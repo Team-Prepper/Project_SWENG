@@ -9,6 +9,7 @@ using Unity.VisualScripting;
 public class ItemUI : MonoBehaviour
 {
     public static ItemUI Instance;
+
     public Transform itemPickupUITransform;
     public GameObject itemPickupUI;
     public Sprite[] itemTierBackground;

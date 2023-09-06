@@ -27,23 +27,6 @@ public class ItemPickup : MonoBehaviour
         isPickable = false;
     }
     
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            ShowItem();
-        }
-            
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            HideItem();
-        }
-    }
-    
     public void PickupHandler(object sender, EventArgs e)
     {
         Pickup();

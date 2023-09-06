@@ -12,6 +12,13 @@ public class Hex : MonoBehaviour
     private HexCoordinates hexCoordinates;
 
     public int cost = 0;
+
+    [Header("ITEM")]
+    [Space(20)]
+    public bool isItem = false;
+    public Item item = null;
+
+    [Space(20)]
     public GameObject tile;
     public Vector3Int HexCoords => hexCoordinates.GetHexCoords();
 
