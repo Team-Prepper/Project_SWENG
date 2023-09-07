@@ -3,13 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Xml.Serialization;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 [SelectionBase]
 public class Hex : MonoBehaviour
 {
     [SerializeField]
     private GlowHighlight highlight;
-    private HexCoordinates hexCoordinates;
+
+    public static readonly float xOffset = 4.325f, yOffset = 0.5f, zOffset = 5.0f;
 
     public int cost = 0;
 
@@ -18,9 +20,19 @@ public class Hex : MonoBehaviour
     public bool isItem = false;
     public Item item = null;
 
-    [Space(20)]
-    public GameObject tile;
-    public Vector3Int HexCoords => hexCoordinates.GetHexCoords();
+    //[Space(20)]
+    public GameObject tile { set; get; }
+
+    public Vector3Int HexCoords {
+        get {
+            int x = Mathf.RoundToInt(transform.position.x / xOffset);
+            int y = Mathf.RoundToInt(transform.position.y / yOffset);
+            int z = Mathf.CeilToInt(transform.position.z / zOffset);
+
+            return new Vector3Int(x, y, z);
+
+        }
+    }
 
     public enum Type
     {
@@ -47,8 +59,9 @@ public class Hex : MonoBehaviour
 
     private void Awake()
     {
-        hexCoordinates = GetComponent<HexCoordinates>();
         highlight = GetComponent<GlowHighlight>();
+
+        HexGrid.Instance.AddTile(this);
     }
 
     public void EnableHighlight()

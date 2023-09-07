@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028326, g: 0.22571333, b: 0.30692202, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028334, g: 0.22571328, b: 0.3069217, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -806,8 +806,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dec9c1a33a7517e408e4c30f212a87ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hexPrefab: {fileID: 4785266142466163777, guid: 0e7fd88216591014bbb6c8e769493dda,
+  _hexPrefab: {fileID: 4785266142466163777, guid: 0e7fd88216591014bbb6c8e769493dda,
     type: 3}
+  _tileNormal:
+    tiles: []
+    cost: 2
+  _tileRock:
+    tiles: []
+    cost: -1
+  _tileHill:
+    tiles: []
+    cost: 3
+  _tileDungon:
+    tiles: []
+    cost: 4
+  _tileCastle:
+    tiles: []
+    cost: 5
+  _tileVillage:
+    tiles: []
+    cost: 1
+  _tileWater:
+    tiles: []
+    cost: -1
+  _tileOcean:
+    tiles: []
+    cost: -1
+  _tileIsland:
+    tiles: []
+    cost: 1
   tileNormal:
   - {fileID: 8083798922760020371, guid: 8329120456e7e7941b98ea68d93ba1ad, type: 3}
   - {fileID: 6179776355451404573, guid: af20fa4becd272947a607d9012bd2dab, type: 3}

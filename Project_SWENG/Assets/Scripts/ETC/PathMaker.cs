@@ -9,7 +9,6 @@ using Random = UnityEngine.Random;
 public class PathMaker : MonoBehaviour
 {
     GridMaker gridMaker;
-    [SerializeField] HexGrid hexGrid;
     [SerializeField] GameObject[] tilePath;
     [SerializeField] int costPath = 1;
 
@@ -26,7 +25,7 @@ public class PathMaker : MonoBehaviour
     {
         for(int i = 0; i < 5; i++)
         {
-            Hex pathTile = hexGrid.GetRandHex();
+            Hex pathTile = HexGrid.Instance.GetRandHex();
             SetPath(pathTile);
         }
 
@@ -52,10 +51,10 @@ public class PathMaker : MonoBehaviour
 
 
         int rotOffset = 0;
-        foreach (var tile in hexGrid.GetNeighboursFor(pathTile.HexCoords))
+        foreach (var tile in HexGrid.Instance.GetNeighboursFor(pathTile.HexCoords))
         {
             
-            if (hexGrid.GetTileAt(tile).tileType == Hex.Type.Path)
+            if (HexGrid.Instance.GetTileAt(tile).tileType == Hex.Type.Path)
             {
                 pathCnt++;
 
@@ -97,7 +96,7 @@ public class PathMaker : MonoBehaviour
         {
             for (int i = 1; i <= 5; i += 2)
             {
-                result.Add(hexGrid.GetTileAt(std + Direction.GetDirectionList(std.x)[i]));
+                result.Add(HexGrid.Instance.GetTileAt(std + Direction.GetDirectionList(std.x)[i]));
             }
                 
         }
@@ -105,7 +104,7 @@ public class PathMaker : MonoBehaviour
         {
             for (int i = 0; i <= 4; i += 2)
             {
-                result.Add(hexGrid.GetTileAt(std + Direction.GetDirectionList(std.x)[i])); 
+                result.Add(HexGrid.Instance.GetTileAt(std + Direction.GetDirectionList(std.x)[i])); 
             }
                 
         }

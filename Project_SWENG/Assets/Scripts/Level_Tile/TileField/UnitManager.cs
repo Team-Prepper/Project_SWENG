@@ -2,11 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UnitManager : MonoBehaviour
+public class UnitManager : MonoSingleton<UnitManager>
 {
-    [SerializeField]
-    private HexGrid hexGrid;
-    private GameManager GM;
 
     [SerializeField]
     private MovementSystem movementSystem;
@@ -19,8 +16,7 @@ public class UnitManager : MonoBehaviour
 
     private void Awake()
     {
-        GM = GameManager.Instance;
-        hexGrid = HexGrid.Instance;
+
     }
     // Unit Selected
     public void HandleUnitSelected(GameObject unit)
@@ -47,14 +43,12 @@ public class UnitManager : MonoBehaviour
     }
 
     // Terrain Selected
-    public void HandleTerrainSelected(GameObject hexGO)
+    public void HandleTerrainSelected(Hex selectedHex)
     {
         if (selectedUnit == null || PlayersTurn == false)
         {
             return;
         }
-
-        Hex selectedHex = hexGO.GetComponent<Hex>();
 
         if (HandleHexOutOfRange(selectedHex.HexCoords) || HandleSelectedHexIsUnitHex(selectedHex.HexCoords))
             return;
@@ -72,14 +66,14 @@ public class UnitManager : MonoBehaviour
 
         this.selectedUnit = unitReference;
         this.selectedUnit.Select();
-        movementSystem.ShowRange(this.selectedUnit, this.hexGrid); // cal BFS
+        movementSystem.ShowRange(this.selectedUnit); // cal BFS
     }
 
     private void ClearOldSelection()
     {
         previouslySelectedHex = null;
         this.selectedUnit.Deselect();
-        movementSystem.HideRange(this.hexGrid);
+        movementSystem.HideRange();
         this.selectedUnit = null;
 
     }
@@ -90,12 +84,12 @@ public class UnitManager : MonoBehaviour
         {
             // ask about Path
             previouslySelectedHex = selectedHex;
-            movementSystem.ShowPath(selectedHex.HexCoords, this.hexGrid);
+            movementSystem.ShowPath(selectedHex.HexCoords);
         }
         else
         {
             // Move Unit
-            movementSystem.MoveUnit(selectedUnit, this.hexGrid);
+            movementSystem.MoveUnit(selectedUnit);
             //selectedUnit.MovementFinished += ResetTurn;
             ClearOldSelection();
         }
@@ -103,7 +97,7 @@ public class UnitManager : MonoBehaviour
 
     private bool HandleSelectedHexIsUnitHex(Vector3Int hexPosition)
     {
-        if (hexPosition == hexGrid.GetClosestHex(selectedUnit.transform.position))
+        if (hexPosition == HexGrid.Instance.GetClosestHex(selectedUnit.transform.position))
         {
             // hex in unit
             selectedUnit.Deselect();
@@ -128,6 +122,6 @@ public class UnitManager : MonoBehaviour
         selectedUnit.MovementFinished -= ResetTurn;
         PlayersTurn = true;
         selectedUnit.movementPoints = 0;
-        GM.NextPhase();
+        GameManager.Instance.NextPhase();
     }
 }
