@@ -45,6 +45,13 @@ public class StringManager : Singleton<StringManager> {
 
     }
 
+    public void UpdateData()
+    {
+        ReadStringFromXml(_nowLang);
+        OnLangChanged.Invoke();
+
+    }
+
     public void ChangeLang(string lang) {
         ReadStringFromXml(lang);
         OnLangChanged.Invoke();
