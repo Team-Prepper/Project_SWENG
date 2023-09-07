@@ -11,37 +11,37 @@ public class MovementSystem : MonoBehaviour
     private BFSResult movementRange = new BFSResult();
     private List<Vector3Int> currentPath = new List<Vector3Int>();
 
-    public void HideRange(HexGrid hexGrid)
+    public void HideRange()
     {
         foreach (Vector3Int hexPosition in movementRange.GetRangePositions())
         {
-            hexGrid.GetTileAt(hexPosition).DisableHighlight();
+            HexGrid.Instance.GetTileAt(hexPosition).DisableHighlight();
         }
         movementRange = new BFSResult();
     }
 
-    public void ShowRange(Unit selectedUnit, HexGrid hexGrid)
+    public void ShowRange(Unit selectedUnit)
     {
-        CalcualteRange(selectedUnit, hexGrid);
+        CalcualteRange(selectedUnit);
 
-        Vector3Int unitPos = hexGrid.GetClosestHex(selectedUnit.CurPos);
+        Vector3Int unitPos = HexGrid.Instance.GetClosestHex(selectedUnit.CurPos);
 
         
         foreach (Vector3Int hexPosition in movementRange.GetRangePositions())
         {
             if (unitPos == hexPosition)
                 continue;
-            hexGrid.GetTileAt(hexPosition).EnableHighlight();
+            HexGrid.Instance.GetTileAt(hexPosition).EnableHighlight();
         }
     }
 
-    public void CalcualteRange(Unit selectedUnit, HexGrid hexGrid)
+    public void CalcualteRange(Unit selectedUnit)
     {
-        movementRange = GraphSearch.BFSGetRange(hexGrid, hexGrid.GetClosestHex(selectedUnit.CurPos), selectedUnit.movementPoints);
+        movementRange = GraphSearch.BFSGetRange(HexGrid.Instance, HexGrid.Instance.GetClosestHex(selectedUnit.CurPos), selectedUnit.movementPoints);
     }
 
 
-    public void ShowPath(Vector3Int selectedHexPosition, HexGrid hexGrid)
+    public void ShowPath(Vector3Int selectedHexPosition)
     {
         
         if (movementRange.GetRangePositions().Contains(selectedHexPosition))
@@ -49,7 +49,7 @@ public class MovementSystem : MonoBehaviour
             // hide
             foreach (Vector3Int hexPosition in currentPath)
             {
-                hexGrid.GetTileAt(hexPosition).ResetHighlight();
+                HexGrid.Instance.GetTileAt(hexPosition).ResetHighlight();
                 HideMoveNum();
             }
             currentPath = movementRange.GetPathTo(selectedHexPosition);
@@ -58,8 +58,8 @@ public class MovementSystem : MonoBehaviour
             int i = 0;
             foreach (Vector3Int hexPosition in currentPath)
             {
-                hexGrid.GetTileAt(hexPosition).HighlightPath();
-                moveNumPrefabs[++i].transform.position = hexGrid.GetTileAt(hexPosition).transform.position;
+                HexGrid.Instance.GetTileAt(hexPosition).HighlightPath();
+                moveNumPrefabs[++i].transform.position = HexGrid.Instance.GetTileAt(hexPosition).transform.position;
             }
         }
     }
@@ -73,10 +73,10 @@ public class MovementSystem : MonoBehaviour
         }
     }
 
-    public void MoveUnit(Unit selectedUnit, HexGrid hexGrid)
+    public void MoveUnit(Unit selectedUnit)
     {
         Debug.Log("Moving unit " + selectedUnit.name);
-        selectedUnit.MoveThroughPath(currentPath.Select(pos => hexGrid.GetTileAt(pos).transform.position).ToList());
+        selectedUnit.MoveThroughPath(currentPath.Select(pos => HexGrid.Instance.GetTileAt(pos).transform.position).ToList());
         HideMoveNum();
     }
 
