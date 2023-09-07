@@ -9,20 +9,19 @@ public class StringManager : Singleton<StringManager> {
 
     public static UnityEvent OnLangChanged = new UnityEvent();
     class StringData {
-        public string name;
+        public string key;
         public string value;
 
         public void Read(XmlNode node)
         {
-            name = node.Attributes["name"].Value;
+            key = node.Attributes["key"].Value;
             value = node.Attributes["value"].Value;
         }
     }
 
-    Dictionary<string, StringData> _dic;
+    Dictionary<string, string> _dic;
 
-    string _nowLang = "Kor";
-    string _fileName = "String.xml";
+    string _nowLang = "Korean";
 
     protected override void OnCreate()
     {
@@ -31,19 +30,25 @@ public class StringManager : Singleton<StringManager> {
 
     public void ReadStringFromXml(string lang)
     {
-        _dic = new Dictionary<string, StringData>();
-        XmlDocument xmlDoc = new XmlDocument();
-        xmlDoc.Load("Assets/XML/" + lang + "/" + _fileName);
+        _dic = new Dictionary<string, string>();
+        XmlDocument xmlDoc = AssetOpener.ReadXML("String/" + _nowLang);
 
-        XmlNodeList nodes = xmlDoc.SelectNodes("StringData/String");
+        XmlNodeList nodes = xmlDoc.SelectNodes("List/Element");
 
         for (int i = 0; i < nodes.Count; i++)
         {
             StringData stringData = new StringData();
             stringData.Read(nodes[i]);
 
-            _dic.Add(stringData.name, stringData);
+            _dic.Add(stringData.key, stringData.value);
         }
+
+    }
+
+    public void UpdateData()
+    {
+        ReadStringFromXml(_nowLang);
+        OnLangChanged.Invoke();
 
     }
 
@@ -54,10 +59,10 @@ public class StringManager : Singleton<StringManager> {
 
     public string GetStringByKey(string key) {
 
-        if (_dic.TryGetValue(key, out StringData temp)) {
-            return temp.value;
+        if (_dic.TryGetValue(key, out string value)) {
+            return value;
         }
-        return string.Empty;
+        return key;
 
     }
 }
