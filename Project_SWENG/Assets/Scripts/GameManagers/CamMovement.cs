@@ -13,7 +13,7 @@ public class CamMovement : MonoBehaviour
     [Header("FOV")]
     private float minFOV = 10.0f;
     private float maxFOV = 100.0f;
-    
+
     private CinemachineVirtualCamera virtualCamera;
     [SerializeField] private GameObject player;
     [SerializeField] private bool isCamMove = false;
@@ -73,22 +73,27 @@ public class CamMovement : MonoBehaviour
         Vector3 worldPos = Camera.main.ScreenToViewportPoint(playerInput.mousePos);
         if (worldPos.x < 0.01f)
         {
-            mouseCamMove.x = -1;
+            if(PlayerOutOfRange() % 2 != 0)
+                mouseCamMove.x = -1;
         }
         if (worldPos.x > 0.99f)
         {
-            mouseCamMove.x = 1; 
+            if (PlayerOutOfRange() % 3 != 0)
+                mouseCamMove.x = 1; 
         }
         if (worldPos.y < 0.01f)
         {
-            mouseCamMove.z = -1;
+            if (PlayerOutOfRange() % 7 != 0)
+                mouseCamMove.z = -1;
         }
         if (worldPos.y > 0.99f)
         {
-            mouseCamMove.z = 1;
+            if (PlayerOutOfRange() % 5 != 0)
+                mouseCamMove.z = 1;
         }
         return mouseCamMove;
     }
+
     private void AdjustFOV(float scrollValue)
     {
         float currentFOV = virtualCamera.m_Lens.FieldOfView;
@@ -96,5 +101,30 @@ public class CamMovement : MonoBehaviour
         float newFOV = Mathf.Clamp(currentFOV - (scrollValue/12), minFOV, maxFOV);
 
         virtualCamera.m_Lens.FieldOfView = newFOV;
+    }
+
+    // 1 : inside 2 : left, 3 : right, 5 : top, 7 : bottom
+    private int PlayerOutOfRange()
+    {
+        int outValue = 1;
+        float px = player.transform.position.x;
+        float pz = player.transform.position.z;
+        float tx = this.transform.position.x;
+        float tz = this.transform.position.z;
+
+        float xOffset = px - tx;
+        float zOffset = pz - tz;
+
+        if (xOffset > 12)
+            outValue *= 2;
+        if (xOffset < -12)
+            outValue *= 3;
+
+        if (zOffset > 16)
+            outValue *= 7;
+        if (zOffset < -2)
+            outValue *= 5;
+
+        return outValue;
     }
 }

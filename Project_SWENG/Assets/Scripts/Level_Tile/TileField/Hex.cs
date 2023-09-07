@@ -13,8 +13,8 @@ public class Hex : MonoBehaviour
 
     public int cost = 0;
 
-    [Header("ITEM")]
     [Space(20)]
+    [Header("ITEM")]
     public bool isItem = false;
     public Item item = null;
 

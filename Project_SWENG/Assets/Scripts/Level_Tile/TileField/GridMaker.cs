@@ -9,7 +9,7 @@ using Random = UnityEngine.Random;
 public class GridMaker : MonoBehaviour
 {
     [Header("Ref")]
-    public GameObject hexPrefab; // 인스턴스화할 육각형 프리팹
+    public GameObject hexPrefab; // ???????????? ?????? ??????
     [Space(5)]
     public GameObject[] tileNormal;
     [SerializeField] int costNormal = 2;
@@ -41,7 +41,7 @@ public class GridMaker : MonoBehaviour
     public GameObject[] hexGround; // 0 Groudn 1 River
     public Material[] materials;
     [Space(20)]
-    public int gridSizeN = 7; // 생성할 크기 N
+    public int gridSizeN = 7; // ?????? ???? N
     public int oceanSizeN = 5;
 
     public List<GameObject> objTilesGo = new List<GameObject>();
@@ -110,7 +110,8 @@ public class GridMaker : MonoBehaviour
                             HexTileSpawn(tileVillage, tileNormal, xPos, zPos, 10, costVillage, costNormal);
                             break;
                         case 4:
-                            OceanSpawn(tileOcean, xPos, zPos, costOcean);
+                        case 5:
+                            OceanSpawn(tileOcean, xPos, zPos, costWater);
                             break;
                         default:
                             HexTileSpawn(tileRock, tileNormal, xPos, zPos, 5, costRock, costNormal);

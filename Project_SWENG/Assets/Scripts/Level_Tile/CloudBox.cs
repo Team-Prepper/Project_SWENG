@@ -11,15 +11,12 @@ public class CloudBox : MonoBehaviour
     [SerializeField] GameObject cloud02;
     [SerializeField] GameObject cloud03;
 
-    //HexMapCreator에서 노드 생성 완료 후, CloudObj 생성
+    //HexMapCreator???? ???? ???? ???? ??, CloudObj ????
     [SerializeField] GridMaker hexMapCreator;
 
     GameObject[] clouds = new GameObject[3];
 
     public Dictionary<Vector3Int, GameObject> cloudBox = new Dictionary<Vector3Int, GameObject>();
-    
-
-    int zPlusNum=0;
 
     List<Vector3Int> closeIndex = new List<Vector3Int>();
 
