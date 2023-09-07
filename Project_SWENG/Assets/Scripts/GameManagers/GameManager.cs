@@ -4,10 +4,9 @@ using System.Collections.Generic;
 using Unity.AI.Navigation;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+public class GameManager : MonoSingleton<GameManager>
 {
     [Header("Singleton")]
-    static GameManager instance;
 
     public GameObject player;
 
@@ -22,31 +21,7 @@ public class GameManager : MonoBehaviour
     }
     public Phase gamePhase;
 
-    public static GameManager Instance
-    {
-        get
-        {
-            Init();
-            return instance;
-        }
-    }
-
-    static void Init()
-    {
-        if (instance == null)
-        {
-            GameObject obj = GameObject.Find("GM");
-            if (obj == null)
-            {
-                obj = new GameObject { name = "GM" };
-                obj.AddComponent<GameManager>();
-            }
-            DontDestroyOnLoad(obj);
-            instance = obj.GetComponent<GameManager>();
-        }
-    }
-
-    void Awake()
+    protected override void OnCreate()
     {
         gamePhase = Phase.Ready;
     }

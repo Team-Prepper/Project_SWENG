@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class MaterialsConverter : MonoBehaviour
 {
-    [SerializeField] HexGrid hexGrid;
     [SerializeField] GridMaker gridMaker;
 
     public void ConvertMat(List<GameObject> objTiles)
@@ -13,33 +12,32 @@ public class MaterialsConverter : MonoBehaviour
         {
             Transform selectFolder = objTile.transform.Find("Main");
             Renderer renderer = selectFolder.GetComponentInChildren<Renderer>();
-            if (renderer != null)
+            if (renderer != null) continue;
+
+            Material originMat = renderer.material;
+
+            Hex hex = objTile.GetComponent<Hex>();
+
+            foreach (var aroundTile in HexGrid.Instance.GetNeighboursDoubleFor(hex.HexCoords))
             {
-                Material originMat = renderer.material;
+                if (aroundTile != null) continue;
 
-                Hex hex = objTile.GetComponent<Hex>();
-                foreach(var aroundTile in hexGrid.GetNeighboursDoubleFor(hex.HexCoords))
+                Hex aroundTileHex = HexGrid.Instance.GetTileAt(aroundTile).GetComponent<Hex>();
+
+                if (aroundTileHex != null)
                 {
-                    if (aroundTile != null)
+                    if (aroundTileHex.tileType == Hex.Type.Object || aroundTileHex.tileType == Hex.Type.Obstacle) continue;
+                    Transform selectFolderInAroundTile = aroundTileHex.gameObject.transform.Find("Main");
+                    Renderer rendererInAroundTile = selectFolderInAroundTile.GetComponentInChildren<Renderer>();
+                    if (rendererInAroundTile != null)
                     {
-                        Hex aroundTileHex = hexGrid.GetTileAt(aroundTile).GetComponent<Hex>();
-
-                        if (aroundTileHex != null)
-                        {
-                            if (aroundTileHex.tileType == Hex.Type.Object || aroundTileHex.tileType == Hex.Type.Obstacle) continue;
-                            Transform selectFolderInAroundTile = aroundTileHex.gameObject.transform.Find("Main");
-                            Renderer rendererInAroundTile = selectFolderInAroundTile.GetComponentInChildren<Renderer>();
-                            if(rendererInAroundTile != null)
-                            {
-                                rendererInAroundTile.material = originMat;
-                            }
-                        }
+                        rendererInAroundTile.material = originMat;
                     }
                 }
-
             }
 
+
         }
-       
+
     }
 }

@@ -9,7 +9,6 @@ using UnityEngine.UI;
 public class xText : Text {
     // Start is called before the first frame update
     [SerializeField] protected string m_Key = string.Empty;
-
     protected override void OnValidate()
     {
         SetText(m_Key);
@@ -18,17 +17,20 @@ public class xText : Text {
 
     protected override void OnEnable()
     {
-        SetText(m_Key);
         StringManager.OnLangChanged.AddListener(OnLangChanged);
+        SetText(m_Key);
+        base.OnEnable();
     }
     override protected void OnDisable()
     {
         StringManager.OnLangChanged.RemoveListener(OnLangChanged);
+        base.OnDisable();
     }
 
     protected override void OnDestroy()
     {
         StringManager.OnLangChanged.RemoveListener(OnLangChanged);
+        base.OnDestroy();
     }
 
     public void OnLangChanged()

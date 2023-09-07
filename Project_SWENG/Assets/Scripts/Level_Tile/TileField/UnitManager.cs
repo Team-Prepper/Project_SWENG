@@ -20,6 +20,7 @@ public class UnitManager : MonoBehaviour
     private void Awake()
     {
         GM = GameManager.Instance;
+        hexGrid = HexGrid.Instance;
     }
     // Unit Selected
     public void HandleUnitSelected(GameObject unit)

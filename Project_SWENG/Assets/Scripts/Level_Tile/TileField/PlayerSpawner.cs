@@ -8,30 +8,29 @@ using static GameManager;
 public class PlayerSpawner : MonoBehaviour
 {
     [Header("SystemManager")]
-    GameManager GM;
-    [SerializeField] HexGrid hexGrid;
+
     [SerializeField] GridMaker gridMaker;
     [SerializeField] GameObject playerPrefab;
+
     public GameObject player;
 
     public UnityEvent<GameObject> EventPlayerSpawn;
 
     void Awake()
     {
-        GM = GameManager.Instance;
         GridMaker.EventSetNavComplete += SpawnPlayer;
     }
 
     void SpawnPlayer(object sender, EventArgs e)
     {
         Debug.Log("Spawing");
-        Hex.Type tileType;
-        Hex spawnHex = hexGrid.GetRandHex();
-        tileType = spawnHex.tileType;
-        while (tileType != Hex.Type.Field)
+        Hex spawnHex = HexGrid.Instance.GetRandHex();
+
+        Debug.Log(spawnHex);
+
+        while (spawnHex && spawnHex.tileType != Hex.Type.Field)
         {
-            spawnHex = hexGrid.GetRandHex();
-            tileType = spawnHex.tileType;
+            spawnHex = HexGrid.Instance.GetRandHex();
         }
         Transform spawnPos = spawnHex.transform;
         Debug.Log("SpawnPos : " + spawnPos.position);
@@ -39,8 +38,10 @@ public class PlayerSpawner : MonoBehaviour
         player.GetComponent<Unit>().CurPos = spawnPos.position;
 
         EventPlayerSpawn?.Invoke(player);
-        GM.player = player;
-        GM.gamePhase = GameManager.Phase.Start;
+
+        GameManager.Instance.player = player;
+        GameManager.Instance.gamePhase = GameManager.Phase.Start;
+
         CloudBox.Instance.CloudActiveFalse(spawnHex.HexCoords);
     }
 }

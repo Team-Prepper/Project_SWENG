@@ -4,9 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class HexGrid : MonoBehaviour
+public class HexGrid : Singleton<HexGrid>
 {
-    public static HexGrid Instance;
 
     public Dictionary<Vector3Int, Hex> hexTileDict = new Dictionary<Vector3Int, Hex>();
     Dictionary<Vector3Int, List<Vector3Int>> hexTileNeighboursDict = new Dictionary<Vector3Int, List<Vector3Int>>();
@@ -15,30 +14,21 @@ public class HexGrid : MonoBehaviour
     Vector3Int topOffset    = new Vector3Int(0, 1, 0);
     Vector3Int bottomOffset = new Vector3Int(0, -1, 0);
 
-    public static event EventHandler EventSetHexTileDic;
+    public event EventHandler EventSetHexTileDic;
 
-    void Awake()
+    protected override void OnCreate()
     {
-        Instance = this;
-        GridMaker.EventBuildComplete += SetHexTileDict;
+
     }
 
-    public void SetHexTileDict(object sender, EventArgs e)
-    {
-        Debug.Log("Dic set Start");
-        foreach (Hex hex in FindObjectsOfType<Hex>())
-        {
-            hexTileDict[hex.HexCoords] = hex;
-        }
-        Debug.Log("Dic set complete");
-
-        EventSetHexTileDic?.Invoke(this, EventArgs.Empty);
+    public void AddTile(Hex hex) {
+        hexTileDict[hex.HexCoords] = hex;
     }
+
 
     public Hex GetTileAt(Vector3Int hexCoordinates)
     {
-        Hex result = null;
-        hexTileDict.TryGetValue(hexCoordinates, out result);
+        hexTileDict.TryGetValue(hexCoordinates, out Hex result);
         return result;
     }
 
