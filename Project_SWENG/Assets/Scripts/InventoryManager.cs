@@ -1,15 +1,12 @@
-using UnityEngine;
-
-public class InventoryManager : MonoBehaviour
+public class InventoryManager : Singleton<InventoryManager>
 {
-    public static InventoryManager Instance;
 
     private Item helmet = null;
     private Item armor  = null;
     private Item weapon = null;
     private Item shield = null;
 
-    public void Add(Item item)
+    public void GetItem(Item item)
     {
         switch (item.type)
         {
