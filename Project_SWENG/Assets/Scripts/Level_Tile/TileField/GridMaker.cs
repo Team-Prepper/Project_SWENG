@@ -50,7 +50,6 @@ public class GridMaker : MonoBehaviour
     private float hexHeight = 5.0f;  // vertical
     
     private bool isRiver;
-    private bool isOcean;
 
     private NavMeshSurface navMeshSurface;
     private MaterialsConverter materialsConverter;
@@ -83,40 +82,33 @@ public class GridMaker : MonoBehaviour
                 float xPos = hexWidth * (q);
                 float zPos = hexHeight * (r + q * 0.5f);
 
-                if (MathF.Abs(q) > gridSizeN - oceanSizeN || r <= r1 + oceanSizeN - 1 || r >= r2 - oceanSizeN + 1) // 
-                    isOcean = true;
-                else
-                    isOcean= false;
-                
-
-                if (isOcean)
+                if (MathF.Abs(q) > gridSizeN - oceanSizeN || r <= r1 + oceanSizeN - 1 || r >= r2 - oceanSizeN + 1)
                 {
                     OceanSpawn(tileOcean, xPos, zPos, costOcean);
+                    continue;
                 }
-                else
+
+                switch (Random.Range(0, 10))
                 {
-                    switch(Random.Range(0, 10))
-                    {
-                        case 0:
-                            HexTileSpawn(tileDungon, tileNormal, xPos, zPos, 10, costDungon, costNormal);
-                            break;
-                        case 1:
-                            HexTileSpawn(tileHill, tileNormal, xPos, zPos, 10, costHill, costNormal);
-                            break;
-                        case 2:
-                            HexTileSpawn(tileCastle, tileNormal, xPos, zPos, 10, costCastle, costNormal);
-                            break;
-                        case 3:
-                            HexTileSpawn(tileVillage, tileNormal, xPos, zPos, 10, costVillage, costNormal);
-                            break;
-                        case 4:
-                        case 5:
-                            OceanSpawn(tileOcean, xPos, zPos, costWater);
-                            break;
-                        default:
-                            HexTileSpawn(tileRock, tileNormal, xPos, zPos, 5, costRock, costNormal);
-                            break;
-                    }  
+                    case 0:
+                        HexTileSpawn(tileDungon, tileNormal, xPos, zPos, 10, costDungon, costNormal);
+                        break;
+                    case 1:
+                        HexTileSpawn(tileHill, tileNormal, xPos, zPos, 10, costHill, costNormal);
+                        break;
+                    case 2:
+                        HexTileSpawn(tileCastle, tileNormal, xPos, zPos, 10, costCastle, costNormal);
+                        break;
+                    case 3:
+                        HexTileSpawn(tileVillage, tileNormal, xPos, zPos, 10, costVillage, costNormal);
+                        break;
+                    case 4:
+                    case 5:
+                        OceanSpawn(tileOcean, xPos, zPos, costWater);
+                        break;
+                    default:
+                        HexTileSpawn(tileRock, tileNormal, xPos, zPos, 5, costRock, costNormal);
+                        break;
                 }
             }
         }
@@ -150,6 +142,9 @@ public class GridMaker : MonoBehaviour
             tile.transform.SetParent(hexGO.transform);
 
         tile.transform.localPosition -= new Vector3(0f,0.6f,0f);
+
+        HexGrid.Instance.AddTile(hex);
+
         return hexGO;
     }
 
@@ -196,6 +191,8 @@ public class GridMaker : MonoBehaviour
         {
             objTilesGo.Add(hexGO);
         }
+
+        HexGrid.Instance.AddTile(hex);
 
         return hexGO;
     }

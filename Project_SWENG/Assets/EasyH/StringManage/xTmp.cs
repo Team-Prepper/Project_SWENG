@@ -10,30 +10,33 @@ using UnityEngine.UI;
 [ExecuteAlways]
 public class xTmp : TextMeshProUGUI
 {
-    // Start is called before the first frame update
     [SerializeField] protected string m_Key = string.Empty;
-
-    protected override void OnValidate() {
+    protected override void OnValidate()
+    {
         SetText(m_Key);
         base.OnValidate();
     }
 
     protected override void OnEnable()
     {
-        SetText(m_Key);
         StringManager.OnLangChanged.AddListener(OnLangChanged);
+        SetText(m_Key);
+        base.OnEnable();
     }
     override protected void OnDisable()
     {
         StringManager.OnLangChanged.RemoveListener(OnLangChanged);
+        base.OnDisable();
     }
 
     protected override void OnDestroy()
     {
         StringManager.OnLangChanged.RemoveListener(OnLangChanged);
+        base.OnDestroy();
     }
 
-    public void OnLangChanged() {
+    public void OnLangChanged()
+    {
         SetText(m_Key);
     }
 
@@ -44,11 +47,12 @@ public class xTmp : TextMeshProUGUI
 
         text = StringManager.Instance.GetStringByKey(key);
 
-        if (text.Equals(string.Empty)) {
+        if (text.Equals(string.Empty))
+        {
             text = key;
         }
 
     }
 
-    
+
 }
