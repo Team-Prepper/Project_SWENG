@@ -16,11 +16,11 @@ public class Hex : MonoBehaviour
     public int cost = 0;
 
     [Space(20)]
-    [Header("ITEM")]
+    [Header("EVENT")]
     public bool isItem = false;
     public Item item = null;
+    public bool isEnemy = false;    
 
-    //[Space(20)]
     public GameObject tile { set; get; }
 
     public Vector3Int HexCoords {
