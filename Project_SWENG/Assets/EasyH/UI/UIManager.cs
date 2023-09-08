@@ -61,7 +61,7 @@ public class UIManager : Singleton<UIManager> {
         _dic = new Dictionary<string, GUIData>();
         XmlDocument xmlDoc = AssetOpener.ReadXML("GUIInfor");
 
-        XmlNodeList nodes = xmlDoc.SelectNodes("GUIInfor/GUIData");
+        XmlNodeList nodes = xmlDoc.SelectNodes("List/Element");
 
         for (int i = 0; i < nodes.Count; i++)
         {
@@ -78,5 +78,10 @@ public class UIManager : Singleton<UIManager> {
         T result = AssetOpener.Import<GameObject>(path).GetComponent<T>();
 
         return result;
+    }
+
+    public void DisplayMessage(string messageContent) {
+        GUIMessageBox box = OpenGUI<GUIMessageBox>("MessageBox");
+        box.SetMessage(messageContent);
     }
 }
