@@ -42,8 +42,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7040824174509152096}
   - component: {fileID: 7040824174509152102}
-  - component: {fileID: 7040824174509152103}
-  - component: {fileID: 7040824174509152100}
   - component: {fileID: 7040824174509152101}
   m_Layer: 0
   m_Name: Armor
@@ -81,32 +79,6 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 1
   m_Center: {x: -0.3, y: 0, z: 0}
---- !u!114 &7040824174509152103
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7040824174509152099}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: facd96ec86e3ff443aa5933b588d09b8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  item: {fileID: 11400000, guid: a0fe4efdaa8c9b74aa14eb9b9ea48892, type: 2}
---- !u!114 &7040824174509152100
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7040824174509152099}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 56b3a4800c9fa174e93c86e38b844fea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  item: {fileID: 11400000, guid: a0fe4efdaa8c9b74aa14eb9b9ea48892, type: 2}
 --- !u!54 &7040824174509152101
 Rigidbody:
   m_ObjectHideFlags: 0

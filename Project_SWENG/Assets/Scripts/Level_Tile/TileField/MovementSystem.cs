@@ -18,6 +18,7 @@ public class MovementSystem : MonoBehaviour
             HexGrid.Instance.GetTileAt(hexPosition).DisableHighlight();
         }
         movementRange = new BFSResult();
+        HideMoveNum();
     }
 
     public void ShowRange(Unit selectedUnit)
