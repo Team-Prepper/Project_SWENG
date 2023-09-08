@@ -17,8 +17,6 @@ public class GUIWindow : MonoBehaviour {
         RectTransform rect = gameObject.GetComponent<RectTransform>();
 
         //rect.SetParent(GameObject.Find("Canvas").transform);
-        rect.offsetMax = Vector3.zero;
-        rect.offsetMin = Vector3.zero;
     }
 
     public virtual void Close()
