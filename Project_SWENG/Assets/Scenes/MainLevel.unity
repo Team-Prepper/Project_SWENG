@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028334, g: 0.22571328, b: 0.3069217, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -170,7 +170,6 @@ MonoBehaviour:
   cloud01: {fileID: 2586547599428151692, guid: 1243d39ee16eedc4884d12bf3f5c03c4, type: 3}
   cloud02: {fileID: 2998416022047036847, guid: 98a8fb2c3e18bfc4a90c8b394766283e, type: 3}
   cloud03: {fileID: 8382749024866234373, guid: c0890e79fd08f0d4e8e14affbb7ca236, type: 3}
-  hexMapCreator: {fileID: 606399403}
 --- !u!1001 &87478124
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -756,7 +755,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d121ce55d0b3bf4885fa3aa321a03e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gridMaker: {fileID: 606399403}
+  gridMaker: {fileID: 0}
   playerPrefab: {fileID: 828901899843211881, guid: c5ae880e42228154e81e288b1737b380,
     type: 3}
   player: {fileID: 0}
@@ -806,7 +805,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dec9c1a33a7517e408e4c30f212a87ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _hexPrefab: {fileID: 4785266142466163777, guid: 0e7fd88216591014bbb6c8e769493dda,
+  _hexPrefab: {fileID: 1178759674367969501, guid: 0e7fd88216591014bbb6c8e769493dda,
     type: 3}
   _tileNormal:
     tiles: []
@@ -3490,6 +3489,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 45
       objectReference: {fileID: 0}
+    - target: {fileID: 4364904830423307240, guid: 464949c0e53af7443bf9011463b825a4,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 289301614986012343, guid: a9f57f281fcf8e245ae5677cf164b85c,
+        type: 3}
     - target: {fileID: 7034977196418748445, guid: 464949c0e53af7443bf9011463b825a4,
         type: 3}
       propertyPath: m_Type

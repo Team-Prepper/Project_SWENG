@@ -11,9 +11,6 @@ public class CloudBox : MonoBehaviour
     [SerializeField] GameObject cloud02;
     [SerializeField] GameObject cloud03;
 
-    //HexMapCreator???? ???? ???? ???? ??, CloudObj ????
-    [SerializeField] GridMaker hexMapCreator;
-
     GameObject[] clouds = new GameObject[3];
 
     public Dictionary<Vector3Int, GameObject> cloudBox = new Dictionary<Vector3Int, GameObject>();
@@ -28,8 +25,6 @@ public class CloudBox : MonoBehaviour
 
     private void CreatCloud(object sender, EventArgs e)
     {
-        hexMapCreator = FindObjectOfType<GridMaker>();
-
         clouds[0] = cloud01;
         clouds[1] = cloud02;
         clouds[2] = cloud03;

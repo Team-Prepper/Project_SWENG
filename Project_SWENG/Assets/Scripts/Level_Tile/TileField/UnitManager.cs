@@ -43,8 +43,9 @@ public class UnitManager : MonoSingleton<UnitManager>
     }
 
     // Terrain Selected
-    public void HandleTerrainSelected(Hex selectedHex)
+    public void HandleTerrainSelected(GameObject HexGo)
     {
+        Hex selectedHex = HexGo.GetComponent<Hex>();
         if (selectedUnit == null || PlayersTurn == false)
         {
             return;
