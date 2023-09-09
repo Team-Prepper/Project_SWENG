@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using static GameManager;
+using Random = UnityEngine.Random;
 
 public class PlayerSpawner : MonoBehaviour
 {
@@ -24,14 +25,9 @@ public class PlayerSpawner : MonoBehaviour
     void SpawnPlayer(object sender, EventArgs e)
     {
         Debug.Log("Spawing");
-        Hex spawnHex = HexGrid.Instance.GetRandHex();
+       
+        Hex spawnHex = HexGrid.Instance.GetRandHexAtEmpty();
 
-        Debug.Log(spawnHex);
-
-        while (spawnHex && spawnHex.tileType != Hex.Type.Field)
-        {
-            spawnHex = HexGrid.Instance.GetRandHex();
-        }
         Transform spawnPos = spawnHex.transform;
         Debug.Log("SpawnPos : " + spawnPos.position);
         player = Instantiate(playerPrefab, spawnPos.position, spawnPos.rotation);

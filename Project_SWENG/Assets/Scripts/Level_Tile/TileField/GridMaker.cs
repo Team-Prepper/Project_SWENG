@@ -74,8 +74,6 @@ public class GridMaker : MonoBehaviour
 
     private float hexWidth = 4.325f; // horizontal
     private float hexHeight = 5.0f;  // vertical
-    
-    private bool isRiver;
 
     private NavMeshSurface navMeshSurface;
     private MaterialsConverter materialsConverter;
@@ -153,7 +151,7 @@ public class GridMaker : MonoBehaviour
     {
         Vector3 spawnPos = new Vector3(xPos, -0.5f, zPos);
 
-        Hex hex = _SpawnHexTile(data, false, spawnPos);
+        Hex hex = _SpawnHexTile(data, spawnPos);
 
         hex.tile.transform.localPosition -= new Vector3(0f, 0.6f, 0f);
 
@@ -165,14 +163,17 @@ public class GridMaker : MonoBehaviour
         //float setHigh = Random.Range(0, 2) * 0.5f;
         Vector3 spawnPos = new Vector3(xPos, 0, zPos);
 
+        // Empty Field
         if (Random.Range(0, percentage) != 0) {
-            Hex hexDefault = _SpawnHexTile(new TileData(tileNormal, costNormal), isRiver, spawnPos);
+            Hex hexDefault = _SpawnHexTile(new TileData(tileNormal, costNormal),  spawnPos);
             hexDefault.tileType = Hex.Type.Field;
+
+            HexGrid.Instance.emptyHexTiles.Add(hexDefault);
 
             return hexDefault;
         }
 
-        Hex hex = _SpawnHexTile(selectedData, isRiver, spawnPos);
+        Hex hex = _SpawnHexTile(selectedData,  spawnPos);
 
         if (selectedData.cost == -1)
         {
@@ -186,7 +187,7 @@ public class GridMaker : MonoBehaviour
         return hex;
     }
 
-    Hex _SpawnHexTile(TileData data, bool isRiver, Vector3 spawnPos)
+    Hex _SpawnHexTile(TileData data, Vector3 spawnPos)
     {
 
         GameObject tile = Instantiate(data.tiles[Random.Range(0, data.tiles.Length)], spawnPos, Quaternion.Euler(0f, Random.Range(0, 6) * 60, 0f));
@@ -197,7 +198,7 @@ public class GridMaker : MonoBehaviour
         hex.transform.SetParent(transform);
         hex.cost = data.cost;
 
-        GameObject iHexGround = Instantiate(isRiver ? hexGround[1] : hexGround[0], spawnPos, Quaternion.identity);
+        GameObject iHexGround = Instantiate(hexGround[0], spawnPos, Quaternion.identity);
         iHexGround.layer = LayerMask.NameToLayer("HexTileGround");
         iHexGround.transform.SetParent(hex.transform);
 
@@ -248,7 +249,7 @@ public class GridMaker : MonoBehaviour
         Vector3 spawnPos = new Vector3(xPos, 0, zPos);
 
         Hex hex = Instantiate(_hexPrefab, spawnPos, Quaternion.identity);
-        GameObject iHexGround = Instantiate(isRiver ? hexGround[1] : hexGround[0], spawnPos, Quaternion.identity);
+        GameObject iHexGround = Instantiate(hexGround[0], spawnPos, Quaternion.identity);
         iHexGround.layer = LayerMask.NameToLayer("HexTileGround"); 
 
         GameObject tile = null;

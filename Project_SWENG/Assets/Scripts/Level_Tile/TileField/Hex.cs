@@ -19,7 +19,6 @@ public class Hex : MonoBehaviour
     [Header("EVENT")]
     public bool isItem = false;
     public Item item = null;
-    public bool isEnemy = false;    
 
     public GameObject tile { set; get; }
 

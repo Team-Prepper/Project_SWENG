@@ -8,6 +8,8 @@ public class EnemySpawner : MonoBehaviour
 {
     public List<GameObject> enemyPrefabList;
           
+    public Dictionary<GameObject, Hex> enemyDic = new Dictionary<GameObject, Hex>();
+
     private void Awake()
     {
         GridMaker.EventSetNavComplete += SpawnEnemyHandler;
@@ -22,23 +24,10 @@ public class EnemySpawner : MonoBehaviour
     private void SpawnEnemy()
     {
 
-        Hex spawnHex = GetEmptyHex();
+        Hex spawnHex = HexGrid.Instance.GetRandHexAtEmpty();
 
         Transform spawnPos = spawnHex.transform;
         GameObject enemy = Instantiate(enemyPrefabList[Random.Range(0,enemyPrefabList.Count)], spawnPos.position, spawnPos.rotation);
-    }
-
-    private Hex GetEmptyHex()
-    {
-        Hex spawnHex = HexGrid.Instance.GetRandHex();
-
-        while (spawnHex && spawnHex.tileType != Hex.Type.Field)
-        {
-            spawnHex = HexGrid.Instance.GetRandHex();
-        }
-
-        spawnHex.isEnemy = true;
-
-        return spawnHex;
+        enemyDic.Add(enemy, spawnHex);
     }
 }

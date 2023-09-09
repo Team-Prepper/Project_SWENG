@@ -6,11 +6,12 @@ using Random = UnityEngine.Random;
 
 public class HexGrid : Singleton<HexGrid>
 {
-
     public Dictionary<Vector3Int, Hex> hexTileDict = new Dictionary<Vector3Int, Hex>();
     Dictionary<Vector3Int, List<Vector3Int>> hexTileNeighboursDict = new Dictionary<Vector3Int, List<Vector3Int>>();
     Dictionary<Vector3Int, List<Vector3Int>> hexTileNeighboursDoubleDict = new Dictionary<Vector3Int, List<Vector3Int>>();
+    public List<Hex> emptyHexTiles = new List<Hex>();
 
+    
     Vector3Int topOffset    = new Vector3Int(0, 1, 0);
     Vector3Int bottomOffset = new Vector3Int(0, -1, 0);
 
@@ -92,6 +93,17 @@ public class HexGrid : Singleton<HexGrid>
         hexTileDict.Keys.CopyTo(keysArray, 0);
 
         return hexTileDict[keysArray[Random.Range(0,keysArray.Length)]];
+    }
+
+    public Hex GetRandHexAtEmpty()
+    {
+        if(emptyHexTiles.Count == 0) return null;
+
+        int randHexIndex = Random.Range(0, emptyHexTiles.Count);
+        Hex randHex = emptyHexTiles[randHexIndex];
+        emptyHexTiles.Remove(randHex);
+
+        return randHex;
     }
 }
 
