@@ -40,6 +40,5 @@ public class PlayerSpawner : MonoBehaviour
 
         CloudBox.Instance.CloudActiveFalse(spawnHex.HexCoords);
 
-        UIManager.Instance.DisplayMessage("아무거나 적어");
     }
 }

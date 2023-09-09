@@ -1,3 +1,6 @@
+using System.Diagnostics;
+using UnityEngine;
+
 public class InventoryManager : Singleton<InventoryManager>
 {
 
@@ -16,6 +19,7 @@ public class InventoryManager : Singleton<InventoryManager>
                     int helmetType  = item.id / 100;
                     int helmetIndex = item.id % 100;
                     EquipManager.Instance.EquipHelmet(helmetType, helmetIndex);
+                    UnityEngine.Debug.Log("EquipHelmet");
                 }
                 break;
             case Item.ItemType.Armor:

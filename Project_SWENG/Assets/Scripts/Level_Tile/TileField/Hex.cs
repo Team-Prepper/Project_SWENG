@@ -8,6 +8,7 @@ using UnityEngine.UIElements;
 [SelectionBase]
 public class Hex : MonoBehaviour
 {
+    
     [SerializeField]
     private GlowHighlight highlight;
 
@@ -31,6 +32,15 @@ public class Hex : MonoBehaviour
             return new Vector3Int(x, y, z);
 
         }
+    }
+
+    public void WhenCreate(GameObject tile, Transform parent, int cost)
+    {
+        this.tile = tile;
+        transform.SetParent(parent);
+        this.cost = cost;
+
+        HexGrid.Instance.AddTile(this);
     }
 
     public enum Type
@@ -59,8 +69,6 @@ public class Hex : MonoBehaviour
     private void Awake()
     {
         highlight = GetComponent<GlowHighlight>();
-
-        HexGrid.Instance.AddTile(this);
     }
 
     public void EnableHighlight()

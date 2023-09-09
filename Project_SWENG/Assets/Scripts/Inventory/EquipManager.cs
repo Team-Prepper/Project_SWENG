@@ -25,6 +25,8 @@ public class EquipManager : MonoBehaviour
     public GameObject femaleEyebrowsParent;
     public GameObject facialHairParent;
 
+    // 
+
     public bool isMale = true;
     
     public int curEquipHelmetCode;
