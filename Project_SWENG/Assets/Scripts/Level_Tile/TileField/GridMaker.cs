@@ -181,8 +181,12 @@ public class GridMaker : MonoBehaviour
             return hex;
         }
 
-        hex.tileType = Hex.Type.Object;
-        objTilesGo.Add(hex.gameObject);
+        if(selectedData.cost != 3)
+        {
+            hex.tileType = Hex.Type.Object;
+            objTilesGo.Add(hex.gameObject);
+        }
+        
 
         return hex;
     }

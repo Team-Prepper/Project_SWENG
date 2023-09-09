@@ -14,14 +14,12 @@ public class MaterialsConverter : MonoBehaviour
             Renderer renderer = selectFolder.GetComponentInChildren<Renderer>();
             if (renderer != null) continue;
 
-            Material originMat = renderer.material;
+            Material newMat = renderer.material;
 
             Hex hex = objTile.GetComponent<Hex>();
 
             foreach (var aroundTile in HexGrid.Instance.GetNeighboursDoubleFor(hex.HexCoords))
             {
-                if (aroundTile != null) continue;
-
                 Hex aroundTileHex = HexGrid.Instance.GetTileAt(aroundTile).GetComponent<Hex>();
 
                 if (aroundTileHex != null)
@@ -31,12 +29,10 @@ public class MaterialsConverter : MonoBehaviour
                     Renderer rendererInAroundTile = selectFolderInAroundTile.GetComponentInChildren<Renderer>();
                     if (rendererInAroundTile != null)
                     {
-                        rendererInAroundTile.material = originMat;
+                        rendererInAroundTile.material = newMat;
                     }
                 }
             }
-
-
         }
 
     }

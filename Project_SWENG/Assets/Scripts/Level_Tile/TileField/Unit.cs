@@ -15,7 +15,7 @@ public class Unit : MonoBehaviour
     NavMeshAgent agent;
 
     [Header("Movemet")]
-    public int movementPoints = 0;
+    public int dicePoints = 0;
 
     private Vector3 curPos;
     public Vector3 CurPos { get => curPos; set => curPos = value; }
@@ -73,14 +73,14 @@ public class Unit : MonoBehaviour
         Hex endPosHex;
         if (HexGrid.Instance != null && HexGrid.Instance.hexTileDict.TryGetValue(hcPos, out endPosHex))
         {
-            movementPoints -= endPosHex.cost;
+            dicePoints -= endPosHex.cost;
         }
         else
         {
-            movementPoints -= Mathf.CeilToInt((endPosition - transform.position).magnitude);
+            dicePoints -= Mathf.CeilToInt((endPosition - transform.position).magnitude);
         }
         
-        EventMovementPoint?.Invoke(this, new IntEventArgs(movementPoints));
+        EventMovementPoint?.Invoke(this, new IntEventArgs(dicePoints));
         agent.ResetPath();
         agent.SetDestination(endPosition);
         while (!isArrive())
@@ -129,7 +129,7 @@ public class Unit : MonoBehaviour
     
     private void GetMovementPointFromDice(object sender, IntEventArgs e)
     {
-        movementPoints = e.Value;
-        EventMovementPoint?.Invoke(this, new IntEventArgs(movementPoints));
+        dicePoints = e.Value;
+        EventMovementPoint?.Invoke(this, new IntEventArgs(dicePoints));
     }
 }

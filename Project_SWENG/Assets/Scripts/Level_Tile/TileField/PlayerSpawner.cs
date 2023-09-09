@@ -39,6 +39,5 @@ public class PlayerSpawner : MonoBehaviour
         GameManager.Instance.gamePhase = GameManager.Phase.Start;
 
         CloudBox.Instance.CloudActiveFalse(spawnHex.HexCoords);
-
     }
 }

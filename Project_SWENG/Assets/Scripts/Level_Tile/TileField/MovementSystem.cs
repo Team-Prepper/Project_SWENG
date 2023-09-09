@@ -38,7 +38,7 @@ public class MovementSystem : MonoBehaviour
 
     public void CalcualteRange(Unit selectedUnit)
     {
-        movementRange = GraphSearch.BFSGetRange(HexGrid.Instance, HexGrid.Instance.GetClosestHex(selectedUnit.CurPos), selectedUnit.movementPoints);
+        movementRange = GraphSearch.BFSGetRange(HexGrid.Instance, HexGrid.Instance.GetClosestHex(selectedUnit.CurPos), selectedUnit.dicePoints);
     }
 
 
@@ -62,7 +62,7 @@ public class MovementSystem : MonoBehaviour
             {
                 Hex pathHex = HexGrid.Instance.GetTileAt(hexPosition);
                 pathHex.HighlightPath();
-                moveNumPrefabs[i += pathHex.cost].transform.position = pathHex.transform.position;
+                moveNumPrefabs[Mathf.Clamp(i += pathHex.cost, 0, 10)].transform.position = pathHex.transform.position;
             }
         }
     }
@@ -72,7 +72,7 @@ public class MovementSystem : MonoBehaviour
         moveNumParent.SetActive(false);
         for (int i = 0; i < moveNumPrefabs.Length; i++)
         {
-            moveNumPrefabs[i].transform.position = Vector3.zero;
+            moveNumPrefabs[i].transform.localPosition = Vector3.zero;
         }
     }
 

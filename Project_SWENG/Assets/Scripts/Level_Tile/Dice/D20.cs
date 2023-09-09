@@ -82,8 +82,8 @@ public class D20 : MonoBehaviour
         lastPosition = rb.position;
         
         rb.AddForce(Vector3.up * throwStrength, ForceMode.Impulse);
-        rb.AddForce(Vector3.forward * (throwStrength + Random.Range(30, 80)), ForceMode.Impulse);
-        rb.AddForce(Vector3.right * Random.Range(30, 80), ForceMode.Impulse);
+        rb.AddForce(Vector3.forward * (throwStrength + Random.Range(-100, 100)), ForceMode.Impulse);
+        rb.AddForce(Vector3.right * Random.Range(-100, 100), ForceMode.Impulse);
         rb.AddTorque(transform.forward * Random.Range(torqueMin, torqueMax) + transform.up * Random.Range(torqueMin, torqueMax)
                                                                             + transform.right * Random.Range(torqueMin, torqueMax));
 
@@ -129,7 +129,7 @@ public class D20 : MonoBehaviour
         }
         else
         {
-            rb.AddForce((Vector3.zero - transform.position).normalized * 10f, ForceMode.Impulse);
+            rb.AddForce(Vector3.one, ForceMode.Impulse);
             walls.SetActive(false);
             StartCoroutine(CheckIdle());
         }

@@ -151,11 +151,11 @@ public class RollDice : MonoBehaviour
 
     IEnumerator Result(int value)
     {
-        int movementPoint = value * 2;
+        int dicePoints = value * 2;
         if (text != null)
-            text.text = movementPoint.ToString();
+            text.text = dicePoints.ToString();
         if (unit != null)
-            unit.movementPoints = movementPoint;
+            unit.dicePoints = dicePoints;
         ntg.convert(value);
         GM.NextPhase();         // Movement
         yield return null;

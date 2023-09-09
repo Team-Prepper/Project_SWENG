@@ -100,6 +100,10 @@ public class HexGrid : Singleton<HexGrid>
         int randHexIndex = Random.Range(0, emptyHexTiles.Count);
         Hex randHex = emptyHexTiles[randHexIndex];
         emptyHexTiles.Remove(randHex);
+        foreach(var hex in GetNeighboursFor(randHex.HexCoords))
+        {
+            emptyHexTiles.Remove(GetTileAt(hex));
+        }
 
         return randHex;
     }

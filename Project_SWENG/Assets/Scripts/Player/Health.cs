@@ -7,14 +7,19 @@ public class Health : MonoBehaviour
 {
     bool isDead;
 
-    public int curHealth;
+    int curHealth;
     public int maxHealth;
 
     public static event EventHandler<IntEventArgs> EventRecover;
     public static event EventHandler<IntEventArgs> EventDamaged;
     public static event EventHandler EventDead;
 
-    int Recover(int val)
+    private void Start()
+    {
+        curHealth = maxHealth;
+    }
+
+    public int Recover(int val)
     {
         if (isDead) return 0;
 
@@ -30,7 +35,7 @@ public class Health : MonoBehaviour
         return curHealth;
     }
 
-    int Damaged(int val)
+    public int Damaged(int val)
     {
         if (isDead) return 0;
 

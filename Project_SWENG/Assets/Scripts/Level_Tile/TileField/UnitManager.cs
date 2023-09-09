@@ -10,8 +10,7 @@ public class UnitManager : MonoSingleton<UnitManager>
 
     public bool PlayersTurn { get; private set; } = true;
 
-    [SerializeField]
-    private Unit selectedUnit;
+    public Unit selectedUnit;
     private Hex previouslySelectedHex;
 
     private void Awake()
@@ -25,6 +24,12 @@ public class UnitManager : MonoSingleton<UnitManager>
             return;
 
         Unit unitReference = unit.GetComponent<Unit>();
+
+        if (AttackManager.Instance.isAtkReady)
+        {
+            AttackManager.Instance.HideAtkRange();
+            return;
+        }
 
         if (CheckIfTheSameUnitSelected(unitReference))
             return;
@@ -51,7 +56,26 @@ public class UnitManager : MonoSingleton<UnitManager>
             return;
         }
 
-        if (HandleHexOutOfRange(selectedHex.HexCoords) || HandleSelectedHexIsUnitHex(selectedHex.HexCoords))
+        if(AttackManager.Instance.isAtkReady)
+        {
+            if (AttackManager.Instance.IsHexInAtkRange(selectedHex.HexCoords))
+            {
+                // do atk
+                Debug.Log("ATK");
+            }
+            else
+            {
+                AttackManager.Instance.HideAtkRange();
+            }
+            return;
+        }
+        else
+        {
+            if (HandleHexOutOfRange(selectedHex.HexCoords))
+                return;
+        }
+
+        if (HandleSelectedHexIsUnitHex(selectedHex.HexCoords))
             return;
 
         HandleTargetHexSelected(selectedHex);
@@ -122,7 +146,7 @@ public class UnitManager : MonoSingleton<UnitManager>
     {
         selectedUnit.MovementFinished -= ResetTurn;
         PlayersTurn = true;
-        selectedUnit.movementPoints = 0;
+        selectedUnit.dicePoints = 0;
         GameManager.Instance.NextPhase();
     }
 }

@@ -17075,6 +17075,7 @@ GameObject:
   - component: {fileID: 831800693388432926}
   - component: {fileID: 831800693388432921}
   - component: {fileID: 4189250705815023951}
+  - component: {fileID: 3493437217021042240}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -17138,7 +17139,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
-  movementPoints: 0
+  dicePoints: 0
 --- !u!195 &831800693388432927
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -17262,6 +17263,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   glowMaterial: {fileID: 2100000, guid: 8ecce6bbbb3ab60488514e2d479190e0, type: 2}
+--- !u!114 &3493437217021042240
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 828901899843211881}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22a3e8949fc20ff459d0df18ffee5531, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
 --- !u!1 &828904246111668701
 GameObject:
   m_ObjectHideFlags: 0
