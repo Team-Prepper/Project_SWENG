@@ -43,8 +43,7 @@ public class MovementSystem : MonoBehaviour
 
 
     public void ShowPath(Vector3Int selectedHexPosition)
-    {
-        
+    {  
         if (movementRange.GetRangePositions().Contains(selectedHexPosition))
         {
             // hide
@@ -56,11 +55,14 @@ public class MovementSystem : MonoBehaviour
             currentPath = movementRange.GetPathTo(selectedHexPosition);
             // show
             moveNumParent.SetActive(true);
+
+
             int i = 0;
             foreach (Vector3Int hexPosition in currentPath)
             {
-                HexGrid.Instance.GetTileAt(hexPosition).HighlightPath();
-                moveNumPrefabs[++i].transform.position = HexGrid.Instance.GetTileAt(hexPosition).transform.position;
+                Hex pathHex = HexGrid.Instance.GetTileAt(hexPosition);
+                pathHex.HighlightPath();
+                moveNumPrefabs[i += pathHex.cost].transform.position = pathHex.transform.position;
             }
         }
     }

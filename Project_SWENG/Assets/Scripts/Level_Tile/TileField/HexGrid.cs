@@ -15,8 +15,6 @@ public class HexGrid : Singleton<HexGrid>
     Vector3Int topOffset    = new Vector3Int(0, 1, 0);
     Vector3Int bottomOffset = new Vector3Int(0, -1, 0);
 
-    public event EventHandler EventSetHexTileDic;
-
     protected override void OnCreate()
     {
 

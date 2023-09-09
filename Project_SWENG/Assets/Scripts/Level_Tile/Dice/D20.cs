@@ -12,7 +12,7 @@ public class D20 : MonoBehaviour
     [SerializeField] float torqueMax = 200f;
     [SerializeField] private float throwStrength = 50;
     [SerializeField] private GameObject walls;
-    
+   
     float idleTime = 0.1f;
     private Vector3 lastPosition;
 
@@ -125,13 +125,11 @@ public class D20 : MonoBehaviour
             targetRotation = Quaternion.Euler(initialRotation.eulerAngles.x, inverse ? 180 : 0, initialRotation.eulerAngles.z);
 
             StartCoroutine(RotateSmoothly(rollValue));
-            
-            
-            
+
         }
         else
         {
-            //rb.AddForce((Vector3.zero - transform.position).normalized * 10f, ForceMode.Impulse);
+            rb.AddForce((Vector3.zero - transform.position).normalized * 10f, ForceMode.Impulse);
             walls.SetActive(false);
             StartCoroutine(CheckIdle());
         }
