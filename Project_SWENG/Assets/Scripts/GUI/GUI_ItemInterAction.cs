@@ -4,12 +4,12 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class GUIItemInterAction : GUIPopUp
+public class GUI_ItemInterAction : GUIPopUp
 {
     private Item _targetItem;
 
     [SerializeField] private TextMeshProUGUI _itemNameLabel;
-    [SerializeField] private Text _itemInforLabel;
+    [SerializeField] private TextMeshProUGUI _itemInforLabel;
 
     protected override void Open()
     {
@@ -21,13 +21,12 @@ public class GUIItemInterAction : GUIPopUp
         _targetItem = item;
 
         _itemNameLabel.text = item.itemName;
-
-        // id 기반으로 아이템에 대한 설명을 가져오자
         _itemInforLabel.text = item.id.ToString();
+
     }
 
     public void InterAction() {
-        Debug.Log("InterAction");
+        InventoryManager.Instance.GetItem(_targetItem);
     }
 
 }

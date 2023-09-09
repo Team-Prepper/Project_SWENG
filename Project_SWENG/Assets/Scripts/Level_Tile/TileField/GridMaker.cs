@@ -194,9 +194,7 @@ public class GridMaker : MonoBehaviour
         tile.layer = LayerMask.NameToLayer("HexTile");
 
         Hex hex = Instantiate(_hexPrefab, spawnPos, Quaternion.identity);
-        hex.tile = tile;
-        hex.transform.SetParent(transform);
-        hex.cost = data.cost;
+        hex.WhenCreate(tile, transform, data.cost);
 
         GameObject iHexGround = Instantiate(hexGround[0], spawnPos, Quaternion.identity);
         iHexGround.layer = LayerMask.NameToLayer("HexTileGround");
@@ -207,6 +205,8 @@ public class GridMaker : MonoBehaviour
             tile.transform.SetParent(selectFolder.transform);
         else
             tile.transform.SetParent(hex.transform);
+
+        HexGrid.Instance.AddTile(hex);
 
         return hex;
     }
