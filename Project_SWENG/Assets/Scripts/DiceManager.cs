@@ -25,14 +25,16 @@ public class DiceManager : MonoBehaviour
 
     private void OnEnable()
     {
-        Unit.EventMovementPoint += HandleDiceText;
+        Unit.EventDicePoint += HandleDiceText;
+        AttackManager.EventBaseAtk += HandleDiceText;
         if (text != null)
             text.text = "";
     }
 
     private void OnDisable()
     {
-        Unit.EventMovementPoint += HandleDiceText;
+        Unit.EventDicePoint -= HandleDiceText;
+        AttackManager.EventBaseAtk -= HandleDiceText;
         if (text != null)
             text.text = "";
     }

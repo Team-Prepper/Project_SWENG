@@ -53,13 +53,13 @@ public class GridMaker : MonoBehaviour
     [SerializeField] int costVillage = 1;
 
     public GameObject[] tileWater;
-    [SerializeField] int costWater = 3;
+    //[SerializeField] int costWater = 3;
 
     public GameObject[] tileOcean;
     [SerializeField] int costOcean = -1;
 
     public GameObject[] tileIsland;
-    [SerializeField] int costIsland = 1;
+    //[SerializeField] int costIsland = 1;
 
     #endregion
 

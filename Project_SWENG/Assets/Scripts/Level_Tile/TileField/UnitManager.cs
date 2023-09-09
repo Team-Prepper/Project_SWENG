@@ -51,7 +51,7 @@ public class UnitManager : MonoSingleton<UnitManager>
     public void HandleTerrainSelected(GameObject HexGo)
     {
         Hex selectedHex = HexGo.GetComponent<Hex>();
-        if (selectedUnit == null || PlayersTurn == false)
+        if (PlayersTurn == false)
         {
             return;
         }
@@ -60,8 +60,7 @@ public class UnitManager : MonoSingleton<UnitManager>
         {
             if (AttackManager.Instance.IsHexInAtkRange(selectedHex.HexCoords))
             {
-                // do atk
-                Debug.Log("ATK");
+                AttackManager.Instance.BaseAtkHandler();
             }
             else
             {
@@ -69,11 +68,12 @@ public class UnitManager : MonoSingleton<UnitManager>
             }
             return;
         }
-        else
-        {
-            if (HandleHexOutOfRange(selectedHex.HexCoords))
-                return;
-        }
+        
+        if (selectedUnit == null)
+            return;
+        
+        if (HandleHexOutOfRange(selectedHex.HexCoords))
+            return;
 
         if (HandleSelectedHexIsUnitHex(selectedHex.HexCoords))
             return;

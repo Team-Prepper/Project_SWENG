@@ -24,7 +24,7 @@ public class Unit : MonoBehaviour
     private Queue<Vector3> pathPositions = new Queue<Vector3>();
 
     public event Action<Unit> MovementFinished;
-    public static event EventHandler<IntEventArgs> EventMovementPoint;
+    public static event EventHandler<IntEventArgs> EventDicePoint;
 
     private void Awake()
     {
@@ -80,7 +80,7 @@ public class Unit : MonoBehaviour
             dicePoints -= Mathf.CeilToInt((endPosition - transform.position).magnitude);
         }
         
-        EventMovementPoint?.Invoke(this, new IntEventArgs(dicePoints));
+        EventDicePoint?.Invoke(this, new IntEventArgs(dicePoints));
         agent.ResetPath();
         agent.SetDestination(endPosition);
         while (!isArrive())
@@ -130,6 +130,6 @@ public class Unit : MonoBehaviour
     private void GetMovementPointFromDice(object sender, IntEventArgs e)
     {
         dicePoints = e.Value;
-        EventMovementPoint?.Invoke(this, new IntEventArgs(dicePoints));
+        EventDicePoint?.Invoke(this, new IntEventArgs(dicePoints));
     }
 }

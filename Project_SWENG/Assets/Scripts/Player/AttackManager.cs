@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,12 +11,17 @@ public class AttackManager : MonoSingleton<AttackManager>
     List<Vector3Int> atkRange = new List<Vector3Int>();
 
     public bool isAtkReady = false;
-    public void AttackHandler()
+    private Vector3Int atkHexPos;
+
+    Unit player;
+
+    public static event EventHandler<IntEventArgs> EventBaseAtk;
+
+    public void ReadyToAttack()
     {
         MovementSystem.Instance.HideRange();
 
-
-        Unit player = GameManager.Instance.player.GetComponent<Unit>();
+        player = GameManager.Instance.player.GetComponent<Unit>();
         if (player == null || player.dicePoints < atkPoint) 
             return;
 
@@ -31,8 +37,23 @@ public class AttackManager : MonoSingleton<AttackManager>
             atkRange.Add(neighbour);
             atkMarkers[i++].transform.position = atkHex.transform.position;
         }
-        UnitManager.Instance.selectedUnit = player;
         isAtkReady = true;
+    }
+
+    public void BaseAtkHandler()
+    {
+        if(!isAtkReady) return;
+        isAtkReady = false;
+
+        player.dicePoints -= atkPoint;
+
+        HideAtkRange();
+        Animator ani = GameManager.Instance.player.GetComponent<Animator>();
+
+        GameManager.Instance.player.gameObject.transform.LookAt(HexGrid.Instance.GetTileAt(atkHexPos).transform.position);
+
+        ani.SetTrigger("DoAttack");
+        EventBaseAtk?.Invoke(this, new IntEventArgs(player.dicePoints));
     }
 
     public void HideAtkRange()
@@ -47,6 +68,7 @@ public class AttackManager : MonoSingleton<AttackManager>
 
     public bool IsHexInAtkRange(Vector3Int hexPosition)
     {
+        atkHexPos = hexPosition;
         return atkRange.Contains(hexPosition); 
     }
 }
