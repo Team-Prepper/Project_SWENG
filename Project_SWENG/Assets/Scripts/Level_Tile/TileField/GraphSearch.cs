@@ -79,5 +79,5 @@ public struct BFSResult
     }
 
     public IEnumerable<Vector3Int> GetRangePositions()
-        => visitedNodesDict.Keys;
+        => visitedNodesDict?.Keys;
 }

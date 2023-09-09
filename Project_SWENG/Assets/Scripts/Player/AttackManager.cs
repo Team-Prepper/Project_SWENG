@@ -12,6 +12,9 @@ public class AttackManager : MonoSingleton<AttackManager>
     public bool isAtkReady = false;
     public void AttackHandler()
     {
+        MovementSystem.Instance.HideRange();
+
+
         Unit player = GameManager.Instance.player.GetComponent<Unit>();
         if (player == null || player.dicePoints < atkPoint) 
             return;

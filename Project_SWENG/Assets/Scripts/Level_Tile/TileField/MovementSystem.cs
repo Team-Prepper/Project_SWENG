@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class MovementSystem : MonoBehaviour
+public class MovementSystem : MonoSingleton<MovementSystem>
 {
     public GameObject[] moveNumPrefabs;
     public GameObject moveNumParent;
@@ -13,6 +13,8 @@ public class MovementSystem : MonoBehaviour
 
     public void HideRange()
     {
+        if (movementRange.GetRangePositions() == null) return;
+
         foreach (Vector3Int hexPosition in movementRange.GetRangePositions())
         {
             HexGrid.Instance.GetTileAt(hexPosition).DisableHighlight();
@@ -62,7 +64,7 @@ public class MovementSystem : MonoBehaviour
             {
                 Hex pathHex = HexGrid.Instance.GetTileAt(hexPosition);
                 pathHex.HighlightPath();
-                moveNumPrefabs[Mathf.Clamp(i += pathHex.cost, 0, 10)].transform.position = pathHex.transform.position;
+                moveNumPrefabs[Mathf.Clamp(i += pathHex.cost, 0, 9)].transform.position = pathHex.transform.position;
             }
         }
     }
