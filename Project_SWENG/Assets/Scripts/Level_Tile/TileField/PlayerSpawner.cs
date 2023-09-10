@@ -32,6 +32,7 @@ public class PlayerSpawner : MonoBehaviour
         Debug.Log("SpawnPos : " + spawnPos.position);
         player = Instantiate(playerPrefab, spawnPos.position, spawnPos.rotation);
         player.GetComponent<Unit>().CurPos = spawnPos.position;
+        spawnHex.Entity = player;
 
         EventPlayerSpawn?.Invoke(player);
 

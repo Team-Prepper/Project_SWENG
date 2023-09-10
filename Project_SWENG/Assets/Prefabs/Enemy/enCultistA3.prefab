@@ -672,9 +672,10 @@ GameObject:
   - component: {fileID: 462931504656417679}
   - component: {fileID: 183870526083500709}
   - component: {fileID: 266205731085073334}
+  - component: {fileID: -2804207283999239431}
   m_Layer: 0
   m_Name: enCultistA3
-  m_TagString: ChaosBoss
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -727,7 +728,7 @@ MonoBehaviour:
   enemyStatus: {fileID: 11400000, guid: b38f29cb5a5260c4e916225fa56ace70, type: 2}
   monsterName: 
   maxHp: 0
-  nowHp: 0
+  curHp: 0
   atk: 0
   def: 0
   speed: 0
@@ -759,6 +760,20 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &-2804207283999239431
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3000013078151166183}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 543f9e3fd40ac844ba57bfd061d5f67f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyStat: {fileID: 0}
+  ani: {fileID: 0}
 --- !u!1 &3265455073651403347
 GameObject:
   m_ObjectHideFlags: 0

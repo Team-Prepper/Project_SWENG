@@ -60,7 +60,7 @@ public class UnitManager : MonoSingleton<UnitManager>
         {
             if (AttackManager.Instance.IsHexInAtkRange(selectedHex.HexCoords))
             {
-                AttackManager.Instance.BaseAtkHandler();
+                AttackManager.Instance.BaseAtkHandler(selectedHex);
             }
             else
             {

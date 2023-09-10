@@ -15,7 +15,9 @@ public class AttackManager : MonoSingleton<AttackManager>
 
     Unit player;
 
-    public static event EventHandler<IntEventArgs> EventBaseAtk;
+    // TODO : get status about player 
+
+    public static event EventHandler<IntEventArgs> EventBaseAtk; // dicePoint
 
     public void ReadyToAttack()
     {
@@ -40,10 +42,10 @@ public class AttackManager : MonoSingleton<AttackManager>
         isAtkReady = true;
     }
 
-    public void BaseAtkHandler()
+    public void BaseAtkHandler(Hex selectedHex)
     {
         if(!isAtkReady) return;
-        isAtkReady = false;
+        int atkPower = 5;
 
         player.dicePoints -= atkPoint;
 
@@ -54,6 +56,14 @@ public class AttackManager : MonoSingleton<AttackManager>
 
         ani.SetTrigger("DoAttack");
         EventBaseAtk?.Invoke(this, new IntEventArgs(player.dicePoints));
+        Attack(selectedHex, atkPower);
+    }
+
+    public void Attack(Hex selectedHex, int atkPower)
+    {
+
+        selectedHex.DamageToEntity(atkPower);
+        isAtkReady = false;
     }
 
     public void HideAtkRange()

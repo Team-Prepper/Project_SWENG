@@ -8,18 +8,43 @@ using UnityEngine.UIElements;
 [SelectionBase]
 public class Hex : MonoBehaviour
 {
-    
     [SerializeField]
     private GlowHighlight highlight;
 
     public static readonly float xOffset = 4.325f, yOffset = 0.5f, zOffset = 5.0f;
 
     public int cost = 0;
+    private int originCost;
 
     [Space(20)]
-    [Header("EVENT")]
+    [Header("Item")]
     public bool isItem = false;
     public Item item = null;
+
+    [Space(20)]
+    [Header("Entity")]
+    private GameObject entity;
+    public GameObject Entity
+    {
+        get { return entity; }
+        set
+        {
+            if (entity != value)
+            {
+                entity = value;
+
+                if (value != null)
+                {
+                    cost = -1;
+                }
+                else
+                {
+                    cost = originCost;
+                }
+                
+            }
+        }
+    }
 
     public GameObject tile { set; get; }
 
@@ -39,7 +64,7 @@ public class Hex : MonoBehaviour
         this.tile = tile;
         transform.SetParent(parent);
         this.cost = cost;
-
+        this.originCost = cost;
         HexGrid.Instance.AddTile(this);
     }
 
@@ -64,6 +89,28 @@ public class Hex : MonoBehaviour
         if(cost == -1) 
             return true;
         return false;
+    }
+
+    public void DamageToEntity(int damage)
+    {
+        if(entity == null) return;
+
+        if (entity.CompareTag("Player"))
+        {
+            PlayerHealth entityHealth = entity.GetComponent<PlayerHealth>();
+            if (entityHealth != null)
+            {
+                entityHealth.Damaged(damage);
+            }
+        }
+        else
+        {
+            EnemyController enemy = entity.GetComponent<EnemyController>();
+            if (enemy != null)
+            {
+                enemy.DamagedHandler(damage);
+            }
+        }
     }
 
     private void Awake()

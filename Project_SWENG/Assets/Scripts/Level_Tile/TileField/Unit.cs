@@ -67,18 +67,17 @@ public class Unit : MonoBehaviour
     
     private IEnumerator MovementCoroutine(Vector3 endPosition)
     {
+        Vector3Int curHexPos = HexGrid.Instance.GetClosestHex(transform.position);
+        HexGrid.Instance.GetTileAt(curHexPos).Entity = null;
+
         Debug.Log("Move to " + endPosition);
-        Vector3Int hcPos = HexCoordinates.ConvertPositionToOffset(endPosition);
-        CloudBox.Instance?.CloudActiveFalse(hcPos);
-        Hex endPosHex;
-        if (HexGrid.Instance != null && HexGrid.Instance.hexTileDict.TryGetValue(hcPos, out endPosHex))
-        {
-            dicePoints -= endPosHex.cost;
-        }
-        else
-        {
-            dicePoints -= Mathf.CeilToInt((endPosition - transform.position).magnitude);
-        }
+
+        Vector3Int newHexPos = HexCoordinates.ConvertPositionToOffset(endPosition);
+        CloudBox.Instance?.CloudActiveFalse(newHexPos);
+        Hex endHex = HexGrid.Instance.GetTileAt(newHexPos);
+
+        dicePoints -= endHex.cost;
+        endHex.Entity = this.gameObject;
         
         EventDicePoint?.Invoke(this, new IntEventArgs(dicePoints));
         agent.ResetPath();

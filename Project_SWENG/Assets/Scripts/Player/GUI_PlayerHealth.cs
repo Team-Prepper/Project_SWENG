@@ -7,7 +7,7 @@ using System;
 
 public class GUI_PlayerHealth : MonoBehaviour
 {
-    Health health;
+    PlayerHealth health;
 
     [SerializeField] Image healthFront;
     [SerializeField] Image healthBack;
@@ -20,12 +20,12 @@ public class GUI_PlayerHealth : MonoBehaviour
 
     private void Awake()
     {
-        Health.EventDamaged += GUI_Damaged;
+        PlayerHealth.EventDamaged += GUI_Damaged;
     }
 
     public void SetPlayerHealth(GameObject player)
     {
-        health = player.GetComponent<Health>();
+        health = player.GetComponent<PlayerHealth>();
         SetHealth(health.maxHealth);
         afterimage.fillAmount = 1;
     }

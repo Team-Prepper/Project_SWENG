@@ -35,6 +35,8 @@ public class EnemySpawner : MonoBehaviour
         Transform spawnPos = spawnHex.transform;
         GameObject enemy = Instantiate(enemyPrefabList[Random.Range(0,enemyPrefabList.Count)], spawnPos.position, spawnPos.rotation);
         enemy.transform.SetParent(transform);
+
+        spawnHex.Entity = enemy;
         enemyDic.Add(enemy, spawnHex);
     }
 }
