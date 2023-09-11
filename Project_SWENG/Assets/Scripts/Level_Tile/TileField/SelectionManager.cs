@@ -27,6 +27,7 @@ public class SelectionManager : MonoBehaviour
         {
             if (UnitSelected(result))
             {
+                Debug.Log("Click Player");
                 OnUnitSelected?.Invoke(result);
             }
             else

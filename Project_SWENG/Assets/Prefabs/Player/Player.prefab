@@ -17075,6 +17075,7 @@ GameObject:
   - component: {fileID: 831800693388432921}
   - component: {fileID: 4189250705815023951}
   - component: {fileID: 2934245154341635780}
+  - component: {fileID: 8123138769544760882}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -17262,6 +17263,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 100
+--- !u!65 &8123138769544760882
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 828901899843211881}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2, y: 2, z: 2}
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &828904246111668701
 GameObject:
   m_ObjectHideFlags: 0

@@ -8,8 +8,6 @@ public class UnitManager : MonoSingleton<UnitManager>
     [SerializeField]
     private MovementSystem movementSystem;
 
-    public bool PlayersTurn { get; private set; } = true;
-
     public Unit selectedUnit;
     private Hex previouslySelectedHex;
 
@@ -20,9 +18,6 @@ public class UnitManager : MonoSingleton<UnitManager>
     // Unit Selected
     public void HandleUnitSelected(GameObject unit)
     {
-        if (PlayersTurn == false)
-            return;
-
         Unit unitReference = unit.GetComponent<Unit>();
 
         if (AttackManager.Instance.isAtkReady)
@@ -51,10 +46,6 @@ public class UnitManager : MonoSingleton<UnitManager>
     public void HandleTerrainSelected(GameObject HexGo)
     {
         Hex selectedHex = HexGo.GetComponent<Hex>();
-        if (PlayersTurn == false)
-        {
-            return;
-        }
 
         if(AttackManager.Instance.isAtkReady)
         {
@@ -115,7 +106,6 @@ public class UnitManager : MonoSingleton<UnitManager>
         {
             // Move Unit
             movementSystem.MoveUnit(selectedUnit);
-            //selectedUnit.MovementFinished += ResetTurn;
             ClearOldSelection();
         }
     }
@@ -140,13 +130,5 @@ public class UnitManager : MonoSingleton<UnitManager>
             return true;
         }
         return false;
-    }
-
-    private void ResetTurn(Unit selectedUnit)
-    {
-        selectedUnit.MovementFinished -= ResetTurn;
-        PlayersTurn = true;
-        selectedUnit.dicePoints = 0;
-        GameManager.Instance.NextPhase();
     }
 }
