@@ -32,37 +32,6 @@ public class GridMaker : MonoBehaviour
     [SerializeField] TileData _tileOcean = new TileData(null, 5);
     [SerializeField] TileData _tileIsland= new TileData(null, 5);
 
-    #region originMember
-    [Space(5)]
-    public GameObject[] tileNormal;
-    [SerializeField] int costNormal = 2;
-
-    public GameObject[] tileRock;
-    [SerializeField] int costRock = -1;
-
-    public GameObject[] tileHill;
-    [SerializeField] int costHill = 3;
-
-    public GameObject[] tileDungon;
-    [SerializeField] int costDungon = 4;
-
-    public GameObject[] tileCastle;
-    [SerializeField] int costCastle = 5;
-
-    public GameObject[] tileVillage;
-    [SerializeField] int costVillage = 1;
-
-    public GameObject[] tileWater;
-    //[SerializeField] int costWater = 3;
-
-    public GameObject[] tileOcean;
-    [SerializeField] int costOcean = -1;
-
-    public GameObject[] tileIsland;
-    //[SerializeField] int costIsland = 1;
-
-    #endregion
-
     [Space(10)]
     public GameObject[] hexGround; // 0 Groudn 1 River
     public Material[] materials;
@@ -108,36 +77,30 @@ public class GridMaker : MonoBehaviour
 
                 if (MathF.Abs(q) > gridSizeN - oceanSizeN || r <= r1 + oceanSizeN - 1 || r >= r2 - oceanSizeN + 1)
                 {
-                    OceanSpawn(tileOcean, xPos, zPos, costOcean);
+                    OceanSpawn(_tileOcean, xPos, zPos);
                     continue;
                 }
 
                 switch (Random.Range(0, 10))
                 {
                     case 0:
-                        HexTileSpawn(new TileData(tileDungon, costDungon), xPos, zPos, 10);
-                        //HexTileSpawn(tileDungon, tileNormal, xPos, zPos, 10, costDungon, costNormal);
+                        HexTileSpawn(_tileDungon, xPos, zPos, 10);
                         break;
                     case 1:
-                        HexTileSpawn(new TileData(tileHill, costHill), xPos, zPos, 10);
-                        //HexTileSpawn(tileHill, tileNormal, xPos, zPos, 10, costHill, costNormal);
+                        HexTileSpawn(_tileHill, xPos, zPos, 10);
                         break;
                     case 2:
-                        HexTileSpawn(new TileData(tileCastle, costCastle), xPos, zPos, 10);
-                        //HexTileSpawn(tileCastle, tileNormal, xPos, zPos, 10, costCastle, costNormal);
+                        HexTileSpawn(_tileCastle, xPos, zPos, 10);
                         break;
                     case 3:
-                        HexTileSpawn(new TileData(tileVillage, costVillage), xPos, zPos, 10);
-                        //HexTileSpawn(tileVillage, tileNormal, xPos, zPos, 10, costVillage, costNormal);
+                        HexTileSpawn(_tileVillage, xPos, zPos, 10);
                         break;
                     case 4:
                     case 5:
-                        OceanSpawn(new TileData(tileOcean, costOcean), xPos, zPos);
-                        //OceanSpawn(tileOcean, xPos, zPos, costWater);
+                        OceanSpawn(_tileOcean, xPos, zPos);
                         break;
                     default:
-                        HexTileSpawn(new TileData(tileRock, costRock), xPos, zPos, 10);
-                        //HexTileSpawn(tileRock, tileNormal, xPos, zPos, 5, costRock, costNormal);
+                        HexTileSpawn(_tileRock, xPos, zPos, 10);
                         break;
                 }
             }
@@ -145,7 +108,6 @@ public class GridMaker : MonoBehaviour
         EventBuildComplete?.Invoke(this, EventArgs.Empty);
         SetNavMesh();
     }
-    #region suggest
 
     Hex OceanSpawn(TileData data, float xPos, float zPos)
     {
@@ -166,7 +128,7 @@ public class GridMaker : MonoBehaviour
 
         // Empty Field
         if (Random.Range(0, percentage) != 0) {
-            Hex hexDefault = _SpawnHexTile(new TileData(tileNormal, costNormal),  spawnPos);
+            Hex hexDefault = _SpawnHexTile(_tileNormal,  spawnPos);
             hexDefault.tileType = Hex.Type.Field;
 
             HexGrid.Instance.emptyHexTiles.Add(hexDefault);
@@ -215,85 +177,6 @@ public class GridMaker : MonoBehaviour
 
         return hex;
     }
-#endregion
-
-    #region origin
-    Hex OceanSpawn(GameObject[] prefabs, float xPos, float zPos, int cost)
-    {
-        Vector3 spawnPos = new Vector3(xPos, -0.5f, zPos);
-        Hex hex = Instantiate(_hexPrefab, spawnPos, Quaternion.identity);
-
-        GameObject iHexGround = Instantiate(hexGround[1], spawnPos, Quaternion.identity);
-        iHexGround.layer = LayerMask.NameToLayer("HexTileGround");
-
-        GameObject tile = Instantiate(prefabs[Random.Range(0, prefabs.Length)], spawnPos, Quaternion.Euler(0f, 30f, 0f));
-        hex.cost = cost;
-        tile.layer = LayerMask.NameToLayer("HexTile");
-        hex.tileType = Hex.Type.Water;
-        hex.tile = tile;
-        hex.transform.SetParent(transform);
-        
-        iHexGround.transform.SetParent(hex.transform);
-
-
-        // just clean up hierarchy
-        Transform selectFolder = hex.transform.Find("Main");
-        if (selectFolder != null)
-            tile.transform.SetParent(selectFolder.transform);
-        else
-            tile.transform.SetParent(hex.transform);
-
-        tile.transform.localPosition -= new Vector3(0f,0.6f,0f);
-
-        return hex;
-    }
-
-    Hex HexTileSpawn(GameObject[] prefabs, GameObject[] prefabsDefault, float xPos, float zPos, int percentage, int costSelected, int costDefalut)
-    {
-        bool isObjTile = Random.Range(0, percentage) == 0;
-        //float setHigh = Random.Range(0, 2) * 0.5f;
-        Vector3 spawnPos = new Vector3(xPos, 0, zPos);
-
-        Hex hex = Instantiate(_hexPrefab, spawnPos, Quaternion.identity);
-        GameObject iHexGround = Instantiate(hexGround[0], spawnPos, Quaternion.identity);
-        iHexGround.layer = LayerMask.NameToLayer("HexTileGround"); 
-
-        GameObject tile = null;
-        float randomRotationY = Random.Range(0, 6) * 60;
-        if (isObjTile)
-        {
-            
-            tile = Instantiate(prefabs[Random.Range(0, prefabs.Length)], spawnPos, Quaternion.Euler(0f, randomRotationY, 0f));
-            hex.cost = costSelected;
-            hex.tileType = (costSelected == -1) ? Hex.Type.Obstacle : Hex.Type.Object;
-            
-        }
-        else
-        {
-            tile = Instantiate(prefabsDefault[Random.Range(0, prefabsDefault.Length)], spawnPos, Quaternion.Euler(0f, randomRotationY, 0f));
-            hex.cost = costDefalut;
-            hex.tileType = Hex.Type.Field;
-        }
-
-        tile.layer = LayerMask.NameToLayer("HexTile");
-        hex.tile = tile;
-        hex.transform.SetParent(transform);
-        iHexGround.transform.SetParent(hex.transform);
-
-        Transform selectFolder = hex.transform.Find("Main");
-        if (selectFolder != null)
-            tile.transform.SetParent(selectFolder.transform);
-        else
-            tile.transform.SetParent(hex.transform);
-
-        if (hex.tileType == Hex.Type.Object)
-        {
-            objTilesGo.Add(hex.gameObject);
-        }
-
-        return hex;
-    }
-    #endregion
 
     public void SetNavMesh()
     {
