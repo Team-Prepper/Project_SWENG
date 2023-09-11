@@ -8,10 +8,11 @@ public class EnemyHealthGUI : MonoBehaviour
 {
     [SerializeField] Image healthBar;
 
-    private void OnEable()
+    private void Start()
     {
         healthBar.fillAmount = 1;
     }
+
     public void UpdateGUI(float value)
     {
         healthBar.fillAmount = value;

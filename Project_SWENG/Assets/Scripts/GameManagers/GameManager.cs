@@ -16,8 +16,8 @@ public class GameManager : MonoSingleton<GameManager>
         Start,
         SetDice,
         DiceRolling,
-        Movement,
-        Interaction
+        ActionPhase,
+        EnemyPhase,
     }
     public Phase gamePhase;
 
@@ -31,6 +31,7 @@ public class GameManager : MonoSingleton<GameManager>
         if(gamePhase == Phase.Start)
         {
             NextPhase();
+            PlayerTurnStandBy();
         }
     }
 

@@ -20,7 +20,6 @@ public class DiceManager : MonoBehaviour
     {
         Instance = this;
         d20 = dice.GetComponent<D20>();
-        diceImage.SetActive(false);
     }
 
     private void OnEnable()
@@ -44,7 +43,6 @@ public class DiceManager : MonoBehaviour
         diceImage.SetActive(true);
         text.text = "";
         d20.Rolling();
-        diceBTN.interactable = false;
     }
     
     private void HandleDiceText(object sender, IntEventArgs e)
@@ -68,6 +66,12 @@ public class DiceManager : MonoBehaviour
 
     public void DiceStandBy()
     {
-        diceBTN.interactable = true;
+        StartCoroutine(ShowCam());
+    }
+
+    IEnumerator ShowCam()
+    {
+        yield return new WaitForSeconds(0.1f);
+        diceImage.SetActive(true);
     }
 }
