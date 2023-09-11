@@ -130,6 +130,7 @@ public class Hex : MonoBehaviour
 
     public void OnMouseToggle()
     {
+        if (tileType == Type.Water) return;
         highlight.OnMouseToggleGlow();
     }
 

@@ -26,6 +26,7 @@ public class InventoryManager : Singleton<InventoryManager>
                 if (armor == null)
                 {
                     EquipManager.Instance.EquipArmor(item.id);
+                    GUI_ItemEquiped.Instance.SetItemGUI(item);
                 }
                 break; 
             case Item.ItemType.Weapon:

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028326, g: 0.22571333, b: 0.30692202, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -483,7 +483,7 @@ GameObject:
   - component: {fileID: 135517222}
   - component: {fileID: 135517221}
   m_Layer: 5
-  m_Name: EquipSlot (1)
+  m_Name: SlotArmor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1770,7 +1770,7 @@ GameObject:
   - component: {fileID: 448509508}
   - component: {fileID: 448509507}
   m_Layer: 5
-  m_Name: EquipSlot (3)
+  m_Name: SoltHandR
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2075,7 +2075,7 @@ GameObject:
   - component: {fileID: 531584537}
   - component: {fileID: 531584536}
   m_Layer: 5
-  m_Name: Image
+  m_Name: Icon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2362,7 +2362,7 @@ GameObject:
   - component: {fileID: 600021412}
   - component: {fileID: 600021411}
   m_Layer: 5
-  m_Name: Image
+  m_Name: Icon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3779,7 +3779,7 @@ GameObject:
   - component: {fileID: 995935519}
   - component: {fileID: 995935518}
   m_Layer: 5
-  m_Name: EquipSlot
+  m_Name: SlotHelmet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4381,6 +4381,7 @@ GameObject:
   - component: {fileID: 1189665299}
   - component: {fileID: 1189665298}
   - component: {fileID: 1189665297}
+  - component: {fileID: 1189665300}
   m_Layer: 5
   m_Name: Equipment
   m_TagString: Untagged
@@ -4474,6 +4475,26 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1189665295}
   m_CullTransparentMesh: 1
+--- !u!114 &1189665300
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1189665295}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0c86fa06ef804bfa8e0cef7c2e2ac23, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slotHelmet: {fileID: 995935518}
+  iconHelmet: {fileID: 531584536}
+  slotArmor: {fileID: 135517221}
+  iconArmor: {fileID: 1339910697}
+  slotHandL: {fileID: 1886186268}
+  iconHandL: {fileID: 1303068689}
+  slotHandR: {fileID: 448509507}
+  iconHandR: {fileID: 600021411}
 --- !u!1 &1303068687
 GameObject:
   m_ObjectHideFlags: 0
@@ -4486,7 +4507,7 @@ GameObject:
   - component: {fileID: 1303068690}
   - component: {fileID: 1303068689}
   m_Layer: 5
-  m_Name: Image
+  m_Name: Icon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4562,7 +4583,7 @@ GameObject:
   - component: {fileID: 1339910698}
   - component: {fileID: 1339910697}
   m_Layer: 5
-  m_Name: Image
+  m_Name: Icon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6410,7 +6431,7 @@ GameObject:
   - component: {fileID: 1886186269}
   - component: {fileID: 1886186268}
   m_Layer: 5
-  m_Name: EquipSlot (2)
+  m_Name: SlotHandL
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -153,6 +153,7 @@ public class GridMaker : MonoBehaviour
 
         Hex hex = _SpawnHexTile(data, spawnPos);
 
+        hex.tileType = Hex.Type.Water;
         hex.tile.transform.localPosition -= new Vector3(0f, 0.6f, 0f);
 
         return hex;
@@ -228,6 +229,7 @@ public class GridMaker : MonoBehaviour
         GameObject tile = Instantiate(prefabs[Random.Range(0, prefabs.Length)], spawnPos, Quaternion.Euler(0f, 30f, 0f));
         hex.cost = cost;
         tile.layer = LayerMask.NameToLayer("HexTile");
+        hex.tileType = Hex.Type.Water;
         hex.tile = tile;
         hex.transform.SetParent(transform);
         
