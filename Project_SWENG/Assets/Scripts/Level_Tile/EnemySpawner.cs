@@ -39,4 +39,12 @@ public class EnemySpawner : MonoBehaviour
         spawnHex.Entity = enemy;
         enemyDic.Add(enemy, spawnHex);
     }
+
+    public void UpdateEnemyDic(GameObject enemy, Hex enemyPos)
+    {
+        if (enemyDic.ContainsKey(enemy))
+        {
+            enemyDic[enemy] = enemyPos;
+        }
+    }
 }

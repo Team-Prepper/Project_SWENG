@@ -52,6 +52,7 @@ public class GameManager : MonoSingleton<GameManager>
     // Turn End Button Trigger
     public void PlayerTurnEnd()
     {
+        gamePhase = Phase.EnemyPhase;
         //do something EndPhase
         PlayerTurnStandBy();
     }
