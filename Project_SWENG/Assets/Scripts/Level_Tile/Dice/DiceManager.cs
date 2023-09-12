@@ -14,12 +14,12 @@ public class DiceManager : MonoBehaviour
     [SerializeField] private GameObject diceImage;
     [SerializeField] TextMeshProUGUI text;
     [SerializeField] private Button diceBTN;
-    private D20 d20;
+    private Dice d20;
     
     private void Awake()
     {
         Instance = this;
-        d20 = dice.GetComponent<D20>();
+        d20 = dice.GetComponent<Dice>();
     }
 
     private void OnEnable()

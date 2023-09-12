@@ -40,12 +40,12 @@ public class Unit : MonoBehaviour
     
     private void OnEnable()
     {
-        D20.EventDiceStop += GetMovementPointFromDice;
+        Dice.EventDiceStop += GetMovementPointFromDice;
     }
 
     private void OnDisable()
     {
-        D20.EventDiceStop -= GetMovementPointFromDice;
+        Dice.EventDiceStop -= GetMovementPointFromDice;
     }
 
     public void Deselect()
