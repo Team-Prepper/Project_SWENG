@@ -84,13 +84,9 @@ public class HexGrid : Singleton<HexGrid>
         return HexCoordinates.ConvertPositionToOffset(worldposition);
     }
 
-    public Hex GetRandHex()
+    public Hex GetHexFromPosition(Vector3 worldposition)
     {
-        if(hexTileDict.Count == 0) return null;
-        Vector3Int[] keysArray = new Vector3Int[hexTileDict.Count];
-        hexTileDict.Keys.CopyTo(keysArray, 0);
-
-        return hexTileDict[keysArray[Random.Range(0,keysArray.Length)]];
+        return GetTileAt(GetClosestHex(worldposition));
     }
 
     public Hex GetRandHexAtEmpty()

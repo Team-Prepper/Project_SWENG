@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028334, g: 0.22571328, b: 0.3069217, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028326, g: 0.22571333, b: 0.30692202, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -7034,7 +7034,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 15, y: 1, z: 15}
+  m_Size: {x: 100, y: 1, z: 100}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!4 &808757969424626966
 Transform:
@@ -8010,14 +8010,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 808757970167795280}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c85af37348be1ae4f980a2d809fc3139, type: 3}
+  m_Script: {fileID: 11500000, guid: 87bf4fac6647a7e4982ba05ed663af9a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Dice: {fileID: 574244993180997045}
   torqueMin: 100
   torqueMax: 200
   throwStrength: 50
   walls: {fileID: 808757970960622721}
+  _diceSet:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!224 &808757970207987984
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8109,7 +8111,7 @@ MonoBehaviour:
   dice: {fileID: 808757970167795280}
   diceImage: {fileID: 705563835}
   text: {fileID: 808757970622744231}
-  diceBTN: {fileID: 0}
+  diceBTN: {fileID: 1174376473}
 --- !u!4 &808757970265166574
 Transform:
   m_ObjectHideFlags: 0

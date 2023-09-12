@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-public class EnemyHealthGUI : MonoBehaviour
+public class GUI_EnemyHealth : MonoBehaviour
 {
     [SerializeField] Image healthBar;
 

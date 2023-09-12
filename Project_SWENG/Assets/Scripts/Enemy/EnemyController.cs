@@ -7,7 +7,9 @@ public class EnemyController : MonoBehaviour
 {
     [SerializeField] EnemyStat enemyStat;
     [SerializeField] Animator ani;
-    [SerializeField] EnemyHealthGUI healthGUI;
+    [SerializeField] GUI_EnemyHealth healthGUI;
+
+    public GameObject target;
 
     private void OnEnable()
     {
@@ -18,7 +20,7 @@ public class EnemyController : MonoBehaviour
             ani = GetComponent<Animator>();
 
         if(healthGUI == null)
-            healthGUI = GetComponentInChildren<EnemyHealthGUI>();
+            healthGUI = GetComponentInChildren<GUI_EnemyHealth>();
     }
 
     public void DamagedHandler(int damage)
@@ -37,9 +39,17 @@ public class EnemyController : MonoBehaviour
             enemyStat.isDie = true;
             ani.SetTrigger("Die");
             healthGUI.UpdateGUI(0);
+            EnemyDeadHandler();
             return;
         }
         ani.SetTrigger("Hit");
         healthGUI.UpdateGUI(enemyStat.curHp/ enemyStat.maxHp);
+    }
+
+    private void EnemyDeadHandler()
+    {
+        Hex curHex = HexGrid.Instance.GetHexFromPosition(this.gameObject.transform.position);
+        curHex.Entity = null;
+        Destroy(this.gameObject, 1f);
     }
 }

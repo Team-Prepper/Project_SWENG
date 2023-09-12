@@ -24,6 +24,7 @@ public class Hex : MonoBehaviour
     [Space(20)]
     [Header("Entity")]
     private GameObject entity;
+
     public GameObject Entity
     {
         get { return entity; }

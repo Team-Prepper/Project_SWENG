@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class HexCoordinates : MonoBehaviour
 {
-    public static float xOffset = 4.325f, yOffset = 0.5f, zOffset = 5.0f;
+    public static float xOffset = 4.325f, zOffset = 5.0f; //  yOffset = 0.5f,
 
     internal Vector3Int GetHexCoords()
         => offsetCoordinates;
@@ -20,7 +20,7 @@ public class HexCoordinates : MonoBehaviour
     public static Vector3Int ConvertPositionToOffset(Vector3 position)
     {
         int x = Mathf.RoundToInt(position.x / xOffset);
-        int y = Mathf.RoundToInt(position.y / yOffset);
+        int y = 0;
         int z = Mathf.CeilToInt(position.z / zOffset);
         return new Vector3Int(x, y, z);
     }

@@ -58,7 +58,7 @@ public class Dice : MonoBehaviour
         _diceInfor.Add(new Vector3Int(-5, -4, 8), new DiceInfor(3, false));
         _diceInfor.Add(new Vector3Int(-2, 6, -8), new DiceInfor(4, true));
         _diceInfor.Add(new Vector3Int(5, -4, -8), new DiceInfor(5, true));
-        _diceInfor.Add(new Vector3Int(-8, 6, 2), new DiceInfor(6, true));
+        _diceInfor.Add(new Vector3Int(-8, 6, 2), new DiceInfor(6, false));
         _diceInfor.Add(new Vector3Int(3, -9, 2), new DiceInfor(7, false));
         _diceInfor.Add(new Vector3Int(2, 6, 8), new DiceInfor(8, false));
         _diceInfor.Add(new Vector3Int(-10, 0, -2), new DiceInfor(9, false));
