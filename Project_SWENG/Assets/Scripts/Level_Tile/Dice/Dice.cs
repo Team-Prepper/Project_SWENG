@@ -18,6 +18,7 @@ class DiceInfor {
 
 public class Dice : MonoBehaviour
 {
+    Vector3 originPos = new Vector3(0,3,0);
     [Space(20)]
     [SerializeField] float torqueMin = 100f;
     [SerializeField] float torqueMax = 200f;
@@ -63,7 +64,7 @@ public class Dice : MonoBehaviour
         _diceInfor.Add(new Vector3Int(2, 6, 8), new DiceInfor(8, false));
         _diceInfor.Add(new Vector3Int(-10, 0, -2), new DiceInfor(9, false));
         _diceInfor.Add(new Vector3Int(6, 0, 8), new DiceInfor(10, false));
-        _diceInfor.Add(new Vector3Int(-6, 0, -8), new DiceInfor(11, false));
+        _diceInfor.Add(new Vector3Int(-6, 0, -8), new DiceInfor(11, true));
         _diceInfor.Add(new Vector3Int(10, 0, 2), new DiceInfor(12, false));
         _diceInfor.Add(new Vector3Int(-2, -5, -8), new DiceInfor(13, true));
         _diceInfor.Add(new Vector3Int(-3, 9, -2), new DiceInfor(14, false));
@@ -86,6 +87,7 @@ public class Dice : MonoBehaviour
     public void Rolling()
     {
         walls.SetActive(true);
+        this.gameObject.transform.localPosition = originPos;
         StartCoroutine(RollingDice());
     }
     IEnumerator RollingDice()
@@ -95,8 +97,7 @@ public class Dice : MonoBehaviour
         lastPosition = rb.position;
         
         rb.AddForce(Vector3.up * throwStrength, ForceMode.Impulse);
-        rb.AddForce(Vector3.forward * (throwStrength + Random.Range(-100, 100)), ForceMode.Impulse);
-        rb.AddForce(Vector3.right * Random.Range(-100, 100), ForceMode.Impulse);
+        rb.AddForce(Random.insideUnitSphere * Random.Range(50, 100), ForceMode.Impulse);
         rb.AddTorque(Random.insideUnitSphere * torqueMax + torqueMin * Vector3.one);
 
 

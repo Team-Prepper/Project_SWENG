@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7263900520540431955}
   - component: {fileID: 8739516103693960357}
   - component: {fileID: -6415245916537751610}
+  - component: {fileID: -6580618294095406116}
   m_Layer: 0
   m_Name: enCragHulk
   m_TagString: Enemy
@@ -116,6 +117,21 @@ MonoBehaviour:
   enemyStat: {fileID: 0}
   ani: {fileID: 0}
   healthGUI: {fileID: 0}
+  curHex: {fileID: 0}
+--- !u!114 &-6580618294095406116
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 561213026084782}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a37a6f251b8e8439d9be072ed3f38dfd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyController: {fileID: 0}
+  attackPower: 5
 --- !u!1 &143273982570609827
 GameObject:
   m_ObjectHideFlags: 0

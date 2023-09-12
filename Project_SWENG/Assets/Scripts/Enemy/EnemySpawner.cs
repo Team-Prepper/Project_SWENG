@@ -5,14 +5,15 @@ using UnityEditor.ShaderKeywordFilter;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class EnemySpawner : MonoBehaviour
+public class EnemySpawner : MonoSingleton<EnemySpawner>
 {
     public List<GameObject> enemyPrefabList;
-          
-    public Dictionary<GameObject, Hex> enemyDic = new Dictionary<GameObject, Hex>();
+    public List<GameObject> enemyList;
+    //public Dictionary<GameObject, Hex> enemyDic = new Dictionary<GameObject, Hex>();
 
-    private int enemyCnt = 0;
     [SerializeField] private int diff = 10;
+    private int enemyCnt = 0;
+    
 
     private void Awake()
     {
@@ -28,6 +29,7 @@ public class EnemySpawner : MonoBehaviour
             Hex spawnHex = HexGrid.Instance.GetRandHexAtEmpty();
             SpawnEnemy(spawnHex);
         }
+        GameManager.Instance.enemys = enemyList;
     }
 
     private void SpawnEnemy(Hex spawnHex)
@@ -37,14 +39,8 @@ public class EnemySpawner : MonoBehaviour
         enemy.transform.SetParent(transform);
 
         spawnHex.Entity = enemy;
-        enemyDic.Add(enemy, spawnHex);
-    }
-
-    public void UpdateEnemyDic(GameObject enemy, Hex enemyPos)
-    {
-        if (enemyDic.ContainsKey(enemy))
-        {
-            enemyDic[enemy] = enemyPos;
-        }
+        EnemyController enemyController = enemy.GetComponent<EnemyController>();
+        enemyList.Add(enemy);
+        enemyController.curHex = spawnHex;
     }
 }

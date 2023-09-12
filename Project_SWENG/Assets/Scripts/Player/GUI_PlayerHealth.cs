@@ -43,8 +43,8 @@ public class GUI_PlayerHealth : MonoBehaviour
 
     void SetHealth(int newHealth)
     {
-        healthFront.fillAmount = (float)(newHealth / health.maxHealth);
-        healthBack.fillAmount  = (float)(newHealth / health.maxHealth);
+        healthFront.fillAmount = ((float)newHealth / health.maxHealth);
+        healthBack.fillAmount  = ((float)newHealth / health.maxHealth);
         hpText.text = newHealth.ToString() + " / " + health.maxHealth.ToString();
     }
 }

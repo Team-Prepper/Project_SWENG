@@ -515,6 +515,7 @@ GameObject:
   - component: {fileID: 8521782341187759036}
   - component: {fileID: 6553928170046245639}
   - component: {fileID: 1701117374937670703}
+  - component: {fileID: 4927461438919463643}
   m_Layer: 0
   m_Name: enHobgoblinA 1
   m_TagString: Enemy
@@ -618,6 +619,21 @@ MonoBehaviour:
   enemyStat: {fileID: 0}
   ani: {fileID: 0}
   healthGUI: {fileID: 0}
+  curHex: {fileID: 0}
+--- !u!114 &4927461438919463643
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2549418641515672979}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a37a6f251b8e8439d9be072ed3f38dfd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyController: {fileID: 0}
+  attackPower: 5
 --- !u!1 &2574853504587313132
 GameObject:
   m_ObjectHideFlags: 0

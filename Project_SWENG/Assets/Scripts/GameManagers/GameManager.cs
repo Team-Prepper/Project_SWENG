@@ -9,6 +9,9 @@ public class GameManager : MonoSingleton<GameManager>
     [Header("Singleton")]
 
     public GameObject player;
+    public List<GameObject> enemys;
+    public GameObject day;
+    public GameObject night;
 
     public enum Phase
     {
@@ -45,6 +48,7 @@ public class GameManager : MonoSingleton<GameManager>
     public void PlayerTurnStandBy()
     {
         gamePhase = Phase.SetDice;
+        changeDayNight();
         DiceManager.Instance.DiceStandBy();
         NextPhase();
     }
@@ -53,7 +57,35 @@ public class GameManager : MonoSingleton<GameManager>
     public void PlayerTurnEnd()
     {
         gamePhase = Phase.EnemyPhase;
-        //do something EndPhase
+        EnemyTurn();
+
         PlayerTurnStandBy();
+    }
+
+    public void EnemyTurn()
+    {
+        changeDayNight();
+        foreach (GameObject enemy in enemys)
+        {
+            EnemyAttack enemyAttack = enemy.GetComponent<EnemyAttack>();
+            if (enemyAttack != null)
+            {
+                enemyAttack.EnemyAttackHandler();
+            }
+        }
+    }
+
+    void changeDayNight()
+    {
+        if(gamePhase != Phase.EnemyPhase)
+        {
+            day.SetActive(true);
+            night.SetActive(false);
+        }
+        else
+        {
+            day.SetActive(false );
+            night.SetActive(true);
+        }
     }
 }

@@ -7,7 +7,7 @@ public class PlayerHealth : MonoBehaviour
 {
     bool isDead;
 
-    int curHealth;
+    [SerializeField] int curHealth;
     public int maxHealth;
 
     public static event EventHandler<IntEventArgs> EventRecover;

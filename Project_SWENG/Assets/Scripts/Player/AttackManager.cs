@@ -6,6 +6,7 @@ using UnityEngine;
 public class AttackManager : MonoSingleton<AttackManager>
 {
     [SerializeField] int atkPoint = 3;
+    [SerializeField] int baseAtkPower = 10;
     [SerializeField] GameObject[] atkMarkers;
 
     List<Vector3Int> atkRange = new List<Vector3Int>();
@@ -45,7 +46,6 @@ public class AttackManager : MonoSingleton<AttackManager>
     public void BaseAtkHandler(Hex selectedHex)
     {
         if(!isAtkReady) return;
-        int atkPower = 5;
 
         player.dicePoints -= atkPoint;
 
@@ -56,7 +56,7 @@ public class AttackManager : MonoSingleton<AttackManager>
 
         ani.SetTrigger("DoAttack");
         EventBaseAtk?.Invoke(this, new IntEventArgs(player.dicePoints));
-        Attack(selectedHex, atkPower);
+        Attack(selectedHex, baseAtkPower);
     }
 
     public void Attack(Hex selectedHex, int atkPower)

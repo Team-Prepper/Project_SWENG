@@ -327,6 +327,7 @@ GameObject:
   - component: {fileID: 230870534326503686}
   - component: {fileID: 6485366006909980630}
   - component: {fileID: -7786517133656824823}
+  - component: {fileID: -4461794700453695561}
   m_Layer: 0
   m_Name: enHagB
   m_TagString: Enemy
@@ -430,6 +431,21 @@ MonoBehaviour:
   enemyStat: {fileID: 0}
   ani: {fileID: 0}
   healthGUI: {fileID: 0}
+  curHex: {fileID: 0}
+--- !u!114 &-4461794700453695561
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1928702006753952328}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a37a6f251b8e8439d9be072ed3f38dfd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyController: {fileID: 0}
+  attackPower: 5
 --- !u!1 &2051443942853779361
 GameObject:
   m_ObjectHideFlags: 0

@@ -528,6 +528,7 @@ GameObject:
   - component: {fileID: 5234000762076497610}
   - component: {fileID: 8466090001862238895}
   - component: {fileID: -7681544876962112987}
+  - component: {fileID: 4482755274537034461}
   m_Layer: 0
   m_Name: enBat01
   m_TagString: Enemy
@@ -629,6 +630,21 @@ MonoBehaviour:
   enemyStat: {fileID: 0}
   ani: {fileID: 0}
   healthGUI: {fileID: 0}
+  curHex: {fileID: 0}
+--- !u!114 &4482755274537034461
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1604126045003252978}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a37a6f251b8e8439d9be072ed3f38dfd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyController: {fileID: 0}
+  attackPower: 5
 --- !u!1 &1719907867068069482
 GameObject:
   m_ObjectHideFlags: 0

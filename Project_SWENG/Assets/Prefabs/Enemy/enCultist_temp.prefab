@@ -1616,6 +1616,7 @@ GameObject:
   - component: {fileID: 6211357435790801169}
   - component: {fileID: 2733763468089672400}
   - component: {fileID: 7756921132049324024}
+  - component: {fileID: 3326869076820961227}
   m_Layer: 0
   m_Name: enCultist_temp
   m_TagString: Enemy
@@ -1719,6 +1720,21 @@ MonoBehaviour:
   enemyStat: {fileID: 0}
   ani: {fileID: 0}
   healthGUI: {fileID: 0}
+  curHex: {fileID: 0}
+--- !u!114 &3326869076820961227
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6918695849260143600}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a37a6f251b8e8439d9be072ed3f38dfd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyController: {fileID: 0}
+  attackPower: 5
 --- !u!1 &6947748153499990828
 GameObject:
   m_ObjectHideFlags: 0

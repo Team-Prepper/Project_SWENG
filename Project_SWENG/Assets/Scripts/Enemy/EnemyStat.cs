@@ -7,10 +7,10 @@ public class EnemyStat : MonoBehaviour
     [Header("Enemy stat")]
     [SerializeField] EnemyStatus enemyStatus;
     public string monsterName;
-    public float maxHp;
-    public float curHp;
-    public float atk;
-    public float def;
+    public int maxHp;
+    public int curHp;
+    public int atk;
+    public int def;
 
     public int speed;
     public int Lv;
@@ -30,7 +30,7 @@ public class EnemyStat : MonoBehaviour
     {
         monsterName = enemyStatus.monsterName;
         maxHp = enemyStatus.maxHp;
-        curHp = enemyStatus.nowHp;
+        curHp = enemyStatus.maxHp;
         atk = enemyStatus.atk;
         def = enemyStatus.def;
         speed = enemyStatus.speed;

@@ -5399,6 +5399,7 @@ GameObject:
   - component: {fileID: 2913645712870139460}
   - component: {fileID: 2728194593669522706}
   - component: {fileID: -2713323147446757429}
+  - component: {fileID: -1861261591504056966}
   m_Layer: 0
   m_Name: enCubeA
   m_TagString: Enemy
@@ -5500,6 +5501,21 @@ MonoBehaviour:
   enemyStat: {fileID: 0}
   ani: {fileID: 0}
   healthGUI: {fileID: 0}
+  curHex: {fileID: 0}
+--- !u!114 &-1861261591504056966
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5758151492415811492}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a37a6f251b8e8439d9be072ed3f38dfd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyController: {fileID: 0}
+  attackPower: 5
 --- !u!1 &6190559114886175668
 GameObject:
   m_ObjectHideFlags: 0

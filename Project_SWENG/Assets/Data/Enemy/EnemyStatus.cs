@@ -6,12 +6,11 @@ using UnityEngine;
 
 public class EnemyStatus : ScriptableObject
 {
-   
     public string monsterName = "Normal";
-    public float atk = 10f;
-    public float def = 10f;
-    public float maxHp = 60f;
-    public float nowHp = 60f;
+    public int atk = 10;
+    public int def = 10;
+    public int maxHp = 60;
+    public int curHp = 60;
     public float percent = 70;
    
     //¼Óµµ 

@@ -397,6 +397,7 @@ GameObject:
   - component: {fileID: 1891505159218561241}
   - component: {fileID: 5074710289121484188}
   - component: {fileID: -4377305439944631723}
+  - component: {fileID: 6335513699418150582}
   m_Layer: 0
   m_Name: enForestHag
   m_TagString: Enemy
@@ -500,6 +501,21 @@ MonoBehaviour:
   enemyStat: {fileID: 0}
   ani: {fileID: 0}
   healthGUI: {fileID: 0}
+  curHex: {fileID: 0}
+--- !u!114 &6335513699418150582
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1849538497004083235}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a37a6f251b8e8439d9be072ed3f38dfd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyController: {fileID: 0}
+  attackPower: 5
 --- !u!1 &1983687976884844916
 GameObject:
   m_ObjectHideFlags: 0

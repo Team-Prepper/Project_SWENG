@@ -1717,6 +1717,7 @@ GameObject:
   - component: {fileID: 8870184302230737418}
   - component: {fileID: 7412058713382700384}
   - component: {fileID: -4024308646578086109}
+  - component: {fileID: 4174041196468468339}
   m_Layer: 0
   m_Name: enSpiderB
   m_TagString: Enemy
@@ -1818,6 +1819,21 @@ MonoBehaviour:
   enemyStat: {fileID: 0}
   ani: {fileID: 0}
   healthGUI: {fileID: 0}
+  curHex: {fileID: 0}
+--- !u!114 &4174041196468468339
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5425129256778124266}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a37a6f251b8e8439d9be072ed3f38dfd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyController: {fileID: 0}
+  attackPower: 5
 --- !u!1 &5666031228058352475
 GameObject:
   m_ObjectHideFlags: 0

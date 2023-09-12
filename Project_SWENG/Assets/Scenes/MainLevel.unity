@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028326, g: 0.22571333, b: 0.30692202, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -859,6 +859,7 @@ MonoBehaviour:
   - {fileID: 2549418641515672979, guid: 2f49cba507343f3498f0abf793a002a7, type: 3}
   - {fileID: 9136432872720792948, guid: 2ac668bc686d54d4896377547bf18726, type: 3}
   - {fileID: 8726868839618427266, guid: 818b88692b4a99045951306de55912e4, type: 3}
+  enemyList: []
   diff: 10
 --- !u!1 &228100141
 GameObject:
@@ -6242,6 +6243,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   atkPoint: 3
+  baseAtkPower: 10
   atkMarkers:
   - {fileID: 912519056}
   - {fileID: 1730002260}
@@ -7255,15 +7257,16 @@ MonoBehaviour:
       m_Calls: []
   m_text: 10 / 100
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 125cb55b44b24c4393181402bc6200e6, type: 2}
-  m_sharedMaterial: {fileID: 2100000, guid: 125cb55b44b24c4393181402bc6200e6, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8d34560b6d49c4469b2174ccd34ae34b, type: 2}
+  m_sharedMaterial: {fileID: 8690591861142563998, guid: 8d34560b6d49c4469b2174ccd34ae34b,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4280953386
-  m_fontColor: {r: 0.16470589, g: 0.16470589, b: 0.16470589, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -7977,7 +7980,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 808757970167795280}
   serializedVersion: 2
-  m_Mass: 3
+  m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0
   m_UseGravity: 1
@@ -7992,9 +7995,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 808757970167795280}
-  m_LocalRotation: {x: -0.07344309, y: 0.0028532431, z: 0.1562884, w: 0.98497313}
-  m_LocalPosition: {x: -0.55604833, y: 2.0365453, z: -0.26456338}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 3, z: 0}
+  m_LocalScale: {x: 1.9, y: 1.9, z: 1.9}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 915339495835553551}
@@ -8119,9 +8122,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 808757970265166575}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 311.18115, y: -113.31897, z: 0}
-  m_LocalScale: {x: 2.841181, y: 2.841181, z: 2.841181}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1000, y: 0, z: 0}
+  m_LocalScale: {x: 3, y: 3, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 808757970167795283}
@@ -8502,7 +8505,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2, y: 2, z: 2}
+  m_Size: {x: 5, y: 1, z: 5}
   m_Center: {x: 0, y: 5, z: 0}
 --- !u!23 &808757970960622733
 MeshRenderer:
@@ -8953,6 +8956,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
+  enemys: []
+  day: {fileID: 1085845868}
+  night: {fileID: 653825964}
   gamePhase: 0
 --- !u!23 &2087661107269743712
 MeshRenderer:

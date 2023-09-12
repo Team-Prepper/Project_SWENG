@@ -710,6 +710,7 @@ GameObject:
   - component: {fileID: 2450530541402074309}
   - component: {fileID: 2249882306818113445}
   - component: {fileID: 2868529706404146149}
+  - component: {fileID: 2575584186239218085}
   m_Layer: 0
   m_Name: enFairy
   m_TagString: Enemy
@@ -811,6 +812,21 @@ MonoBehaviour:
   enemyStat: {fileID: 0}
   ani: {fileID: 0}
   healthGUI: {fileID: 0}
+  curHex: {fileID: 0}
+--- !u!114 &2575584186239218085
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1687034426028266533}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a37a6f251b8e8439d9be072ed3f38dfd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyController: {fileID: 0}
+  attackPower: 5
 --- !u!1 &2050031097269433564
 GameObject:
   m_ObjectHideFlags: 0

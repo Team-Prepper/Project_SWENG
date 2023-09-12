@@ -5,13 +5,13 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
-    [SerializeField] EnemyStat enemyStat;
-    [SerializeField] Animator ani;
+    public EnemyStat enemyStat;
+    public Animator ani;
     [SerializeField] GUI_EnemyHealth healthGUI;
 
-    public GameObject target;
+    public Hex curHex;
 
-    private void OnEnable()
+    private void Awake()
     {
         if(enemyStat == null)
             enemyStat = GetComponent<EnemyStat>();
@@ -43,13 +43,14 @@ public class EnemyController : MonoBehaviour
             return;
         }
         ani.SetTrigger("Hit");
-        healthGUI.UpdateGUI(enemyStat.curHp/ enemyStat.maxHp);
+        healthGUI.UpdateGUI((float)enemyStat.curHp / enemyStat.maxHp);
     }
 
     private void EnemyDeadHandler()
     {
         Hex curHex = HexGrid.Instance.GetHexFromPosition(this.gameObject.transform.position);
         curHex.Entity = null;
+        EnemySpawner.Instance.enemyList.Remove(this.gameObject);
         Destroy(this.gameObject, 1f);
     }
 }
