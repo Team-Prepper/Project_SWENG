@@ -58,8 +58,7 @@ public class GameManager : MonoSingleton<GameManager>
     {
         gamePhase = Phase.EnemyPhase;
         EnemyTurn();
-
-        PlayerTurnStandBy();
+        Invoke("PlayerTurnStandBy",3f);
     }
 
     public void EnemyTurn()

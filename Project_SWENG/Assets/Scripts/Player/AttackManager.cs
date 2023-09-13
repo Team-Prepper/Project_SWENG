@@ -54,7 +54,7 @@ public class AttackManager : MonoSingleton<AttackManager>
 
         GameManager.Instance.player.gameObject.transform.LookAt(HexGrid.Instance.GetTileAt(atkHexPos).transform.position);
 
-        ani.SetTrigger("DoAttack");
+        ani.SetTrigger("Attack");
         EventBaseAtk?.Invoke(this, new IntEventArgs(player.dicePoints));
         Attack(selectedHex, baseAtkPower);
     }

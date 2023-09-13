@@ -14,8 +14,7 @@ public class GUI_PlayerHealth : MonoBehaviour
     [SerializeField] Image afterimage;
     [SerializeField] TextMeshProUGUI hpText;
     
-    public float lerpSpeed = 0.5f;
-    public float updateInterval = 0.1f;
+    public float lerpSpeed = 100f;
 
     float curValue;
 
@@ -47,7 +46,7 @@ public class GUI_PlayerHealth : MonoBehaviour
             curValue = Mathf.Lerp(startValue, endValue, elapsedTime);
             afterimage.fillAmount = (float)(curValue / health.maxHealth);
             elapsedTime += Time.deltaTime * lerpSpeed;
-            yield return new WaitForSeconds(updateInterval);
+            yield return null;
         }
     }
 

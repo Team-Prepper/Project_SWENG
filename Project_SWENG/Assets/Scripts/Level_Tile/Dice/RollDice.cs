@@ -76,7 +76,6 @@ public class RollDice : MonoBehaviour
         lastPosition = rb.position;
         isCheckingIdle = true;
 
-        unit.JumpAction();
         rb.AddForce(Vector3.up * throwStrength, ForceMode.Impulse);
         rb.AddForce((Vector3.zero - transform.position).normalized, ForceMode.Impulse);
         rb.AddTorque(transform.forward * Random.Range(torqueMin, torqueMax) + transform.up * Random.Range(torqueMin, torqueMax)

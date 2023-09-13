@@ -10,7 +10,6 @@ public class Unit : MonoBehaviour
     [Header("Ref")]
     [SerializeField]
     private Animator animator;
-
     
     NavMeshAgent agent;
 
@@ -40,12 +39,13 @@ public class Unit : MonoBehaviour
     
     private void OnEnable()
     {
-        Dice.EventDiceStop += GetMovementPointFromDice;
+        Dice.EventDiceStop += GetDicePointFromDice;
+        PlayerHealth.EventDamaged += DamagedAction;
     }
 
     private void OnDisable()
     {
-        Dice.EventDiceStop -= GetMovementPointFromDice;
+        Dice.EventDiceStop -= GetDicePointFromDice;
     }
 
     public void Deselect()
@@ -82,6 +82,7 @@ public class Unit : MonoBehaviour
         EventDicePoint?.Invoke(this, new IntEventArgs(dicePoints));
         agent.ResetPath();
         agent.SetDestination(endPosition);
+
         while (!isArrive())
         {
             if(animator)
@@ -89,6 +90,7 @@ public class Unit : MonoBehaviour
 
             yield return null;
         }
+
         transform.position = endPosition;
         curPos = endPosition;
 
@@ -121,14 +123,17 @@ public class Unit : MonoBehaviour
         return false;
     }
 
-    public void JumpAction()
-    {
-        animator.SetTrigger("Jump");
-    }
-    
-    private void GetMovementPointFromDice(object sender, IntEventArgs e)
+    private void GetDicePointFromDice(object sender, IntEventArgs e)
     {
         dicePoints = e.Value;
         EventDicePoint?.Invoke(this, new IntEventArgs(dicePoints));
+    }
+
+    private void DamagedAction(object sender, IntEventArgs e)
+    {
+        if(e.Value > 0)
+            animator.SetTrigger("Hit");
+        else
+            animator.SetTrigger("Die");
     }
 }

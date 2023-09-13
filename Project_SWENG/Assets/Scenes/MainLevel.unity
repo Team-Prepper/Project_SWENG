@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028326, g: 0.22571333, b: 0.30692202, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -849,18 +849,14 @@ MonoBehaviour:
   - {fileID: 6719478820052443104, guid: 0cd393cbbe3f053409c1d51c7ef52b11, type: 3}
   - {fileID: 561213026084782, guid: bc389c6a6a94d88408eaf545e07f43fe, type: 3}
   - {fileID: 5758151492415811492, guid: 4c0e2a02517d7454b8a710fe4f827449, type: 3}
-  - {fileID: 6918695849260143600, guid: fd2e45d555b7a264991c164c693db9b2, type: 3}
-  - {fileID: 3000013078151166183, guid: 2aceb31f66369c047a3bb08eb7a1a076, type: 3}
   - {fileID: 4183390767300949228, guid: ce67c78447778a641b68dc98da13518a, type: 3}
   - {fileID: 1687034426028266533, guid: 2f2fbd137e623914cbb0ab0aeec2a632, type: 3}
-  - {fileID: 1849538497004083235, guid: e24a00e7be21f7b43ab6f463444ddbb2, type: 3}
-  - {fileID: 1928702006753952328, guid: b952fe293741f634ba06336228f6ec47, type: 3}
   - {fileID: 5219102376209304107, guid: d764f11222baa8f4c81fa85a03432f81, type: 3}
   - {fileID: 2549418641515672979, guid: 2f49cba507343f3498f0abf793a002a7, type: 3}
-  - {fileID: 9136432872720792948, guid: 2ac668bc686d54d4896377547bf18726, type: 3}
   - {fileID: 8726868839618427266, guid: 818b88692b4a99045951306de55912e4, type: 3}
+  - {fileID: 7418122654190826676, guid: c3aa4078b3bd2454b92936e1e12d2a48, type: 3}
   enemyList: []
-  diff: 10
+  diff: 20
 --- !u!1 &228100141
 GameObject:
   m_ObjectHideFlags: 0
@@ -5435,7 +5431,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 20
+  far clip plane: 30
   field of view: 60
   orthographic: 1
   orthographic size: 3.5
@@ -7025,6 +7021,7 @@ MonoBehaviour:
   healthBack: {fileID: 808757970207987987}
   afterimage: {fileID: 808757969846395812}
   hpText: {fileID: 808757969451909045}
+  lerpSpeed: 0.5
 --- !u!65 &808757969424626961
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -8572,8 +8569,8 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
-  far clip plane: 20
+  near clip plane: 0.01
+  far clip plane: 30
   field of view: 60
   orthographic: 1
   orthographic size: 7
@@ -8652,7 +8649,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 808757971149220652}
   m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 10, z: 0}
+  m_LocalPosition: {x: 0, y: 15, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

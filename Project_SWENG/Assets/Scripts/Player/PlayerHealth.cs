@@ -12,7 +12,6 @@ public class PlayerHealth : MonoBehaviour
 
     public static event EventHandler<IntEventArgs> EventRecover;
     public static event EventHandler<IntEventArgs> EventDamaged;
-    public static event EventHandler EventDead;
 
     private void Start()
     {
@@ -43,7 +42,7 @@ public class PlayerHealth : MonoBehaviour
         {
             curHealth = 0;
             isDead = true;
-            EventDead?.Invoke(this, EventArgs.Empty);
+            EventDamaged?.Invoke(this, new IntEventArgs(0));
             return 0;
         }
 
