@@ -11,7 +11,7 @@ public class EnemySpawner : MonoSingleton<EnemySpawner>
     public List<GameObject> enemyList;
     //public Dictionary<GameObject, Hex> enemyDic = new Dictionary<GameObject, Hex>();
 
-    [SerializeField] private int diff = 10;
+    [SerializeField] private int diff = 20;
     private int enemyCnt = 0;
     
 

@@ -43,6 +43,7 @@ public class DiceManager : MonoBehaviour
         diceImage.SetActive(true);
         text.text = "";
         d20.Rolling();
+        diceBTN.interactable = false;
     }
     
     private void HandleDiceText(object sender, IntEventArgs e)
@@ -73,5 +74,6 @@ public class DiceManager : MonoBehaviour
     {
         yield return new WaitForSeconds(0.1f);
         diceImage.SetActive(true);
+        diceBTN.interactable = true;
     }
 }
