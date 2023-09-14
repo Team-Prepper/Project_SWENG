@@ -8,7 +8,9 @@ public class UIManager : Singleton<UIManager> {
     List<GUIFullScreen> uiStack;
 
     public GUIFullScreen NowPopUp { get; set; }
-    public GUIInforBox InforBox;
+
+    private GUIMessageBox msgBox;
+    private GUI_Dice _dice;
 
     public void EnrollmentGUI(GUIFullScreen newData)
     {
@@ -81,7 +83,18 @@ public class UIManager : Singleton<UIManager> {
     }
 
     public void DisplayMessage(string messageContent) {
-        GUIMessageBox box = OpenGUI<GUIMessageBox>("MessageBox");
-        box.SetMessage(messageContent);
+        if (msgBox == null) msgBox = OpenGUI<GUIMessageBox>("MessageBox");
+        else msgBox.gameObject.SetActive(true);
+
+        msgBox.SetMessage(messageContent);
     }
+
+    public void UseDice(Unit target)
+    {
+        if (_dice == null) _dice = OpenGUI<GUI_Dice>("Dice");
+        else _dice.gameObject.SetActive(true);
+
+        _dice.SetPlayer(target);
+    }
+
 }

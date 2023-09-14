@@ -49,7 +49,7 @@ public class GameManager : MonoSingleton<GameManager>
     {
         gamePhase = Phase.SetDice;
         changeDayNight();
-        DiceManager.Instance.DiceStandBy();
+        UIManager.Instance.UseDice(player.GetComponent<Unit>());
         NextPhase();
     }
 

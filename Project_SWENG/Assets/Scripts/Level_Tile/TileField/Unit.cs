@@ -36,17 +36,6 @@ public class Unit : MonoBehaviour
     {
         curPos = transform.position;
     }
-    
-    private void OnEnable()
-    {
-        Dice.EventDiceStop += GetDicePointFromDice;
-        PlayerHealth.EventDamaged += DamagedAction;
-    }
-
-    private void OnDisable()
-    {
-        Dice.EventDiceStop -= GetDicePointFromDice;
-    }
 
     public void Deselect()
     {

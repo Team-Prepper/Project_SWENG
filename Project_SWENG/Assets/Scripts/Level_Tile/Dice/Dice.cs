@@ -1,24 +1,29 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using Random = UnityEngine.Random;
 
-class DiceInfor {
+class DiceValueInfor {
     public int value;
     public bool isReverse;
 
-    public DiceInfor(int value, bool isReverse)
+    public DiceValueInfor(int value, bool isReverse)
     {
         this.value = value;
         this.isReverse = isReverse;
     }
 }
 
-public class Dice : MonoBehaviour
-{
-    Vector3 originPos = new Vector3(0,3,0);
+public class Dice : MonoBehaviour {
+
+    private Dictionary<Vector3Int, DiceValueInfor> _diceInfor = new Dictionary<Vector3Int, DiceValueInfor>();
+
+    public int Value { get; private set; }
+    Vector3 originPos = new Vector3(0, 3, 0);
+
     [Space(20)]
     [SerializeField] float torqueMin = 100f;
     [SerializeField] float torqueMax = 200f;
@@ -26,11 +31,10 @@ public class Dice : MonoBehaviour
     [SerializeField] private GameObject walls;
 
     [SerializeField] private UnityEvent _diceSet;
-   
+    [SerializeField] private UnityEvent _diceStopEvent;
+
     float idleTime = 0.1f;
     private Vector3 lastPosition;
-
-    private Dictionary<Vector3Int, DiceInfor> _diceInfor = new Dictionary<Vector3Int, DiceInfor>();
 
     Rigidbody rb;
 
@@ -39,7 +43,7 @@ public class Dice : MonoBehaviour
     private Quaternion initialRotation;
     private Quaternion targetRotation;
 
-    public static event EventHandler<IntEventArgs> EventDiceStop;
+
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -47,38 +51,39 @@ public class Dice : MonoBehaviour
 
     private void Start()
     {
-        _SetDicD20();
+        _diceSet.Invoke();
     }
 
-    void _SetDicD20()
+    public void SetDicD20()
     {
-        _diceInfor = new Dictionary<Vector3Int, DiceInfor>();
-
-        _diceInfor.Add(new Vector3Int(-3, -9, -2), new DiceInfor(1, false));
-        _diceInfor.Add(new Vector3Int(8, 6, -2), new DiceInfor(2, false));
-        _diceInfor.Add(new Vector3Int(-5, -4, 8), new DiceInfor(3, false));
-        _diceInfor.Add(new Vector3Int(-2, 6, -8), new DiceInfor(4, true));
-        _diceInfor.Add(new Vector3Int(5, -4, -8), new DiceInfor(5, true));
-        _diceInfor.Add(new Vector3Int(-8, 6, 2), new DiceInfor(6, false));
-        _diceInfor.Add(new Vector3Int(3, -9, 2), new DiceInfor(7, false));
-        _diceInfor.Add(new Vector3Int(2, 6, 8), new DiceInfor(8, false));
-        _diceInfor.Add(new Vector3Int(-10, 0, -2), new DiceInfor(9, false));
-        _diceInfor.Add(new Vector3Int(6, 0, 8), new DiceInfor(10, false));
-        _diceInfor.Add(new Vector3Int(-6, 0, -8), new DiceInfor(11, true));
-        _diceInfor.Add(new Vector3Int(10, 0, 2), new DiceInfor(12, false));
-        _diceInfor.Add(new Vector3Int(-2, -5, -8), new DiceInfor(13, true));
-        _diceInfor.Add(new Vector3Int(-3, 9, -2), new DiceInfor(14, false));
-        _diceInfor.Add(new Vector3Int(8, -6, -2), new DiceInfor(15, false));
-        _diceInfor.Add(new Vector3Int(-5, 4, 8), new DiceInfor(16, false));
-        _diceInfor.Add(new Vector3Int(2, -5, 8), new DiceInfor(17, false));
-        _diceInfor.Add(new Vector3Int(5, 4, -8), new DiceInfor(18, true));
-        _diceInfor.Add(new Vector3Int(-8, -6, 2), new DiceInfor(19, false));
-        _diceInfor.Add(new Vector3Int(3, 9, 1), new DiceInfor(20, false));
+        _diceInfor = new Dictionary<Vector3Int, DiceValueInfor>
+        {
+            { new Vector3Int(-3, -9, -2), new DiceValueInfor(1, false) },
+            { new Vector3Int(8, 6, -2), new DiceValueInfor(2, false) },
+            { new Vector3Int(-5, -4, 8), new DiceValueInfor(3, false) },
+            { new Vector3Int(-2, 6, -8), new DiceValueInfor(4, true) },
+            { new Vector3Int(5, -4, -8), new DiceValueInfor(5, true) },
+            { new Vector3Int(-8, 6, 2), new DiceValueInfor(6, false) },
+            { new Vector3Int(3, -9, 2), new DiceValueInfor(7, false) },
+            { new Vector3Int(2, 6, 8), new DiceValueInfor(8, false) },
+            { new Vector3Int(-10, 0, -2), new DiceValueInfor(9, false) },
+            { new Vector3Int(6, 0, 8), new DiceValueInfor(10, false) },
+            { new Vector3Int(-6, 0, -8), new DiceValueInfor(11, true) },
+            { new Vector3Int(10, 0, 2), new DiceValueInfor(12, false) },
+            { new Vector3Int(-2, -5, -8), new DiceValueInfor(13, true) },
+            { new Vector3Int(-3, 9, -2), new DiceValueInfor(14, false) },
+            { new Vector3Int(8, -6, -2), new DiceValueInfor(15, false) },
+            { new Vector3Int(-5, 4, 8), new DiceValueInfor(16, false) },
+            { new Vector3Int(2, -5, 8), new DiceValueInfor(17, false) },
+            { new Vector3Int(5, 4, -8), new DiceValueInfor(18, true) },
+            { new Vector3Int(-8, -6, 2), new DiceValueInfor(19, false) },
+            { new Vector3Int(3, 9, 1), new DiceValueInfor(20, false) }
+        };
 
     }
-    void _SetDicD6()
+    public void SetDicD6()
     {
-        _diceInfor = new Dictionary<Vector3Int, DiceInfor>();
+        _diceInfor = new Dictionary<Vector3Int, DiceValueInfor>();
 
         // 주사위 6에 관련된 딕셔너리
 
@@ -95,7 +100,7 @@ public class Dice : MonoBehaviour
         yield return new WaitForSeconds(.5f);
         rb.useGravity = true;
         lastPosition = rb.position;
-        
+
         rb.AddForce(Vector3.up * throwStrength, ForceMode.Impulse);
         rb.AddForce(Random.insideUnitSphere * Random.Range(50, 100), ForceMode.Impulse);
         rb.AddTorque(Random.insideUnitSphere * torqueMax + torqueMin * Vector3.one);
@@ -103,35 +108,37 @@ public class Dice : MonoBehaviour
 
         StartCoroutine(CheckIdle());
     }
-    
+
     public IEnumerator CheckIdle()
     {
-        bool isCheckingIdle = true;
-        while (isCheckingIdle)
+        while (true)
         {
             yield return new WaitForSeconds(idleTime);
 
             if (rb.position == lastPosition)
             {
-                Debug.Log("is Stop");
-                isCheckingIdle = false;
-                ChkRoll();
+                break;
             }
             lastPosition = rb.position;
         }
+
+        Debug.Log("is Stop");
+        ChkRoll();
     }
     public void ChkRoll()
     {
         float yDot, xDot, zDot;
-        
-        yDot = Mathf.Round(Vector3.Dot(transform.up.normalized, Vector3.up) * 10);
-        zDot = Mathf.Round(Vector3.Dot(transform.forward.normalized, Vector3.up)* 10);
-        xDot = Mathf.Round(Vector3.Dot(transform.right.normalized, Vector3.up)* 10);
 
-        if (_diceInfor.TryGetValue(new Vector3Int((int)xDot, (int)yDot, (int)zDot), out DiceInfor rollValue))
+        yDot = Mathf.Round(Vector3.Dot(transform.up.normalized, Vector3.up) * 10);
+        zDot = Mathf.Round(Vector3.Dot(transform.forward.normalized, Vector3.up) * 10);
+        xDot = Mathf.Round(Vector3.Dot(transform.right.normalized, Vector3.up) * 10);
+
+        if (_diceInfor.TryGetValue(new Vector3Int((int)xDot, (int)yDot, (int)zDot), out DiceValueInfor rollValue))
         {
             initialRotation = transform.rotation;
             targetRotation = Quaternion.Euler(initialRotation.eulerAngles.x, rollValue.isReverse ? 180 : 0, initialRotation.eulerAngles.z);
+
+            Value = rollValue.value;
 
             StartCoroutine(RotateSmoothly(rollValue.value));
 
@@ -143,7 +150,7 @@ public class Dice : MonoBehaviour
         walls.SetActive(false);
         StartCoroutine(CheckIdle());
     }
-    
+
     private IEnumerator RotateSmoothly(int rollValue)
     {
         float elapsedTime = 0f;
@@ -160,7 +167,7 @@ public class Dice : MonoBehaviour
         }
 
         transform.rotation = targetRotation;
-        EventDiceStop?.Invoke(this, new IntEventArgs(rollValue));
+        _diceStopEvent.Invoke();
     }
-    
+
 }
