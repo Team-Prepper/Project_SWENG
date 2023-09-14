@@ -9,8 +9,9 @@ public class CamMovement : MonoBehaviour
 {
     public static CamMovement Instance;
     [SerializeField] float moveSpeed = 5f;
-    
-    [Header("FOV")]
+
+    [Header("FOV")] 
+    private float defFov = 60.0f;
     private float minFOV = 10.0f;
     private float maxFOV = 100.0f;
 
@@ -30,6 +31,7 @@ public class CamMovement : MonoBehaviour
     {
         isCamMove = false;
         this.player = player;
+        virtualCamera.m_Lens.FieldOfView = defFov;
         virtualCamera.Follow = player.transform;
         virtualCamera.LookAt = player.transform;
         StartCoroutine(ResetMode());
