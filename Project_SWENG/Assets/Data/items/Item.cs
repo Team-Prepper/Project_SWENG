@@ -14,6 +14,7 @@ public class Item : ScriptableObject
     public int value;
     public Sprite icon;
     public GameObject itemObject;
+    public Hex itemHex;
 
     public enum ItemTier
     {

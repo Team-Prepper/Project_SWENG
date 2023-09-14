@@ -15,11 +15,12 @@ public class EnemyStat : MonoBehaviour
     public int speed;
     public int Lv;
     public int Exp;
-    public int maxSlot; //°ø°Ý ½½·Ô Ä­
+    public int maxSlot;
     public Sprite portrait;
     public bool isDie = false;
     public string attackType;
     public float percent;
+    public List<Item> dropItem;
 
     private void Awake()
     {
@@ -40,6 +41,7 @@ public class EnemyStat : MonoBehaviour
         maxSlot = enemyStatus.maxSlot;
         attackType = enemyStatus.AttackType;
         percent = enemyStatus.percent;
+        dropItem = new List<Item>(enemyStatus.dropItem);
     }
 
 }

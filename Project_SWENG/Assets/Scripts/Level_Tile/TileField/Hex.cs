@@ -18,8 +18,29 @@ public class Hex : MonoBehaviour
 
     [Space(20)]
     [Header("Item")]
-    public bool isItem = false;
-    public Item item = null;
+    private Item item;
+    [SerializeField] private GameObject itemZone; //parent
+    private GameObject itemMesh;
+    public Item Item
+    {
+        get { return item; }
+        set
+        {
+            if (item != value)
+            {
+                item = value;
+                
+                if (value != null)
+                {
+                    SpawnItem();
+                }
+                else
+                {
+                    Destroy(itemMesh);
+                }
+            }
+        }
+    }
 
     [Space(20)]
     [Header("Entity")]
@@ -112,6 +133,12 @@ public class Hex : MonoBehaviour
                 enemy.DamagedHandler(damage);
             }
         }
+    }
+
+    private void SpawnItem()
+    {
+        itemMesh = Instantiate(item.itemObject, itemZone.transform);
+        itemMesh.transform.localScale = Vector3.one * 3f;
     }
 
     private void Awake()

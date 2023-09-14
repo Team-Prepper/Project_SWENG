@@ -31,8 +31,6 @@ public class EnemyController : MonoBehaviour
 
         enemyStat.curHp -= damage;
 
-        
-
         if (enemyStat.curHp <= 0)
         {
             enemyStat.curHp = 0;
@@ -48,9 +46,17 @@ public class EnemyController : MonoBehaviour
 
     private void EnemyDeadHandler()
     {
-        Hex curHex = HexGrid.Instance.GetHexFromPosition(this.gameObject.transform.position);
+        curHex = HexGrid.Instance.GetHexFromPosition(this.gameObject.transform.position);
         curHex.Entity = null;
         EnemySpawner.Instance.enemyList.Remove(this.gameObject);
+        DropItem();
         Destroy(this.gameObject, 1f);
+    }
+
+    private void DropItem()
+    {
+        Item dropitem = enemyStat.dropItem[Random.Range(0, enemyStat.dropItem.Count)];
+        curHex.Item = dropitem;
+        dropitem.itemHex = this.curHex;
     }
 }

@@ -12,13 +12,13 @@ public class EnemyStatus : ScriptableObject
     public int maxHp = 60;
     public int curHp = 60;
     public float percent = 70;
-   
-    //속도 
+    
     public int speed = 50;
     
     public int Lv = 1;
     public int Exp = 10;
     public int maxSlot = 3;
-    public Sprite UIImage; //초상화 이미지
+    public Sprite UIImage; 
     public string AttackType = "attackBlackSmith";
+    public List<Item> dropItem;
 }

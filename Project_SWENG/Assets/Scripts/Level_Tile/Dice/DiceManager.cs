@@ -34,8 +34,9 @@ public class DiceManager : MonoBehaviour
     public void RollingDice()
     {
         diceImage.SetActive(true);
-        d20.Rolling();
         diceBTN.interactable = false;
+        d20.Rolling();
+        
     }
     
     private void HandleDiceText(object sender, IntEventArgs e)

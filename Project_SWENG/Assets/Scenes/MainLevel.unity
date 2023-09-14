@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028326, g: 0.22571333, b: 0.30692202, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -5688,38 +5688,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1852483271}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1855660345 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7040824174509152099, guid: 46e5a0f2123ef5c4399283955d625275,
-    type: 3}
-  m_PrefabInstance: {fileID: 2124013707}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1855660346
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1855660345}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 56e60f75c5fc0184b9abd4a8fae8b38f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _testTarget: {fileID: 1855660347}
---- !u!114 &1855660347
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1855660345}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 411b361c7e63f8948aac3875b8736178, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _infor: {fileID: 11400000, guid: a0fe4efdaa8c9b74aa14eb9b9ea48892, type: 2}
 --- !u!1 &1886186266
 GameObject:
   m_ObjectHideFlags: 0
@@ -6533,17 +6501,17 @@ PrefabInstance:
     - target: {fileID: 7040824174509152096, guid: 46e5a0f2123ef5c4399283955d625275,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3.57
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7040824174509152096, guid: 46e5a0f2123ef5c4399283955d625275,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.674
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7040824174509152096, guid: 46e5a0f2123ef5c4399283955d625275,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 3.12
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7040824174509152096, guid: 46e5a0f2123ef5c4399283955d625275,
         type: 3}
@@ -8020,6 +7988,9 @@ MonoBehaviour:
   _diceSet:
     m_PersistentCalls:
       m_Calls: []
+  _diceStopEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!224 &808757970207987984
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8108,10 +8079,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58cd86a46e9ec6841aaa591613ce6e28, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dice: {fileID: 808757970167795280}
   diceImage: {fileID: 705563835}
-  text: {fileID: 808757970622744231}
   diceBTN: {fileID: 1174376473}
+  d20: {fileID: 0}
 --- !u!4 &808757970265166574
 Transform:
   m_ObjectHideFlags: 0

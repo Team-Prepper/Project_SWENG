@@ -16,7 +16,7 @@ MonoBehaviour:
   atk: 8
   def: 7
   maxHp: 15
-  nowHp: 15
+  curHp: 60
   percent: 60
   speed: 60
   Lv: 1
@@ -24,3 +24,5 @@ MonoBehaviour:
   maxSlot: 2
   UIImage: {fileID: 21300000, guid: e1d92d7d434b2204a9666712516c267b, type: 3}
   AttackType: attackScholar
+  dropItem:
+  - {fileID: 11400000, guid: a0fe4efdaa8c9b74aa14eb9b9ea48892, type: 2}

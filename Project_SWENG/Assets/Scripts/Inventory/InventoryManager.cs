@@ -11,6 +11,8 @@ public class InventoryManager : Singleton<InventoryManager>
 
     public void GetItem(Item item)
     {
+        item.itemHex.Item = null;
+        
         switch (item.type)
         {
             case Item.ItemType.Helmet:
