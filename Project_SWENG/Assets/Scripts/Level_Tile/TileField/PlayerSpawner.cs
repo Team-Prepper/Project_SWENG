@@ -17,6 +17,9 @@ public class PlayerSpawner : MonoBehaviour
 
     public UnityEvent<GameObject> EventPlayerSpawn;
 
+    public delegate void GameObjectEventUnit(GameObject obj);
+    public static GameObjectEventUnit eventUnit;
+
     void Awake()
     {
         GridMaker.EventSetNavComplete += SpawnPlayer;
@@ -32,6 +35,7 @@ public class PlayerSpawner : MonoBehaviour
         Debug.Log("SpawnPos : " + spawnPos.position);
         player = Instantiate(playerPrefab, spawnPos.position, spawnPos.rotation);
         player.GetComponent<Unit>().CurPos = spawnPos.position;
+        UIManager.OpenGUI<GUI_PlayerInfor>("UnitInfor").SetPlayer(player);
         spawnHex.Entity = player;
 
         EventPlayerSpawn?.Invoke(player);

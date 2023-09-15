@@ -19,6 +19,7 @@ public class GUIWindow : MonoBehaviour {
         rect.SetParent(GameObject.Find("Canvas").transform);
         rect.anchoredPosition = Vector3.zero;
         rect.localScale = Vector3.one;
+
     }
 
     public virtual void Close()
