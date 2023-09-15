@@ -1,13 +1,9 @@
 using Cinemachine;
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
-public class CamMovement : MonoBehaviour
+public class CamMovement : MonoSingleton<CamMovement>
 {
-    public static CamMovement Instance;
     [SerializeField] float moveSpeed = 5f;
 
     [Header("FOV")] 
@@ -15,16 +11,17 @@ public class CamMovement : MonoBehaviour
     private float minFOV = 10.0f;
     private float maxFOV = 100.0f;
 
-    private CinemachineVirtualCamera virtualCamera;
+    [SerializeField] private CinemachineVirtualCamera virtualCamera;
+    [SerializeField] private CinemachineFreeLook battleCamera;
     [SerializeField] private GameObject player;
     [SerializeField] private bool isCamMove = false;
-    PlayerInputBase playerInput;
+
+    private bool isGamePhase;
     
     private void Awake()
     {
-        Instance = this;
-        virtualCamera = GetComponent<CinemachineVirtualCamera>();
-        playerInput = PlayerInputBase.Instance;
+        if (virtualCamera == null)
+            virtualCamera = GetComponent<CinemachineVirtualCamera>();
     }
 
     public void CamSetToPlayer(GameObject player)
@@ -48,31 +45,46 @@ public class CamMovement : MonoBehaviour
         virtualCamera.LookAt = null;
     }
 
-    void CamSet(object sender, IntEventArgs e)
-    {
-        if(player != null)
-            CamSetToPlayer(player);
-    }
-
     // Update is called once per frame
     void Update()
     {
-        if(isCamMove)
+        if (GameManager.Instance.gamePhase == GameManager.Phase.AttackPhase || GameManager.Instance.gamePhase == GameManager.Phase.EnemyPhase)
+        {
+            if (!isGamePhase)
+            {
+                isGamePhase = true;
+                ConvertBattleCamera();
+            }
+        }
+        else
+        {
+            if (isGamePhase)
+            {
+                isGamePhase = false;
+                Invoke("ConvertMovementCamera",2f);
+            }
+        }
+
+        if (isCamMove)
+        {
             moveCam();
-        AdjustFOV(playerInput.scrollValue);
+            AdjustFOV(PlayerInputBase.Instance.scrollValue);
+        }
+        
     }
 
     private void moveCam()
     {
+        if (GameManager.Instance.gamePhase == GameManager.Phase.AttackPhase) return;
         CamReset();
-        transform.Translate(playerInput.moveDirection * moveSpeed * Time.deltaTime, Space.World);
-        transform.Translate(MoveCamWithMouse() * moveSpeed * Time.deltaTime, Space.World);
+        virtualCamera.gameObject.transform.Translate(PlayerInputBase.Instance.moveDirection * moveSpeed * Time.deltaTime, Space.World);
+        virtualCamera.gameObject.transform.Translate(MoveCamWithMouse() * moveSpeed * Time.deltaTime, Space.World);
     }
 
     private Vector3 MoveCamWithMouse()
     {
         Vector3 mouseCamMove = new Vector3();
-        Vector3 worldPos = Camera.main.ScreenToViewportPoint(playerInput.mousePos);
+        Vector3 worldPos = Camera.main.ScreenToViewportPoint(PlayerInputBase.Instance.mousePos);
         if (worldPos.x < 0.01f)
         {
             if(PlayerOutOfRange() % 2 != 0)
@@ -111,8 +123,8 @@ public class CamMovement : MonoBehaviour
         int outValue = 1;
         float px = player.transform.position.x;
         float pz = player.transform.position.z;
-        float tx = this.transform.position.x;
-        float tz = this.transform.position.z;
+        float tx = virtualCamera.gameObject.transform.position.x;
+        float tz = virtualCamera.gameObject.transform.position.z;
 
         float xOffset = px - tx;
         float zOffset = pz - tz;
@@ -122,11 +134,32 @@ public class CamMovement : MonoBehaviour
         if (xOffset < -12)
             outValue *= 3;
 
-        if (zOffset > 16)
+        if (zOffset > 17)
             outValue *= 7;
-        if (zOffset < -2)
+        if (zOffset < -1)
             outValue *= 5;
 
         return outValue;
+    }
+
+    public void ConvertBattleCamera()
+    {
+        virtualCamera.gameObject.SetActive(false);
+        battleCamera.gameObject.SetActive(true);
+        isCamMove = false;  
+        
+        if (player != null)
+        {
+            Transform camRoot = player.transform.Find("CamRoot");
+            battleCamera.LookAt = player.transform;
+            battleCamera.Follow = camRoot;
+        }
+    }
+
+    public void ConvertMovementCamera()
+    {
+        isCamMove = true;
+        virtualCamera.gameObject.SetActive(true);
+        battleCamera.gameObject.SetActive(false);
     }
 }

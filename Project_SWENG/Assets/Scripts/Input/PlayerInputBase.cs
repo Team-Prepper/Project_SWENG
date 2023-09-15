@@ -3,9 +3,8 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
-public class PlayerInputBase : MonoBehaviour
+public class PlayerInputBase : MonoSingleton<PlayerInputBase>
 {
-    public static PlayerInputBase Instance;
     
     [SerializeField]
     private Camera mainCamera;
@@ -16,8 +15,6 @@ public class PlayerInputBase : MonoBehaviour
     public Vector3 moveDirection;
     public Vector3 mousePos;
 
-
-    GameManager GM;
     public float scrollValue;
     public bool input1;
     public bool input2;
@@ -72,12 +69,6 @@ public class PlayerInputBase : MonoBehaviour
     
     private void Awake()
     {
-        if(Instance == null)
-            Instance = this;
-        else
-            Destroy(gameObject);
-        
-        GM = GameManager.Instance;
         if (mainCamera == null)
             mainCamera = Camera.main;
     }
@@ -182,7 +173,7 @@ public class PlayerInputBase : MonoBehaviour
 
     public void OnDiceRolling(InputValue value)
     {
-        if(GM.gamePhase == GameManager.Phase.DiceRolling)
+        if(GameManager.Instance.gamePhase == GameManager.Phase.DiceRolling)
         {
             if (value.Get<float>() == 1)
             {
@@ -214,10 +205,8 @@ public class PlayerInputBase : MonoBehaviour
         }
     }
     
-    
-
     void SetPlayer()
     {
-        player = GM.player;
+        player = GameManager.Instance.player;
     }
 }

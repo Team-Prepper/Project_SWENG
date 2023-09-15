@@ -41,6 +41,7 @@ public class AttackManager : MonoSingleton<AttackManager>
             atkMarkers[i++].transform.position = atkHex.transform.position;
         }
         isAtkReady = true;
+        GameManager.Instance.gamePhase = GameManager.Phase.AttackPhase;
     }
 
     public void BaseAtkHandler(Hex selectedHex)
@@ -53,7 +54,7 @@ public class AttackManager : MonoSingleton<AttackManager>
         Animator ani = GameManager.Instance.player.GetComponent<Animator>();
 
         GameManager.Instance.player.gameObject.transform.LookAt(HexGrid.Instance.GetTileAt(atkHexPos).transform.position);
-
+        
         ani.SetTrigger("Attack");
         EventBaseAtk?.Invoke(this, new IntEventArgs(player.dicePoints));
         Attack(selectedHex, baseAtkPower);
@@ -64,6 +65,7 @@ public class AttackManager : MonoSingleton<AttackManager>
 
         selectedHex.DamageToEntity(atkPower);
         isAtkReady = false;
+        
     }
 
     public void HideAtkRange()
@@ -74,6 +76,7 @@ public class AttackManager : MonoSingleton<AttackManager>
         }
         isAtkReady = false;
         UnitManager.Instance.selectedUnit = null;
+        GameManager.Instance.gamePhase = GameManager.Phase.ActionPhase;
     }
 
     public bool IsHexInAtkRange(Vector3Int hexPosition)

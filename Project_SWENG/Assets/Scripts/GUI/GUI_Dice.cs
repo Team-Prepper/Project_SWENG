@@ -25,6 +25,7 @@ public class GUI_Dice : GUIPopUp
     public void SetDiceValue()
     {
         _targetPlayer.dicePoints = _dice.Value;
+        GameManager.Instance.gamePhase = GameManager.Phase.ActionPhase;
         Close();
     }
 
