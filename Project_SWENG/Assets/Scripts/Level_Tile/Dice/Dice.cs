@@ -24,11 +24,14 @@ public class Dice : MonoBehaviour {
     public int Value { get; private set; }
     Vector3 originPos = new Vector3(0, 3, 0);
 
+    bool _isRolling;
+
     [Space(20)]
     [SerializeField] float torqueMin = 100f;
     [SerializeField] float torqueMax = 200f;
     [SerializeField] private float throwStrength = 50;
     [SerializeField] private GameObject walls;
+    [SerializeField] private float _waitTime = 1f;
 
     [SerializeField] private UnityEvent _diceSet;
     [SerializeField] private UnityEvent _diceStopEvent;
@@ -43,7 +46,6 @@ public class Dice : MonoBehaviour {
     private Quaternion initialRotation;
     private Quaternion targetRotation;
 
-
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -52,6 +54,7 @@ public class Dice : MonoBehaviour {
     private void Start()
     {
         _diceSet.Invoke();
+        _isRolling = false;
     }
 
     public void SetDicD20()
@@ -91,17 +94,15 @@ public class Dice : MonoBehaviour {
 
     public void Rolling()
     {
+        if (_isRolling) return;
+
+        _isRolling = true;
         walls.SetActive(true);
         this.gameObject.transform.localPosition = originPos;
-        StartCoroutine(RollingDice());
-    }
-    IEnumerator RollingDice()
-    {
-        yield return new WaitForSeconds(.5f);
         rb.useGravity = true;
         lastPosition = rb.position;
 
-        rb.AddForce(Vector3.up * throwStrength, ForceMode.Impulse);
+        rb.velocity = Vector3.up * throwStrength;
         rb.AddForce(Random.insideUnitSphere * Random.Range(50, 100), ForceMode.Impulse);
         rb.AddTorque(Random.insideUnitSphere * torqueMax + torqueMin * Vector3.one);
 
@@ -158,16 +159,18 @@ public class Dice : MonoBehaviour {
 
         while (elapsedTime < rotationSpeed)
         {
-            float t = elapsedTime / rotationSpeed;
-            Quaternion newRotation = Quaternion.Slerp(startRotation, targetRotation, t);
-            transform.rotation = newRotation;
+            transform.rotation = Quaternion.Slerp(startRotation, targetRotation, elapsedTime / rotationSpeed);
 
             elapsedTime += Time.deltaTime;
             yield return null;
         }
 
         transform.rotation = targetRotation;
+
+        yield return new WaitForSeconds(_waitTime);
+
         _diceStopEvent.Invoke();
+        _isRolling = false; 
     }
 
 }

@@ -796,8 +796,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6689326524714760362}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 3, z: 0}
+  m_LocalRotation: {x: -0.07336472, y: 0.003400343, z: 0.15631409, w: 0.98497313}
+  m_LocalPosition: {x: -0.5181478, y: 1.9597168, z: -0.24942458}
   m_LocalScale: {x: 1.9, y: 1.9, z: 1.9}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -819,8 +819,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   torqueMin: 100
   torqueMax: 200
-  throwStrength: 50
+  throwStrength: 10
   walls: {fileID: 6689326525004190331}
+  _waitTime: 0.5
   _diceSet:
     m_PersistentCalls:
       m_Calls:
