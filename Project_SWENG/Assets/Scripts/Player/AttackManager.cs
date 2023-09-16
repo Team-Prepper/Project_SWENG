@@ -79,7 +79,7 @@ public class AttackManager : MonoSingleton<AttackManager>
         }
         isAtkReady = false;
         UnitManager.Instance.selectedUnit = null;
-        GameManager.Instance.gamePhase = GameManager.Phase.ActionPhase;
+        
     }
 
     public bool IsHexInAtkRange(Vector3Int hexPosition)

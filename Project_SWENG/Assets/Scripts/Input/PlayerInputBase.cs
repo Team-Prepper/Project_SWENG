@@ -27,21 +27,17 @@ public class PlayerInputBase : MonoSingleton<PlayerInputBase>
     public bool inputShift;
     public bool inputML;
     public bool inputMR;
-    
 
-    [SerializeField]
-    private InputActionReference pointerPos, mouseLClickAction, mouseRClickAction, mouseScroll;
-    
-    [SerializeField]
-    private InputActionReference inputMouseDelta;
-    [SerializeField]
-    private InputActionReference inputAction1;
-    [SerializeField]
-    private InputActionReference inputAction2;
-    [SerializeField]
-    private InputActionReference inputAction3;
-    [SerializeField]
-    private InputActionReference inputAction4;
+
+    [SerializeField] private InputActionReference pointerPos;
+    [SerializeField] private InputActionReference mouseLClickAction;
+    [SerializeField] private InputActionReference mouseRClickAction;
+    [SerializeField] private InputActionReference mouseScroll;
+    [SerializeField] private InputActionReference inputMouseDelta;
+    [SerializeField] private InputActionReference inputAction1;
+    [SerializeField] private InputActionReference inputAction2;
+    [SerializeField] private InputActionReference inputAction3;
+    [SerializeField] private InputActionReference inputAction4;
     [SerializeField]
     private InputActionReference inputActionQ;
     [SerializeField]

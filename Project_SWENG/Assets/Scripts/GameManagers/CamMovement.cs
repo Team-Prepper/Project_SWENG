@@ -61,7 +61,7 @@ public class CamMovement : MonoSingleton<CamMovement>
             if (isGamePhase)
             {
                 isGamePhase = false;
-                Invoke("ConvertMovementCamera",2f);
+                ConvertMovementCamera();
             }
         }
 
