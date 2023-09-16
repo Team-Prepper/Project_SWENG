@@ -8,6 +8,7 @@ public class AttackManager : MonoSingleton<AttackManager>
     [SerializeField] int atkPoint = 3;
     [SerializeField] int baseAtkPower = 10;
     [SerializeField] GameObject[] atkMarkers;
+    
 
     List<Vector3Int> atkRange = new List<Vector3Int>();
 
@@ -58,6 +59,8 @@ public class AttackManager : MonoSingleton<AttackManager>
         ani.SetTrigger("Attack");
         EventBaseAtk?.Invoke(this, new IntEventArgs(player.dicePoints));
         Attack(selectedHex, baseAtkPower);
+        EffectManager.Instance.SetTarget(player.gameObject);
+        StartCoroutine(EffectManager.Instance.ShowImpactVfx(0));
     }
 
     public void Attack(Hex selectedHex, int atkPower)
@@ -84,4 +87,5 @@ public class AttackManager : MonoSingleton<AttackManager>
         atkHexPos = hexPosition;
         return atkRange.Contains(hexPosition); 
     }
+    
 }

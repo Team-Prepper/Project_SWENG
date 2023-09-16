@@ -55,6 +55,7 @@ public class EnemyController : MonoBehaviour
 
     private void DropItem()
     {
+        if (enemyStat.dropItem.Count == 0) return;
         Item dropitem = enemyStat.dropItem[Random.Range(0, enemyStat.dropItem.Count)];
         curHex.Item = dropitem;
         dropitem.itemHex = this.curHex;
