@@ -1,5 +1,6 @@
 using Cinemachine;
 using System.Collections;
+using Unity.Collections;
 using UnityEngine;
 
 public class CamMovement : MonoSingleton<CamMovement>
@@ -7,16 +8,16 @@ public class CamMovement : MonoSingleton<CamMovement>
     [SerializeField] float moveSpeed = 5f;
 
     [Header("FOV")] 
-    private float defFov = 60.0f;
-    private float minFOV = 10.0f;
-    private float maxFOV = 100.0f;
+    private float _defFov = 60.0f;
+    private float _minFOV = 10.0f;
+    private float _maxFOV = 100.0f;
 
     [SerializeField] private CinemachineVirtualCamera virtualCamera;
     [SerializeField] private CinemachineFreeLook battleCamera;
     [SerializeField] private GameObject player;
     [SerializeField] private bool isCamMove = false;
 
-    private bool isGamePhase;
+    private bool _isAttackPhase;
     
     private void Awake()
     {
@@ -28,7 +29,7 @@ public class CamMovement : MonoSingleton<CamMovement>
     {
         isCamMove = false;
         this.player = player;
-        virtualCamera.m_Lens.FieldOfView = defFov;
+        virtualCamera.m_Lens.FieldOfView = _defFov;
         virtualCamera.Follow = player.transform;
         virtualCamera.LookAt = player.transform;
         StartCoroutine(ResetMode());
@@ -50,18 +51,19 @@ public class CamMovement : MonoSingleton<CamMovement>
     {
         if (GameManager.Instance.gamePhase == GameManager.Phase.AttackPhase || GameManager.Instance.gamePhase == GameManager.Phase.EnemyPhase)
         {
-            if (!isGamePhase)
+            if (!_isAttackPhase)
             {
-                isGamePhase = true;
+                _isAttackPhase = true;
                 ConvertBattleCamera();
             }
         }
         else
         {
-            if (isGamePhase)
+            if (_isAttackPhase)
             {
-                isGamePhase = false;
+                _isAttackPhase = false;
                 ConvertMovementCamera();
+                CamSetToPlayer(player);
             }
         }
 
@@ -112,7 +114,7 @@ public class CamMovement : MonoSingleton<CamMovement>
     {
         float currentFOV = virtualCamera.m_Lens.FieldOfView;
 
-        float newFOV = Mathf.Clamp(currentFOV - (scrollValue/12), minFOV, maxFOV);
+        float newFOV = Mathf.Clamp(currentFOV - (scrollValue/12), _minFOV, _maxFOV);
 
         virtualCamera.m_Lens.FieldOfView = newFOV;
     }

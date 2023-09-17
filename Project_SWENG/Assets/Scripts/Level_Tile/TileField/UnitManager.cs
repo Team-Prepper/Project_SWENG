@@ -20,7 +20,7 @@ public class UnitManager : MonoSingleton<UnitManager>
     {
         Unit unitReference = unit.GetComponent<Unit>();
 
-        if (AttackManager.Instance.isAtkReady)
+        if (GameManager.Instance.gamePhase == GameManager.Phase.AttackPhase)
         {
             AttackManager.Instance.HideAtkRange();
             GameManager.Instance.gamePhase = GameManager.Phase.ActionPhase;
