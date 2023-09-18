@@ -38,4 +38,8 @@ public class Item : ScriptableObject
     }
 
     public ItemType type;
+    
+    public void Pick() {
+        UIManager.OpenGUI<GUI_ItemInterAction>("ItemInterAction").SetItem(this);    
+    }
 }

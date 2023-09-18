@@ -12,9 +12,9 @@ public class GUI_PlayerInfor : GUIFullScreen
 
     Unit _targetUnit;
 
-    protected override void Open()
+    protected override void Open(Vector2 openPos)
     {
-        base.Open();
+        base.Open(openPos);
     }
 
     public void SetPlayer(GameObject target) {

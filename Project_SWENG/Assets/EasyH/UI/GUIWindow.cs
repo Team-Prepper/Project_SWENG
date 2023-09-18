@@ -9,15 +9,15 @@ public class GUIWindow : MonoBehaviour {
 
     private void Awake()
     {
-        Open();
+        Open(Vector2.zero);
     }
 
-    protected virtual void Open()
+    protected virtual void Open(Vector2 opnePos)
     {
         RectTransform rect = gameObject.GetComponent<RectTransform>();
 
         rect.SetParent(GameObject.Find("Canvas").transform);
-        rect.anchoredPosition = Vector3.zero;
+        rect.anchoredPosition = opnePos;
         rect.localScale = Vector3.one;
 
     }

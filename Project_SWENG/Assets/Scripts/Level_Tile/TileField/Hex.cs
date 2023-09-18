@@ -58,6 +58,11 @@ public class Hex : MonoBehaviour
                 if (value != null)
                 {
                     cost = -1;
+
+                    if (item != null && entity.CompareTag("Player"))
+                    {
+                        InteractionPlayerWithItem();
+                    }
                 }
                 else
                 {
@@ -170,6 +175,11 @@ public class Hex : MonoBehaviour
     internal void HighlightPath()
     {
         highlight.HighlightValidPath();
+    }
+
+    private void InteractionPlayerWithItem()
+    {
+        item.Pick();
     }
 }
 
