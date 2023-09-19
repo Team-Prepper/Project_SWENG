@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class GUIFullScreen : GUIWindow
 {
-    protected override void Open()
+    protected override void Open(Vector2 openPos)
     {
-        base.Open();
+        base.Open(openPos);
         UIManager.Instance.EnrollmentGUI(this);
         gameObject.GetComponent<RectTransform>().sizeDelta = Vector3.zero;
     }
