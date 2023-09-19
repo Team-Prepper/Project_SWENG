@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour
 {
+    private Animator _animator;
+
     bool isDead;
 
     [SerializeField] int curHealth;
@@ -12,6 +14,11 @@ public class PlayerHealth : MonoBehaviour
 
     public static event EventHandler<IntEventArgs> EventRecover;
     public static event EventHandler<IntEventArgs> EventDamaged;
+
+    private void Awake()
+    {
+        _animator = GetComponent<Animator>();   
+    }
 
     private void Start()
     {
@@ -42,11 +49,13 @@ public class PlayerHealth : MonoBehaviour
         {
             curHealth = 0;
             isDead = true;
+            _animator.SetTrigger("Die");
             EventDamaged?.Invoke(this, new IntEventArgs(0));
             return 0;
         }
 
         curHealth -= val;
+        _animator.SetTrigger("Hit");
         EventDamaged?.Invoke(this, new IntEventArgs(curHealth));
         return curHealth;
     }
