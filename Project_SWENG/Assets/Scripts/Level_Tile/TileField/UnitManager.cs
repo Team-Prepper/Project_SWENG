@@ -18,6 +18,7 @@ public class UnitManager : MonoSingleton<UnitManager>
     // Unit Selected
     public void HandleUnitSelected(GameObject unit)
     {
+        Debug.Log("Name : " + unit.name);
         Unit unitReference = unit.GetComponent<Unit>();
 
         if (GameManager.Instance.gamePhase == GameManager.Phase.AttackPhase)

@@ -70,7 +70,7 @@ public class CamMovement : MonoSingleton<CamMovement>
         if (isCamMove)
         {
             moveCam();
-            AdjustFOV(PlayerInputBase.Instance.scrollValue);
+            AdjustFOV(PlayerInputManager.Instance.scrollValue);
         }
         
     }
@@ -79,14 +79,14 @@ public class CamMovement : MonoSingleton<CamMovement>
     {
         if (GameManager.Instance.gamePhase == GameManager.Phase.AttackPhase) return;
         CamReset();
-        virtualCamera.gameObject.transform.Translate(PlayerInputBase.Instance.moveDirection * moveSpeed * Time.deltaTime, Space.World);
+        virtualCamera.gameObject.transform.Translate(PlayerInputManager.Instance.moveDirection * moveSpeed * Time.deltaTime, Space.World);
         virtualCamera.gameObject.transform.Translate(MoveCamWithMouse() * moveSpeed * Time.deltaTime, Space.World);
     }
 
     private Vector3 MoveCamWithMouse()
     {
         Vector3 mouseCamMove = new Vector3();
-        Vector3 worldPos = Camera.main.ScreenToViewportPoint(PlayerInputBase.Instance.mousePos);
+        Vector3 worldPos = Camera.main.ScreenToViewportPoint(PlayerInputManager.Instance.mousePos);
         if (worldPos.x < 0.01f)
         {
             if(PlayerOutOfRange() % 2 != 0)
