@@ -86,15 +86,10 @@ public class Dice : MonoBehaviour {
     }
     public void SetDicD6()
     {
-        _diceInfor = new Dictionary<Vector3Int, DiceValueInfor>
-        {
-            { new Vector3Int( 0,  0,  1), new DiceValueInfor(1, false) },
-            { new Vector3Int( 0,  1,  0), new DiceValueInfor(2, false) },
-            { new Vector3Int(-1,  0,  0), new DiceValueInfor(3, false) },
-            { new Vector3Int( 1,  0,  0), new DiceValueInfor(4, false) },
-            { new Vector3Int( 0, -1,  0), new DiceValueInfor(5, false) },
-            { new Vector3Int( 0,  0, -1), new DiceValueInfor(6, false) },
-        };
+        _diceInfor = new Dictionary<Vector3Int, DiceValueInfor>();
+
+        // 주사위 6에 관련된 딕셔너리
+
     }
 
     public void Rolling()

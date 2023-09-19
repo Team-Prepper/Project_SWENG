@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GUIPopUp : GUIWindow
 {
-    protected override void Open(Vector2 openPos)
+    protected override void Open()
     {
         /*
         if (UIManager.Instance.NowPopUp == null)
@@ -17,6 +17,6 @@ public class GUIPopUp : GUIWindow
 
         rect.SetParent(UIManager.Instance.NowPopUp.transform);
         */
-        base.Open(openPos);
+        base.Open();
     }
 }
