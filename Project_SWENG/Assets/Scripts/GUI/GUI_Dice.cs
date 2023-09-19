@@ -11,9 +11,9 @@ public class GUI_Dice : GUIPopUp
     [SerializeField] private Dice _dice;
 
 
-    protected override void Open()
+    protected override void Open(Vector2 openPos)
     {
-        base.Open();
+        base.Open(new Vector2(-800,0));
     }
 
     public void SetPlayer(Unit target) {
