@@ -1,9 +1,4 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Xml.Serialization;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 [SelectionBase]
 public class Hex : MonoBehaviour
@@ -58,6 +53,11 @@ public class Hex : MonoBehaviour
                 if (value != null)
                 {
                     cost = -1;
+
+                    if (item != null && entity.CompareTag("Player"))
+                    {
+                        InteractionPlayerWithItem();
+                    }
                 }
                 else
                 {
@@ -171,5 +171,9 @@ public class Hex : MonoBehaviour
     {
         highlight.HighlightValidPath();
     }
-}
 
+    private void InteractionPlayerWithItem()
+    {
+        item.Pick();
+    }
+}
