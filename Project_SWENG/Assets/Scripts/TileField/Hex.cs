@@ -130,7 +130,7 @@ public class Hex : MonoBehaviour
             EnemyController enemy = entity.GetComponent<EnemyController>();
             if (enemy != null)
             {
-                enemy.DamagedHandler(damage);
+                enemy.Damaged(damage);
             }
         }
     }

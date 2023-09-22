@@ -615,6 +615,7 @@ MonoBehaviour:
   isDie: 0
   attackType: 
   percent: 0
+  dropItem: []
 --- !u!114 &-7681544876962112987
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -627,9 +628,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 543f9e3fd40ac844ba57bfd061d5f67f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  healthGUI: {fileID: 4746775073523050757}
   enemyStat: {fileID: 0}
-  ani: {fileID: 0}
-  healthGUI: {fileID: 0}
   curHex: {fileID: 0}
 --- !u!114 &4482755274537034461
 MonoBehaviour:
@@ -2590,6 +2590,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6b35e559e2048424d8b237e3718e2058, type: 3}
+--- !u!114 &4746775073523050757 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2134647276887054886, guid: 6b35e559e2048424d8b237e3718e2058,
+    type: 3}
+  m_PrefabInstance: {fileID: 6647353340376036131}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c2f6ff36458f1742b1f7fd7e8e9b0d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &6475395028725073557 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 404512375063164342, guid: 6b35e559e2048424d8b237e3718e2058,

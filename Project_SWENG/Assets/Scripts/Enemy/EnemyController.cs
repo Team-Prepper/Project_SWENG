@@ -3,11 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyController : MonoBehaviour
-{
-    public EnemyStat enemyStat;
-    public Animator ani;
+public class EnemyController : Character {
+
     [SerializeField] GUI_EnemyHealth healthGUI;
+
+    public EnemyStat enemyStat;
 
     public Hex curHex;
 
@@ -16,39 +16,29 @@ public class EnemyController : MonoBehaviour
         if(enemyStat == null)
             enemyStat = GetComponent<EnemyStat>();
         
-        if(ani == null)
-            ani = GetComponent<Animator>();
-
         if(healthGUI == null)
             healthGUI = GetComponentInChildren<GUI_EnemyHealth>();
+
+        stat.curHP = enemyStat.maxHp;
     }
 
-    public void DamagedHandler(int damage)
+    public override int GetAttackValue() {
+        Debug.Log(enemyStat.atk);
+        return enemyStat.atk;
+    }
+
+    public override void DamageAct()
     {
-        if (enemyStat.isDie) return;
-
-        Debug.Log("Enemy Take Damage : " + damage);
-
-        enemyStat.curHp -= damage;
-
-        if (enemyStat.curHp <= 0)
-        {
-            enemyStat.curHp = 0;
-            enemyStat.isDie = true;
-            ani.SetTrigger("Die");
-            healthGUI.UpdateGUI(0);
-            EnemyDeadHandler();
-            return;
-        }
-        ani.SetTrigger("Hit");
-        healthGUI.UpdateGUI((float)enemyStat.curHp / enemyStat.maxHp);
+        healthGUI.UpdateGUI((float)stat.curHP / enemyStat.maxHp);
     }
 
-    private void EnemyDeadHandler()
+    public override void DieAct()
     {
         curHex = HexGrid.Instance.GetHexFromPosition(this.gameObject.transform.position);
         curHex.Entity = null;
         EnemySpawner.Instance.enemyList.Remove(this.gameObject);
+
+        healthGUI.UpdateGUI(0);
         DropItem();
         Destroy(this.gameObject, 1f);
     }

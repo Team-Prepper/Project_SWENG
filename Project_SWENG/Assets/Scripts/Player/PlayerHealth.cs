@@ -3,60 +3,56 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerHealth : MonoBehaviour
+public class PlayerHealth : Character
 {
-    private Animator _animator;
-
-    bool isDead;
-
-    [SerializeField] int curHealth;
     public int maxHealth;
+
+    [SerializeField] int atkPoint = 3;
 
     public static event EventHandler<IntEventArgs> EventRecover;
     public static event EventHandler<IntEventArgs> EventDamaged;
 
+    private Unit unit;
+
     private void Awake()
     {
-        _animator = GetComponent<Animator>();   
-    }
-
-    private void Start()
-    {
-        curHealth = maxHealth;
+        stat.curHP = maxHealth;
+        unit = GetComponent<Unit>();
     }
 
     public int Recover(int val)
     {
-        if (isDead) return 0;
+        if (stat.curHP <= 0) return 0;
 
-        if (curHealth + val > maxHealth)
+        stat.curHP += val;
+
+        if (stat.curHP > maxHealth)
         {
-            curHealth = maxHealth;
+            stat.curHP = maxHealth;
         }
-        else
-        {
-            curHealth += val;
-        }
-        EventRecover?.Invoke(this, new IntEventArgs(curHealth));
-        return curHealth;
+
+        EventRecover?.Invoke(this, new IntEventArgs(stat.curHP));
+        return stat.curHP;
     }
 
-    public int Damaged(int val)
+    public bool CanAttack() {
+        return unit.dicePoints >= atkPoint;
+    }
+
+    public override void AttackAct() {
+        unit.dicePoints -= atkPoint;
+        EffectManager.Instance.SetTarget(gameObject);
+        StartCoroutine(EffectManager.Instance.ShowImpactVfx(0));
+    }
+
+    public override void DamageAct()
     {
-        if (isDead) return 0;
+        base.DamageAct();
+        EventDamaged?.Invoke(this, new IntEventArgs(stat.curHP));
+    }
 
-        if (val > curHealth)
-        {
-            curHealth = 0;
-            isDead = true;
-            _animator.SetTrigger("Die");
-            EventDamaged?.Invoke(this, new IntEventArgs(0));
-            return 0;
-        }
-
-        curHealth -= val;
-        _animator.SetTrigger("Hit");
-        EventDamaged?.Invoke(this, new IntEventArgs(curHealth));
-        return curHealth;
+    public override void DieAct()
+    {
+        base.DieAct();
     }
 }

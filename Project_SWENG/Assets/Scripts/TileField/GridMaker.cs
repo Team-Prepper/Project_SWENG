@@ -33,7 +33,9 @@ public class GridMaker : MonoBehaviour
     [SerializeField] TileData _tileIsland= new TileData(null, 5);
 
     [Space(10)]
-    public GameObject[] hexGround; // 0 Groudn 1 River
+    public GameObject hexGround;
+    public GameObject hexRiver;
+
     public Material[] materials;
     [Space(20)]
     public int gridSizeN = 7; // ?????? ???? N
@@ -45,7 +47,6 @@ public class GridMaker : MonoBehaviour
     private float hexHeight = 5.0f;  // vertical
 
     private NavMeshSurface navMeshSurface;
-    private MaterialsConverter materialsConverter;
 
     public static event EventHandler EventBuildComplete;
     public static event EventHandler EventSetNavComplete;
@@ -54,7 +55,6 @@ public class GridMaker : MonoBehaviour
     private void Awake()
     {
         navMeshSurface = GetComponent<NavMeshSurface>();
-        materialsConverter = GetComponent<MaterialsConverter>();
     }
 
     private void Start()
@@ -84,23 +84,23 @@ public class GridMaker : MonoBehaviour
                 switch (Random.Range(0, 10))
                 {
                     case 0:
-                        HexTileSpawn(_tileDungon, xPos, zPos, 10);
+                        _HexTileSpawn(_tileDungon, xPos, zPos, 10);
                         break;
                     case 1:
-                        HexTileSpawn(_tileHill, xPos, zPos, 10);
+                        _HexTileSpawn(_tileHill, xPos, zPos, 10);
                         break;
                     case 2:
-                        HexTileSpawn(_tileCastle, xPos, zPos, 10);
+                        _HexTileSpawn(_tileCastle, xPos, zPos, 10);
                         break;
                     case 3:
-                        HexTileSpawn(_tileVillage, xPos, zPos, 10);
+                        _HexTileSpawn(_tileVillage, xPos, zPos, 10);
                         break;
                     case 4:
                     case 5:
                         OceanSpawn(_tileOcean, xPos, zPos);
                         break;
                     default:
-                        HexTileSpawn(_tileRock, xPos, zPos, 10);
+                        _HexTileSpawn(_tileRock, xPos, zPos, 10);
                         break;
                 }
             }
@@ -121,7 +121,7 @@ public class GridMaker : MonoBehaviour
         return hex;
     }
 
-    Hex HexTileSpawn(TileData selectedData, float xPos, float zPos, int percentage)
+    private Hex _HexTileSpawn(TileData selectedData, float xPos, float zPos, int percentage)
     {
         //float setHigh = Random.Range(0, 2) * 0.5f;
         Vector3 spawnPos = new Vector3(xPos, 0, zPos);
@@ -154,7 +154,7 @@ public class GridMaker : MonoBehaviour
         return hex;
     }
 
-    Hex _SpawnHexTile(TileData data, Vector3 spawnPos)
+    private Hex _SpawnHexTile(TileData data, Vector3 spawnPos)
     {
 
         GameObject tile = Instantiate(data.tiles[Random.Range(0, data.tiles.Length)], spawnPos, Quaternion.Euler(0f, Random.Range(0, 6) * 60, 0f));
@@ -163,7 +163,7 @@ public class GridMaker : MonoBehaviour
         Hex hex = Instantiate(_hexPrefab, spawnPos, Quaternion.identity);
         hex.WhenCreate(tile, transform, data.cost);
 
-        GameObject iHexGround = Instantiate(hexGround[0], spawnPos, Quaternion.identity);
+        GameObject iHexGround = Instantiate(hexGround, spawnPos, Quaternion.identity);
         iHexGround.layer = LayerMask.NameToLayer("HexTileGround");
         iHexGround.transform.SetParent(hex.transform);
 
@@ -185,7 +185,7 @@ public class GridMaker : MonoBehaviour
             navMeshSurface.BuildNavMesh();
 
 
-        materialsConverter.ConvertMat(objTilesGo);
+        MaterialsConverter.ConvertMat(objTilesGo);
         EventSetNavComplete?.Invoke(this, EventArgs.Empty);
     }
 }

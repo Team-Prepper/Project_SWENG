@@ -27,7 +27,7 @@ public class MovementSystem : MonoSingleton<MovementSystem>
     {
         CalcualteRange(selectedUnit);
 
-        Vector3Int unitPos = HexGrid.Instance.GetClosestHex(selectedUnit.CurPos);
+        Vector3Int unitPos = HexGrid.Instance.GetClosestHex(selectedUnit.transform.position);
 
         
         foreach (Vector3Int hexPosition in movementRange.GetRangePositions())
@@ -40,7 +40,7 @@ public class MovementSystem : MonoSingleton<MovementSystem>
 
     public void CalcualteRange(Unit selectedUnit)
     {
-        movementRange = GraphSearch.BFSGetRange(HexGrid.Instance, HexGrid.Instance.GetClosestHex(selectedUnit.CurPos), selectedUnit.dicePoints);
+        movementRange = GraphSearch.BFSGetRange(HexGrid.Instance.GetClosestHex(selectedUnit.transform.position), selectedUnit.dicePoints);
     }
 
 
@@ -65,6 +65,8 @@ public class MovementSystem : MonoSingleton<MovementSystem>
                 Hex pathHex = HexGrid.Instance.GetTileAt(hexPosition);
                 pathHex.HighlightPath();
                 moveNumPrefabs[Mathf.Clamp(i += pathHex.cost, 0, 9)].transform.position = pathHex.transform.position;
+
+                Debug.Log(i);
             }
         }
     }

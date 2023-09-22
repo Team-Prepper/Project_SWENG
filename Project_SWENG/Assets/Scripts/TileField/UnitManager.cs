@@ -5,16 +5,9 @@ using UnityEngine;
 public class UnitManager : MonoSingleton<UnitManager>
 {
 
-    [SerializeField]
-    private MovementSystem movementSystem;
-
     public Unit selectedUnit;
     private Hex previouslySelectedHex;
 
-    private void Awake()
-    {
-
-    }
     // Unit Selected
     public void HandleUnitSelected(GameObject unit)
     {
@@ -53,7 +46,9 @@ public class UnitManager : MonoSingleton<UnitManager>
         {
             if (AttackManager.Instance.IsHexInAtkRange(selectedHex.HexCoords))
             {
-                AttackManager.Instance.BaseAtkHandler(selectedHex);
+                Character player = GameManager.Instance.player.GetComponent<PlayerHealth>();
+                AttackManager.Instance.BaseAtkHandler(player, selectedHex);
+                AttackManager.Instance.HideAtkRange();
             }
             else
             {
@@ -84,14 +79,14 @@ public class UnitManager : MonoSingleton<UnitManager>
 
         this.selectedUnit = unitReference;
         this.selectedUnit.Select();
-        movementSystem.ShowRange(this.selectedUnit); // cal BFS
+        MovementSystem.Instance.ShowRange(this.selectedUnit); // cal BFS
     }
 
     private void ClearOldSelection()
     {
         previouslySelectedHex = null;
         this.selectedUnit.Deselect();
-        movementSystem.HideRange();
+        MovementSystem.Instance.HideRange();
         this.selectedUnit = null;
 
     }
@@ -102,12 +97,12 @@ public class UnitManager : MonoSingleton<UnitManager>
         {
             // ask about Path
             previouslySelectedHex = selectedHex;
-            movementSystem.ShowPath(selectedHex.HexCoords);
+            MovementSystem.Instance.ShowPath(selectedHex.HexCoords);
         }
         else
         {
             // Move Unit
-            movementSystem.MoveUnit(selectedUnit);
+            MovementSystem.Instance.MoveUnit(selectedUnit);
             ClearOldSelection();
         }
     }
@@ -126,7 +121,7 @@ public class UnitManager : MonoSingleton<UnitManager>
 
     private bool HandleHexOutOfRange(Vector3Int hexPosition)
     {
-        if (movementSystem.IsHexInRange(hexPosition) == false)
+        if (MovementSystem.Instance.IsHexInRange(hexPosition) == false)
         {
             Debug.Log("Hex Out of range!");
             return true;

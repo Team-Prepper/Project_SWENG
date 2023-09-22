@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class AttackManager : MonoSingleton<AttackManager>
 {
-    [SerializeField] int atkPoint = 3;
     [SerializeField] int baseAtkPower = 10;
     [SerializeField] GameObject[] atkMarkers;
     
@@ -19,15 +18,11 @@ public class AttackManager : MonoSingleton<AttackManager>
 
     // TODO : get status about player 
 
-    public static event EventHandler<IntEventArgs> EventBaseAtk; // dicePoint
+    //public static event EventHandler<IntEventArgs> EventBaseAtk; // dicePoint
 
     public void ReadyToAttack()
     {
         MovementSystem.Instance.HideRange();
-
-        player = GameManager.Instance.player.GetComponent<Unit>();
-        if (player == null || player.dicePoints < atkPoint) 
-            return;
 
         Vector3Int curHexPos =  HexGrid.Instance.GetClosestHex(GameManager.Instance.player.transform.position);
 
@@ -45,23 +40,21 @@ public class AttackManager : MonoSingleton<AttackManager>
         GameManager.Instance.gamePhase = GameManager.Phase.AttackPhase;
     }
 
-    public void BaseAtkHandler(Hex selectedHex)
-    {
-        if(!isAtkReady) return;
+    public void AttackTo(Character attacker, Character defender) {
 
-        player.dicePoints -= atkPoint;
+        defender.Damaged(attacker.GetAttackValue());
 
-        HideAtkRange();
-        Animator ani = GameManager.Instance.player.GetComponent<Animator>();
-
-        GameManager.Instance.player.gameObject.transform.LookAt(HexGrid.Instance.GetTileAt(atkHexPos).transform.position);
-        
-        ani.SetTrigger("Attack");
-        EventBaseAtk?.Invoke(this, new IntEventArgs(player.dicePoints));
-        Attack(selectedHex, baseAtkPower);
-        EffectManager.Instance.SetTarget(player.gameObject);
-        StartCoroutine(EffectManager.Instance.ShowImpactVfx(0));
     }
+
+    public void BaseAtkHandler(Character attacker, Hex targetHex)
+    {
+        attacker.Attack(targetHex.transform.position);
+
+        if (!targetHex.Entity || !targetHex.Entity.TryGetComponent(out Character target)) return;
+
+        AttackTo(attacker, target);
+    }
+
 
     public void Attack(Hex selectedHex, int atkPower)
     {

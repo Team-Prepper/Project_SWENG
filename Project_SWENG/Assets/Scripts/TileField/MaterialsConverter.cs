@@ -2,11 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MaterialsConverter : MonoBehaviour
-{
-    [SerializeField] GridMaker gridMaker;
+public class MaterialsConverter {
 
-    public void ConvertMat(List<GameObject> objTiles)
+    static public void ConvertMat(List<GameObject> objTiles)
     {
         // CHK
         Debug.Log("Chg MAT");
@@ -23,19 +21,18 @@ public class MaterialsConverter : MonoBehaviour
             {
                 Hex aroundTileHex = HexGrid.Instance.GetTileAt(aroundTile).GetComponent<Hex>();
 
-                if (aroundTileHex != null)
-                {
+                if (aroundTileHex == null) continue;
+                if (aroundTileHex.tileType == Hex.Type.Object || aroundTileHex.tileType == Hex.Type.Obstacle || aroundTileHex.tileType == Hex.Type.Water) continue;
 
-                    if (aroundTileHex.tileType == Hex.Type.Object || aroundTileHex.tileType == Hex.Type.Obstacle || aroundTileHex.tileType == Hex.Type.Water) continue;
-                    Transform selectFolderInAroundTile = aroundTileHex.gameObject.transform.Find("Main");
-                    Renderer rendererInAroundTile = selectFolderInAroundTile.GetComponentInChildren<Renderer>();
-                    if (rendererInAroundTile != null)
-                    {
-                        rendererInAroundTile.material = newMat;
-                    }
+                Transform selectFolderInAroundTile = aroundTileHex.gameObject.transform.Find("Main");
+                Renderer rendererInAroundTile = selectFolderInAroundTile.GetComponentInChildren<Renderer>();
+                if (rendererInAroundTile != null)
+                {
+                    rendererInAroundTile.material = newMat;
                 }
+
             }
         }
-
     }
+
 }

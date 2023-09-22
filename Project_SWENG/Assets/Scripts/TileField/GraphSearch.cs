@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class GraphSearch
 {
-    public static BFSResult BFSGetRange(HexGrid hexGrid, Vector3Int startPoint, int movementPoints)
+    public static BFSResult BFSGetRange(Vector3Int startPoint, int movementPoints)
     {
         Dictionary<Vector3Int, Vector3Int?> visitedNodes = new Dictionary<Vector3Int, Vector3Int?>();
         Dictionary<Vector3Int, int> costSoFar = new Dictionary<Vector3Int, int>();
@@ -19,12 +19,12 @@ public class GraphSearch
         while (nodesToVisitQueue.Count > 0)
         {
             Vector3Int currentNode = nodesToVisitQueue.Dequeue();
-            foreach (Vector3Int neighbourPosition in hexGrid.GetNeighboursFor(currentNode))
+            foreach (Vector3Int neighbourPosition in HexGrid.Instance.GetNeighboursFor(currentNode))
             {
-                if (hexGrid.GetTileAt(neighbourPosition).IsObstacle())
+                if (HexGrid.Instance.GetTileAt(neighbourPosition).IsObstacle())
                     continue;
 
-                int nodeCost = hexGrid.GetTileAt(neighbourPosition).GetCost();
+                int nodeCost = HexGrid.Instance.GetTileAt(neighbourPosition).GetCost();
                 int currentCost = costSoFar[currentNode];
                 int newCost = currentCost + nodeCost;
 
