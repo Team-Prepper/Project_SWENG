@@ -4,9 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class CloudBox : MonoBehaviour
+public class CloudBox : MonoSingleton<CloudBox>
 {
-    public static CloudBox Instance;
 
     [SerializeField] List<GameObject> clouds = new List<GameObject>();
 
@@ -14,9 +13,8 @@ public class CloudBox : MonoBehaviour
 
     List<Vector3Int> closeIndex = new List<Vector3Int>();
 
-    private void Awake()
+    protected override void OnCreate()
     {
-        Instance = this;
         GridMaker.EventSetNavComplete += CreatCloud;
     }
 
@@ -25,12 +23,12 @@ public class CloudBox : MonoBehaviour
 
         foreach (var tile in HexGrid.Instance.hexTileDict.Keys)
         {
-            GameObject cloud;
-            Hex cloudPos;
             
             cloudBox.Add(tile, Instantiate(clouds[Random.Range(0, clouds.Count)]));
-            cloudBox.TryGetValue(tile, out cloud);
-            HexGrid.Instance.hexTileDict.TryGetValue(tile, out cloudPos);
+
+            cloudBox.TryGetValue(tile, out GameObject cloud);
+            HexGrid.Instance.hexTileDict.TryGetValue(tile, out Hex cloudPos);
+
             cloud.transform.position = cloudPos.gameObject.transform.position + new Vector3(0f, 3f, 0f);
             cloud.transform.SetParent(gameObject.transform);
             

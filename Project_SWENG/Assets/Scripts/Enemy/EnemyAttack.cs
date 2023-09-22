@@ -22,9 +22,10 @@ public class EnemyAttack : MonoBehaviour
             GameObject entity = curHex.Entity;
             if (entity != null && entity.CompareTag("Player"))
             {
-                this.gameObject.transform.LookAt(entity.transform);
-                enemyController.ani.SetTrigger("Attack");
-                curHex.DamageToEntity(attackPower);
+                //this.gameObject.transform.LookAt(entity.transform);
+                //enemyController.Attack();
+                AttackManager.Instance.BaseAtkHandler(enemyController, curHex);
+                //curHex.DamageToEntity(attackPower);
             }
         }
     }

@@ -10,15 +10,8 @@ public class PlayerSpawner : MonoBehaviour
 {
     [Header("SystemManager")]
 
-    [SerializeField] GridMaker gridMaker;
     [SerializeField] GameObject playerPrefab;
-
-    public GameObject player;
-
     public UnityEvent<GameObject> EventPlayerSpawn;
-
-    public delegate void GameObjectEventUnit(GameObject obj);
-    public static GameObjectEventUnit eventUnit;
 
     void Awake()
     {
@@ -33,8 +26,9 @@ public class PlayerSpawner : MonoBehaviour
 
         Transform spawnPos = spawnHex.transform;
         Debug.Log("SpawnPos : " + spawnPos.position);
-        player = Instantiate(playerPrefab, spawnPos.position, spawnPos.rotation);
-        player.GetComponent<Unit>().CurPos = spawnPos.position;
+
+        GameObject player = Instantiate(playerPrefab, spawnPos.position, spawnPos.rotation);
+
         UIManager.OpenGUI<GUI_PlayerInfor>("UnitInfor").SetPlayer(player);
         spawnHex.Entity = player;
 

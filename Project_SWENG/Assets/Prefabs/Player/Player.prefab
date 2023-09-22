@@ -17262,7 +17262,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22a3e8949fc20ff459d0df18ffee5531, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  curHealth: 0
+  anim: {fileID: 0}
+  stat:
+    Lv: 0
+    Exp: 0
+    curHP: 100
   maxHealth: 100
 --- !u!65 &8123138769544760882
 BoxCollider:
