@@ -23,6 +23,7 @@ public class GUI_PlayerInfor : GUIFullScreen
         _target = target;
 
         _targetUnit = target.GetComponent<Unit>();
+        _targetPlayer = target.GetComponent<PlayerHealth>();
         _playerHealth.SetPlayerHealth(target);
 
     }
@@ -37,7 +38,7 @@ public class GUI_PlayerInfor : GUIFullScreen
     }
 
     public void AttackButton() {
-        if (_targetPlayer.CanAttack()) return;
+        if (!_targetPlayer.CanAttack()) return;
         
         AttackManager.Instance.ReadyToAttack();
     }
