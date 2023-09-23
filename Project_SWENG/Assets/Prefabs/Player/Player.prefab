@@ -5362,7 +5362,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &831888542836439139
 Transform:
   m_ObjectHideFlags: 0
@@ -6068,7 +6068,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &831848868466090619
 Transform:
   m_ObjectHideFlags: 0
@@ -17176,52 +17176,761 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enabledObjects: []
   male:
-    headAllElements: []
-    headNoElements: []
-    eyebrow: []
-    facialHair: []
-    torso: []
-    arm_Upper_Right: []
-    arm_Upper_Left: []
-    arm_Lower_Right: []
-    arm_Lower_Left: []
-    hand_Right: []
-    hand_Left: []
-    hips: []
-    leg_Right: []
-    leg_Left: []
+    headAllElements:
+    - {fileID: 829599154493735261}
+    - {fileID: 830912181153512103}
+    - {fileID: 829114489930083969}
+    - {fileID: 830861940724569963}
+    - {fileID: 828705587994722329}
+    - {fileID: 828705477987625565}
+    - {fileID: 829349014191793153}
+    - {fileID: 829267273143579443}
+    - {fileID: 829129151794180243}
+    - {fileID: 828680870602416189}
+    - {fileID: 828752677500420917}
+    - {fileID: 829306629358111521}
+    - {fileID: 830778790641091895}
+    - {fileID: 829484487447184995}
+    - {fileID: 830839857007733187}
+    - {fileID: 829375888503607595}
+    - {fileID: 829001171674670145}
+    - {fileID: 828861610351669441}
+    - {fileID: 830803509682578573}
+    - {fileID: 828764115188588049}
+    - {fileID: 828689794781249507}
+    - {fileID: 829483895754173105}
+    - {fileID: 829253239123003529}
+    headNoElements:
+    - {fileID: 830828045116587941}
+    - {fileID: 828780294110780779}
+    - {fileID: 830848023212363575}
+    - {fileID: 828862903489948547}
+    - {fileID: 830789724100489961}
+    - {fileID: 829306302965571057}
+    - {fileID: 828760984769837551}
+    - {fileID: 829320427361679659}
+    - {fileID: 829467925872293383}
+    - {fileID: 828836351295723147}
+    - {fileID: 829155757052473631}
+    - {fileID: 829101765646467687}
+    - {fileID: 828988953127976009}
+    eyebrow:
+    - {fileID: 828945434976427711}
+    - {fileID: 828913463444485829}
+    - {fileID: 830828147572915995}
+    - {fileID: 829191410085613687}
+    - {fileID: 828861866300026641}
+    - {fileID: 829430967474489393}
+    - {fileID: 830817535762911073}
+    - {fileID: 828904633063656069}
+    - {fileID: 828941730586162509}
+    - {fileID: 828840923435538715}
+    facialHair:
+    - {fileID: 829132216552304521}
+    - {fileID: 828992721888449013}
+    - {fileID: 828668502926663855}
+    - {fileID: 829192592291890169}
+    - {fileID: 829018772828073171}
+    - {fileID: 828674333899916621}
+    - {fileID: 829421160525321293}
+    - {fileID: 829471829672880379}
+    - {fileID: 828978924096895631}
+    - {fileID: 829437525689111933}
+    - {fileID: 829144680993360393}
+    - {fileID: 829050819340262365}
+    - {fileID: 829191626324174285}
+    - {fileID: 829317836491155875}
+    - {fileID: 829095130384669291}
+    - {fileID: 829440411042460199}
+    - {fileID: 829123803031302159}
+    - {fileID: 828853465978646367}
+    torso:
+    - {fileID: 829161261268928751}
+    - {fileID: 829093070311146197}
+    - {fileID: 829166630166183209}
+    - {fileID: 830776282808493183}
+    - {fileID: 830777294259138527}
+    - {fileID: 830888959710122031}
+    - {fileID: 829583776387669039}
+    - {fileID: 830797868160197061}
+    - {fileID: 828711135609560147}
+    - {fileID: 829482981958169955}
+    - {fileID: 830895125314084669}
+    - {fileID: 829419384583962133}
+    - {fileID: 828818197761115397}
+    - {fileID: 829227320702274453}
+    - {fileID: 829053955502950693}
+    - {fileID: 829256394329787795}
+    - {fileID: 828996210009885049}
+    - {fileID: 828950838856639883}
+    - {fileID: 829498340702730351}
+    - {fileID: 829248323670253591}
+    - {fileID: 830831988149097359}
+    - {fileID: 828939371210442215}
+    - {fileID: 828994155620354639}
+    - {fileID: 829006882936092651}
+    - {fileID: 829206817256268661}
+    - {fileID: 829259270819593919}
+    - {fileID: 828782752517157769}
+    - {fileID: 828904464046702127}
+    - {fileID: 829065673322237345}
+    arm_Upper_Right:
+    - {fileID: 829259675931476517}
+    - {fileID: 829320961330921201}
+    - {fileID: 829046115836573129}
+    - {fileID: 830894975426661271}
+    - {fileID: 828767722187564015}
+    - {fileID: 829321238310262097}
+    - {fileID: 829061457585136383}
+    - {fileID: 828896103907632131}
+    - {fileID: 829177633734633841}
+    - {fileID: 829168813321091737}
+    - {fileID: 829432606547267227}
+    - {fileID: 828928453413301199}
+    - {fileID: 829330886809697055}
+    - {fileID: 829159758866284719}
+    - {fileID: 829037467201388955}
+    - {fileID: 828780227104809929}
+    - {fileID: 830790273952333911}
+    - {fileID: 828792752272294713}
+    - {fileID: 828780590711694395}
+    - {fileID: 829371513490720543}
+    - {fileID: 829354310827792291}
+    arm_Upper_Left:
+    - {fileID: 830812880898165887}
+    - {fileID: 829097131725838565}
+    - {fileID: 829257691952602033}
+    - {fileID: 828959903551765169}
+    - {fileID: 829477721137163921}
+    - {fileID: 829116840329037847}
+    - {fileID: 828958869920974167}
+    - {fileID: 828915769320631183}
+    - {fileID: 829321041900921365}
+    - {fileID: 830793656310848497}
+    - {fileID: 829406628449197507}
+    - {fileID: 828720973400957361}
+    - {fileID: 830807404003594239}
+    - {fileID: 829220612231587101}
+    - {fileID: 829296031166141057}
+    - {fileID: 828885735093078635}
+    - {fileID: 828932007208019433}
+    - {fileID: 828878447633612039}
+    - {fileID: 828965332076746141}
+    - {fileID: 829020845405170427}
+    - {fileID: 829342887179850245}
+    arm_Lower_Right:
+    - {fileID: 830913795107016907}
+    - {fileID: 829109449227263849}
+    - {fileID: 829022344527388713}
+    - {fileID: 828997055095368385}
+    - {fileID: 828679056569056603}
+    - {fileID: 828891373282444625}
+    - {fileID: 830885442788631459}
+    - {fileID: 830821776011194725}
+    - {fileID: 828725645383747337}
+    - {fileID: 829091464690730537}
+    - {fileID: 828876416321221547}
+    - {fileID: 829499370765454097}
+    - {fileID: 830803821204894171}
+    - {fileID: 828879611922007049}
+    - {fileID: 829185823821841617}
+    - {fileID: 829386918897117095}
+    - {fileID: 828928370063624997}
+    - {fileID: 828719757202623527}
+    - {fileID: 829365192634769931}
+    arm_Lower_Left:
+    - {fileID: 829229725985802029}
+    - {fileID: 829256404346380439}
+    - {fileID: 829605484430723229}
+    - {fileID: 829244781097629249}
+    - {fileID: 828855353982338987}
+    - {fileID: 829410704431414377}
+    - {fileID: 828978326567913155}
+    - {fileID: 830837809202639145}
+    - {fileID: 828998504346127015}
+    - {fileID: 829337692251097165}
+    - {fileID: 829137700227739507}
+    - {fileID: 829005159734286383}
+    - {fileID: 829469443388035325}
+    - {fileID: 828686137444027717}
+    - {fileID: 828922305128277811}
+    - {fileID: 829382702885610013}
+    - {fileID: 828880187138266459}
+    - {fileID: 829241365328632533}
+    - {fileID: 830876887790884801}
+    hand_Right:
+    - {fileID: 829058345027657389}
+    - {fileID: 829578642559650003}
+    - {fileID: 829389428093858535}
+    - {fileID: 829292091611240561}
+    - {fileID: 828996222642645979}
+    - {fileID: 828725581036738589}
+    - {fileID: 829014744889833641}
+    - {fileID: 829591472215777597}
+    - {fileID: 829358571079104187}
+    - {fileID: 828699828246954211}
+    - {fileID: 830865804223462107}
+    - {fileID: 829411640157791645}
+    - {fileID: 829164084880339585}
+    - {fileID: 830899028425762019}
+    - {fileID: 829271871167485067}
+    - {fileID: 829230323535510533}
+    - {fileID: 828978836271370099}
+    - {fileID: 829288081503599693}
+    hand_Left:
+    - {fileID: 829409874117001553}
+    - {fileID: 829500483112315897}
+    - {fileID: 828762363143300937}
+    - {fileID: 829181836502935293}
+    - {fileID: 829178704471480189}
+    - {fileID: 828893748594689925}
+    - {fileID: 829448576002574531}
+    - {fileID: 829610219590419433}
+    - {fileID: 830842989517348335}
+    - {fileID: 830881381602960473}
+    - {fileID: 829221314254557461}
+    - {fileID: 828810463200671297}
+    - {fileID: 829254715853885967}
+    - {fileID: 828842033541096133}
+    - {fileID: 829265622018708173}
+    - {fileID: 829061991467279845}
+    - {fileID: 829291619933318491}
+    - {fileID: 828970966345186881}
+    hips:
+    - {fileID: 829473520988650431}
+    - {fileID: 829014769338488711}
+    - {fileID: 828675441900331029}
+    - {fileID: 829278761321674265}
+    - {fileID: 828692199215597549}
+    - {fileID: 828717640024432013}
+    - {fileID: 828724157452955113}
+    - {fileID: 828773909350258407}
+    - {fileID: 829241096771109445}
+    - {fileID: 829257023456773599}
+    - {fileID: 828839406165562829}
+    - {fileID: 829131689101871329}
+    - {fileID: 829422767083190777}
+    - {fileID: 829382385561432939}
+    - {fileID: 830791701577491701}
+    - {fileID: 830784982117780823}
+    - {fileID: 829159012072952741}
+    - {fileID: 828816851239505071}
+    - {fileID: 829160110706565937}
+    - {fileID: 830785816791576169}
+    - {fileID: 830827830436643697}
+    - {fileID: 828664871592774967}
+    - {fileID: 829141252334012449}
+    - {fileID: 829016595922835381}
+    - {fileID: 829500195547770625}
+    - {fileID: 829006293460758443}
+    - {fileID: 829457743379177263}
+    - {fileID: 830833982478654283}
+    - {fileID: 829592018628455487}
+    leg_Right:
+    - {fileID: 830864419297564161}
+    - {fileID: 829492916142291941}
+    - {fileID: 829337001139979539}
+    - {fileID: 828819207298705075}
+    - {fileID: 828796854981397527}
+    - {fileID: 828940130539775973}
+    - {fileID: 829391964584252631}
+    - {fileID: 828732420234714879}
+    - {fileID: 829587801284611325}
+    - {fileID: 830823061021628895}
+    - {fileID: 829045129406429959}
+    - {fileID: 829270526953830011}
+    - {fileID: 829022699562203593}
+    - {fileID: 829446616983464061}
+    - {fileID: 830806692139850511}
+    - {fileID: 829611780702471513}
+    - {fileID: 829059391592179337}
+    - {fileID: 828901688004765987}
+    - {fileID: 829023040836002881}
+    - {fileID: 829020004026030771}
+    leg_Left:
+    - {fileID: 828958991972908095}
+    - {fileID: 828776233708318229}
+    - {fileID: 828735087558034485}
+    - {fileID: 829137888997294655}
+    - {fileID: 828800388061988219}
+    - {fileID: 829419499909086191}
+    - {fileID: 828815751283373849}
+    - {fileID: 828694920515902907}
+    - {fileID: 830825840569325595}
+    - {fileID: 829583181407858901}
+    - {fileID: 828702264033941665}
+    - {fileID: 828888513085745847}
+    - {fileID: 829351762537148871}
+    - {fileID: 829024920273756845}
+    - {fileID: 829124187662148219}
+    - {fileID: 829484696607531571}
+    - {fileID: 830910009283634649}
+    - {fileID: 828728010140063465}
+    - {fileID: 828778901207060667}
+    - {fileID: 829044743656090647}
   female:
-    headAllElements: []
-    headNoElements: []
-    eyebrow: []
+    headAllElements:
+    - {fileID: 829089708066433589}
+    - {fileID: 828933620897854011}
+    - {fileID: 829003247487119645}
+    - {fileID: 828888276645060251}
+    - {fileID: 829215653479706275}
+    - {fileID: 828969928246452911}
+    - {fileID: 828714800196766747}
+    - {fileID: 828822331773999923}
+    - {fileID: 830898485923254471}
+    - {fileID: 828813644636279983}
+    - {fileID: 830813072111274291}
+    - {fileID: 828721404198316997}
+    - {fileID: 829298300502925931}
+    - {fileID: 830780722003440369}
+    - {fileID: 829505197039770251}
+    - {fileID: 828860880144029369}
+    - {fileID: 829587515977578251}
+    - {fileID: 828881159135692557}
+    - {fileID: 829588385574372099}
+    - {fileID: 828931237005959471}
+    - {fileID: 830912229681624403}
+    - {fileID: 829053296174482573}
+    - {fileID: 830896365958452549}
+    headNoElements:
+    - {fileID: 828913091908157343}
+    - {fileID: 829464158005792589}
+    - {fileID: 830812295647936023}
+    - {fileID: 829032606185099399}
+    - {fileID: 829396594845341985}
+    - {fileID: 829149470463312521}
+    - {fileID: 828845873555450385}
+    - {fileID: 829174794338646445}
+    - {fileID: 829400224629857451}
+    - {fileID: 828931460800803231}
+    - {fileID: 829124724826942187}
+    - {fileID: 829481166161580719}
+    - {fileID: 829401503342462661}
+    eyebrow:
+    - {fileID: 829491665934059957}
+    - {fileID: 829263943777568609}
+    - {fileID: 828882652058770123}
+    - {fileID: 829382865060904239}
+    - {fileID: 829046302130821175}
+    - {fileID: 830865979261099225}
+    - {fileID: 829406722510085831}
     facialHair: []
-    torso: []
-    arm_Upper_Right: []
-    arm_Upper_Left: []
-    arm_Lower_Right: []
-    arm_Lower_Left: []
-    hand_Right: []
-    hand_Left: []
-    hips: []
-    leg_Right: []
-    leg_Left: []
+    torso:
+    - {fileID: 830811944195345881}
+    - {fileID: 828796782419523975}
+    - {fileID: 829057020885138565}
+    - {fileID: 829032759829060221}
+    - {fileID: 829368400835612605}
+    - {fileID: 829252062928603551}
+    - {fileID: 830818748706557029}
+    - {fileID: 828966810977056299}
+    - {fileID: 829416201067152689}
+    - {fileID: 829489435268797727}
+    - {fileID: 829055654429980913}
+    - {fileID: 828787976746021359}
+    - {fileID: 830799097014497087}
+    - {fileID: 828821124491455337}
+    - {fileID: 828732453217551205}
+    - {fileID: 828970805775859059}
+    - {fileID: 830840030650216067}
+    - {fileID: 828863609899688095}
+    - {fileID: 828696268063625721}
+    - {fileID: 828954590579901031}
+    - {fileID: 829463215941397331}
+    - {fileID: 829365585768922157}
+    - {fileID: 828930365059625961}
+    - {fileID: 829361487637208627}
+    - {fileID: 828822515805450313}
+    - {fileID: 829588930212805107}
+    - {fileID: 828813384178295751}
+    - {fileID: 829431290043102293}
+    - {fileID: 830887180940568647}
+    arm_Upper_Right:
+    - {fileID: 829131639360218679}
+    - {fileID: 829276817063848555}
+    - {fileID: 830834611909843875}
+    - {fileID: 829497068589231069}
+    - {fileID: 829241815684968237}
+    - {fileID: 829361302340999965}
+    - {fileID: 829497105301842315}
+    - {fileID: 829248430952660391}
+    - {fileID: 828890702150736963}
+    - {fileID: 829053513822934387}
+    - {fileID: 829112727351574657}
+    - {fileID: 830893939420657591}
+    - {fileID: 828926219408733209}
+    - {fileID: 829027785348103741}
+    - {fileID: 830808073696325199}
+    - {fileID: 829105626533283149}
+    - {fileID: 829457125808567615}
+    - {fileID: 828788242720162227}
+    - {fileID: 829119720398157425}
+    - {fileID: 828696389242996293}
+    - {fileID: 829329175848934835}
+    arm_Upper_Left:
+    - {fileID: 829052005876291005}
+    - {fileID: 829212808106931183}
+    - {fileID: 829172084796648583}
+    - {fileID: 828891883362523099}
+    - {fileID: 828904246111668701}
+    - {fileID: 829132113952554999}
+    - {fileID: 829319315575215473}
+    - {fileID: 829185001057537753}
+    - {fileID: 829476030745487019}
+    - {fileID: 828944092220192055}
+    - {fileID: 829183735677225363}
+    - {fileID: 830791452511997667}
+    - {fileID: 829416696410198883}
+    - {fileID: 829105510958446967}
+    - {fileID: 829147810653717419}
+    - {fileID: 829089565090276701}
+    - {fileID: 828941796433067621}
+    - {fileID: 829088181320816317}
+    - {fileID: 828857927973917941}
+    - {fileID: 828679331512496785}
+    - {fileID: 828923439443868825}
+    arm_Lower_Right:
+    - {fileID: 829070431902188029}
+    - {fileID: 829101483385627619}
+    - {fileID: 828789276848332627}
+    - {fileID: 829043320642496393}
+    - {fileID: 829037157814667775}
+    - {fileID: 830798996925575403}
+    - {fileID: 830833817334972477}
+    - {fileID: 830875012973208331}
+    - {fileID: 828750363718757029}
+    - {fileID: 829116598404226811}
+    - {fileID: 829081718630910275}
+    - {fileID: 829400554718425725}
+    - {fileID: 829442447543406211}
+    - {fileID: 829266420737920249}
+    - {fileID: 829475315433508869}
+    - {fileID: 829186167627127117}
+    - {fileID: 828777433338363931}
+    - {fileID: 828986494045548741}
+    - {fileID: 829398655335160345}
+    arm_Lower_Left:
+    - {fileID: 828991879683106331}
+    - {fileID: 829345096651308109}
+    - {fileID: 830810391965783683}
+    - {fileID: 828781650032687867}
+    - {fileID: 830899762953404307}
+    - {fileID: 829419479795603725}
+    - {fileID: 828897986761681427}
+    - {fileID: 830827552238158173}
+    - {fileID: 828835531987141935}
+    - {fileID: 828797759958446383}
+    - {fileID: 829436957929505441}
+    - {fileID: 829326730294228019}
+    - {fileID: 829476694346233645}
+    - {fileID: 828942779921198853}
+    - {fileID: 830776691463739419}
+    - {fileID: 829121055825637723}
+    - {fileID: 828947972202428277}
+    - {fileID: 829504648203007993}
+    - {fileID: 829365288056684505}
+    hand_Right:
+    - {fileID: 829326057678292221}
+    - {fileID: 828950543899822593}
+    - {fileID: 829475011037905605}
+    - {fileID: 829001000198264625}
+    - {fileID: 830819176799817839}
+    - {fileID: 830777989557780433}
+    - {fileID: 829247773790869697}
+    - {fileID: 828682712474739645}
+    - {fileID: 829214420039320953}
+    - {fileID: 828745663263628409}
+    - {fileID: 829333609727988047}
+    - {fileID: 828945565211167891}
+    - {fileID: 828772867407221863}
+    - {fileID: 829584642199712795}
+    - {fileID: 829072517157012435}
+    - {fileID: 828830503093773651}
+    - {fileID: 829038636953605367}
+    - {fileID: 828675511787384659}
+    hand_Left:
+    - {fileID: 829017811259323901}
+    - {fileID: 829306740378574927}
+    - {fileID: 829495526100440501}
+    - {fileID: 829055197592342279}
+    - {fileID: 829607957327303259}
+    - {fileID: 828664354900103171}
+    - {fileID: 829488019941869153}
+    - {fileID: 829340562828941713}
+    - {fileID: 829305218682146827}
+    - {fileID: 828807286561240795}
+    - {fileID: 828668816464996413}
+    - {fileID: 829232781696728991}
+    - {fileID: 830800203165845105}
+    - {fileID: 828917625412424223}
+    - {fileID: 829496801104952427}
+    - {fileID: 829474582635908049}
+    - {fileID: 828665066903620517}
+    - {fileID: 829113231552467327}
+    hips:
+    - {fileID: 828745847157164959}
+    - {fileID: 828885053510632033}
+    - {fileID: 829113438482000483}
+    - {fileID: 829315742741998679}
+    - {fileID: 829494673005702097}
+    - {fileID: 829112703669628023}
+    - {fileID: 828954280641365057}
+    - {fileID: 829256212264309749}
+    - {fileID: 829155340471548081}
+    - {fileID: 829488993545679581}
+    - {fileID: 828712460675463113}
+    - {fileID: 829261883310595527}
+    - {fileID: 829495157157385321}
+    - {fileID: 829112996751837451}
+    - {fileID: 830870640506998379}
+    - {fileID: 828878818482312615}
+    - {fileID: 828668023193526373}
+    - {fileID: 829193523795405415}
+    - {fileID: 829240611920100201}
+    - {fileID: 828870122657592827}
+    - {fileID: 828690776959326859}
+    - {fileID: 829185039243173849}
+    - {fileID: 829592630567099567}
+    - {fileID: 830809465012112367}
+    - {fileID: 829353636577230051}
+    - {fileID: 828788248260791033}
+    - {fileID: 828847584862657093}
+    - {fileID: 828789606307298629}
+    - {fileID: 829432197540286001}
+    leg_Right:
+    - {fileID: 829361668000798235}
+    - {fileID: 828973075256745057}
+    - {fileID: 829427695469180041}
+    - {fileID: 829346736844329031}
+    - {fileID: 829448516769220811}
+    - {fileID: 829074760295612969}
+    - {fileID: 829204088290716759}
+    - {fileID: 828773899389467401}
+    - {fileID: 829499826405547979}
+    - {fileID: 829241389293133845}
+    - {fileID: 828928661088385811}
+    - {fileID: 828731116719138569}
+    - {fileID: 829581467524653367}
+    - {fileID: 829267428675767107}
+    - {fileID: 829208328212581629}
+    - {fileID: 828889872117436085}
+    - {fileID: 830910751988579361}
+    - {fileID: 829417361168717437}
+    - {fileID: 829315500068284415}
+    - {fileID: 830910832312025405}
+    leg_Left:
+    - {fileID: 829287175335140821}
+    - {fileID: 829099492280890459}
+    - {fileID: 828798048969968203}
+    - {fileID: 828884633070786611}
+    - {fileID: 828738240081989559}
+    - {fileID: 828687355093788545}
+    - {fileID: 828786545838439577}
+    - {fileID: 828744491309198101}
+    - {fileID: 828927784583892327}
+    - {fileID: 829386955861436537}
+    - {fileID: 828699940690448899}
+    - {fileID: 829404853376924971}
+    - {fileID: 829331932883139187}
+    - {fileID: 828663597041793195}
+    - {fileID: 830809256954432797}
+    - {fileID: 828986549729857259}
+    - {fileID: 829028942818899589}
+    - {fileID: 828913472726337893}
+    - {fileID: 830832016456132203}
+    - {fileID: 829408599468793539}
   allGender:
-    headCoverings_Base_Hair: []
-    headCoverings_No_FacialHair: []
-    headCoverings_No_Hair: []
-    all_Hair: []
-    all_Head_Attachment: []
+    headCoverings_Base_Hair:
+    - {fileID: 830847085154827819}
+    - {fileID: 828920024185425817}
+    - {fileID: 829093722569066681}
+    - {fileID: 828925685464211149}
+    - {fileID: 829111919254940727}
+    - {fileID: 829089825911729791}
+    - {fileID: 828933917946012051}
+    - {fileID: 829009752781020757}
+    - {fileID: 830868786007548675}
+    - {fileID: 829126425955831707}
+    - {fileID: 828860328565330529}
+    headCoverings_No_FacialHair:
+    - {fileID: 828918748837777685}
+    - {fileID: 830808936204383321}
+    - {fileID: 828863736417727927}
+    - {fileID: 830779924614268673}
+    headCoverings_No_Hair:
+    - {fileID: 829176932703438747}
+    - {fileID: 830861571423998563}
+    - {fileID: 829152388364626901}
+    - {fileID: 829368855410559509}
+    - {fileID: 829376452286741155}
+    - {fileID: 828921906169275463}
+    - {fileID: 828852436471290355}
+    - {fileID: 829109597645449075}
+    - {fileID: 828853267861936067}
+    - {fileID: 828712931722786501}
+    - {fileID: 829041463337199149}
+    - {fileID: 830907336155713779}
+    - {fileID: 828951663379255275}
+    all_Hair:
+    - {fileID: 829125522895141957}
+    - {fileID: 828994636944068815}
+    - {fileID: 829067148656403217}
+    - {fileID: 829079292571291789}
+    - {fileID: 828728215542333375}
+    - {fileID: 828702663949249107}
+    - {fileID: 828957322741642139}
+    - {fileID: 828710810217912535}
+    - {fileID: 828777384436036827}
+    - {fileID: 828702943975736129}
+    - {fileID: 829017020533819195}
+    - {fileID: 828947217344827441}
+    - {fileID: 829395936947916723}
+    - {fileID: 829404549087489607}
+    - {fileID: 829333938908274027}
+    - {fileID: 830864251330082425}
+    - {fileID: 828833033389355621}
+    - {fileID: 829216001756985383}
+    - {fileID: 829017749713949741}
+    - {fileID: 830789843954186111}
+    - {fileID: 828853205078599023}
+    - {fileID: 828836270165100529}
+    - {fileID: 829366267786938781}
+    - {fileID: 829396515948722885}
+    - {fileID: 828811765158058633}
+    - {fileID: 829177015225514409}
+    - {fileID: 828954712806711137}
+    - {fileID: 829498244168506895}
+    - {fileID: 828938622863847561}
+    - {fileID: 829378130390836533}
+    - {fileID: 829099748194513269}
+    - {fileID: 829385734648537191}
+    - {fileID: 828728388076815963}
+    - {fileID: 829065625399827565}
+    - {fileID: 829101800575267701}
+    - {fileID: 829405815639868451}
+    - {fileID: 828888417916966545}
+    - {fileID: 829198690747105823}
+    all_Head_Attachment:
+    - {fileID: 828731606270316109}
+    - {fileID: 829054034213281295}
     chest_Attachment: []
-    back_Attachment: []
-    shoulder_Attachment_Right: []
-    shoulder_Attachment_Left: []
-    elbow_Attachment_Right: []
-    elbow_Attachment_Left: []
-    hips_Attachment: []
-    knee_Attachement_Right: []
-    knee_Attachement_Left: []
+    back_Attachment:
+    - {fileID: 828710985287445121}
+    - {fileID: 828684537057114223}
+    - {fileID: 828853013597378145}
+    - {fileID: 830802636039823765}
+    - {fileID: 828937537709307743}
+    - {fileID: 829234777665094155}
+    - {fileID: 829014840847351395}
+    - {fileID: 828837496523994205}
+    - {fileID: 829441175392829785}
+    - {fileID: 829388832651285239}
+    - {fileID: 829262908870816557}
+    - {fileID: 828920425162477553}
+    - {fileID: 829292759483032349}
+    - {fileID: 829198509962769429}
+    - {fileID: 828892014161181021}
+    shoulder_Attachment_Right:
+    - {fileID: 829464588568462121}
+    - {fileID: 828929405259209827}
+    - {fileID: 828860416521756279}
+    - {fileID: 828923212796839989}
+    - {fileID: 829199353979515023}
+    - {fileID: 829204599967128579}
+    - {fileID: 828693958447017965}
+    - {fileID: 828781044716612609}
+    - {fileID: 829244198943882521}
+    - {fileID: 828710266158617075}
+    - {fileID: 828857214446619559}
+    - {fileID: 828675479228028785}
+    - {fileID: 830804949998059155}
+    - {fileID: 828909821601049679}
+    - {fileID: 829370947569240389}
+    - {fileID: 828749312461140249}
+    - {fileID: 829190904989650555}
+    - {fileID: 829248160022206355}
+    - {fileID: 829297079069632323}
+    - {fileID: 828948901334805177}
+    - {fileID: 829432100628253721}
+    shoulder_Attachment_Left:
+    - {fileID: 829484611296688731}
+    - {fileID: 828846005486697375}
+    - {fileID: 829097776312455861}
+    - {fileID: 829110727521312101}
+    - {fileID: 828828488662901689}
+    - {fileID: 828814998216041213}
+    - {fileID: 828723400397332255}
+    - {fileID: 828908026828255737}
+    - {fileID: 830907416997934017}
+    - {fileID: 829348593962431847}
+    - {fileID: 829588758468213977}
+    - {fileID: 829057652717583157}
+    - {fileID: 829020815465579389}
+    - {fileID: 829305937133308825}
+    - {fileID: 830842644534011717}
+    - {fileID: 828709592789789875}
+    - {fileID: 829315268204773661}
+    - {fileID: 829279167836315519}
+    - {fileID: 829487420423863183}
+    - {fileID: 828980847937810559}
+    - {fileID: 829490310383588881}
+    elbow_Attachment_Right:
+    - {fileID: 828997308647290539}
+    - {fileID: 830880356707893427}
+    - {fileID: 829066626430960267}
+    - {fileID: 829014908738524967}
+    - {fileID: 829411370234239737}
+    - {fileID: 829125606551272867}
+    elbow_Attachment_Left:
+    - {fileID: 829103230251176373}
+    - {fileID: 829363533004801673}
+    - {fileID: 828722549398055269}
+    - {fileID: 828693787749707953}
+    - {fileID: 828743676298753413}
+    - {fileID: 829146146731675163}
+    hips_Attachment:
+    - {fileID: 828923107009914127}
+    - {fileID: 829153476116979547}
+    - {fileID: 829321787859293933}
+    - {fileID: 829122144899671615}
+    - {fileID: 829477738246778763}
+    - {fileID: 829285393448902419}
+    - {fileID: 829501837333012527}
+    - {fileID: 829441931993748619}
+    - {fileID: 828864674322810587}
+    - {fileID: 828853888661086513}
+    - {fileID: 829175647868699373}
+    - {fileID: 830876067666749483}
+    knee_Attachement_Right:
+    - {fileID: 828893275514849467}
+    - {fileID: 829096832583773859}
+    - {fileID: 829076918821443033}
+    - {fileID: 829275038585476753}
+    - {fileID: 829182998886547181}
+    - {fileID: 828882769274475127}
+    - {fileID: 829032097694278129}
+    - {fileID: 830866000932699497}
+    - {fileID: 828883589315878131}
+    - {fileID: 829422984869049703}
+    - {fileID: 828779906261685873}
+    knee_Attachement_Left:
+    - {fileID: 829239174070306271}
+    - {fileID: 828890808185989741}
+    - {fileID: 829168483365536777}
+    - {fileID: 830879671040806559}
+    - {fileID: 828928219927040471}
+    - {fileID: 829398664583079635}
+    - {fileID: 828679843421204919}
+    - {fileID: 829072861611933939}
+    - {fileID: 830870286187910751}
+    - {fileID: 829316893205704337}
+    - {fileID: 830843673351657983}
     all_12_Extra: []
-    elf_Ear: []
+    elf_Ear:
+    - {fileID: 830879075411950783}
+    - {fileID: 830812918980755921}
+    - {fileID: 828799829146941147}
   maleHeadParent: {fileID: 828790368997617847}
   femaleHeadParent: {fileID: 829367357746282333}
   hairParent: {fileID: 828796634313556677}
@@ -17232,6 +17941,12 @@ MonoBehaviour:
   curEquipHelmetCode: 0
   curEquipHelmetType: 0
   curEquipArmorCode: 0
+  curEquipWeapon: {fileID: 0}
+  weaponModel: {fileID: 0}
+  weaponSlot: {fileID: 2893188458773183081}
+  curEquipShield: {fileID: 0}
+  shieldModel: {fileID: 0}
+  shieldSlot: {fileID: 2893188458871475086}
   mat: {fileID: 0}
   curFaceCode: 0
   curEyebrowCode: 0
@@ -17268,6 +17983,7 @@ MonoBehaviour:
     Exp: 0
     curHP: 100
   maxHealth: 100
+  atkPoint: 3
 --- !u!65 &8123138769544760882
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -21136,7 +21852,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &834572022003148793
 Transform:
   m_ObjectHideFlags: 0
@@ -22415,7 +23131,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &834804208329328717
 Transform:
   m_ObjectHideFlags: 0
@@ -23857,7 +24573,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &834556087201178843
 Transform:
   m_ObjectHideFlags: 0
@@ -26164,7 +26880,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &831754271067154439
 Transform:
   m_ObjectHideFlags: 0
@@ -28458,7 +29174,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &834326690421760945
 Transform:
   m_ObjectHideFlags: 0
@@ -28848,7 +29564,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &834853667509512439
 Transform:
   m_ObjectHideFlags: 0
@@ -29264,7 +29980,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &831480103537698285
 Transform:
   m_ObjectHideFlags: 0
@@ -30101,7 +30817,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &831492649750108531
 Transform:
   m_ObjectHideFlags: 0
@@ -31039,7 +31755,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &831619195332886039
 Transform:
   m_ObjectHideFlags: 0
@@ -34707,7 +35423,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &834669814561760571
 Transform:
   m_ObjectHideFlags: 0
@@ -34973,7 +35689,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &834527856339565365
 Transform:
   m_ObjectHideFlags: 0
@@ -36453,7 +37169,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &834578224334416423
 Transform:
   m_ObjectHideFlags: 0
@@ -40120,7 +40836,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &831804286169984957
 Transform:
   m_ObjectHideFlags: 0
@@ -42518,7 +43234,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &831640881374876773
 Transform:
   m_ObjectHideFlags: 0
@@ -43904,7 +44620,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &831931312612111543
 Transform:
   m_ObjectHideFlags: 0
@@ -46334,7 +47050,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &834827762669149605
 Transform:
   m_ObjectHideFlags: 0
@@ -48357,7 +49073,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &834630384126648921
 Transform:
   m_ObjectHideFlags: 0
@@ -51900,7 +52616,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &831789229502941381
 Transform:
   m_ObjectHideFlags: 0
@@ -55418,7 +56134,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &834464036332292339
 Transform:
   m_ObjectHideFlags: 0
@@ -57156,7 +57872,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &831646883248772245
 Transform:
   m_ObjectHideFlags: 0
@@ -59918,7 +60634,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &834692247563252583
 Transform:
   m_ObjectHideFlags: 0
@@ -59954,7 +60670,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: ea128b040f8b0af4c9d2de400aaff30a, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -63323,7 +64039,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &831737957388485317
 Transform:
   m_ObjectHideFlags: 0
@@ -63504,7 +64220,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &834802660877053851
 Transform:
   m_ObjectHideFlags: 0
@@ -66369,7 +67085,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &832018882594802587
 Transform:
   m_ObjectHideFlags: 0
@@ -69294,7 +70010,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &831757534276018843
 Transform:
   m_ObjectHideFlags: 0

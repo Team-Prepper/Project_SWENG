@@ -16,9 +16,7 @@ public class AttackManager : MonoSingleton<AttackManager>
 
     Unit player;
 
-    // TODO : get status about player 
-
-    //public static event EventHandler<IntEventArgs> EventBaseAtk; // dicePoint
+    // TODO : get status about player
 
     public void ReadyToAttack()
     {

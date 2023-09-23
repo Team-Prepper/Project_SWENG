@@ -5,10 +5,8 @@ using System.Linq;
 using UnityEngine;
 
 
-public class EquipManager : MonoBehaviour
+public class EquipManager : MonoSingleton<EquipManager>
 {
-    public static EquipManager Instance;
-    
     [HideInInspector]
     public List<GameObject> enabledObjects = new List<GameObject>();
     [HideInInspector]
@@ -25,14 +23,21 @@ public class EquipManager : MonoBehaviour
     public GameObject femaleEyebrowsParent;
     public GameObject facialHairParent;
 
-    // 
-
     public bool isMale = true;
     
+    [Header("Current Equipment")]
     public int curEquipHelmetCode;
     public int curEquipHelmetType;
-    
     public int curEquipArmorCode;
+
+    public Item curEquipWeapon;
+    public GameObject weaponModel;
+    public Transform weaponSlot;
+
+    public Item curEquipShield;
+    public GameObject shieldModel;
+    public Transform shieldSlot;
+    
     public Material mat;
 
     [Range(0, 21)]
@@ -43,10 +48,6 @@ public class EquipManager : MonoBehaviour
     public int curBeardCode = 17;
     [Range(0, 37)]
     public int curHairCode = 33;
-    private void Awake()
-    {
-        Instance = this;
-    }
 
     private void Start()
     {
@@ -190,7 +191,7 @@ public class EquipManager : MonoBehaviour
         }
     }
     
-    public void EquipHelmet(int helmetCode, int helmetType)
+    public void EquipHelmet(int helmetType, int helmetCode)
     {
         //helmetType 0 : headCovering Base
         //helmetType 1 : headCovering No FacialHair
@@ -361,6 +362,37 @@ public class EquipManager : MonoBehaviour
     {
         ResetArmor(curEquipArmorCode);
         SetArmor(armorCode);
+    }
+    
+    // Equip Weapon
+    public void EquipWeapon(Item newWeapon)
+    {
+        if(curEquipWeapon != newWeapon) UnEquipWeapon();
+
+        weaponModel = Instantiate(newWeapon.itemObject, weaponSlot);
+        curEquipWeapon = newWeapon;
+    }
+
+    public void UnEquipWeapon()
+    {
+        if(weaponModel != null)
+            Destroy(weaponModel);
+        curEquipWeapon = null;
+    }
+
+    public void EquipShield(Item newShield)
+    {
+        if (curEquipShield != newShield) UnEquipShield();
+
+        shieldModel = Instantiate(newShield.itemObject, shieldSlot);
+        curEquipShield = newShield;
+    }
+
+    public void UnEquipShield()
+    {
+        if(shieldModel != null) 
+            Destroy(shieldModel);
+        curEquipShield = null;
     }
 }
 
