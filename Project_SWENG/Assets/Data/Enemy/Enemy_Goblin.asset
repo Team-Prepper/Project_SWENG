@@ -10,17 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d5bfb1b379276674e919c7b67ba75480, type: 3}
-  m_Name: enFairy
+  m_Name: Enemy_Goblin
   m_EditorClassIdentifier: 
-  monsterName: Fairy
-  atk: 8
-  def: 8
-  maxHp: 35
-  nowHp: 35
+  monsterName: "\uD649\uACE0\uBE14\uB9B0"
+  atk: 9
+  def: 12
+  maxHp: 50
+  nowHp: 50
   percent: 70
-  speed: 55
-  Lv: 1
+  speed: 70
+  Lv: 3
   Exp: 6
-  maxSlot: 2
-  UIImage: {fileID: 21300000, guid: ccf4aef76a681ca4eba2dfc0ebce9a1d, type: 3}
-  AttackType: attackScholar
+  maxSlot: 5
+  UIImage: {fileID: 21300000, guid: fb142f2fac9ec8642a8abab270931716, type: 3}
+  AttackType: attackBlackSmith
