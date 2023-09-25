@@ -194,7 +194,7 @@ public class EquipManager : MonoSingleton<EquipManager>
     {
         
         int helmetType  = item.id / 100;
-        int helmetCode = item.id % 100;
+        int helmetCode = item.id % 100 -1;
         
         //helmetType 0 : headCovering Base
         //helmetType 1 : headCovering No FacialHair
