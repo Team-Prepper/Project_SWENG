@@ -11,7 +11,7 @@ public class GUI_PlayerInfor : GUIFullScreen
     [SerializeField] private GUI_PlayerHealth _playerHealth;
 
     Unit _targetUnit;
-    PlayerHealth _targetPlayer;
+    PlayerManger _targetPlayer;
 
     protected override void Open(Vector2 openPos)
     {
@@ -23,7 +23,7 @@ public class GUI_PlayerInfor : GUIFullScreen
         _target = target;
 
         _targetUnit = target.GetComponent<Unit>();
-        _targetPlayer = target.GetComponent<PlayerHealth>();
+        _targetPlayer = target.GetComponent<PlayerManger>();
         _playerHealth.SetPlayerHealth(target);
 
     }

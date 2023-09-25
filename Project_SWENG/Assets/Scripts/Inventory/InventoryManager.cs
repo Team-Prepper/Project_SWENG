@@ -5,11 +5,13 @@ using Debug = System.Diagnostics.Debug;
 public class InventoryManager : Singleton<InventoryManager>
 {
 
-    private Item helmet = null;
-    private Item armor  = null;
-    private Item weapon = null;
-    private Item shield = null;
-
+    public Item Helmet = null;
+    public Item Armor  = null;
+    public Item Weapon = null;
+    public Item Shield = null;
+    
+    // EquipManger.Instance,EquipItem -> resetItem + setItem
+    
     public void GetItem(Item item)
     {
         item.itemHex.Item = null;
@@ -19,32 +21,20 @@ public class InventoryManager : Singleton<InventoryManager>
         switch (item.type)
         {
             case Item.ItemType.Helmet:
-                if(helmet == null)
-                {
-                    int helmetType  = item.id / 100;
-                    int helmetIndex = item.id % 100;
-                    EquipManager.Instance.EquipHelmet(helmetType, helmetIndex);
-                    UnityEngine.Debug.Log("type : " + helmetType + "index : " + helmetIndex);
-                    UnityEngine.Debug.Log("EquipHelmet");
-                }
+                Helmet = item;
+                EquipManager.Instance.EquipHelmet(item);
                 break;
             case Item.ItemType.Armor:
-                if (armor == null)
-                {
-                    EquipManager.Instance.EquipArmor(item.id);
-                }
+                Armor = item;
+                EquipManager.Instance.EquipArmor(item);
                 break; 
             case Item.ItemType.Weapon:
-                if (weapon == null)
-                {
-                    EquipManager.Instance.EquipWeapon(item);
-                }
+                Weapon = item;
+                EquipManager.Instance.EquipWeapon(item);
                 break;
             case Item.ItemType.Shield:
-                if (shield == null)
-                {
-                    EquipManager.Instance.EquipShield(item);
-                }
+                Shield = item;
+                EquipManager.Instance.EquipShield(item);
                 break;
         }
     }

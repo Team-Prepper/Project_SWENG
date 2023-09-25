@@ -46,7 +46,7 @@ public class UnitManager : MonoSingleton<UnitManager>
         {
             if (AttackManager.Instance.IsHexInAtkRange(selectedHex.HexCoords))
             {
-                Character player = GameManager.Instance.player.GetComponent<PlayerHealth>();
+                Character player = GameManager.Instance.player.GetComponent<PlayerManger>();
                 AttackManager.Instance.BaseAtkHandler(player, selectedHex);
                 AttackManager.Instance.HideAtkRange();
             }

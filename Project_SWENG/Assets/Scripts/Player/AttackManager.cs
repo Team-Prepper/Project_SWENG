@@ -5,14 +5,13 @@ using UnityEngine;
 
 public class AttackManager : MonoSingleton<AttackManager>
 {
-    [SerializeField] int baseAtkPower = 10;
     [SerializeField] GameObject[] atkMarkers;
     
 
     List<Vector3Int> atkRange = new List<Vector3Int>();
 
     public bool isAtkReady = false;
-    private Vector3Int atkHexPos;
+    //private Vector3Int atkHexPos;
 
     Unit player;
 
@@ -41,7 +40,7 @@ public class AttackManager : MonoSingleton<AttackManager>
     public void AttackTo(Character attacker, Character defender) {
 
         defender.Damaged(attacker.GetAttackValue());
-
+        isAtkReady = false;
     }
 
     public void BaseAtkHandler(Character attacker, Hex targetHex)
@@ -56,10 +55,8 @@ public class AttackManager : MonoSingleton<AttackManager>
 
     public void Attack(Hex selectedHex, int atkPower)
     {
-
         selectedHex.DamageToEntity(atkPower);
         isAtkReady = false;
-        
     }
 
     public void HideAtkRange()
@@ -75,7 +72,7 @@ public class AttackManager : MonoSingleton<AttackManager>
 
     public bool IsHexInAtkRange(Vector3Int hexPosition)
     {
-        atkHexPos = hexPosition;
+        //atkHexPos = hexPosition;
         return atkRange.Contains(hexPosition); 
     }
     

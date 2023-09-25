@@ -27,7 +27,6 @@ public class Character : MonoBehaviour
 
     public void Damaged(int damage)
     {
-
         if (stat.curHP <= 0) return;
 
         stat.curHP -= damage;

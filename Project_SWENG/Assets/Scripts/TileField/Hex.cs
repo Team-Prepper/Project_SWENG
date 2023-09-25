@@ -11,6 +11,8 @@ public class Hex : MonoBehaviour
     public int cost = 0;
     private int originCost;
 
+    #region ItemInHex
+    
     [Space(20)]
     [Header("Item")]
     private Item item;
@@ -36,11 +38,13 @@ public class Hex : MonoBehaviour
             }
         }
     }
-
+    #endregion
+    
+    #region Entity
+    
     [Space(20)]
     [Header("Entity")]
     private GameObject entity;
-
     public GameObject Entity
     {
         get { return entity; }
@@ -68,6 +72,8 @@ public class Hex : MonoBehaviour
         }
     }
 
+    #endregion
+    
     public GameObject tile { set; get; }
 
     public Vector3Int HexCoords {
@@ -112,36 +118,7 @@ public class Hex : MonoBehaviour
             return true;
         return false;
     }
-
-    public void DamageToEntity(int damage)
-    {
-        if(entity == null) return;
-
-        if (entity.CompareTag("Player"))
-        {
-            PlayerHealth entityHealth = entity.GetComponent<PlayerHealth>();
-            if (entityHealth != null)
-            {
-                entityHealth.Damaged(damage);
-            }
-        }
-        else
-        {
-            EnemyController enemy = entity.GetComponent<EnemyController>();
-            if (enemy != null)
-            {
-                enemy.Damaged(damage);
-            }
-        }
-    }
-
-    private void SpawnItem()
-    {
-        itemMesh = Instantiate(item.itemObject, itemZone.transform);
-        itemMesh.transform.localScale = Vector3.one * 3f;
-    }
-
-    private void Awake()
+    private void Start()
     {
         highlight = GetComponent<GlowHighlight>();
     }
@@ -175,5 +152,33 @@ public class Hex : MonoBehaviour
     private void InteractionPlayerWithItem()
     {
         item.Pick();
+    }
+    
+    public void DamageToEntity(int damage)
+    {
+        if(entity == null) return;
+
+        if (entity.CompareTag("Player"))
+        {
+            PlayerManger entityManger = entity.GetComponent<PlayerManger>();
+            if (entityManger != null)
+            {
+                entityManger.Damaged(damage);
+            }
+        }
+        else // Enemy
+        {
+            EnemyController enemy = entity.GetComponent<EnemyController>();
+            if (enemy != null)
+            {
+                enemy.Damaged(damage);
+            }
+        }
+    }
+
+    private void SpawnItem()
+    {
+        itemMesh = Instantiate(item.itemObject, itemZone.transform);
+        itemMesh.transform.localScale = Vector3.one * 3f;
     }
 }

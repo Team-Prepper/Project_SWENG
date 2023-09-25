@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerHealth : Character
+public class PlayerManger : Character
 {
     public int maxHealth;
 
@@ -42,7 +42,12 @@ public class PlayerHealth : Character
     public override void AttackAct() {
         unit.dicePoints -= atkPoint;
         EffectManager.Instance.SetTarget(gameObject);
-        StartCoroutine(EffectManager.Instance.ShowImpactVfx(0));
+        if (InventoryManager.Instance.Weapon)
+        {
+            int weaponID = InventoryManager.Instance.Weapon.id;
+            StartCoroutine(EffectManager.Instance.ShowImpactVfx(weaponID));
+        }
+        
     }
 
     public override void DamageAct()

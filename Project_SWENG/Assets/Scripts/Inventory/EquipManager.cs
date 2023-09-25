@@ -26,9 +26,12 @@ public class EquipManager : MonoSingleton<EquipManager>
     public bool isMale = true;
     
     [Header("Current Equipment")]
+    public Item curEquipHelmet;
+
     public int curEquipHelmetCode;
     public int curEquipHelmetType;
-    public int curEquipArmorCode;
+    
+    public Item curEquipArmor;
 
     public Item curEquipWeapon;
     public GameObject weaponModel;
@@ -62,6 +65,8 @@ public class EquipManager : MonoSingleton<EquipManager>
         enabledObjects.Clear();
         SetupPlayer(0);
     }
+    
+    
 
 
     private void BuildLists()
@@ -148,12 +153,6 @@ public class EquipManager : MonoSingleton<EquipManager>
         }
     }
     
-    void ActivateItem(GameObject go)
-    {
-        go.SetActive(true);
-        enabledObjects.Add(go);
-    }
-
     void SetupPlayer(int newArmorCode)
     {
         if (isMale)
@@ -191,8 +190,12 @@ public class EquipManager : MonoSingleton<EquipManager>
         }
     }
     
-    public void EquipHelmet(int helmetType, int helmetCode)
+    private void SetHelmet(Item item)
     {
+        
+        int helmetType  = item.id / 100;
+        int helmetCode = item.id % 100;
+        
         //helmetType 0 : headCovering Base
         //helmetType 1 : headCovering No FacialHair
         //helmetType 2 : headCovering No Hair
@@ -249,7 +252,7 @@ public class EquipManager : MonoSingleton<EquipManager>
         
     }
 
-    public void UnEquipHelmet()
+    public void ResetHelmet()
     {
         if (isMale)
         {
@@ -299,8 +302,15 @@ public class EquipManager : MonoSingleton<EquipManager>
         }
     }
 
-    private void ResetArmor(int curArmorCode)
+    public void EquipHelmet(Item item)
     {
+        ResetHelmet();
+        SetHelmet(item);
+    }
+
+    private void ResetArmor(Item item)
+    {
+        int curArmorCode = item.id;
         if (isMale)
         {
             male.torso[curArmorCode].SetActive(false);
@@ -329,8 +339,10 @@ public class EquipManager : MonoSingleton<EquipManager>
         }
     }
     
-    private void SetArmor(int newArmorCode)
+    private void SetArmor(Item item)
     {
+
+        int newArmorCode = item.id;
         if (isMale)
         {
             male.torso[newArmorCode].SetActive(true);
@@ -358,10 +370,10 @@ public class EquipManager : MonoSingleton<EquipManager>
             female.leg_Left[newArmorCode].SetActive(true);
         }
     }
-    public void EquipArmor(int armorCode)
+    public void EquipArmor(Item item)
     {
-        ResetArmor(curEquipArmorCode);
-        SetArmor(armorCode);
+        ResetArmor(item);
+        SetArmor(item);
     }
     
     // Equip Weapon

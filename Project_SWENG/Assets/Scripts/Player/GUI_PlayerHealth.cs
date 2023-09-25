@@ -7,7 +7,7 @@ using System;
 
 public class GUI_PlayerHealth : MonoBehaviour
 {
-    PlayerHealth health;
+    PlayerManger _manger;
 
     [SerializeField] Image healthFront;
     [SerializeField] Image healthBack;
@@ -20,15 +20,15 @@ public class GUI_PlayerHealth : MonoBehaviour
 
     private void Awake()
     {
-        PlayerHealth.EventDamaged += GUI_Damaged;
+        PlayerManger.EventDamaged += GUI_Damaged;
     }
 
     public void SetPlayerHealth(GameObject player)
     {
-        health = player.GetComponent<PlayerHealth>();
-        SetHealth(health.maxHealth);
+        _manger = player.GetComponent<PlayerManger>();
+        SetHealth(_manger.maxHealth);
         afterimage.fillAmount = 1;
-        curValue = health.maxHealth;
+        curValue = _manger.maxHealth;
     }
 
     void GUI_Damaged(object sender, IntEventArgs e)
@@ -44,7 +44,7 @@ public class GUI_PlayerHealth : MonoBehaviour
         while (elapsedTime < 1f)
         {
             curValue = Mathf.Lerp(startValue, endValue, elapsedTime);
-            afterimage.fillAmount = (float)(curValue / health.maxHealth);
+            afterimage.fillAmount = (float)(curValue / _manger.maxHealth);
             elapsedTime += Time.deltaTime * lerpSpeed;
             yield return null;
         }
@@ -52,8 +52,8 @@ public class GUI_PlayerHealth : MonoBehaviour
 
     void SetHealth(int newHealth)
     {
-        healthFront.fillAmount = ((float)newHealth / health.maxHealth);
-        healthBack.fillAmount  = ((float)newHealth / health.maxHealth);
-        hpText.text = newHealth.ToString() + " / " + health.maxHealth.ToString();
+        healthFront.fillAmount = ((float)newHealth / _manger.maxHealth);
+        healthBack.fillAmount  = ((float)newHealth / _manger.maxHealth);
+        hpText.text = newHealth.ToString() + " / " + _manger.maxHealth.ToString();
     }
 }
