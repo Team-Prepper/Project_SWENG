@@ -712,7 +712,7 @@ GameObject:
   - component: {fileID: 2868529706404146149}
   - component: {fileID: 2575584186239218085}
   m_Layer: 0
-  m_Name: enFairy
+  m_Name: Enemy_Fairy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -751,16 +751,13 @@ MonoBehaviour:
   enemyStatus: {fileID: 11400000, guid: f43bce7f1e6bdf5468e9bb5d5cab7e11, type: 2}
   monsterName: 
   maxHp: 0
-  curHp: 0
   atk: 0
   def: 0
   speed: 0
   Lv: 0
   Exp: 0
-  maxSlot: 0
   portrait: {fileID: 0}
   isDie: 0
-  attackType: 
   percent: 0
   dropItem: []
 --- !u!136 &2450530541402074309
@@ -810,6 +807,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 543f9e3fd40ac844ba57bfd061d5f67f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  anim: {fileID: 0}
+  stat:
+    Lv: 0
+    Exp: 0
+    curHP: 0
   healthGUI: {fileID: 4615092111065079343}
   enemyStat: {fileID: 0}
   curHex: {fileID: 0}
