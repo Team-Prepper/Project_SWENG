@@ -144,7 +144,13 @@ public class GridMaker : MonoBehaviour
             return hex;
         }
 
-        if(selectedData.cost != 3)
+        if (selectedData.cost == 1)
+        {
+            hex.tileType = Hex.Type.Shop;
+            return hex;
+        }
+
+        if (selectedData.cost != 3)
         {
             hex.tileType = Hex.Type.Object;
             objTilesGo.Add(hex.gameObject);

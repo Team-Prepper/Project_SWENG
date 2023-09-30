@@ -12,7 +12,9 @@ public class Item : ScriptableObject
     
     public string itemName;
     public int value;
+    public int cost;
     public Sprite icon;
+    public Sprite skillIcon;
     public GameObject itemObject;
     public Hex itemHex;
 

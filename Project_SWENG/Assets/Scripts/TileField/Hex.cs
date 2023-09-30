@@ -62,6 +62,12 @@ public class Hex : MonoBehaviour
                     {
                         InteractionPlayerWithItem();
                     }
+
+                    if(tileType == Type.Shop)
+                    {
+                        InteractionPlayerWithShop();
+                    }
+
                 }
                 else
                 {
@@ -99,7 +105,7 @@ public class Hex : MonoBehaviour
     public enum Type
     {
         Object,
-        Path,
+        Shop,
         Obstacle,
         Water,
         Field,
@@ -108,7 +114,6 @@ public class Hex : MonoBehaviour
 
     public int GetCost()
     {
-        if(tileType == Type.Path) return 1;
         return cost;
     }
 
@@ -153,7 +158,12 @@ public class Hex : MonoBehaviour
     {
         item.Pick();
     }
-    
+
+    private void InteractionPlayerWithShop()
+    {
+        ShopManager.Instance.WelcomeToShop();
+    }
+
     public void DamageToEntity(int damage)
     {
         if(entity == null) return;
