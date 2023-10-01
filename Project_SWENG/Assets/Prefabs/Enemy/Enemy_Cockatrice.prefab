@@ -1894,16 +1894,13 @@ MonoBehaviour:
   enemyStatus: {fileID: 11400000, guid: 3a53c8af4ac707946935aad960a6d556, type: 2}
   monsterName: 
   maxHp: 0
-  curHp: 0
   atk: 0
   def: 0
   speed: 0
   Lv: 0
   Exp: 0
-  maxSlot: 0
   portrait: {fileID: 0}
   isDie: 0
-  attackType: 
   percent: 0
   dropItem: []
 --- !u!95 &8708793842863733948
@@ -1953,7 +1950,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 543f9e3fd40ac844ba57bfd061d5f67f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  anim: {fileID: 0}
+  stat:
+    Lv: 0
+    Exp: 0
+    curHP: 0
   healthGUI: {fileID: 7933122486559083093}
+  playerLayerMask:
+    serializedVersion: 2
+    m_Bits: 65536
+  recognitionRange: 10
   enemyStat: {fileID: 0}
   curHex: {fileID: 0}
 --- !u!114 &8909115769715850742
@@ -2586,6 +2592,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 896479245809704517, guid: d74c9a51a6272804292fe65826c0f8ed,
+        type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     - target: {fileID: 5084024243750198697, guid: d74c9a51a6272804292fe65826c0f8ed,
         type: 3}
       propertyPath: m_RootOrder
@@ -2780,6 +2791,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Canvas_enHealth
+      objectReference: {fileID: 0}
+    - target: {fileID: 833343554697698998, guid: 6b35e559e2048424d8b237e3718e2058,
+        type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 5448171883185752182, guid: 6b35e559e2048424d8b237e3718e2058,
         type: 3}

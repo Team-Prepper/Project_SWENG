@@ -1129,7 +1129,7 @@ GameObject:
   - component: {fileID: 7468441365205007461}
   m_Layer: 0
   m_Name: Enemy_UndaedKnight
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1215,6 +1215,10 @@ MonoBehaviour:
     Exp: 0
     curHP: 0
   healthGUI: {fileID: 8892871114911049901}
+  playerLayerMask:
+    serializedVersion: 2
+    m_Bits: 65536
+  recognitionRange: 10
   enemyStat: {fileID: 7468441365205007459}
   curHex: {fileID: 0}
 --- !u!114 &7468441365205007461
@@ -2195,6 +2199,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Canvas_enHealth
+      objectReference: {fileID: 0}
+    - target: {fileID: 833343554697698998, guid: 6b35e559e2048424d8b237e3718e2058,
+        type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 4276439471583978496, guid: 6b35e559e2048424d8b237e3718e2058,
         type: 3}

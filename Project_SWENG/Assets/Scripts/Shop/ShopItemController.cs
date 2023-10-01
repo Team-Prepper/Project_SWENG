@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Unity.VisualScripting;
 
 public class ShopItemController : MonoBehaviour
 {
@@ -14,6 +15,7 @@ public class ShopItemController : MonoBehaviour
     [SerializeField] TextMeshProUGUI itemCost;
 
     private List<Color> colors = new List<Color>();
+    [SerializeField] private Item thisItem;
 
     private void OnEnable()
     {
@@ -32,6 +34,7 @@ public class ShopItemController : MonoBehaviour
 
     public void SetItem(Item item)
     {
+        thisItem = item;
         itemIcon.sprite = item.icon;
         itemIconBackground.color = colors[(int)item.tier];
         skillIcon.sprite = item.skillIcon;
@@ -57,5 +60,11 @@ public class ShopItemController : MonoBehaviour
                 break;
         }
         itemInfo.text += item.value.ToString();
+    }
+
+    public void BuyItem()
+    {
+        ShopManager.Instance.BuyItemToShop(thisItem);
+        Destroy(this.gameObject);
     }
 }

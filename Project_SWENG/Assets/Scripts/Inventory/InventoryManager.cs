@@ -14,7 +14,8 @@ public class InventoryManager : Singleton<InventoryManager>
     
     public void GetItem(Item item)
     {
-        item.itemHex.Item = null;
+        if(item.itemHex != null)
+            item.itemHex.Item = null;
         
         GUI_ItemEquiped.Instance.SetItemGUI(item);
         

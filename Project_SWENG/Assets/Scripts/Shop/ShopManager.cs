@@ -13,6 +13,11 @@ public class ShopManager : MonoSingleton<ShopManager>
         Instantiate(GUI_item);
     }
 
+    public void BuyItemToShop(Item targetItem)
+    {
+        InventoryManager.Instance.GetItem(targetItem);
+    }
+
     public List<Item> GetRandomItemList(int itemCounts)
     {
         return GetRandomSelection(items, itemCounts);

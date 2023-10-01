@@ -1479,16 +1479,13 @@ MonoBehaviour:
   enemyStatus: {fileID: 11400000, guid: cadd95ec5f17b844d9debbfe7c83fadc, type: 2}
   monsterName: 
   maxHp: 0
-  curHp: 0
   atk: 0
   def: 0
   speed: 0
   Lv: 0
   Exp: 0
-  maxSlot: 0
   portrait: {fileID: 0}
   isDie: 0
-  attackType: 
   percent: 0
   dropItem: []
 --- !u!95 &6202825420256002057
@@ -1524,7 +1521,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 543f9e3fd40ac844ba57bfd061d5f67f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  anim: {fileID: 0}
+  stat:
+    Lv: 0
+    Exp: 0
+    curHP: 0
   healthGUI: {fileID: 527216363961204277}
+  playerLayerMask:
+    serializedVersion: 2
+    m_Bits: 65536
+  recognitionRange: 10
   enemyStat: {fileID: 0}
   curHex: {fileID: 0}
 --- !u!114 &5103649249183583084
@@ -8307,6 +8313,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Canvas_enHealth
+      objectReference: {fileID: 0}
+    - target: {fileID: 833343554697698998, guid: 6b35e559e2048424d8b237e3718e2058,
+        type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 5448171883185752182, guid: 6b35e559e2048424d8b237e3718e2058,
         type: 3}

@@ -16,7 +16,7 @@ public class Item : ScriptableObject
     public Sprite icon;
     public Sprite skillIcon;
     public GameObject itemObject;
-    public Hex itemHex;
+    public Hex itemHex; // Required to remove dropped items
 
     public enum ItemTier
     {

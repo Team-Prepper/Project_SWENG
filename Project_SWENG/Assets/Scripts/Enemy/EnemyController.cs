@@ -6,12 +6,12 @@ using UnityEngine;
 public class EnemyController : Character {
 
     [SerializeField] GUI_EnemyHealth healthGUI;
-
+    [SerializeField] LayerMask playerLayerMask;
     public EnemyStat enemyStat;
 
     public Hex curHex;
 
-    private void Awake()
+    private void OnEnable()
     {
         if(enemyStat == null)
             enemyStat = GetComponent<EnemyStat>();
@@ -29,6 +29,10 @@ public class EnemyController : Character {
 
     public override void DamageAct()
     {
+        Collider[] colliders = Physics.OverlapSphere(transform.position, 10f, playerLayerMask);
+        if(colliders.Length > 0 )
+            gameObject.transform.LookAt(colliders[0].transform);
+
         healthGUI.UpdateGUI((float)stat.curHP / enemyStat.maxHp);
     }
 

@@ -10,12 +10,12 @@ GameObject:
   m_Component:
   - component: {fileID: 5110700302637738397}
   - component: {fileID: 5167814934297746353}
+  - component: {fileID: 3307650390993169689}
   - component: {fileID: 8541738688539648228}
   - component: {fileID: 2704694391395156812}
-  - component: {fileID: 3307650390993169689}
   m_Layer: 0
   m_Name: Enemy_Nomad_M
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -59,6 +59,30 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &3307650390993169689
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5107100726514873987}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be46a47d6ee0b4842a7b064a835ae481, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyStatus: {fileID: 11400000, guid: 475c0950da5a4468594229c4d7495211, type: 2}
+  monsterName: 
+  maxHp: 0
+  atk: 0
+  def: 0
+  speed: 0
+  Lv: 0
+  Exp: 0
+  portrait: {fileID: 0}
+  isDie: 0
+  percent: 0
+  dropItem: []
 --- !u!114 &8541738688539648228
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -91,32 +115,12 @@ MonoBehaviour:
     Exp: 0
     curHP: 0
   healthGUI: {fileID: 5069026101904300249}
+  playerLayerMask:
+    serializedVersion: 2
+    m_Bits: 65536
+  recognitionRange: 10
   enemyStat: {fileID: 3307650390993169689}
   curHex: {fileID: 0}
---- !u!114 &3307650390993169689
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5107100726514873987}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: be46a47d6ee0b4842a7b064a835ae481, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemyStatus: {fileID: 11400000, guid: 475c0950da5a4468594229c4d7495211, type: 2}
-  monsterName: 
-  maxHp: 0
-  atk: 0
-  def: 0
-  speed: 0
-  Lv: 0
-  Exp: 0
-  portrait: {fileID: 0}
-  isDie: 0
-  percent: 0
-  dropItem: []
 --- !u!1 &5107101363861206323
 GameObject:
   m_ObjectHideFlags: 0
@@ -2434,6 +2438,21 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 404512375063164342, guid: 6b35e559e2048424d8b237e3718e2058,
         type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 404512375063164342, guid: 6b35e559e2048424d8b237e3718e2058,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 404512375063164342, guid: 6b35e559e2048424d8b237e3718e2058,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 404512375063164342, guid: 6b35e559e2048424d8b237e3718e2058,
+        type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -2496,6 +2515,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: GUI_EnemyHealth
+      objectReference: {fileID: 0}
+    - target: {fileID: 833343554697698998, guid: 6b35e559e2048424d8b237e3718e2058,
+        type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6b35e559e2048424d8b237e3718e2058, type: 3}
