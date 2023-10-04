@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028326, g: 0.22571333, b: 0.30692202, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -5225,6 +5225,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3c770d3d91ca3d4ba3b05dced2cf895, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
   player: {fileID: 0}
   enemys: []
   day: {fileID: 1085845868}
@@ -5312,6 +5313,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4211884697469968129}
   - component: {fileID: 1944284584875625300}
+  - component: {fileID: 4211884697469968132}
+  - component: {fileID: 4211884697469968131}
   m_Layer: 0
   m_Name: GM
   m_TagString: Untagged
@@ -5319,6 +5322,44 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &4211884697469968131
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4211884697469968130}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectInterest: 1
+  DefaultInterestGroups: []
+  DestroyWhenStateAuthorityLeaves: 0
+  AllowStateAuthorityOverride: 1
+  AoiPositionSource: {fileID: 0}
+  Flags: 2561
+  NetworkGuid:
+    RawGuidValue: 596f1ff9885b4ef59bfa7c6c0ab8fda7
+  NestedObjects: []
+  NetworkedBehaviours:
+  - {fileID: 1944284584875625300}
+  - {fileID: 4211884697469968132}
+  SimulationBehaviours: []
+--- !u!114 &4211884697469968132
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4211884697469968130}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10310b972ad3042c0859e5f5715405c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
 --- !u!114 &4211884698124246712
 MonoBehaviour:
   m_ObjectHideFlags: 0

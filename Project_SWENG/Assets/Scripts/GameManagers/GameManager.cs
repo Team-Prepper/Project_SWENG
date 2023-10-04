@@ -1,12 +1,17 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Fusion;
 using Unity.AI.Navigation;
 using UnityEngine;
 
-public class GameManager : MonoSingleton<GameManager>
+public class GameManager : NetworkBehaviour
 {
-
+    public static GameManager Instance;
+    public static GameState State { get; private set; }
+    
+    
+    
     public GameObject player;
     public List<GameObject> enemys;
     public GameObject day;
@@ -24,8 +29,19 @@ public class GameManager : MonoSingleton<GameManager>
     }
     public Phase gamePhase;
 
-    protected override void OnCreate()
+    private void Awake()
     {
+        
+        if (Instance == null)
+        {
+            Instance = this;
+            
+            State = GetComponent<GameState>();
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
         gamePhase = Phase.Ready;
     }
 
