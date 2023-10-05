@@ -11,21 +11,22 @@ public class Unit : MonoBehaviour {
     [SerializeField]
     private Animator animator;
 
-    private NavMeshAgent agent;
+    private CharacterController _characterController;
 
+    [SerializeField]
+    private float movementDuration = 1, rotationDuration = 0.3f;
+    
     [Header("Movemet")]
     public int dicePoints = 0;
 
     private GlowHighlight glowHighlight;
-
-    public event Action<Unit> MovementFinished;
-    public static event EventHandler<IntEventArgs> EventDicePoint;
+    private Queue<Vector3> pathPositions = new Queue<Vector3>();
 
     private void Start()
     {
         glowHighlight = GetComponent<GlowHighlight>();
         animator = GetComponentInChildren<Animator>();
-        agent = GetComponent<NavMeshAgent>();
+        _characterController = GetComponent<CharacterController>();
     }
 
     public void Deselect()
@@ -37,69 +38,76 @@ public class Unit : MonoBehaviour {
     {
         glowHighlight.ToggleGlow();
     }
-
-    public void MoveThroughPath(List<Vector3> currentPath)
+    
+    public void NewMoveThroughPath(List<Vector3> currentPath)
     {
-        Queue<Vector3> pathPositions = new Queue<Vector3>(currentPath);
-        StartCoroutine(MovementCoroutine(pathPositions));
+        pathPositions = new Queue<Vector3>(currentPath);
+        Vector3 firstTarget = pathPositions.Dequeue();
+        StartCoroutine(RotationCoroutine(firstTarget, rotationDuration));
     }
-
-    private IEnumerator MovementCoroutine(Queue<Vector3> pathPositions)
+    
+    private IEnumerator RotationCoroutine(Vector3 endPosition, float rotationDuration)
     {
-        HexGrid.Instance.GetTileAt(HexGrid.Instance.GetClosestHex(transform.position)).Entity = null;
+        Quaternion startRotation = transform.rotation;
+        endPosition.y = transform.position.y;
+        Vector3 direction = endPosition - transform.position;
+        Quaternion endRotation = Quaternion.LookRotation(direction, Vector3.up);
 
-        Debug.Log("Move to " + pathPositions);
-
-        if (animator)
-            animator.SetBool("IsWalk", true);
-
-        while (true)
+        if (Mathf.Approximately(Mathf.Abs(Quaternion.Dot(startRotation, endRotation)), 1.0f) == false)
         {
-            Vector3 goalPos = pathPositions.Dequeue();
-            EventDicePoint?.Invoke(this, new IntEventArgs(dicePoints));
-            agent.ResetPath();
-            agent.SetDestination(goalPos);
-
-            Vector3Int newHexPos = HexCoordinates.ConvertPositionToOffset(goalPos);
-            CloudBox.Instance.CloudActiveFalse(newHexPos);
-            Hex goalHex = HexGrid.Instance.GetTileAt(newHexPos);
-            dicePoints -= goalHex.cost;
-
-            while (!_IsArrive())
+            float timeElapsed = 0;
+            while (timeElapsed < rotationDuration)
             {
+                timeElapsed += Time.deltaTime;
+                float lerpStep = timeElapsed / rotationDuration; // 0-1
+                transform.rotation = Quaternion.Lerp(startRotation, endRotation, lerpStep);
                 yield return null;
             }
-
-            transform.position = goalPos;
-
-            if (pathPositions.Count == 0)
-            {
-                Debug.Log("Movement finished!");
-                HexGrid.Instance.GetTileAt(newHexPos).Entity = gameObject;
-
-                break;
-            }
-
-            Debug.Log("Selecting the next position!");
+            transform.rotation = endRotation;
         }
+        StartCoroutine(NewMovementCoroutine(endPosition));
+    }
 
+    private IEnumerator NewMovementCoroutine(Vector3 endPosition)
+    {
+        HexGrid.Instance.GetTileAt(HexGrid.Instance.GetClosestHex(transform.position)).Entity = null;
+        
+        Vector3 startPosition = transform.position;
+        endPosition.y = startPosition.y;
+        
+        Vector3Int newHexPos = HexCoordinates.ConvertPositionToOffset(endPosition);
+        CloudBox.Instance.CloudActiveFalse(newHexPos);
+        Hex goalHex = HexGrid.Instance.GetTileAt(newHexPos);
+        dicePoints -= goalHex.cost;
+        
+        
+        float timeElapsed = 0;
+
+        while (timeElapsed < movementDuration)
+        {
+            if (animator)
+                animator.SetBool("IsWalk", true);
+
+            timeElapsed += Time.deltaTime;
+            float lerpStep = timeElapsed / movementDuration;
+            transform.position = Vector3.Lerp(startPosition, endPosition, lerpStep);
+            yield return null;
+        }
+        transform.position = endPosition;
+
+        if (pathPositions.Count > 0)
+        {
+            Debug.Log("Selecting the next position!");
+            StartCoroutine(RotationCoroutine(pathPositions.Dequeue(), rotationDuration));
+        }
+        else
+        {
+            Debug.Log("Movement finished!");
+            HexGrid.Instance.GetTileAt(newHexPos).Entity = gameObject;
+        }
         if (animator)
             animator.SetBool("IsWalk", false);
-
-        MovementFinished?.Invoke(this);
     }
-
-    private bool _IsArrive()
-    {
-        if (agent.pathPending || agent.remainingDistance > agent.stoppingDistance) return false;
-
-        if (!agent.hasPath || agent.velocity.sqrMagnitude == 0f)
-        {
-            Debug.Log("isArrive!");
-            return true;
-        }
-
-        return false;
-    }
+    
 
 }

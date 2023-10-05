@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028326, g: 0.22571333, b: 0.30692202, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1741,7 +1741,6 @@ GameObject:
   m_Component:
   - component: {fileID: 606399404}
   - component: {fileID: 606399403}
-  - component: {fileID: 606399405}
   m_Layer: 0
   m_Name: GridMaker
   m_TagString: Untagged
@@ -1846,36 +1845,6 @@ Transform:
   m_Father: {fileID: 4211884697469968129}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &606399405
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 606399402}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_AgentTypeID: 0
-  m_CollectObjects: 2
-  m_Size: {x: 10, y: 10, z: 10}
-  m_Center: {x: 0, y: 2, z: 0}
-  m_LayerMask:
-    serializedVersion: 2
-    m_Bits: 1911
-  m_UseGeometry: 1
-  m_DefaultArea: 0
-  m_IgnoreNavMeshAgent: 1
-  m_IgnoreNavMeshObstacle: 1
-  m_OverrideTileSize: 0
-  m_TileSize: 256
-  m_OverrideVoxelSize: 0
-  m_VoxelSize: 0.16666667
-  m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 0}
-  m_BuildHeightMesh: 0
 --- !u!1001 &648837178
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5225,6 +5194,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3c770d3d91ca3d4ba3b05dced2cf895, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
   player: {fileID: 0}
   enemys: []
   day: {fileID: 1085845868}
@@ -5312,6 +5282,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4211884697469968129}
   - component: {fileID: 1944284584875625300}
+  - component: {fileID: 4211884697469968132}
+  - component: {fileID: 4211884697469968131}
   m_Layer: 0
   m_Name: GM
   m_TagString: Untagged
@@ -5319,6 +5291,46 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &4211884697469968131
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4211884697469968130}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectInterest: 1
+  DefaultInterestGroups: []
+  DestroyWhenStateAuthorityLeaves: 0
+  AllowStateAuthorityOverride: 1
+  AoiPositionSource: {fileID: 0}
+  Flags: 2561
+  NetworkGuid:
+    RawGuidValue: 596f1ff9885b4ef59bfa7c6c0ab8fda7
+  NestedObjects: []
+  NetworkedBehaviours:
+  - {fileID: 1944284584875625300}
+  - {fileID: 4211884697469968132}
+  SimulationBehaviours: []
+--- !u!114 &4211884697469968132
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4211884697469968130}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10310b972ad3042c0859e5f5715405c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
+  _Previous: 0
+  _Current: 0
 --- !u!114 &4211884698124246712
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5423,7 +5435,7 @@ MonoBehaviour:
   mainCamera: {fileID: 0}
   selectionMask:
     serializedVersion: 2
-    m_Bits: 192
+    m_Bits: 65728
   OnUnitSelected:
     m_PersistentCalls:
       m_Calls:

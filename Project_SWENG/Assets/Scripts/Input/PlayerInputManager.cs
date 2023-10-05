@@ -7,7 +7,6 @@ using UnityEngine.InputSystem;
 public class PlayerInputManager : MonoSingleton<PlayerInputManager>
 {
     // LOCAL PLAYER
-    public GameObject player;
     public LayerMask selectionMask;
     private Hex hex = null;
     GameObject originObj = null;
@@ -77,11 +76,6 @@ public class PlayerInputManager : MonoSingleton<PlayerInputManager>
         playerControls.Enable();
     }
 
-    private void Start()
-    {
-        SetPlayer();
-    }
-
     private void Update()
     {
         HandleAllInputs();
@@ -128,13 +122,9 @@ public class PlayerInputManager : MonoSingleton<PlayerInputManager>
     {
         Debug.Log("SpaceBar");
         
-        if (player != null)
+        if (GameManager.Instance.player != null)
         {
-            OnUnitSelected?.Invoke(player);
-        }
-        else
-        {
-            SetPlayer();
+            OnUnitSelected?.Invoke(GameManager.Instance.player);
         }
         
     }
@@ -162,10 +152,5 @@ public class PlayerInputManager : MonoSingleton<PlayerInputManager>
                 }
             }
         }
-    }
-
-    void SetPlayer()
-    {
-        player = GameManager.Instance.player;
     }
 }

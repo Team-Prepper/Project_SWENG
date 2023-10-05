@@ -49,6 +49,7 @@ public class CamMovement : MonoSingleton<CamMovement>
     // Update is called once per frame
     void Update()
     {
+
         if (isCamMove)
         {
             moveCam();
