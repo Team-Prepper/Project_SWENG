@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -24,6 +25,7 @@ public class GameState : NetworkBehaviour
 
     public override void Spawned()
     {
+        
         StateMachine[EGameState.Off].onExit = newState =>
         {
             Debug.Log($"Exited {EGameState.Off} to {newState}");
@@ -37,8 +39,6 @@ public class GameState : NetworkBehaviour
                 GUI_Lobby.Instance.InitPregame(Runner);
             }
         };
-        
-        
     }
     
     

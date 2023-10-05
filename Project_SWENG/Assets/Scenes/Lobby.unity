@@ -7974,7 +7974,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 583133273}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1114915137}
+        m_TargetAssemblyTypeName: GUI_Lobby, Assembly-CSharp
+        m_MethodName: StartGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &583133273
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22728,22 +22740,22 @@ PrefabInstance:
     - target: {fileID: 4707318784427536736, guid: 95a292bfa5b9a02429a3df90f2e90384,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4707318784427536736, guid: 95a292bfa5b9a02429a3df90f2e90384,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4707318784427536736, guid: 95a292bfa5b9a02429a3df90f2e90384,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 102.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4707318784427536736, guid: 95a292bfa5b9a02429a3df90f2e90384,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -20
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4741710040570908391, guid: 95a292bfa5b9a02429a3df90f2e90384,
         type: 3}
@@ -29957,6 +29969,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
+  starter: {fileID: 0}
   player: {fileID: 0}
   enemys: []
   day: {fileID: 0}

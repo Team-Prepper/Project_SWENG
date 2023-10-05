@@ -17,4 +17,9 @@ public class GUI_Lobby : MonoSingleton<GUI_Lobby>
     {
         roomNameText.text = roomText;
     }
+    
+    public void StartGame()
+    {
+        GameManager.Instance.Server_StartGame();
+    }
 }

@@ -8,8 +8,10 @@ using static GameState;
 
 public class GameManager : NetworkBehaviour, INetworkRunnerCallbacks
 {
-    public static GameManager Instance;
+    public static GameManager Instance { get; private set; }
     public static GameState State { get; private set; }
+    
+    public NetworkDebugStart starter;
     
     public GameObject player;
     public List<GameObject> enemys;
@@ -30,7 +32,6 @@ public class GameManager : NetworkBehaviour, INetworkRunnerCallbacks
 
     private void Awake()
     {
-        
         if (Instance == null)
         {
             Instance = this;
@@ -114,6 +115,27 @@ public class GameManager : NetworkBehaviour, INetworkRunnerCallbacks
         }
 
         Runner.AddCallbacks(this);
+    }
+    
+    public override void Despawned(NetworkRunner runner, bool hasState)
+    {
+        base.Despawned(runner, hasState);
+        runner.RemoveCallbacks(this);
+        starter.Shutdown();
+    }
+    public void Server_StartGame()
+    {
+        if (Runner.IsServer == false)
+        {
+            Debug.LogWarning("This method is server-only");
+            return;
+        }
+
+        if (State.Current != EGameState.Lobby) return;
+        
+        Debug.Log("Game Start");
+        State.Server_SetState(EGameState.MapCreating);
+        
     }
 
     void INetworkRunnerCallbacks.OnConnectedToServer(NetworkRunner runner)
