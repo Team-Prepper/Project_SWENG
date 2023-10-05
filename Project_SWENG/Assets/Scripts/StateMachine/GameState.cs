@@ -14,6 +14,12 @@ public class GameState : NetworkBehaviour
         TurnEnemy
     }
     
+    [Networked] public EGameState Previous { get; set; }
+    [Networked] public EGameState Current { get; set; }
+
+    [Networked] TickTimer Delay { get; set; }
+    [Networked] EGameState DelayedState { get; set; }
+    
     protected StateMachine<EGameState> StateMachine = new StateMachine<EGameState>();
 
     public override void Spawned()
@@ -31,5 +37,36 @@ public class GameState : NetworkBehaviour
                 GUI_Lobby.Instance.InitPregame(Runner);
             }
         };
+    }
+    
+    
+    //================================================================================//
+    public override void FixedUpdateNetwork()
+    {
+        if (Runner.IsServer)
+        {
+            if (Delay.Expired(Runner))
+            {
+                Delay = TickTimer.None;
+                Server_SetState(DelayedState);
+            }
+        }
+
+        if (Runner.IsForward)
+            StateMachine.Update(Current, Previous);
+    }
+    
+    public void Server_SetState(EGameState st)
+    {
+        if (Current == st) return;
+        Previous = Current;
+        Current = st;
+    }
+	
+    public void Server_DelaySetState(EGameState newState, float delay)
+    {
+        Debug.Log($"Delay state change to {newState} for {delay}s");
+        Delay = TickTimer.CreateFromSeconds(Runner, delay);
+        DelayedState = newState;
     }
 }

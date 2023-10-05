@@ -9,11 +9,11 @@ public class GUI_Lobby : MonoSingleton<GUI_Lobby>
 
     public void InitPregame(Fusion.NetworkRunner runner)
     {
-        SetRoomText(runner.SessionInfo.Name);
         roomNameText.gameObject.SetActive(true);
+        SetRoomText(runner.SessionInfo.Name);
     }
 
-    public void SetRoomText(string roomText)
+    private void SetRoomText(string roomText)
     {
         roomNameText.text = roomText;
     }
