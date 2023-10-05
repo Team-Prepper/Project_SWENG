@@ -49,23 +49,24 @@ public class CamMovement : MonoSingleton<CamMovement>
     // Update is called once per frame
     void Update()
     {
-        if (GameManager.Instance.gamePhase == GameManager.Phase.AttackPhase || GameManager.Instance.gamePhase == GameManager.Phase.EnemyPhase)
-        {
-            if (!_isAttackPhase)
+        if(GameManager.Instance)
+            if (GameManager.Instance.gamePhase == GameManager.Phase.AttackPhase || GameManager.Instance.gamePhase == GameManager.Phase.EnemyPhase)
             {
-                _isAttackPhase = true;
-                ConvertBattleCamera();
+                if (!_isAttackPhase)
+                {
+                    _isAttackPhase = true;
+                    ConvertBattleCamera();
+                }
             }
-        }
-        else
-        {
-            if (_isAttackPhase)
+            else
             {
-                _isAttackPhase = false;
-                ConvertMovementCamera();
-                CamSetToPlayer(player);
+                if (_isAttackPhase)
+                {
+                    _isAttackPhase = false;
+                    ConvertMovementCamera();
+                    CamSetToPlayer(player);
+                }
             }
-        }
 
         if (isCamMove)
         {

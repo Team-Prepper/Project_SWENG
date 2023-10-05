@@ -1,13 +1,16 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Fusion;
 using Unity.AI.Navigation;
 using UnityEngine;
+using static GameState;
 
-public class GameManager : MonoSingleton<GameManager>
+public class GameManager : NetworkBehaviour, INetworkRunnerCallbacks
 {
-    [Header("Singleton")]
-
+    public static GameManager Instance;
+    public static GameState State { get; private set; }
+    
     public GameObject player;
     public List<GameObject> enemys;
     public GameObject day;
@@ -25,8 +28,19 @@ public class GameManager : MonoSingleton<GameManager>
     }
     public Phase gamePhase;
 
-    protected override void OnCreate()
+    private void Awake()
     {
+        
+        if (Instance == null)
+        {
+            Instance = this;
+            
+            State = GetComponent<GameState>();
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
         gamePhase = Phase.Ready;
     }
 
@@ -88,4 +102,47 @@ public class GameManager : MonoSingleton<GameManager>
             night.SetActive(true);
         }
     }
+
+    // NETWORK
+    
+    public override void Spawned()
+    {
+        base.Spawned();
+        if (Runner.IsServer)
+        {
+            State.Server_SetState(EGameState.Lobby);
+        }
+
+        Runner.AddCallbacks(this);
+    }
+
+    void INetworkRunnerCallbacks.OnConnectedToServer(NetworkRunner runner)
+    {
+        UIScreen.CloseAll();
+    }
+    
+    public static void QuitGame()
+    {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+		Application.Quit();
+#endif
+    }
+    
+    void INetworkRunnerCallbacks.OnConnectFailed(NetworkRunner runner, Fusion.Sockets.NetAddress remoteAddress, Fusion.Sockets.NetConnectFailedReason reason) { }
+    void INetworkRunnerCallbacks.OnShutdown(NetworkRunner runner, ShutdownReason shutdownReason) { }
+    void INetworkRunnerCallbacks.OnDisconnectedFromServer(NetworkRunner runner) { }
+    void INetworkRunnerCallbacks.OnPlayerJoined(NetworkRunner runner, PlayerRef player) { }
+    void INetworkRunnerCallbacks.OnPlayerLeft(NetworkRunner runner, PlayerRef player) { }
+    void INetworkRunnerCallbacks.OnInput(NetworkRunner runner, NetworkInput input) { }
+    void INetworkRunnerCallbacks.OnInputMissing(NetworkRunner runner, PlayerRef player, NetworkInput input) { }
+    void INetworkRunnerCallbacks.OnConnectRequest(NetworkRunner runner, NetworkRunnerCallbackArgs.ConnectRequest request, byte[] token) { }
+    void INetworkRunnerCallbacks.OnUserSimulationMessage(NetworkRunner runner, SimulationMessagePtr message) { }
+    void INetworkRunnerCallbacks.OnSessionListUpdated(NetworkRunner runner, List<SessionInfo> sessionList) { }
+    void INetworkRunnerCallbacks.OnCustomAuthenticationResponse(NetworkRunner runner, Dictionary<string, object> data) { }
+    void INetworkRunnerCallbacks.OnReliableDataReceived(NetworkRunner runner, PlayerRef player, System.ArraySegment<byte> data) { }
+    void INetworkRunnerCallbacks.OnSceneLoadDone(NetworkRunner runner) { }
+    void INetworkRunnerCallbacks.OnSceneLoadStart(NetworkRunner runner) { }
+    void INetworkRunnerCallbacks.OnHostMigration(NetworkRunner runner, HostMigrationToken hostMigrationToken) { }
 }

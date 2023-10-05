@@ -106,7 +106,7 @@ public class GridMaker : MonoBehaviour
             }
         }
         EventBuildComplete?.Invoke(this, EventArgs.Empty);
-        SetNavMesh();
+        ConvertMaterials();
     }
 
     Hex OceanSpawn(TileData data, float xPos, float zPos)
@@ -184,13 +184,8 @@ public class GridMaker : MonoBehaviour
         return hex;
     }
 
-    public void SetNavMesh()
+    public void ConvertMaterials()
     {
-        Debug.Log("Nav set Start");
-        if (navMeshSurface != null)
-            navMeshSurface.BuildNavMesh();
-
-
         MaterialsConverter.ConvertMat(objTilesGo);
         EventSetNavComplete?.Invoke(this, EventArgs.Empty);
     }
