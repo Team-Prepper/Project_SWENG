@@ -18,8 +18,6 @@ public class Unit : MonoBehaviour {
     
     [Header("Movemet")]
     public int dicePoints = 0;
-    private Vector3 destination;
-    private float moveSpeed = 5;
 
     private GlowHighlight glowHighlight;
     private Queue<Vector3> pathPositions = new Queue<Vector3>();

@@ -17139,6 +17139,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
+  movementDuration: 1
+  rotationDuration: 0.3
   dicePoints: 0
 --- !u!114 &831800693388432921
 MonoBehaviour:
@@ -17975,7 +17977,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 2, y: 0.2, z: 2}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 0.4, z: 0}
 --- !u!143 &2804843534456360368
 CharacterController:
   m_ObjectHideFlags: 0
