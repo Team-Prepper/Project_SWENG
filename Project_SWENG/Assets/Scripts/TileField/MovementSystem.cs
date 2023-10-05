@@ -83,7 +83,7 @@ public class MovementSystem : MonoSingleton<MovementSystem>
     public void MoveUnit(Unit selectedUnit)
     {
         Debug.Log("Moving unit " + selectedUnit.name);
-        selectedUnit.MoveThroughPath(currentPath.Select(pos => HexGrid.Instance.GetTileAt(pos).transform.position).ToList());
+        selectedUnit.NewMoveThroughPath(currentPath.Select(pos => HexGrid.Instance.GetTileAt(pos).transform.position).ToList());
         HideMoveNum();
     }
 
