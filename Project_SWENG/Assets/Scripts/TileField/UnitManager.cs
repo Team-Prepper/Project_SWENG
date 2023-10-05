@@ -20,11 +20,11 @@ public class UnitManager : MonoSingleton<UnitManager>
         return;
 
         //if (GameManager.Instance.gamePhase == GameManager.Phase.AttackPhase)
-        {
-            AttackManager.Instance.HideAtkRange();
-            GameManager.Instance.gamePhase = GameManager.Phase.ActionPhase;
-            return;
-        }
+        //{
+        //    AttackManager.Instance.HideAtkRange();
+        //    GameManager.Instance.gamePhase = GameManager.Phase.ActionPhase;
+        //    return;
+        //}
         
         if (CheckIfTheSameUnitSelected(unitReference))
             return;

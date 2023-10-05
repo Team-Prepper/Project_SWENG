@@ -81,7 +81,7 @@ public class GUI_Moving : GUIFullScreen {
     private void _MoveUnit()
     {
         Debug.Log("Moving unit " + _target.name);
-        _target.MoveThroughPath(currentPath.Select(pos => HexGrid.Instance.GetTileAt(pos).transform.position).ToList());
+        _target.NewMoveThroughPath(currentPath.Select(pos => HexGrid.Instance.GetTileAt(pos).transform.position).ToList());
         _HideRange();
         Close();
     }
