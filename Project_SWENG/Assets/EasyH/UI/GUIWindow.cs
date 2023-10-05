@@ -14,6 +14,8 @@ public class GUIWindow : MonoBehaviour {
 
     protected virtual void Open(Vector2 opnePos)
     {
+        gameObject.SetActive(true);
+
         RectTransform rect = gameObject.GetComponent<RectTransform>();
 
         rect.SetParent(GameObject.Find("Canvas").transform);

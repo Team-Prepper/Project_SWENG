@@ -20,9 +20,9 @@ public class GameManager : MonoSingleton<GameManager>
         SetDice,
         DiceRolling,
         ActionPhase,
-        AttackPhase,
         EnemyPhase,
     }
+
     public Phase gamePhase;
 
     protected override void OnCreate()

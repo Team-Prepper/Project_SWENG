@@ -2891,6 +2891,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   priority: 0
-  _targetPlayer: {fileID: 0}
+  _target: {fileID: 0}
   _dicePoint: {fileID: 6995522101713054052}
   _playerHealth: {fileID: 6995522102989802996}
+  selectionMask:
+    serializedVersion: 2
+    m_Bits: 64

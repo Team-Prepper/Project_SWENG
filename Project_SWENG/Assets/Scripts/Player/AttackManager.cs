@@ -34,7 +34,6 @@ public class AttackManager : MonoSingleton<AttackManager>
             atkMarkers[i++].transform.position = atkHex.transform.position;
         }
         isAtkReady = true;
-        GameManager.Instance.gamePhase = GameManager.Phase.AttackPhase;
     }
 
     public void AttackTo(Character attacker, Character defender) {
