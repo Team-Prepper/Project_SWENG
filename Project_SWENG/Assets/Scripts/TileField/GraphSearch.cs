@@ -28,7 +28,7 @@ public class GraphSearch
                 int currentCost = costSoFar[currentNode];
                 int newCost = currentCost + nodeCost;
 
-                if (newCost <= movementPoints)
+                if (newCost > movementPoints) continue;
                 {
                     if (!visitedNodes.ContainsKey(neighbourPosition))
                     {

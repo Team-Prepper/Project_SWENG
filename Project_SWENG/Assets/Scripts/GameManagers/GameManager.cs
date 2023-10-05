@@ -25,9 +25,9 @@ public class GameManager : NetworkBehaviour, INetworkRunnerCallbacks
         SetDice,
         DiceRolling,
         ActionPhase,
-        AttackPhase,
         EnemyPhase,
     }
+
     public Phase gamePhase;
 
     private void Awake()

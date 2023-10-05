@@ -12,9 +12,14 @@ public class UnitManager : MonoSingleton<UnitManager>
     public void HandleUnitSelected(GameObject unit)
     {
         Debug.Log("Name : " + unit.name);
+
+        //UIManager.OpenGUI<GUI_ActionSelect>("ActionSelect").Set(unit);
+
         Unit unitReference = unit.GetComponent<Unit>();
 
-        if (GameManager.Instance.gamePhase == GameManager.Phase.AttackPhase)
+        return;
+
+        //if (GameManager.Instance.gamePhase == GameManager.Phase.AttackPhase)
         {
             AttackManager.Instance.HideAtkRange();
             GameManager.Instance.gamePhase = GameManager.Phase.ActionPhase;

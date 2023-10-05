@@ -28,9 +28,19 @@ public class GUI_PlayerInfor : GUIFullScreen
 
     }
 
-    private void Update()
+    protected override void Update()
     {
+        base.Update();
         _dicePoint.text = _targetUnit.dicePoints.ToString();
+
+    }
+
+    public override void HexSelect(Vector3Int selectGridPos)
+    {
+        Hex selected = HexGrid.Instance.GetTileAt(selectGridPos);
+
+        if (selected && selected.Entity == _target)
+            UIManager.OpenGUI<GUI_ActionSelect>("ActionSelect").Set(_target);
     }
 
     public void TurnEndButton() {
