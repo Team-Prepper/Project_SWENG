@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace Character {
-    public class PlayerController : CharacterController {
+    public class PlayerController : ControllerOfCharacter {
         public int maxHealth;
 
         [SerializeField] int atkPoint = 3;

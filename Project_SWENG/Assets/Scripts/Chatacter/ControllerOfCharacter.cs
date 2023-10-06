@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Character {
 
-    public class CharacterController : MonoBehaviour {
+    public class ControllerOfCharacter : MonoBehaviour {
 
         [SerializeField] Animator anim;
 
