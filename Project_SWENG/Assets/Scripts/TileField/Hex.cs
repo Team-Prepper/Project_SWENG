@@ -164,28 +164,6 @@ public class Hex : MonoBehaviour
         ShopManager.Instance.WelcomeToShop();
     }
 
-    public void DamageToEntity(int damage)
-    {
-        if(entity == null) return;
-
-        if (entity.CompareTag("Player"))
-        {
-            PlayerManger entityManger = entity.GetComponent<PlayerManger>();
-            if (entityManger != null)
-            {
-                entityManger.Damaged(damage);
-            }
-        }
-        else // Enemy
-        {
-            EnemyController enemy = entity.GetComponent<EnemyController>();
-            if (enemy != null)
-            {
-                enemy.Damaged(damage);
-            }
-        }
-    }
-
     private void SpawnItem()
     {
         itemMesh = Instantiate(item.itemObject, itemZone.transform);

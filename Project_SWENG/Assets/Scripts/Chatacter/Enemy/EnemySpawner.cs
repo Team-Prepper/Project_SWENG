@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.ShaderKeywordFilter;
 using UnityEngine;
+using Character;
 using Random = UnityEngine.Random;
 
 public class EnemySpawner : MonoSingleton<EnemySpawner>

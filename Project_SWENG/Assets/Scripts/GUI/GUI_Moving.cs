@@ -107,8 +107,12 @@ public class GUI_Moving : GUIFullScreen {
 
     public override void HexSelect(Vector3Int selectGridHex)
     {
-        if (selectGridHex == HexGrid.Instance.GetClosestHex(_target.transform.position))
+        if (!movementRange.IsHexPositionInRange(selectGridHex))
+        {
+            _HideRange();
             Close();
+            return;
+        }
 
         switch (_state)
         {
