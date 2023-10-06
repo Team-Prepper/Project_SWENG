@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace Character {
-    public class EnemyController : CharacterController {
+    public class EnemyController : ControllerOfCharacter {
 
         [SerializeField] GUI_EnemyHealth healthGUI;
         [SerializeField] LayerMask playerLayerMask;

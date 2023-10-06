@@ -6,7 +6,7 @@ using static UnityEditor.PlayerSettings;
 
 public class GUI_Attack : GUIFullScreen {
 
-    public Character.CharacterController _target;
+    public Character.ControllerOfCharacter _target;
 
     [SerializeField] private Transform[] _attackMarkers;
 
@@ -20,7 +20,7 @@ public class GUI_Attack : GUIFullScreen {
 
     public void Set(GameObject target) {
 
-        _target = target.GetComponent<Character.CharacterController>();
+        _target = target.GetComponent<Character.ControllerOfCharacter>();
 
         Vector3Int curHexPos = HexGrid.Instance.GetClosestHex(target.transform.position);
 
