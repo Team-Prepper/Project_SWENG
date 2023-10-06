@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Character;
 using static UnityEditor.PlayerSettings;
 
 public class GUI_Attack : GUIFullScreen {
 
-    public Character _target;
+    public Character.CharacterController _target;
 
     [SerializeField] private Transform[] _attackMarkers;
 
@@ -19,7 +20,7 @@ public class GUI_Attack : GUIFullScreen {
 
     public void Set(GameObject target) {
 
-        _target = target.GetComponent<Character>();
+        _target = target.GetComponent<Character.CharacterController>();
 
         Vector3Int curHexPos = HexGrid.Instance.GetClosestHex(target.transform.position);
 
@@ -51,18 +52,5 @@ public class GUI_Attack : GUIFullScreen {
             Debug.Log("Success");
         }
         Close();
-    }
-
-
-    public Vector3Int MousePointHex()
-    {
-        Vector3 touchPos = PlayerInputManager.Instance.mousePos;
-        RaycastHit hit;
-        Ray ray = Camera.main.ScreenPointToRay(touchPos);
-
-        if (!Physics.Raycast(ray, out hit, 100, selectionMask)) return Vector3Int.zero;
-
-        return HexGrid.Instance.GetClosestHex(hit.collider.gameObject.transform.position);
-
     }
 }

@@ -4,10 +4,11 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System;
+using Character;
 
 public class GUI_PlayerHealth : MonoBehaviour
 {
-    PlayerManger _manger;
+    PlayerController _manger;
 
     [SerializeField] Image healthFront;
     [SerializeField] Image healthBack;
@@ -20,12 +21,12 @@ public class GUI_PlayerHealth : MonoBehaviour
 
     private void Awake()
     {
-        PlayerManger.EventDamaged += GUI_Damaged;
+        PlayerController.EventDamaged += GUI_Damaged;
     }
 
     public void SetPlayerHealth(GameObject player)
     {
-        _manger = player.GetComponent<PlayerManger>();
+        _manger = player.GetComponent<PlayerController>();
         SetHealth(_manger.maxHealth);
         afterimage.fillAmount = 1;
         curValue = _manger.maxHealth;

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Character;
 
 public class GUI_PlayerInfor : GUIFullScreen
 {
@@ -11,7 +12,7 @@ public class GUI_PlayerInfor : GUIFullScreen
     [SerializeField] private GUI_PlayerHealth _playerHealth;
 
     Unit _targetUnit;
-    PlayerManger _targetPlayer;
+    PlayerController _targetPlayer;
 
     protected override void Open(Vector2 openPos)
     {
@@ -23,7 +24,7 @@ public class GUI_PlayerInfor : GUIFullScreen
         _target = target;
 
         _targetUnit = target.GetComponent<Unit>();
-        _targetPlayer = target.GetComponent<PlayerManger>();
+        _targetPlayer = target.GetComponent<PlayerController>();
         _playerHealth.SetPlayerHealth(target);
 
     }
@@ -49,8 +50,6 @@ public class GUI_PlayerInfor : GUIFullScreen
 
     public void AttackButton() {
         if (!_targetPlayer.CanAttack()) return;
-        
-        AttackManager.Instance.ReadyToAttack();
     }
 
 }  
