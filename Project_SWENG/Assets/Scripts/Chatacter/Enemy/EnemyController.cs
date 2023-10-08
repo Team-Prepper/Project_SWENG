@@ -21,6 +21,9 @@ namespace Character {
                 healthGUI = GetComponentInChildren<GUI_EnemyHealth>();
 
             stat.curHP = enemyStat.maxHp;
+            curHex = HexGrid.Instance.GetHexFromPosition(this.gameObject.transform.position);
+            curHex.Entity = this.gameObject;
+            EnemySpawner.Instance.enemyList.Add(gameObject);
         }
 
         public override int GetAttackValue()

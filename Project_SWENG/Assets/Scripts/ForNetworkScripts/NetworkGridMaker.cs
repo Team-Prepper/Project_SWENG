@@ -35,13 +35,13 @@ public class NetworkGridMaker : MonoBehaviourPun
     [Header("Ref")]
     [SerializeField] private Hex _hexPrefab;
 
-    [SerializeField] TileData _tileNormal  = new TileData(null, 5, 0);
-    [SerializeField] TileData _tileRock    = new TileData(null, 5, 1);
-    [SerializeField] TileData _tileHill    = new TileData(null, 5, 2);
-    [SerializeField] TileData _tileDungon  = new TileData(null, 5, 3);
-    [SerializeField] TileData _tileCastle  = new TileData(null, 5, 4);
-    [SerializeField] TileData _tileVillage = new TileData(null, 5, 5);
-    [SerializeField] TileData _tileOcean   = new TileData(null, 5, 6);
+    [SerializeField] TileData _tileNormal   = new TileData(null, 5, 0);
+    [SerializeField] TileData _tileRock     = new TileData(null, 5, 1);
+    [SerializeField] TileData _tileHill     = new TileData(null, 5, 2);
+    [SerializeField] TileData _tileDungeon  = new TileData(null, 5, 3);
+    [SerializeField] TileData _tileCastle   = new TileData(null, 5, 4);
+    [SerializeField] TileData _tileVillage  = new TileData(null, 5, 5);
+    [SerializeField] TileData _tileOcean    = new TileData(null, 5, 6);
 
     
 
@@ -59,10 +59,8 @@ public class NetworkGridMaker : MonoBehaviourPun
     private float hexWidth = 4.325f; // horizontal
     private float hexHeight = 5.0f;  // vertical
 
-    private Hex createdHex;
-
     public static event EventHandler EventBuildComplete;
-    public static event EventHandler EventSetNavComplete;
+    public static event EventHandler EventConvertMaterials;
 
 
     private void Awake()
@@ -84,7 +82,7 @@ public class NetworkGridMaker : MonoBehaviourPun
         tileDic.Add(0, _tileNormal);
         tileDic.Add(1, _tileRock);
         tileDic.Add(2, _tileHill);
-        tileDic.Add(3, _tileDungon);
+        tileDic.Add(3, _tileDungeon);
         tileDic.Add(4, _tileCastle);
         tileDic.Add(5, _tileVillage);
         tileDic.Add(6, _tileOcean);
@@ -111,7 +109,7 @@ public class NetworkGridMaker : MonoBehaviourPun
                 switch (Random.Range(0, 10))
                 {
                     case 0:
-                        _HexTileSpawn(_tileDungon, xPos, zPos, 10);
+                        _HexTileSpawn(_tileDungeon, xPos, zPos, 10);
                         break;
                     case 1:
                         _HexTileSpawn(_tileHill, xPos, zPos, 10);
@@ -136,20 +134,14 @@ public class NetworkGridMaker : MonoBehaviourPun
         _PhotonView.RPC("ConvertMaterials", RpcTarget.All, null);
     }
 
-    Hex OceanSpawn(TileData data, float xPos, float zPos)
+    void OceanSpawn(TileData data, float xPos, float zPos)
     {
         Vector3 spawnPos = new Vector3(xPos, -0.5f, zPos);
 
         SpawnHexHandler(data, spawnPos, GetRandomTile(data));
-        Hex hex = createdHex;
-
-        hex.tileType = Hex.Type.Water;
-        hex.tile.transform.localPosition -= new Vector3(0f, 0.6f, 0f);
-
-        return hex;
     }
 
-    private Hex _HexTileSpawn(TileData selectedData, float xPos, float zPos, int percentage)
+    private void _HexTileSpawn(TileData selectedData, float xPos, float zPos, int percentage)
     {
         Vector3 spawnPos = new Vector3(xPos, 0, zPos);
 
@@ -157,37 +149,11 @@ public class NetworkGridMaker : MonoBehaviourPun
         if (Random.Range(0, percentage) != 0)
         {
             SpawnHexHandler(_tileNormal, spawnPos, GetRandomTile(_tileNormal));
-            Hex hexDefault = createdHex;
-                
-            hexDefault.tileType = Hex.Type.Field;
-
-            HexGrid.Instance.emptyHexTiles.Add(hexDefault);
-
-            return hexDefault;
         }
-        SpawnHexHandler(selectedData, spawnPos, GetRandomTile(selectedData));
-        Hex hex = createdHex;
-
-        if (selectedData.cost == -1)
+        else
         {
-            hex.tileType = Hex.Type.Obstacle;
-            return hex;
+            SpawnHexHandler(selectedData, spawnPos, GetRandomTile(selectedData));
         }
-
-        if (selectedData.cost == 1)
-        {
-            hex.tileType = Hex.Type.Shop;
-            return hex;
-        }
-
-        if (selectedData.cost != 3)
-        {
-            hex.tileType = Hex.Type.Object;
-            objTilesGo.Add(hex.gameObject);
-        }
-
-
-        return hex;
     }
 
     private int GetRandomTile(TileData data)
@@ -201,12 +167,10 @@ public class NetworkGridMaker : MonoBehaviourPun
       _PhotonView.RPC("_SpawnHexTile", RpcTarget.All, data.GetTileType(), spawnPos, hexNo);
     }
 
-    //
 
     [PunRPC]
     private void _SpawnHexTile(int tileType, Vector3 spawnPos, int hexNo)
     {
-
         TileData data = tileDic[tileType];
         GameObject tile = Instantiate(data.tiles[hexNo], spawnPos, Quaternion.Euler(0f, Random.Range(0, 6) * 60, 0f));
         tile.layer = LayerMask.NameToLayer("HexTile");
@@ -226,14 +190,41 @@ public class NetworkGridMaker : MonoBehaviourPun
 
         HexGrid.Instance.AddTile(hex);
 
-        createdHex =  hex;
+        switch (data.tileType)
+        {
+            case 0://field
+                hex.tileType = Hex.Type.Field;
+                HexGrid.Instance.emptyHexTiles.Add(hex);
+                break;
+            case 1://rock
+                hex.tileType = Hex.Type.Obstacle;
+                break;
+            case 2://hill
+                break;
+            case 3: //dungeon
+                hex.tileType = Hex.Type.Object;
+                objTilesGo.Add(hex.gameObject);
+                break;
+            case 4: //castle
+                hex.tileType = Hex.Type.Object;
+                objTilesGo.Add(hex.gameObject);
+                break;
+            case 5://village
+                hex.tileType = Hex.Type.Shop;
+                break;
+            case 6://water
+                hex.tileType = Hex.Type.Water;
+                hex.tile.transform.localPosition -= new Vector3(0f, 0.6f, 0f);
+                break;
+        }
     }
 
     [PunRPC]
     public void ConvertMaterials()
     {
         MaterialsConverter.ConvertMat(objTilesGo);
-        EventSetNavComplete?.Invoke(this, EventArgs.Empty);
+        if(PhotonNetwork.IsMasterClient)
+            EventConvertMaterials?.Invoke(this, EventArgs.Empty);
     }
 }
 

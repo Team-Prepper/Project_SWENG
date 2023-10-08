@@ -22,10 +22,16 @@ public class NetworkPlayerSpawner : MonoBehaviourPun
     void Awake()
     {
         _PhotonView = GetComponent<PhotonView>();
-        NetworkGridMaker.EventSetNavComplete += SpawnPlayer;
+        NetworkGridMaker.EventConvertMaterials += SpawnPlayerHandler;
     }
 
-    void SpawnPlayer(object sender, EventArgs e)
+    void SpawnPlayerHandler(object sender, EventArgs e)
+    {
+        _PhotonView.RPC("SpawnPlayer", RpcTarget.All, null);
+    }
+
+    [PunRPC]
+    void SpawnPlayer()
     {
         Debug.Log("Spawing");
 
@@ -46,4 +52,5 @@ public class NetworkPlayerSpawner : MonoBehaviourPun
 
         NetworkCloudManager.Instance.CloudActiveFalse(spawnHex.HexCoords);
     }
+
 }

@@ -17992,6 +17992,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 089c783dd8891bb41be505d50b4b7d6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _PhotonView: {fileID: 0}
   anim: {fileID: 0}
   stat:
     Lv: 0
@@ -18055,19 +18056,19 @@ MonoBehaviour:
   ShowParameterInspector: 1
   m_SynchronizeParameters:
   - Type: 4
-    SynchronizeType: 1
+    SynchronizeType: 2
     Name: IsWalk
   - Type: 9
-    SynchronizeType: 1
+    SynchronizeType: 2
     Name: Attack
   - Type: 9
-    SynchronizeType: 1
+    SynchronizeType: 2
     Name: Hit
   - Type: 9
-    SynchronizeType: 1
+    SynchronizeType: 2
     Name: Die
   m_SynchronizeLayers:
-  - SynchronizeType: 0
+  - SynchronizeType: 2
     LayerIndex: 0
 --- !u!1 &828904246111668701
 GameObject:
@@ -70426,7 +70427,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2893188458871475085}
-  m_LocalRotation: {x: -0.29078573, y: 0.9499485, z: -0.08201236, w: 0.079470254}
+  m_LocalRotation: {x: -0.29078344, y: 0.9499495, z: -0.082010604, w: 0.07946863}
   m_LocalPosition: {x: -6.4000134, y: 9.5999975, z: -4.8000016}
   m_LocalScale: {x: 100, y: 100, z: 99.99998}
   m_ConstrainProportionsScale: 0

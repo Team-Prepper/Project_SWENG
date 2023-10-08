@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -6,6 +7,8 @@ using Random = UnityEngine.Random;
 
 public class NetworkCloudManager : MonoSingleton<NetworkCloudManager>
 {
+    [Header("Network")]
+    private PhotonView _PhotonView;
 
     [SerializeField] List<GameObject> clouds = new List<GameObject>();
 
@@ -15,10 +18,17 @@ public class NetworkCloudManager : MonoSingleton<NetworkCloudManager>
 
     protected override void OnCreate()
     {
-        NetworkGridMaker.EventSetNavComplete += CreatCloud;
+        _PhotonView = GetComponent<PhotonView>();
+        NetworkGridMaker.EventConvertMaterials += CreatCloudHandler;
     }
 
-    private void CreatCloud(object sender, EventArgs e)
+    private void CreatCloudHandler(object sender, EventArgs e)
+    {
+        _PhotonView.RPC("CreatCloud", RpcTarget.All, null);
+    }
+
+    [PunRPC]
+    private void CreatCloud()
     {
 
         foreach (var tile in HexGrid.Instance.hexTileDict.Keys)
