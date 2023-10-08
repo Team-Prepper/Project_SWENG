@@ -10,9 +10,6 @@ public class SelectionManager : MonoBehaviour
     private Camera mainCamera;
 
     public LayerMask selectionMask;
- 
-    public UnityEvent<GameObject> OnUnitSelected;
-    public UnityEvent<GameObject> TerrainSelected;
 
     private void Awake()
     {
@@ -32,10 +29,7 @@ public class SelectionManager : MonoBehaviour
                 
                 UIManager.OpenGUI<GUI_ActionSelect>("ActionSelect").Set(result);
             }
-            else
-            {
-                TerrainSelected?.Invoke(result);
-            }
+            
         }
     }
 

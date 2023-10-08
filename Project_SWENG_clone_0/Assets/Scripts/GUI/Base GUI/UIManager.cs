@@ -89,7 +89,7 @@ public class UIManager : Singleton<UIManager> {
         msgBox.SetMessage(messageContent);
     }
 
-    public void UseDice(Unit target)
+    public void UseDice(NetworkUnit target)
     {
         if (_dice == null) _dice = OpenGUI<GUI_Dice>("Dice");
         else _dice.gameObject.SetActive(true);

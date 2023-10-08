@@ -4,19 +4,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class CloudBox : MonoBehaviour
+public class NetworkCloudManager : MonoSingleton<NetworkCloudManager>
 {
-    public static CloudBox Instance;
+
     [SerializeField] List<GameObject> clouds = new List<GameObject>();
 
     public Dictionary<Vector3Int, GameObject> cloudBox = new Dictionary<Vector3Int, GameObject>();
 
     List<Vector3Int> closeIndex = new List<Vector3Int>();
 
-    private void Awake()
+    protected override void OnCreate()
     {
-        Instance = this;
-        GridMaker.EventSetNavComplete += CreatCloud;
+        NetworkGridMaker.EventSetNavComplete += CreatCloud;
     }
 
     private void CreatCloud(object sender, EventArgs e)
@@ -24,7 +23,7 @@ public class CloudBox : MonoBehaviour
 
         foreach (var tile in HexGrid.Instance.hexTileDict.Keys)
         {
-            
+
             cloudBox.Add(tile, Instantiate(clouds[Random.Range(0, clouds.Count)]));
 
             cloudBox.TryGetValue(tile, out GameObject cloud);
@@ -32,7 +31,7 @@ public class CloudBox : MonoBehaviour
 
             cloud.transform.position = cloudPos.gameObject.transform.position + new Vector3(0f, 3f, 0f);
             cloud.transform.SetParent(gameObject.transform);
-            
+
         }
     }
 
@@ -40,7 +39,7 @@ public class CloudBox : MonoBehaviour
     {
         foreach (Vector3Int cloudNeighbours in HexGrid.Instance.GetNeighboursDoubleFor(hexCoordinate))
         {
-            foreach(Vector3Int cloud in HexGrid.Instance.GetNeighboursFor(cloudNeighbours))
+            foreach (Vector3Int cloud in HexGrid.Instance.GetNeighboursFor(cloudNeighbours))
             {
                 if (!closeIndex.Contains(cloud))
                 {
@@ -48,8 +47,8 @@ public class CloudBox : MonoBehaviour
                     StartCoroutine(ActiveFalseCo(cloud));
                 }
             }
-            
-        }     
+
+        }
     }
 
     IEnumerator ActiveFalseCo(Vector3Int index)

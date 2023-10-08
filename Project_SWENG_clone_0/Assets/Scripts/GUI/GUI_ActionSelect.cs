@@ -7,7 +7,7 @@ public class GUI_ActionSelect : GUIFullScreen
 {
     GameObject _target;
 
-    Unit _targetUnit;
+    NetworkUnit _targetUnit;
 
     [SerializeField] Image btnAttack;
     [SerializeField] Image btnMove;
@@ -15,7 +15,7 @@ public class GUI_ActionSelect : GUIFullScreen
     public void Set(GameObject target)
     {
         _target = target;
-        _targetUnit = target.GetComponent<Unit>();
+        _targetUnit = target.GetComponent<NetworkUnit>();
         CamMovement.Instance.CamSetToPlayer(target);
 
         if (_targetUnit.dicePoints < 3)

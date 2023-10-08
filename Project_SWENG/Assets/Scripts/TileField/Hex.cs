@@ -123,7 +123,7 @@ public class Hex : MonoBehaviour
             return true;
         return false;
     }
-    private void Start()
+    private void OnEnable()
     {
         highlight = GetComponent<GlowHighlight>();
     }

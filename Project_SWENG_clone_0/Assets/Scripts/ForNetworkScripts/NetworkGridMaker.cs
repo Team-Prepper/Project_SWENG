@@ -1,34 +1,49 @@
+using Photon.Pun;
 using System;
 using System.Collections.Generic;
 using System.IO.Compression;
-using Unity.AI.Navigation;
 using UnityEngine;
 using UnityEngine.UIElements;
 using Random = UnityEngine.Random;
 
-//[System.Serializable]
-//class TileData {
-//    public GameObject[] tiles;
-//    public int cost = 0;
-
-//    public TileData(GameObject[] tiles, int cost) { 
-//        this.tiles = tiles;
-//        this.cost = cost;
-//    }
-//}
-
-public class GridMaker : MonoBehaviour 
+[System.Serializable]
+class TileData
 {
+    public GameObject[] tiles;
+    public int cost = 0;
+    public int tileType = 0;
+
+    public TileData(GameObject[] tiles, int cost, int tileType)
+    {
+        this.tiles = tiles;
+        this.cost = cost;
+        this.tileType = tileType;
+    }
+
+    public int GetTileType()
+    {
+        return tileType;
+    }
+}
+
+public class NetworkGridMaker : MonoBehaviourPun
+{
+    [Header("Network")]
+    private PhotonView _PhotonView;
+    Dictionary<int, TileData> tileDic = new Dictionary<int, TileData>();
+
     [Header("Ref")]
     [SerializeField] private Hex _hexPrefab;
 
-    [SerializeField] TileData _tileNormal = new TileData(null, 5, 0);
-    [SerializeField] TileData _tileRock = new TileData(null, 5, 1);
-    [SerializeField] TileData _tileHill = new TileData(null, 5, 2);
-    [SerializeField] TileData _tileDungon = new TileData(null, 5, 3);
-    [SerializeField] TileData _tileCastle = new TileData(null, 5, 4);
+    [SerializeField] TileData _tileNormal  = new TileData(null, 5, 0);
+    [SerializeField] TileData _tileRock    = new TileData(null, 5, 1);
+    [SerializeField] TileData _tileHill    = new TileData(null, 5, 2);
+    [SerializeField] TileData _tileDungon  = new TileData(null, 5, 3);
+    [SerializeField] TileData _tileCastle  = new TileData(null, 5, 4);
     [SerializeField] TileData _tileVillage = new TileData(null, 5, 5);
-    [SerializeField] TileData _tileOcean = new TileData(null, 5, 6);
+    [SerializeField] TileData _tileOcean   = new TileData(null, 5, 6);
+
+    
 
     [Space(10)]
     public GameObject hexGround;
@@ -44,7 +59,7 @@ public class GridMaker : MonoBehaviour
     private float hexWidth = 4.325f; // horizontal
     private float hexHeight = 5.0f;  // vertical
 
-    private NavMeshSurface navMeshSurface;
+    private Hex createdHex;
 
     public static event EventHandler EventBuildComplete;
     public static event EventHandler EventSetNavComplete;
@@ -52,13 +67,27 @@ public class GridMaker : MonoBehaviour
 
     private void Awake()
     {
-        navMeshSurface = GetComponent<NavMeshSurface>();
+        _PhotonView = GetComponent<PhotonView>();
     }
 
     private void Start()
     {
         gridSizeN += oceanSizeN;
-        CreateHexGrid();
+        SetTileDict();
+
+        if (PhotonNetwork.IsMasterClient)
+            CreateHexGrid();
+    }
+
+    private void SetTileDict()
+    {
+        tileDic.Add(0, _tileNormal);
+        tileDic.Add(1, _tileRock);
+        tileDic.Add(2, _tileHill);
+        tileDic.Add(3, _tileDungon);
+        tileDic.Add(4, _tileCastle);
+        tileDic.Add(5, _tileVillage);
+        tileDic.Add(6, _tileOcean);
     }
 
     public void CreateHexGrid()
@@ -104,14 +133,15 @@ public class GridMaker : MonoBehaviour
             }
         }
         EventBuildComplete?.Invoke(this, EventArgs.Empty);
-        ConvertMaterials();
+        _PhotonView.RPC("ConvertMaterials", RpcTarget.All, null);
     }
 
     Hex OceanSpawn(TileData data, float xPos, float zPos)
     {
         Vector3 spawnPos = new Vector3(xPos, -0.5f, zPos);
 
-        Hex hex = _SpawnHexTile(data, spawnPos);
+        SpawnHexHandler(data, spawnPos, GetRandomTile(data));
+        Hex hex = createdHex;
 
         hex.tileType = Hex.Type.Water;
         hex.tile.transform.localPosition -= new Vector3(0f, 0.6f, 0f);
@@ -121,20 +151,22 @@ public class GridMaker : MonoBehaviour
 
     private Hex _HexTileSpawn(TileData selectedData, float xPos, float zPos, int percentage)
     {
-        //float setHigh = Random.Range(0, 2) * 0.5f;
         Vector3 spawnPos = new Vector3(xPos, 0, zPos);
 
         // Empty Field
-        if (Random.Range(0, percentage) != 0) {
-            Hex hexDefault = _SpawnHexTile(_tileNormal,  spawnPos);
+        if (Random.Range(0, percentage) != 0)
+        {
+            SpawnHexHandler(_tileNormal, spawnPos, GetRandomTile(_tileNormal));
+            Hex hexDefault = createdHex;
+                
             hexDefault.tileType = Hex.Type.Field;
 
             HexGrid.Instance.emptyHexTiles.Add(hexDefault);
 
             return hexDefault;
         }
-
-        Hex hex = _SpawnHexTile(selectedData,  spawnPos);
+        SpawnHexHandler(selectedData, spawnPos, GetRandomTile(selectedData));
+        Hex hex = createdHex;
 
         if (selectedData.cost == -1)
         {
@@ -153,18 +185,33 @@ public class GridMaker : MonoBehaviour
             hex.tileType = Hex.Type.Object;
             objTilesGo.Add(hex.gameObject);
         }
-        
+
 
         return hex;
     }
 
-    private Hex _SpawnHexTile(TileData data, Vector3 spawnPos)
+    private int GetRandomTile(TileData data)
+    {
+        return Random.Range(0, data.tiles.Length);
+    }
+
+    private void SpawnHexHandler(TileData data, Vector3 spawnPos, int hexNo)
     {
 
-        GameObject tile = Instantiate(data.tiles[Random.Range(0, data.tiles.Length)], spawnPos, Quaternion.Euler(0f, Random.Range(0, 6) * 60, 0f));
+      _PhotonView.RPC("_SpawnHexTile", RpcTarget.All, data.GetTileType(), spawnPos, hexNo);
+    }
+
+    //
+
+    [PunRPC]
+    private void _SpawnHexTile(int tileType, Vector3 spawnPos, int hexNo)
+    {
+
+        TileData data = tileDic[tileType];
+        GameObject tile = Instantiate(data.tiles[hexNo], spawnPos, Quaternion.Euler(0f, Random.Range(0, 6) * 60, 0f));
         tile.layer = LayerMask.NameToLayer("HexTile");
 
-        Hex hex = Instantiate(_hexPrefab, spawnPos, Quaternion.identity);
+        Hex hex = Instantiate(_hexPrefab, spawnPos, Quaternion.identity).GetComponent<Hex>();
         hex.WhenCreate(tile, transform, data.cost);
 
         GameObject iHexGround = Instantiate(hexGround, spawnPos, Quaternion.identity);
@@ -179,9 +226,10 @@ public class GridMaker : MonoBehaviour
 
         HexGrid.Instance.AddTile(hex);
 
-        return hex;
+        createdHex =  hex;
     }
 
+    [PunRPC]
     public void ConvertMaterials()
     {
         MaterialsConverter.ConvertMat(objTilesGo);

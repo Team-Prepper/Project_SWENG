@@ -208,6 +208,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     public void StartGame()
     {
-        PhotonNetwork.LoadLevel("MainLevel");
+        PhotonNetwork.LoadLevel("NetworkGameLevel");
     }
 }
