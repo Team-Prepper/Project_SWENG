@@ -5,7 +5,6 @@ using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine.UI;
 using TMPro;
-using Fusion;
 using UnityEditor.XR;
 
 
@@ -209,6 +208,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     public void StartGame()
     {
-        PhotonNetwork.LoadLevel("Level1");
+        PhotonNetwork.LoadLevel("MainLevel");
     }
 }

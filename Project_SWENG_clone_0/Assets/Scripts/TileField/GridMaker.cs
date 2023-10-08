@@ -1,4 +1,3 @@
-using Fusion;
 using System;
 using System.Collections.Generic;
 using System.IO.Compression;
@@ -18,7 +17,7 @@ class TileData {
     }
 }
 
-public class GridMaker : NetworkBehaviour
+public class GridMaker : MonoBehaviour 
 {
     [Header("Ref")]
     [SerializeField] private Hex _hexPrefab;
@@ -61,7 +60,7 @@ public class GridMaker : NetworkBehaviour
     private void Start()
     {
         gridSizeN += oceanSizeN;
-        //CreateHexGrid();
+        CreateHexGrid();
     }
 
     public void CreateHexGrid()

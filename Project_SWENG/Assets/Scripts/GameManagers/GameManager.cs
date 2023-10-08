@@ -1,8 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Fusion;
-using Unity.AI.Navigation;
 using UnityEngine;
 
 public class GameManager : MonoSingleton<GameManager>
