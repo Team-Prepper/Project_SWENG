@@ -6,6 +6,7 @@ using UnityEngine;
 public class GUI_Lobby : MonoSingleton<GUI_Lobby>
 {
     public TMP_Text roomNameText;
+    public LobbyManager lobbyManager;
 
     public void InitPregame(Fusion.NetworkRunner runner)
     {
@@ -20,6 +21,6 @@ public class GUI_Lobby : MonoSingleton<GUI_Lobby>
     
     public void StartGame()
     {
-        GameManager.Instance.Server_StartGame();
+        lobbyManager.Server_StartGame();
     }
 }

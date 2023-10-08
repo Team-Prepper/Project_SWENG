@@ -17071,11 +17071,11 @@ GameObject:
   - component: {fileID: 831800693388432925}
   - component: {fileID: 779403298883173109}
   - component: {fileID: 831800693388432920}
-  - component: {fileID: 831800693388432927}
   - component: {fileID: 831800693388432921}
   - component: {fileID: 4189250705815023951}
-  - component: {fileID: 2934245154341635780}
   - component: {fileID: 8123138769544760882}
+  - component: {fileID: 2804843534456360368}
+  - component: {fileID: 8361008152914709463}
   m_Layer: 16
   m_Name: Player
   m_TagString: Player
@@ -17139,29 +17139,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
+  movementDuration: 1
+  rotationDuration: 0.3
   dicePoints: 0
---- !u!195 &831800693388432927
-NavMeshAgent:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 828901899843211881}
-  m_Enabled: 1
-  m_AgentTypeID: 0
-  m_Radius: 0.2
-  m_Speed: 6
-  m_Acceleration: 10
-  avoidancePriority: 50
-  m_AngularSpeed: 540
-  m_StoppingDistance: 1
-  m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
-  m_AutoRepath: 1
-  m_Height: 1.8
-  m_BaseOffset: 0
-  m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
 --- !u!114 &831800693388432921
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17948,7 +17928,7 @@ MonoBehaviour:
   curEquipShield: {fileID: 0}
   shieldModel: {fileID: 0}
   shieldSlot: {fileID: 2893188458871475086}
-  mat: {fileID: 0}
+  mat: {fileID: 2100000, guid: ea128b040f8b0af4c9d2de400aaff30a, type: 2}
   curFaceCode: 0
   curEyebrowCode: 0
   curBeardCode: 0
@@ -17966,25 +17946,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   glowMaterial: {fileID: 2100000, guid: 8ecce6bbbb3ab60488514e2d479190e0, type: 2}
---- !u!114 &2934245154341635780
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 828901899843211881}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 22a3e8949fc20ff459d0df18ffee5531, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  anim: {fileID: 0}
-  stat:
-    Lv: 0
-    Exp: 0
-    curHP: 100
-  maxHealth: 100
-  atkPoint: 3
 --- !u!65 &8123138769544760882
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -17997,7 +17958,44 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 2, y: 0.2, z: 2}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 0.4, z: 0}
+--- !u!143 &2804843534456360368
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 828901899843211881}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Height: 2
+  m_Radius: 0.5
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 1, z: 0}
+--- !u!114 &8361008152914709463
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 828901899843211881}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 089c783dd8891bb41be505d50b4b7d6a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  anim: {fileID: 0}
+  stat:
+    Lv: 0
+    Exp: 0
+    curHP: 100
+  maxHealth: 100
+  atkPoint: 3
 --- !u!1 &828904246111668701
 GameObject:
   m_ObjectHideFlags: 0

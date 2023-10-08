@@ -1,12 +1,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Fusion;
 using Unity.AI.Navigation;
 using UnityEngine;
 
 public class GameManager : MonoSingleton<GameManager>
 {
-
     public GameObject player;
     public List<GameObject> enemys;
     public GameObject day;
@@ -24,14 +24,14 @@ public class GameManager : MonoSingleton<GameManager>
     }
     public Phase gamePhase;
 
-    protected override void OnCreate()
+    private void Awake()
     {
         gamePhase = Phase.Ready;
     }
 
     private void Update()
     {
-        if(gamePhase == Phase.Start)
+        if (gamePhase == Phase.Start)
         {
             NextPhase();
             PlayerTurnStandBy();
@@ -58,7 +58,7 @@ public class GameManager : MonoSingleton<GameManager>
     {
         gamePhase = Phase.EnemyPhase;
         EnemyTurn();
-        Invoke("PlayerTurnStandBy",3f);
+        Invoke("PlayerTurnStandBy", 3f);
     }
 
     public void EnemyTurn()
@@ -76,14 +76,14 @@ public class GameManager : MonoSingleton<GameManager>
 
     void changeDayNight()
     {
-        if(gamePhase != Phase.EnemyPhase)
+        if (gamePhase != Phase.EnemyPhase)
         {
             day.SetActive(true);
             night.SetActive(false);
         }
         else
         {
-            day.SetActive(false );
+            day.SetActive(false);
             night.SetActive(true);
         }
     }

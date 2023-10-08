@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 public class HexGrid : Singleton<HexGrid>
@@ -30,6 +31,7 @@ public class HexGrid : Singleton<HexGrid>
         hexTileDict.TryGetValue(hexCoordinates, out Hex result);
         return result;
     }
+
 
     public List<Vector3Int> GetNeighboursFor(Vector3Int hexCoordinates)
     {

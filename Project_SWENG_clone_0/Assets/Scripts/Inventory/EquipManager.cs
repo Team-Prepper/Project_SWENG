@@ -148,7 +148,7 @@ public class EquipManager : MonoSingleton<EquipManager>
             if (!mat)
             {
                 if (go.GetComponent<SkinnedMeshRenderer>())
-                    mat = go.GetComponent<SkinnedMeshRenderer>().material;
+                    mat = go.GetComponent<SkinnedMeshRenderer>().sharedMaterial;
             }
         }
     }

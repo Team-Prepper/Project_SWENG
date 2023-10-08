@@ -49,23 +49,6 @@ public class CamMovement : MonoSingleton<CamMovement>
     // Update is called once per frame
     void Update()
     {
-        if (GameManager.Instance.gamePhase == GameManager.Phase.AttackPhase || GameManager.Instance.gamePhase == GameManager.Phase.EnemyPhase)
-        {
-            if (!_isAttackPhase)
-            {
-                _isAttackPhase = true;
-                ConvertBattleCamera();
-            }
-        }
-        else
-        {
-            if (_isAttackPhase)
-            {
-                _isAttackPhase = false;
-                ConvertMovementCamera();
-                CamSetToPlayer(player);
-            }
-        }
 
         if (isCamMove)
         {
@@ -77,7 +60,6 @@ public class CamMovement : MonoSingleton<CamMovement>
 
     private void moveCam()
     {
-        if (GameManager.Instance.gamePhase == GameManager.Phase.AttackPhase) return;
         CamReset();
         virtualCamera.gameObject.transform.Translate(PlayerInputManager.Instance.moveDirection * moveSpeed * Time.deltaTime, Space.World);
         virtualCamera.gameObject.transform.Translate(MoveCamWithMouse() * moveSpeed * Time.deltaTime, Space.World);
@@ -160,6 +142,7 @@ public class CamMovement : MonoSingleton<CamMovement>
 
     public void ConvertMovementCamera()
     {
+        
         isCamMove = true;
         virtualCamera.gameObject.SetActive(true);
         battleCamera.gameObject.SetActive(false);

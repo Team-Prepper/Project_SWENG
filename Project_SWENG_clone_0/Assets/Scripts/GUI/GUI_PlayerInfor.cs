@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Character;
 
 public class GUI_PlayerInfor : GUIFullScreen
 {
@@ -11,7 +12,7 @@ public class GUI_PlayerInfor : GUIFullScreen
     [SerializeField] private GUI_PlayerHealth _playerHealth;
 
     Unit _targetUnit;
-    PlayerManger _targetPlayer;
+    PlayerController _targetPlayer;
 
     protected override void Open(Vector2 openPos)
     {
@@ -23,14 +24,24 @@ public class GUI_PlayerInfor : GUIFullScreen
         _target = target;
 
         _targetUnit = target.GetComponent<Unit>();
-        _targetPlayer = target.GetComponent<PlayerManger>();
+        _targetPlayer = target.GetComponent<PlayerController>();
         _playerHealth.SetPlayerHealth(target);
 
     }
 
-    private void Update()
+    protected override void Update()
     {
+        base.Update();
         _dicePoint.text = _targetUnit.dicePoints.ToString();
+
+    }
+
+    public override void HexSelect(Vector3Int selectGridPos)
+    {
+        Hex selected = HexGrid.Instance.GetTileAt(selectGridPos);
+
+        if (selected && selected.Entity == _target)
+            UIManager.OpenGUI<GUI_ActionSelect>("ActionSelect").Set(_target);
     }
 
     public void TurnEndButton() {
@@ -39,8 +50,6 @@ public class GUI_PlayerInfor : GUIFullScreen
 
     public void AttackButton() {
         if (!_targetPlayer.CanAttack()) return;
-        
-        AttackManager.Instance.ReadyToAttack();
     }
 
 }  

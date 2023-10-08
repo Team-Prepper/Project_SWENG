@@ -1,0 +1,52 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using Fusion;
+
+public class PlayerObject : NetworkBehaviour
+{
+	public static PlayerObject Local { get; private set; }
+
+	[Networked]
+	public PlayerRef Ref { get; set; }
+	[Networked]
+	public byte Index { get; set; }
+	public NetworkString<_16> Nickname { get; set; }
+	public byte ColorIndex { get; set; }
+
+
+
+	public void Server_Init(PlayerRef pRef, byte index, byte color)
+	{
+		Debug.Assert(Runner.IsServer);
+
+		Ref = pRef;
+		Index = index;
+		ColorIndex = color;
+	}
+
+	public override void Spawned()
+	{
+		base.Spawned();
+
+		if (Object.HasStateAuthority)
+		{
+			PlayerRegistry.Server_Add(Runner, Object.InputAuthority, this);
+		}
+
+		if (Object.HasInputAuthority)
+		{
+			Local = this;
+			Rpc_SetNickname(PlayerPrefs.GetString("nickname"));
+		}
+	}
+
+	[Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]
+	void Rpc_SetNickname(string nick)
+	{
+		Nickname = nick;
+	}
+
+
+	
+}
