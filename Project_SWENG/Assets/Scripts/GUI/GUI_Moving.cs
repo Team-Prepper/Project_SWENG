@@ -10,7 +10,7 @@ public class GUI_Moving : GUIFullScreen {
 
     private State _state;
 
-    private Unit _target;
+    private NetworkUnit _target;
     private Vector3Int _selectedPos;
 
     public Transform[] moveNumPrefabs;
@@ -97,7 +97,7 @@ public class GUI_Moving : GUIFullScreen {
     {
         _state = State.ready;
 
-        _target = target.GetComponent<Unit>();
+        _target = target.GetComponent<NetworkUnit>();
         CamMovement.Instance.CamSetToPlayer(target);
 
         _CalcualteRange();

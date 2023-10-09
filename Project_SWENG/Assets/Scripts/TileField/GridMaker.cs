@@ -1,4 +1,3 @@
-using Fusion;
 using System;
 using System.Collections.Generic;
 using System.IO.Compression;
@@ -7,31 +6,29 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using Random = UnityEngine.Random;
 
-[System.Serializable]
-class TileData {
-    public GameObject[] tiles;
-    public int cost = 0;
+//[System.Serializable]
+//class TileData {
+//    public GameObject[] tiles;
+//    public int cost = 0;
 
-    public TileData(GameObject[] tiles, int cost) { 
-        this.tiles = tiles;
-        this.cost = cost;
-    }
-}
+//    public TileData(GameObject[] tiles, int cost) { 
+//        this.tiles = tiles;
+//        this.cost = cost;
+//    }
+//}
 
-public class GridMaker : NetworkBehaviour
+public class GridMaker : MonoBehaviour 
 {
     [Header("Ref")]
     [SerializeField] private Hex _hexPrefab;
 
-    [SerializeField] TileData _tileNormal = new TileData(null, 5);
-    [SerializeField] TileData _tileRock = new TileData(null, 5);
-    [SerializeField] TileData _tileHill = new TileData(null, 5);
-    [SerializeField] TileData _tileDungon = new TileData(null, 5);
-    [SerializeField] TileData _tileCastle = new TileData(null, 5);
-    [SerializeField] TileData _tileVillage = new TileData(null, 5);
-    [SerializeField] TileData _tileWater = new TileData(null, 5);
-    [SerializeField] TileData _tileOcean = new TileData(null, 5);
-    [SerializeField] TileData _tileIsland= new TileData(null, 5);
+    [SerializeField] TileData _tileNormal = new TileData(null, 5, 0);
+    [SerializeField] TileData _tileRock = new TileData(null, 5, 1);
+    [SerializeField] TileData _tileHill = new TileData(null, 5, 2);
+    [SerializeField] TileData _tileDungon = new TileData(null, 5, 3);
+    [SerializeField] TileData _tileCastle = new TileData(null, 5, 4);
+    [SerializeField] TileData _tileVillage = new TileData(null, 5, 5);
+    [SerializeField] TileData _tileOcean = new TileData(null, 5, 6);
 
     [Space(10)]
     public GameObject hexGround;
@@ -61,7 +58,7 @@ public class GridMaker : NetworkBehaviour
     private void Start()
     {
         gridSizeN += oceanSizeN;
-        //CreateHexGrid();
+        CreateHexGrid();
     }
 
     public void CreateHexGrid()

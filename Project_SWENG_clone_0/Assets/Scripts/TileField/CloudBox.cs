@@ -4,17 +4,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class CloudBox : MonoSingleton<CloudBox>
+public class CloudBox : MonoBehaviour
 {
-
+    public static CloudBox Instance;
     [SerializeField] List<GameObject> clouds = new List<GameObject>();
 
     public Dictionary<Vector3Int, GameObject> cloudBox = new Dictionary<Vector3Int, GameObject>();
 
     List<Vector3Int> closeIndex = new List<Vector3Int>();
 
-    protected override void OnCreate()
+    private void Awake()
     {
+        Instance = this;
         GridMaker.EventSetNavComplete += CreatCloud;
     }
 

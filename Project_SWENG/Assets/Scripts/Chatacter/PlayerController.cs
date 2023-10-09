@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -5,6 +6,7 @@ using UnityEngine;
 
 namespace Character {
     public class PlayerController : ControllerOfCharacter {
+
         public int maxHealth;
 
         [SerializeField] int atkPoint = 3;
@@ -12,12 +14,13 @@ namespace Character {
         public static event EventHandler<IntEventArgs> EventRecover;
         public static event EventHandler<IntEventArgs> EventDamaged;
 
-        private Unit unit;
+        private NetworkUnit unit;
 
         private void Awake()
         {
             stat.curHP = maxHealth;
-            unit = GetComponent<Unit>();
+            unit = GetComponent<NetworkUnit>();
+            _PhotonView = GetComponent<PhotonView>();
         }
 
         public int Recover(int val)
@@ -43,13 +46,18 @@ namespace Character {
         public override void AttackAct()
         {
             unit.dicePoints -= atkPoint;
+            _PhotonView.RPC("AttackVfx", RpcTarget.All, null);
+        }
+
+        [PunRPC]
+        public void AttackVfx()
+        {
             EffectManager.Instance.SetTarget(gameObject);
             if (InventoryManager.Instance.Weapon)
             {
                 int weaponID = InventoryManager.Instance.Weapon.id;
-                StartCoroutine(EffectManager.Instance.ShowImpactVfx(weaponID));
+                EffectManager.Instance.ShowImpactVfxHandler(weaponID);
             }
-
         }
 
         public override void DamageAct()

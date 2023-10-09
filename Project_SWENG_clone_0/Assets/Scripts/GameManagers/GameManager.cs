@@ -1,8 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Fusion;
-using Unity.AI.Navigation;
 using UnityEngine;
 
 public class GameManager : MonoSingleton<GameManager>
@@ -49,7 +47,7 @@ public class GameManager : MonoSingleton<GameManager>
     {
         gamePhase = Phase.SetDice;
         changeDayNight();
-        UIManager.Instance.UseDice(player.GetComponent<Unit>());
+        UIManager.Instance.UseDice(player.GetComponent<NetworkUnit>());
         NextPhase();
     }
 

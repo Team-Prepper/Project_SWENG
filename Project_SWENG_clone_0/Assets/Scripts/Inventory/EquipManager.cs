@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -5,7 +6,7 @@ using System.Linq;
 using UnityEngine;
 
 
-public class EquipManager : MonoSingleton<EquipManager>
+public class EquipManager : MonoBehaviour
 {
     [HideInInspector]
     public List<GameObject> enabledObjects = new List<GameObject>();
@@ -15,6 +16,9 @@ public class EquipManager : MonoSingleton<EquipManager>
     public CharacterObjectGroups female;
     [HideInInspector]
     public CharacterObjectListsAllGender allGender;
+
+    [Header("Network")]
+    private PhotonView _photonView;
 
     public GameObject maleHeadParent;
     public GameObject femaleHeadParent;
@@ -54,6 +58,7 @@ public class EquipManager : MonoSingleton<EquipManager>
 
     private void Start()
     {
+        _photonView = GetComponent<PhotonView>();
         BuildLists();
         if (enabledObjects.Count != 0)
         {
@@ -189,12 +194,13 @@ public class EquipManager : MonoSingleton<EquipManager>
             female.leg_Left[newArmorCode].SetActive(true);
         }
     }
-    
-    private void SetHelmet(Item item)
+
+    [PunRPC]
+    private void SetHelmet(int itemID)
     {
         
-        int helmetType  = item.id / 100;
-        int helmetCode = item.id % 100 -1;
+        int helmetType  = itemID / 100;
+        int helmetCode = itemID % 100 -1;
         
         //helmetType 0 : headCovering Base
         //helmetType 1 : headCovering No FacialHair
@@ -252,6 +258,7 @@ public class EquipManager : MonoSingleton<EquipManager>
         
     }
 
+    [PunRPC]
     public void ResetHelmet()
     {
         if (isMale)
@@ -304,13 +311,13 @@ public class EquipManager : MonoSingleton<EquipManager>
 
     public void EquipHelmet(Item item)
     {
-        ResetHelmet();
-        SetHelmet(item);
+        _photonView.RPC("ResetHelmet", RpcTarget.All, null);
+        _photonView.RPC("SetHelmet", RpcTarget.All, item.id);
     }
 
-    private void ResetArmor(Item item)
+    [PunRPC]
+    private void ResetArmor(int curArmorCode)
     {
-        int curArmorCode = item.id;
         if (isMale)
         {
             male.torso[curArmorCode].SetActive(false);
@@ -338,11 +345,10 @@ public class EquipManager : MonoSingleton<EquipManager>
             female.leg_Left[curArmorCode].SetActive(false);
         }
     }
-    
-    private void SetArmor(Item item)
-    {
 
-        int newArmorCode = item.id;
+    [PunRPC]
+    private void SetArmor(int newArmorCode)
+    {
         if (isMale)
         {
             male.torso[newArmorCode].SetActive(true);
@@ -372,20 +378,22 @@ public class EquipManager : MonoSingleton<EquipManager>
     }
     public void EquipArmor(Item item)
     {
-        ResetArmor(item);
-        SetArmor(item);
+        _photonView.RPC("ResetArmor", RpcTarget.All, item.id);
+        _photonView.RPC("SetArmor", RpcTarget.All, item.id);
     }
     
     // Equip Weapon
     public void EquipWeapon(Item newWeapon)
     {
-        if(curEquipWeapon != newWeapon) UnEquipWeapon();
+        if(curEquipWeapon != newWeapon) 
+            _photonView.RPC("UnEquipWeapon", RpcTarget.All);
 
         weaponModel = Instantiate(newWeapon.itemObject, weaponSlot);
         curEquipWeapon = newWeapon;
     }
 
-    public void UnEquipWeapon()
+    [PunRPC]
+    private void UnEquipWeapon()
     {
         if(weaponModel != null)
             Destroy(weaponModel);
@@ -394,18 +402,21 @@ public class EquipManager : MonoSingleton<EquipManager>
 
     public void EquipShield(Item newShield)
     {
-        if (curEquipShield != newShield) UnEquipShield();
+        if (curEquipShield != newShield)
+            _photonView.RPC("UnEquipShield", RpcTarget.All);
 
         shieldModel = Instantiate(newShield.itemObject, shieldSlot);
         curEquipShield = newShield;
     }
 
-    public void UnEquipShield()
+    [PunRPC]
+    private void UnEquipShield()
     {
         if(shieldModel != null) 
             Destroy(shieldModel);
         curEquipShield = null;
     }
+
 }
 
 // classe for keeping the lists organized, allows for simple switching from male/female objects

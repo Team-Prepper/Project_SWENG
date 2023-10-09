@@ -6,7 +6,7 @@ using TMPro;
 
 public class GUI_Dice : GUIPopUp
 {
-    [SerializeField] private Unit _targetPlayer;
+    [SerializeField] private NetworkUnit _targetPlayer;
 
     [SerializeField] private Dice _dice;
 
@@ -16,7 +16,7 @@ public class GUI_Dice : GUIPopUp
         base.Open(new Vector2(-800,0));
     }
 
-    public void SetPlayer(Unit target) {
+    public void SetPlayer(NetworkUnit target) {
 
         _targetPlayer = target;
 

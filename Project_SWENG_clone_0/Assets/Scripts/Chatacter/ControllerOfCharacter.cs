@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -7,7 +8,10 @@ namespace Character {
 
     public class ControllerOfCharacter : MonoBehaviour {
 
-        [SerializeField] Animator anim;
+        [Header("Network")]
+        [SerializeField] protected PhotonView _PhotonView;
+
+        [SerializeField] protected Animator anim;
 
         [SerializeField] protected Stat stat;
 
@@ -15,6 +19,7 @@ namespace Character {
         void Start()
         {
             anim = GetComponent<Animator>();
+            _PhotonView = GetComponent<PhotonView>();
         }
 
         public void Attack(Vector3 targetPos)
