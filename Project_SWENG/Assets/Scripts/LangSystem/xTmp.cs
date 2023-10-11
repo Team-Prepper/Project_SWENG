@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,9 +11,9 @@ namespace LangSystem {
     [RequireComponent(typeof(CanvasRenderer))]
     [AddComponentMenu("UI/xTMP", 100)]
     [ExecuteAlways]
-    public class xTmp : TextMeshProUGUI, IStringListener {
+    public class xTmp : TextMeshProUGUI {
 
-        [SerializeField] string m_Key = string.Empty;
+        [SerializeField] protected string m_Key = string.Empty;
 
         protected override void OnValidate()
         {
@@ -24,20 +23,20 @@ namespace LangSystem {
 
         protected override void OnEnable()
         {
-            StringManager.Instance.AddListner(this);
+            StringManager.OnLangChanged.AddListener(OnLangChanged);
             SetText(m_Key);
             base.OnEnable();
         }
 
         override protected void OnDisable()
         {
-            StringManager.Instance.RemoveListner(this);
+            StringManager.OnLangChanged.RemoveListener(OnLangChanged);
             base.OnDisable();
         }
 
         protected override void OnDestroy()
         {
-            StringManager.Instance.RemoveListner(this);
+            StringManager.OnLangChanged.RemoveListener(OnLangChanged);
             base.OnDestroy();
         }
 

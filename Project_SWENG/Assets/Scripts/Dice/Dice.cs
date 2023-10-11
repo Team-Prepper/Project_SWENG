@@ -112,10 +112,10 @@ public class Dice : MonoBehaviour {
         rb.AddTorque(Random.insideUnitSphere * torqueMax + torqueMin * Vector3.one);
 
 
-        StartCoroutine(_CheckIdle());
+        StartCoroutine(CheckIdle());
     }
 
-    private IEnumerator _CheckIdle()
+    public IEnumerator CheckIdle()
     {
         while (true)
         {
@@ -129,9 +129,9 @@ public class Dice : MonoBehaviour {
         }
 
         Debug.Log("is Stop");
-        _ChkRoll();
+        ChkRoll();
     }
-    private void _ChkRoll()
+    public void ChkRoll()
     {
         float yDot, xDot, zDot;
 
@@ -154,7 +154,7 @@ public class Dice : MonoBehaviour {
 
         rb.AddForce(Vector3.one, ForceMode.Impulse);
         walls.SetActive(false);
-        StartCoroutine(_CheckIdle());
+        StartCoroutine(CheckIdle());
     }
 
     private IEnumerator RotateSmoothly(int rollValue)

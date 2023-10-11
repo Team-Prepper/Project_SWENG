@@ -62,7 +62,7 @@ public class ShopItemController : MonoBehaviour
         itemInfo.text += item.value.ToString();
     }
 
-    public void BuyItem()
+    public void BuyItemHandler()
     {
         ShopManager.Instance.BuyItemToShop(thisItem);
         Destroy(this.gameObject);

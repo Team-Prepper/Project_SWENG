@@ -213,7 +213,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &102831156
 RectTransform:
   m_ObjectHideFlags: 0
@@ -945,13 +945,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96311f5b19a95f54383e8f4d4d8a30d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GUI_item: {fileID: 6833208331100735982, guid: e2a9432f0770e4d158f3e77df5c761ab,
+  GUI_ShopPrefab: {fileID: 6833208331100735982, guid: e2a9432f0770e4d158f3e77df5c761ab,
     type: 3}
   items:
   - {fileID: 11400000, guid: a0fe4efdaa8c9b74aa14eb9b9ea48892, type: 2}
   - {fileID: 11400000, guid: 0b1baf7e6ba2e8f4e8593368ff42feef, type: 2}
   - {fileID: 11400000, guid: 7d8ff834795e3e1488071b4064657218, type: 2}
   - {fileID: 11400000, guid: 0409fa5f5395b5f4bab4d5a395500d58, type: 2}
+  visitor: {fileID: 0}
 --- !u!1 &606399402
 GameObject:
   m_ObjectHideFlags: 0
@@ -2032,7 +2033,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1220331772
 RectTransform:
   m_ObjectHideFlags: 0

@@ -49,6 +49,12 @@ namespace Character {
             _PhotonView.RPC("AttackVfx", RpcTarget.All, null);
         }
 
+        public override int GetAttackValue()
+        {
+            return stat.attackPower +
+                (InventoryManager.Instance.Weapon ? InventoryManager.Instance.Weapon.value : 0);
+        }
+
         [PunRPC]
         public void AttackVfx()
         {

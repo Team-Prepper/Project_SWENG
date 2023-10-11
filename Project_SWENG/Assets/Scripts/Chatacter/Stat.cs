@@ -9,6 +9,7 @@ namespace Character {
         public int Lv;
         public int Exp;
         public int curHP;
+        public int attackPower;
 
     }
 }

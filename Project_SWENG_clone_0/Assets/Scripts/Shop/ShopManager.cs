@@ -1,21 +1,40 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Unity.VisualScripting.Antlr3.Runtime.Tree.TreeWizard;
 
 public class ShopManager : MonoSingleton<ShopManager>
 {
-    public GameObject GUI_item;
+    public GameObject GUI_ShopPrefab;
+    private GUI_ShopInterAction GUI_shop;
     public List<Item> items = new List<Item>();
     private List<Item> selectedList = new List<Item>();
 
-    public void WelcomeToShop()
+    public NetworkUnit visitor;
+
+    public void WelcomeToShop(GameObject player)
     {
-        Instantiate(GUI_item);
+        visitor = player.GetComponent<NetworkUnit>();
+        if(visitor != null )
+        {
+            GUI_shop = Instantiate(GUI_ShopPrefab).GetComponent<GUI_ShopInterAction>();
+        }
     }
 
     public void BuyItemToShop(Item targetItem)
     {
-        InventoryManager.Instance.GetItem(targetItem);
+        if(visitor.dicePoints >= targetItem.cost)
+        {
+            visitor.dicePoints -= targetItem.cost;
+            InventoryManager.Instance.GetItem(targetItem);
+            GUI_shop.showComment("Thank you for your purchase");
+        }
+        else
+        {
+            GUI_shop.showComment("Not enough DicePoint");
+        }
+           
+
     }
 
     public List<Item> GetRandomItemList(int itemCounts)

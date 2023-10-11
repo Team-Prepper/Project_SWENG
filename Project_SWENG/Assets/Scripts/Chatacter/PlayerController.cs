@@ -43,10 +43,16 @@ namespace Character {
             return unit.dicePoints >= atkPoint;
         }
 
-        protected override void AttackAct()
+        public override void AttackAct()
         {
             unit.dicePoints -= atkPoint;
             _PhotonView.RPC("AttackVfx", RpcTarget.All, null);
+        }
+
+        public override int GetAttackValue()
+        {
+            return stat.attackPower +
+                (InventoryManager.Instance.Weapon ? InventoryManager.Instance.Weapon.value : 0);
         }
 
         [PunRPC]
@@ -60,13 +66,13 @@ namespace Character {
             }
         }
 
-        protected override void DamageAct()
+        public override void DamageAct()
         {
             base.DamageAct();
             EventDamaged?.Invoke(this, new IntEventArgs(stat.curHP));
         }
 
-        protected override void DieAct()
+        public override void DieAct()
         {
             base.DieAct();
         }

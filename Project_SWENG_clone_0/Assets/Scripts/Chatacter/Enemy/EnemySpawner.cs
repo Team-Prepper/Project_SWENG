@@ -10,8 +10,6 @@ using static UnityEngine.EventSystems.EventTrigger;
 
 public class EnemySpawner : MonoSingleton<EnemySpawner>
 {
-    [Header("Network")]
-    private PhotonView _PhotonView;
 
     public List<GameObject> enemyPrefabList;
     public List<GameObject> enemyList;
@@ -23,7 +21,6 @@ public class EnemySpawner : MonoSingleton<EnemySpawner>
 
     private void Awake()
     {
-        _PhotonView = GetComponent<PhotonView>();
         NetworkGridMaker.EventConvertMaterials += SpawnEnemyHandler;
         enemyCnt = diff;
     }

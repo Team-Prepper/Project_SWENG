@@ -25,13 +25,13 @@ namespace Character {
         public void Attack(Vector3 targetPos)
         {
             transform.LookAt(targetPos);
-            anim.SetBool("Attack", true);
+            _PhotonView.RPC("RunAnimation", RpcTarget.All, 0);
             AttackAct();
         }
 
         public virtual int GetAttackValue()
         {
-            return 10;
+            return stat.attackPower;
         }
 
         public void Damaged(int damage)
@@ -42,31 +42,50 @@ namespace Character {
 
             if (stat.curHP > 0)
             {
-                anim.SetTrigger("Hit");
+                _PhotonView.RPC("RunAnimation", RpcTarget.All, 1);
                 DamageAct();
                 return;
             }
 
-            anim.SetTrigger("Die");
+            _PhotonView.RPC("RunAnimation", RpcTarget.All, 2);
             stat.curHP = 0;
 
             DieAct();
 
         }
 
-        protected virtual void AttackAct()
+        public virtual void AttackAct()
         {
 
         }
 
-        protected virtual void DamageAct()
+        public virtual void DamageAct()
         {
 
         }
 
-        protected virtual void DieAct()
+        public virtual void DieAct()
         {
 
+        }
+
+        [PunRPC]
+        public void RunAnimation(int type)
+        {
+            switch (type)
+            {
+                case 0: // attack
+                    anim.SetTrigger("Attack");
+                    break;
+                case 1: // hit
+                    anim.SetTrigger("Hit");
+                    break;
+                case 2: // die
+                    anim.SetTrigger("Die");
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }

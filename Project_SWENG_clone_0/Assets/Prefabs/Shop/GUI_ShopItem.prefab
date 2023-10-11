@@ -63,6 +63,7 @@ MonoBehaviour:
   skillIcon: {fileID: 3743302295636499914}
   itemInfo: {fileID: 3743302295355517743}
   itemCost: {fileID: 5420357474769212645}
+  thisItem: {fileID: 0}
 --- !u!222 &3701385832855497525
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -983,7 +984,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2956907353703882811}
         m_TargetAssemblyTypeName: ShopItemController, Assembly-CSharp
-        m_MethodName: BuyItem
+        m_MethodName: BuyItemHandler
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

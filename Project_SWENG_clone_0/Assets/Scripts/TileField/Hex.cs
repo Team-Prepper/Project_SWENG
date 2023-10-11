@@ -65,7 +65,7 @@ public class Hex : MonoBehaviour
 
                     if(tileType == Type.Shop)
                     {
-                        InteractionPlayerWithShop();
+                        InteractionPlayerWithShop(entity);
                     }
 
                 }
@@ -159,9 +159,9 @@ public class Hex : MonoBehaviour
         item.Pick();
     }
 
-    private void InteractionPlayerWithShop()
+    private void InteractionPlayerWithShop(GameObject player)
     {
-        ShopManager.Instance.WelcomeToShop();
+        ShopManager.Instance.WelcomeToShop(player);
     }
 
     private void SpawnItem()

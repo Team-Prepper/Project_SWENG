@@ -7,9 +7,9 @@ using UnityEngine.UI;
 namespace LangSystem {
     [RequireComponent(typeof(CanvasRenderer))]
     [AddComponentMenu("UI/Legacy/xText", 100)]
-    public class xText : Text, IStringListener {
+    public class xText : Text {
         // Start is called before the first frame update
-        [SerializeField] string m_Key = string.Empty;
+        [SerializeField] protected string m_Key = string.Empty;
         protected override void OnValidate()
         {
             SetText(m_Key);
@@ -18,19 +18,19 @@ namespace LangSystem {
 
         protected override void OnEnable()
         {
-            StringManager.Instance.AddListner(this);
+            StringManager.OnLangChanged.AddListener(OnLangChanged);
             SetText(m_Key);
             base.OnEnable();
         }
         override protected void OnDisable()
         {
-            StringManager.Instance.RemoveListner(this);
+            StringManager.OnLangChanged.RemoveListener(OnLangChanged);
             base.OnDisable();
         }
 
         protected override void OnDestroy()
         {
-            StringManager.Instance.RemoveListner(this);
+            StringManager.OnLangChanged.RemoveListener(OnLangChanged);
             base.OnDestroy();
         }
 

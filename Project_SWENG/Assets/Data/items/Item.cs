@@ -15,6 +15,8 @@ public class Item : ScriptableObject
     public int cost;
     public Sprite icon;
     public Sprite skillIcon;
+    public int skillCost;
+    public int skillDmg;
     public GameObject itemObject;
     public Hex itemHex; // Required to remove dropped items
 

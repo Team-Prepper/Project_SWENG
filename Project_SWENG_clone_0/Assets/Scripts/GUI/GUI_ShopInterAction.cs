@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class GUI_ShopInterAction : GUIPopUp
@@ -7,6 +8,7 @@ public class GUI_ShopInterAction : GUIPopUp
     public int itemCounts;
     [SerializeField] Transform itemSlot;
     [SerializeField] GameObject itemInfo;
+    [SerializeField] TextMeshProUGUI shopComment;
     protected override void Open(Vector2 openPos)
     {
         base.Open(new Vector2(-1000,0));
@@ -32,5 +34,10 @@ public class GUI_ShopInterAction : GUIPopUp
     {
         GameObject itemInstance = Instantiate(itemInfo, itemSlot);
         itemInstance.GetComponent<ShopItemController>().SetItem(item);
+    }
+
+    public void showComment(string comment)
+    {
+        shopComment.text = comment;
     }
 }
