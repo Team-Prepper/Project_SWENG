@@ -54,17 +54,17 @@ namespace Character {
 
         }
 
-        public virtual void AttackAct()
+        protected virtual void AttackAct()
         {
 
         }
 
-        public virtual void DamageAct()
+        protected virtual void DamageAct()
         {
 
         }
 
-        public virtual void DieAct()
+        protected virtual void DieAct()
         {
 
         }

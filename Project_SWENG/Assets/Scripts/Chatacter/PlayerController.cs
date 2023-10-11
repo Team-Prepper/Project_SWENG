@@ -43,7 +43,7 @@ namespace Character {
             return unit.dicePoints >= atkPoint;
         }
 
-        public override void AttackAct()
+        protected override void AttackAct()
         {
             unit.dicePoints -= atkPoint;
             _PhotonView.RPC("AttackVfx", RpcTarget.All, null);
@@ -60,13 +60,13 @@ namespace Character {
             }
         }
 
-        public override void DamageAct()
+        protected override void DamageAct()
         {
             base.DamageAct();
             EventDamaged?.Invoke(this, new IntEventArgs(stat.curHP));
         }
 
-        public override void DieAct()
+        protected override void DieAct()
         {
             base.DieAct();
         }

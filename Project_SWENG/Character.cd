@@ -1,0 +1,166 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" GroupingSetting="Access">
+  <Class Name="Character.AttackManager">
+    <Position X="8.5" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Chatacter\AttackManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Character.ControllerOfCharacter">
+    <Position X="11" Y="0.75" Width="1.5" />
+    <Members>
+      <Field Name="_PhotonView" Hidden="true" />
+      <Field Name="anim" Hidden="true" />
+      <Method Name="AttackAct" Hidden="true" />
+      <Method Name="DamageAct" Hidden="true" />
+      <Method Name="DieAct" Hidden="true" />
+      <Method Name="Start" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>AAAAAAQAICCAAAAAAAAAgAAAAIABAgAAAQAIAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Chatacter\ControllerOfCharacter.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="stat" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Character.EnemyController">
+    <Position X="12" Y="4.25" Width="1.5" />
+    <Members>
+      <Field Name="curHex" Hidden="true" />
+      <Method Name="DieAct" Hidden="true" />
+      <Field Name="healthGUI" Hidden="true" />
+      <Method Name="OnEnable" Hidden="true" />
+      <Field Name="playerLayerMask" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>AAAAAQAAIAAAACAAAAAAgAEAAAABAAAAACIAAAAACAA=</HashCode>
+      <FileName>Assets\Scripts\Chatacter\Enemy\EnemyController.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="enemyStat" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Character.EnemyStat">
+    <Position X="15" Y="5.5" Width="1.5" />
+    <Members>
+      <Method Name="Awake" Hidden="true" />
+      <Method Name="SetEnemyStat" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>EAACAAAgEAAAAAAAAAAAgAAAAAAAAQAJgAAAAQAgAFA=</HashCode>
+      <FileName>Assets\Scripts\Chatacter\Enemy\EnemyStat.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Character.PlayerController">
+    <Position X="9.75" Y="4.25" Width="1.5" />
+    <Members>
+      <Method Name="AttackAct" Hidden="true" />
+      <Method Name="AttackVfx" Hidden="true" />
+      <Method Name="Awake" Hidden="true" />
+      <Method Name="DamageAct" Hidden="true" />
+      <Method Name="DieAct" Hidden="true" />
+      <Event Name="EventDamaged" Hidden="true" />
+      <Event Name="EventRecover" Hidden="true" />
+      <Field Name="maxHealth" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAIIACgIAAAIAEAgAQQAAAAAAAAAAAAAAAAgEA=</HashCode>
+      <FileName>Assets\Scripts\Chatacter\PlayerController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Character.Stat">
+    <Position X="14.25" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAQAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Chatacter\Stat.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EnemyAttack">
+    <Position X="15" Y="3.5" Width="1.5" />
+    <Members>
+      <Method Name="Awake" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAABACAAAAEA=</HashCode>
+      <FileName>Assets\Scripts\Chatacter\Enemy\EnemyAttack.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="enemyController" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="DiceValueInfor">
+    <Position X="1.5" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAQAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Dice\Dice.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Dice">
+    <Position X="4" Y="4.25" Width="1.5" />
+    <Members>
+      <Method Name="_CheckIdle" Hidden="true" />
+      <Method Name="_ChkRoll" Hidden="true" />
+      <Field Name="_diceSet" Hidden="true" />
+      <Field Name="_diceStopEvent" Hidden="true" />
+      <Field Name="_isRolling" Hidden="true" />
+      <Field Name="_waitTime" Hidden="true" />
+      <Method Name="Awake" Hidden="true" />
+      <Field Name="idleTime" Hidden="true" />
+      <Field Name="initialRotation" Hidden="true" />
+      <Field Name="lastPosition" Hidden="true" />
+      <Field Name="originPos" Hidden="true" />
+      <Field Name="rb" Hidden="true" />
+      <Method Name="RotateSmoothly" Hidden="true" />
+      <Field Name="rotationSpeed" Hidden="true" />
+      <Method Name="SetDicD20" Hidden="true" />
+      <Method Name="SetDicD6" Hidden="true" />
+      <Method Name="Start" Hidden="true" />
+      <Field Name="targetRotation" Hidden="true" />
+      <Field Name="throwStrength" Hidden="true" />
+      <Field Name="torqueMax" Hidden="true" />
+      <Field Name="torqueMin" Hidden="true" />
+      <Field Name="walls" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>AAAEiACAICAIMQAEAAgmIAAAAAAAAACAAIBgABCSAEA=</HashCode>
+      <FileName>Assets\Scripts\Dice\Dice.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Field Name="_diceInfor" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="NetworkUnit">
+    <Position X="9.75" Y="6.75" Width="1.5" />
+    <Members>
+      <Field Name="_characterController" Hidden="true" />
+      <Field Name="animator" Hidden="true" />
+      <Field Name="glowHighlight" Hidden="true" />
+      <Field Name="movementDuration" Hidden="true" />
+      <Method Name="NewMovementCoroutine" Hidden="true" />
+      <Field Name="pathPositions" Hidden="true" />
+      <Method Name="RotationCoroutine" Hidden="true" />
+      <Field Name="rotationDuration" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>BAEAAABAAKAAEAAAAAAACAQQAAAAAAgAAAAAQAAAIAA=</HashCode>
+      <FileName>Assets\Scripts\ForNetworkScripts\NetworkUnit.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GraphSearch">
+    <Position X="8.75" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\TileField\GraphSearch.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="BFSResult">
+    <Position X="8.75" Y="12.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAAAAAAAAAgAAAAAAAAEAAAAAAAAAAAAAAAACA=</HashCode>
+      <FileName>Assets\Scripts\TileField\GraphSearch.cs</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Font Name="맑은 고딕" Size="9" />
+</ClassDiagram>
