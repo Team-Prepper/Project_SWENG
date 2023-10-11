@@ -32,7 +32,7 @@ namespace Character {
             return enemyStat.atk;
         }
 
-        public override void DamageAct()
+        protected override void DamageAct()
         {
             Collider[] colliders = Physics.OverlapSphere(transform.position, 10f, playerLayerMask);
             if (colliders.Length > 0)
@@ -41,7 +41,7 @@ namespace Character {
             healthGUI.UpdateGUI((float)stat.curHP / enemyStat.maxHp);
         }
 
-        public override void DieAct()
+        protected override void DieAct()
         {
             curHex = HexGrid.Instance.GetHexFromPosition(this.gameObject.transform.position);
             curHex.Entity = null;

@@ -3,12 +3,34 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Xml;
 using UnityEngine.Events;
+using Unity.VisualScripting;
+using UnityEngine.InputSystem;
 
 namespace LangSystem {
+
+    public interface IStringListener {
+
+        public void OnLangChanged();
+
+        public void SetText(string key);
+
+    }
+
     public class StringManager : Singleton<StringManager> {
         // Start is called before the first frame update
 
-        public static UnityEvent OnLangChanged = new UnityEvent();
+        List<IStringListener> _targets;
+
+        public void AddListner(IStringListener element) {
+            _targets.Add(element);
+        }
+
+        public void RemoveListner(IStringListener element)
+        {
+            _targets.Add(element);
+
+        }
+
         class StringData {
             public string key;
             public string value;
@@ -26,10 +48,11 @@ namespace LangSystem {
 
         protected override void OnCreate()
         {
-            ReadStringFromXml(_nowLang);
+            _targets = new List<IStringListener>();
+            _ReadStringFromXml(_nowLang);
         }
 
-        public void ReadStringFromXml(string lang)
+        private void _ReadStringFromXml(string lang)
         {
             _dic = new Dictionary<string, string>();
             XmlDocument xmlDoc = AssetOpener.ReadXML("String/" + _nowLang);
@@ -48,15 +71,20 @@ namespace LangSystem {
 
         public void UpdateData()
         {
-            ReadStringFromXml(_nowLang);
-            OnLangChanged.Invoke();
-
+            _ReadStringFromXml(_nowLang);
+            _LangChange();
         }
 
         public void ChangeLang(string lang)
         {
-            ReadStringFromXml(lang);
-            OnLangChanged.Invoke();
+            _ReadStringFromXml(lang);
+            _LangChange();
+        }
+
+        private void _LangChange() {
+            foreach (IStringListener target in _targets) {
+                target.OnLangChanged();
+            }
         }
 
         public string GetStringByKey(string key)
