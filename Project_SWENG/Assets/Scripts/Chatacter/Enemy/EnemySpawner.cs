@@ -45,5 +45,7 @@ public class EnemySpawner : MonoBehaviourPun
         Transform spawnPos = spawnHex.transform;
         GameObject enemy = PhotonNetwork.Instantiate(enemyPrefabList[Random.Range(0,enemyPrefabList.Count)].name, spawnPos.position, spawnPos.rotation);
         enemy.transform.SetParent(transform);
+        enemy.GetComponent<EnemyController>().enemySpawner = this;
+        enemyList.Add(enemy);
     }
 }

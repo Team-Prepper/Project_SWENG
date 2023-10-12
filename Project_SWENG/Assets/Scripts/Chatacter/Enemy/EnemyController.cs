@@ -2,13 +2,14 @@ using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Character {
     public class EnemyController : ControllerOfCharacter {
 
         [SerializeField] GUI_EnemyHealth healthGUI;
         [SerializeField] LayerMask playerLayerMask;
-        private EnemySpawner _enemySpawner;
+        public EnemySpawner enemySpawner;
         
         public EnemyStat enemyStat;
 
@@ -23,13 +24,10 @@ namespace Character {
             if (healthGUI == null)
                 healthGUI = GetComponentInChildren<GUI_EnemyHealth>();
 
-            if (_enemySpawner == null)
-                _enemySpawner.GetComponentInParent<EnemySpawner>();
-
             stat.curHP = enemyStat.maxHp;
             curHex = HexGrid.Instance.GetHexFromPosition(this.gameObject.transform.position);
             curHex.Entity = this.gameObject;
-            _enemySpawner.enemyList.Add(gameObject);
+            
         }
 
         public override int GetAttackValue()
@@ -51,7 +49,7 @@ namespace Character {
         {
             curHex = HexGrid.Instance.GetHexFromPosition(this.gameObject.transform.position);
             curHex.Entity = null;
-            _enemySpawner.enemyList.Remove(this.gameObject);
+            enemySpawner.enemyList.Remove(this.gameObject);
 
             healthGUI.UpdateGUI(0);
             DropItem();
