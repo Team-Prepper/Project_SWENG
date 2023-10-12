@@ -20,8 +20,7 @@ public class NetworkUnit : MonoBehaviourPun
     [SerializeField]
     private float movementDuration = 1, rotationDuration = 0.3f;
 
-    [Header("Movemet")]
-    public int dicePoints = 0;
+    public int dicePoints { get; set; }
 
     private GlowHighlight glowHighlight;
     private Queue<Vector3> pathPositions = new Queue<Vector3>();
@@ -30,6 +29,8 @@ public class NetworkUnit : MonoBehaviourPun
     {
         glowHighlight = GetComponent<GlowHighlight>();
         animator = GetComponentInChildren<Animator>();
+
+        dicePoints = 0;
         _characterController = GetComponent<CharacterController>();
         _photonView = GetComponent<PhotonView>();
     }
@@ -76,11 +77,12 @@ public class NetworkUnit : MonoBehaviourPun
     private IEnumerator NewMovementCoroutine(Vector3 endPosition)
     {
         _photonView.RPC("SetPlayerOnHex",RpcTarget.All,0);
+        HexGrid.Instance.GetTileAt(HexGrid.GetClosestHex(transform.position)).Entity = null;
 
         Vector3 startPosition = transform.position;
         endPosition.y = startPosition.y;
 
-        Vector3Int newHexPos = HexCoordinates.ConvertPositionToOffset(endPosition);
+        Vector3Int newHexPos = HexGrid.GetClosestHex(endPosition);
         NetworkCloudManager.Instance.CloudActiveFalse(newHexPos);
         Hex goalHex = HexGrid.Instance.GetTileAt(newHexPos);
         dicePoints -= goalHex.cost;
@@ -119,11 +121,11 @@ public class NetworkUnit : MonoBehaviourPun
     {
         if (type == 1)
         {
-            HexGrid.Instance.GetTileAt(HexCoordinates.ConvertPositionToOffset(position)).Entity = gameObject;
+            HexGrid.Instance.GetTileAt(HexGrid.GetClosestHex(position)).Entity = gameObject;
         }
         else
         {
-            HexGrid.Instance.GetTileAt(HexCoordinates.ConvertPositionToOffset(position)).Entity = null;
+            HexGrid.Instance.GetTileAt(HexGrid.GetClosestHex(position)).Entity = null;
         }
     }
 

@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Character {
 
-    public class ControllerOfCharacter : MonoBehaviourPun {
+    public class NetworkCharacterController : MonoBehaviourPun {
 
         [Header("Network")]
         [SerializeField] protected PhotonView _PhotonView;

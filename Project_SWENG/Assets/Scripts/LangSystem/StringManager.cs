@@ -1,14 +1,36 @@
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using System.Xml;
-using UnityEngine.Events;
+using ObserberPattern;
 
 namespace LangSystem {
-    public class StringManager : Singleton<StringManager> {
+
+    public interface IStringListener {
+        public void SetText(string key);
+
+    }
+
+    public class StringManager : Singleton<StringManager>, ISubject{
         // Start is called before the first frame update
 
-        public static UnityEvent OnLangChanged = new UnityEvent();
+        List<IObserver> _targets;
+
+        public void AddObserver(IObserver ops)
+        {
+            _targets.Add(ops);
+        }
+
+        public void RemoveObserver(IObserver ops)
+        {
+            _targets.Remove(ops);
+        }
+
+        public void NotifyToObserver()
+        {
+            foreach (IObserver target in _targets) {
+                target.Notified();
+            } 
+        }
+
         class StringData {
             public string key;
             public string value;
@@ -26,11 +48,13 @@ namespace LangSystem {
 
         protected override void OnCreate()
         {
-            ReadStringFromXml(_nowLang);
+            _targets = new List<IObserver>();
+            _ReadStringFromXml();
         }
 
-        public void ReadStringFromXml(string lang)
+        private void _ReadStringFromXml()
         {
+
             _dic = new Dictionary<string, string>();
             XmlDocument xmlDoc = AssetOpener.ReadXML("String/" + _nowLang);
 
@@ -48,15 +72,14 @@ namespace LangSystem {
 
         public void UpdateData()
         {
-            ReadStringFromXml(_nowLang);
-            OnLangChanged.Invoke();
+            _ReadStringFromXml();
+            NotifyToObserver();
 
         }
-
         public void ChangeLang(string lang)
         {
-            ReadStringFromXml(lang);
-            OnLangChanged.Invoke();
+            _nowLang = lang;
+            UpdateData();
         }
 
         public string GetStringByKey(string key)
@@ -69,6 +92,7 @@ namespace LangSystem {
             return key;
 
         }
+
     }
 
 }

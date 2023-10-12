@@ -58,11 +58,12 @@ public class CamMovement : MonoSingleton<CamMovement>
         
     }
 
+    // ReSharper disable Unity.PerformanceAnalysis
     private void moveCam()
     {
         CamReset();
         virtualCamera.gameObject.transform.Translate(PlayerInputManager.Instance.moveDirection * moveSpeed * Time.deltaTime, Space.World);
-        virtualCamera.gameObject.transform.Translate(MoveCamWithMouse() * moveSpeed * Time.deltaTime, Space.World);
+        virtualCamera.gameObject.transform.Translate(MoveCamWithMouse() * (moveSpeed * Time.deltaTime), Space.World);
     }
 
     private Vector3 MoveCamWithMouse()

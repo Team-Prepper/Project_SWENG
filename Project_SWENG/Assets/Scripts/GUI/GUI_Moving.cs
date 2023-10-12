@@ -33,7 +33,7 @@ public class GUI_Moving : GUIFullScreen {
     private void _ShowRange()
     {
 
-        Vector3Int unitPos = HexGrid.Instance.GetClosestHex(_target.transform.position);
+        Vector3Int unitPos = HexGrid.GetClosestHex(_target.transform.position);
 
         foreach (Vector3Int hexPosition in movementRange.GetRangePositions())
         {
@@ -75,7 +75,7 @@ public class GUI_Moving : GUIFullScreen {
 
     private void _CalcualteRange()
     {
-        movementRange = GraphSearch.BFSGetRange(HexGrid.Instance.GetClosestHex(_target.transform.position), _target.dicePoints);
+        movementRange = GraphSearch.BFSGetRange(HexGrid.GetClosestHex(_target.transform.position), _target.dicePoints);
     }
 
     private void _MoveUnit()

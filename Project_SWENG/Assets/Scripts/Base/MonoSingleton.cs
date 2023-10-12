@@ -1,6 +1,4 @@
 using Photon.Pun;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [ExecuteInEditMode]
@@ -77,7 +75,7 @@ public class MonoSingleton<T> : MonoBehaviour where T : MonoBehaviour {
 [ExecuteInEditMode]
 public class Singleton<T> where T : Singleton<T>, new() {
     static T _instance;
-    static public T Instance {
+    public static T Instance {
         get {
             if (_instance == null)
             {

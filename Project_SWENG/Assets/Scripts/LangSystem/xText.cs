@@ -1,15 +1,14 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using ObserberPattern;
 
 namespace LangSystem {
     [RequireComponent(typeof(CanvasRenderer))]
     [AddComponentMenu("UI/Legacy/xText", 100)]
-    public class xText : Text {
+    public class xText : Text, IObserver, IStringListener {
         // Start is called before the first frame update
-        [SerializeField] protected string m_Key = string.Empty;
+        [SerializeField] private string m_Key = string.Empty;
+
         protected override void OnValidate()
         {
             SetText(m_Key);
@@ -18,19 +17,19 @@ namespace LangSystem {
 
         protected override void OnEnable()
         {
-            StringManager.OnLangChanged.AddListener(OnLangChanged);
+            StringManager.Instance.AddObserver(this);
             SetText(m_Key);
             base.OnEnable();
         }
         override protected void OnDisable()
         {
-            StringManager.OnLangChanged.RemoveListener(OnLangChanged);
+            StringManager.Instance.RemoveObserver(this);
             base.OnDisable();
         }
 
         protected override void OnDestroy()
         {
-            StringManager.OnLangChanged.RemoveListener(OnLangChanged);
+            StringManager.Instance.RemoveObserver(this);
             base.OnDestroy();
         }
 
@@ -53,5 +52,9 @@ namespace LangSystem {
 
         }
 
+        public void Notified()
+        {
+            SetText(m_Key);
+        }
     }
 }
