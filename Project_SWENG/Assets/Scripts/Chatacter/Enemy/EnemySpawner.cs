@@ -8,9 +8,9 @@ using Random = UnityEngine.Random;
 using Photon.Pun;
 using static UnityEngine.EventSystems.EventTrigger;
 
-public class EnemySpawner : MonoSingleton<EnemySpawner>
+public class EnemySpawner : MonoBehaviourPun
 {
-
+    
     public List<GameObject> enemyPrefabList;
     public List<GameObject> enemyList;
     //public Dictionary<GameObject, Hex> enemyDic = new Dictionary<GameObject, Hex>();

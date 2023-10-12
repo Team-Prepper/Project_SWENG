@@ -1,12 +1,16 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Photon.Pun;
 using UnityEngine;
 
 [SelectionBase]
-public class NetworkUnit : MonoBehaviour
+public class NetworkUnit : MonoBehaviourPun
 {
 
+    [Header("Network")] 
+    private PhotonView _photonView;
+    
     [Header("Ref")]
     [SerializeField]
     private Animator animator;
@@ -27,6 +31,7 @@ public class NetworkUnit : MonoBehaviour
         glowHighlight = GetComponent<GlowHighlight>();
         animator = GetComponentInChildren<Animator>();
         _characterController = GetComponent<CharacterController>();
+        _photonView = GetComponent<PhotonView>();
     }
 
     public void Deselect()
@@ -70,7 +75,7 @@ public class NetworkUnit : MonoBehaviour
 
     private IEnumerator NewMovementCoroutine(Vector3 endPosition)
     {
-        HexGrid.Instance.GetTileAt(HexGrid.Instance.GetClosestHex(transform.position)).Entity = null;
+        _photonView.RPC("SetPlayerOnHex",RpcTarget.All,0);
 
         Vector3 startPosition = transform.position;
         endPosition.y = startPosition.y;
@@ -103,11 +108,23 @@ public class NetworkUnit : MonoBehaviour
         else
         {
             Debug.Log("Movement finished!");
-            HexGrid.Instance.GetTileAt(newHexPos).Entity = gameObject;
+            _photonView.RPC("SetPlayerOnHex",RpcTarget.All,1);
         }
         if (animator)
             animator.SetBool("IsWalk", false);
     }
 
+    [PunRPC]
+    private void SetPlayerOnHex(int type, Vector3 position)
+    {
+        if (type == 1)
+        {
+            HexGrid.Instance.GetTileAt(HexCoordinates.ConvertPositionToOffset(position)).Entity = gameObject;
+        }
+        else
+        {
+            HexGrid.Instance.GetTileAt(HexCoordinates.ConvertPositionToOffset(position)).Entity = null;
+        }
+    }
 
 }

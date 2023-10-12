@@ -105,6 +105,14 @@ public class HexGrid : Singleton<HexGrid>
 
         return randHex;
     }
+
+    public void RemoveAtEmeptyHexTiles(Hex setHex)
+    {
+        foreach(var hex in GetNeighboursFor(setHex.HexCoords))
+        {
+            emptyHexTiles.Remove(GetTileAt(hex));
+        }
+    }
 }
 
 public static class Direction

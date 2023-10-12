@@ -23,6 +23,13 @@ namespace Character {
             _PhotonView = GetComponent<PhotonView>();
         }
 
+        private void OnEnable()
+        {
+            Hex curHex = HexGrid.Instance.GetHexFromPosition(this.gameObject.transform.position);
+            curHex.Entity = this.gameObject;
+            HexGrid.Instance.RemoveAtEmeptyHexTiles(curHex);
+        }
+
         public int Recover(int val)
         {
             if (stat.curHP <= 0) return 0;

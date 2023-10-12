@@ -8,22 +8,28 @@ namespace Character {
 
         [SerializeField] GUI_EnemyHealth healthGUI;
         [SerializeField] LayerMask playerLayerMask;
+        private EnemySpawner _enemySpawner;
+        
         public EnemyStat enemyStat;
 
         public Hex curHex;
 
         private void OnEnable()
         {
+            Debug.Log("Enemy OnEnable");
             if (enemyStat == null)
                 enemyStat = GetComponent<EnemyStat>();
 
             if (healthGUI == null)
                 healthGUI = GetComponentInChildren<GUI_EnemyHealth>();
 
+            if (_enemySpawner == null)
+                _enemySpawner.GetComponentInParent<EnemySpawner>();
+
             stat.curHP = enemyStat.maxHp;
             curHex = HexGrid.Instance.GetHexFromPosition(this.gameObject.transform.position);
             curHex.Entity = this.gameObject;
-            EnemySpawner.Instance.enemyList.Add(gameObject);
+            _enemySpawner.enemyList.Add(gameObject);
         }
 
         public override int GetAttackValue()
@@ -45,7 +51,7 @@ namespace Character {
         {
             curHex = HexGrid.Instance.GetHexFromPosition(this.gameObject.transform.position);
             curHex.Entity = null;
-            EnemySpawner.Instance.enemyList.Remove(this.gameObject);
+            _enemySpawner.enemyList.Remove(this.gameObject);
 
             healthGUI.UpdateGUI(0);
             DropItem();

@@ -17,6 +17,7 @@ public class NetworkPlayerSpawner : MonoBehaviourPun
     [Header("SystemManager")]
 
     [SerializeField] GameObject playerPrefab;
+    
     public UnityEvent<GameObject> EventPlayerSpawn;
 
     void Awake()
@@ -43,7 +44,6 @@ public class NetworkPlayerSpawner : MonoBehaviourPun
         GameObject player = PhotonNetwork.Instantiate(playerPrefab.name, spawnPos.position, spawnPos.rotation);
 
         UIManager.OpenGUI<GUI_PlayerInfor>("UnitInfor").SetPlayer(player);
-        spawnHex.Entity = player;
 
         EventPlayerSpawn?.Invoke(player);
 

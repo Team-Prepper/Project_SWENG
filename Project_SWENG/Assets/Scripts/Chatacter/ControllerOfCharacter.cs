@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Character {
 
-    public class ControllerOfCharacter : MonoBehaviour {
+    public class ControllerOfCharacter : MonoBehaviourPun {
 
         [Header("Network")]
         [SerializeField] protected PhotonView _PhotonView;
@@ -16,7 +16,7 @@ namespace Character {
         [SerializeField] protected Stat stat;
 
         // Start is called before the first frame update
-        void Start()
+        protected virtual void Start()
         {
             anim = GetComponent<Animator>();
             _PhotonView = GetComponent<PhotonView>();
@@ -34,7 +34,13 @@ namespace Character {
             return stat.attackPower;
         }
 
-        public void Damaged(int damage)
+        public void DamagedHandler(int damage)
+        {
+            _PhotonView.RPC("TakeDamaged", RpcTarget.All, damage);
+        }
+
+        [PunRPC]
+        public void TakeDamaged(int damage)
         {
             if (stat.curHP <= 0) return;
 
@@ -51,7 +57,6 @@ namespace Character {
             stat.curHP = 0;
 
             DieAct();
-
         }
 
         public virtual void AttackAct()

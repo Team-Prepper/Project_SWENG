@@ -8,7 +8,7 @@ namespace Character {
         public void AttackTo(ControllerOfCharacter attacker, ControllerOfCharacter defender)
         {
 
-            defender.Damaged(attacker.GetAttackValue());
+            defender.DamagedHandler(attacker.GetAttackValue());
         }
 
         public void BaseAtkHandler(ControllerOfCharacter attacker, Hex targetHex)
