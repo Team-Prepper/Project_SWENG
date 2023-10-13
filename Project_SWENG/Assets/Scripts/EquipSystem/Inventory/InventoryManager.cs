@@ -2,16 +2,15 @@ using System;
 using System.Diagnostics;
 using System.Xml.Serialization;
 using UnityEngine;
-using Debug = System.Diagnostics.Debug;
 
 public class InventoryManager : MonoSingleton<InventoryManager>
 {
     private EquipManager _equipManager;
 
-    public Item Helmet = null;
-    public Item Armor  = null;
+    private Item Helmet = null;
+    private Item Armor  = null;
     public Item Weapon = null;
-    public Item Shield = null;
+    private Item Shield = null;
 
     // EquipManger.Instance,EquipItem -> resetItem + setItem
 
@@ -24,8 +23,7 @@ public class InventoryManager : MonoSingleton<InventoryManager>
     {
         if(item.itemHex != null)
             item.itemHex.Item = null;
-        
-        
+
         GUI_ItemEquiped.Instance.SetItemGUI(item);
 
         switch (item.type)

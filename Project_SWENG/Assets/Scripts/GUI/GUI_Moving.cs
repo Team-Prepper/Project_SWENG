@@ -10,7 +10,8 @@ public class GUI_Moving : GUIFullScreen {
 
     private State _state;
 
-    private NetworkUnit _target;
+    private DicePoint _targetPoint;
+    [SerializeField] private NetworkUnit _targetUnit;
     private Vector3Int _selectedPos;
 
     public Transform[] moveNumPrefabs;
@@ -33,7 +34,7 @@ public class GUI_Moving : GUIFullScreen {
     private void _ShowRange()
     {
 
-        Vector3Int unitPos = HexGrid.GetClosestHex(_target.transform.position);
+        Vector3Int unitPos = HexGrid.GetClosestHex(_targetPoint.transform.position);
 
         foreach (Vector3Int hexPosition in movementRange.GetRangePositions())
         {
@@ -75,13 +76,13 @@ public class GUI_Moving : GUIFullScreen {
 
     private void _CalcualteRange()
     {
-        movementRange = GraphSearch.BFSGetRange(HexGrid.GetClosestHex(_target.transform.position), _target.dicePoints);
+        movementRange = GraphSearch.BFSGetRange(HexGrid.GetClosestHex(_targetPoint.transform.position), _targetPoint.GetPoint());
     }
 
     private void _MoveUnit()
     {
-        Debug.Log("Moving unit " + _target.name);
-        _target.NewMoveThroughPath(currentPath.Select(pos => HexGrid.Instance.GetTileAt(pos).transform.position).ToList());
+        Debug.Log("Moving unit " + _targetUnit.name);
+        _targetUnit.NewMoveThroughPath(currentPath.Select(pos => HexGrid.Instance.GetTileAt(pos).transform.position).ToList());
         _HideRange();
         Close();
     }
@@ -97,7 +98,8 @@ public class GUI_Moving : GUIFullScreen {
     {
         _state = State.ready;
 
-        _target = target.GetComponent<NetworkUnit>();
+        _targetPoint = target.GetComponent<DicePoint>();
+        _targetUnit = target.GetComponent<NetworkUnit>();
         CamMovement.Instance.CamSetToPlayer(target);
 
         _CalcualteRange();

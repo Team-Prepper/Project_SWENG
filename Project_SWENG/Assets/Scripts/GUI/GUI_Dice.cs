@@ -6,7 +6,7 @@ using TMPro;
 
 public class GUI_Dice : GUIPopUp
 {
-    [SerializeField] private NetworkUnit _targetPlayer;
+    [SerializeField] private DicePoint _targetPlayer;
 
     [SerializeField] private Dice _dice;
 
@@ -16,7 +16,7 @@ public class GUI_Dice : GUIPopUp
         base.Open(new Vector2(-800,0));
     }
 
-    public void SetPlayer(NetworkUnit target) {
+    public void SetPlayer(DicePoint target) {
 
         _targetPlayer = target;
 
@@ -24,7 +24,7 @@ public class GUI_Dice : GUIPopUp
 
     public void SetDiceValue()
     {
-        _targetPlayer.dicePoints = _dice.Value;
+        _targetPlayer.SetPoint(_dice.Value);
         GameManager.Instance.gamePhase = GameManager.Phase.ActionPhase;
         Close();
     }

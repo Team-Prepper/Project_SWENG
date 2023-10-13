@@ -10,11 +10,11 @@ public class ShopManager : MonoSingleton<ShopManager>
     public List<Item> items = new List<Item>();
     private List<Item> selectedList = new List<Item>();
 
-    public NetworkUnit visitor;
+    public DicePoint visitor;
 
     public void WelcomeToShop(GameObject player)
     {
-        visitor = player.GetComponent<NetworkUnit>();
+        visitor = player.GetComponent<DicePoint>();
         if(visitor != null )
         {
             GUI_shop = Instantiate(GUI_ShopPrefab).GetComponent<GUI_ShopInterAction>();
@@ -23,9 +23,9 @@ public class ShopManager : MonoSingleton<ShopManager>
 
     public void BuyItemToShop(Item targetItem)
     {
-        if(visitor.dicePoints >= targetItem.cost)
+        if(visitor.GetPoint() >= targetItem.cost)
         {
-            visitor.dicePoints -= targetItem.cost;
+            visitor.UsePoint(targetItem.cost);
             InventoryManager.Instance.GetItem(targetItem);
             GUI_shop.showComment("Thank you for your purchase");
         }

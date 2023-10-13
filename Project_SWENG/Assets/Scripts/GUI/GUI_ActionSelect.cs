@@ -7,7 +7,7 @@ public class GUI_ActionSelect : GUIFullScreen
 {
     GameObject _target;
 
-    NetworkUnit _targetUnit;
+    DicePoint _targetUnit;
 
     [SerializeField] Image btnAttack;
     [SerializeField] Image btnMove;
@@ -15,14 +15,14 @@ public class GUI_ActionSelect : GUIFullScreen
     public void Set(GameObject target)
     {
         _target = target;
-        _targetUnit = target.GetComponent<NetworkUnit>();
+        _targetUnit = target.GetComponent<DicePoint>();
         CamMovement.Instance.CamSetToPlayer(target);
 
-        if (_targetUnit.dicePoints < 3)
+        if (_targetUnit.GetPoint() < 3)
         {
             btnAttack.color = new Color(.5f, .5f, .5f);
         }
-        if (_targetUnit.dicePoints < 2)
+        if (_targetUnit.GetPoint() < 2)
         {
             btnMove.color = new Color(.5f, .5f, .5f);
         }
@@ -30,14 +30,14 @@ public class GUI_ActionSelect : GUIFullScreen
 
     public void OpenAttack()
     {
-        if (_targetUnit.dicePoints < 3) return;
+        if (_targetUnit.GetPoint() < 3) return;
 
         UIManager.OpenGUI<GUI_Attack>("Attack").Set(_target);
         _AfterAction();
     }
     public void OpenMove()
     {
-        if (_targetUnit.dicePoints < 2) return;
+        if (_targetUnit.GetPoint() < 2) return;
 
         UIManager.OpenGUI<GUI_Moving>("Move").Set(_target);
         _AfterAction();
