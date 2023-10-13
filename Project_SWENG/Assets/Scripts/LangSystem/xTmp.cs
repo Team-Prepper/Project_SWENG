@@ -1,9 +1,6 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
+using ObserberPattern;
 
 
 namespace LangSystem {
@@ -11,9 +8,9 @@ namespace LangSystem {
     [RequireComponent(typeof(CanvasRenderer))]
     [AddComponentMenu("UI/xTMP", 100)]
     [ExecuteAlways]
-    public class xTmp : TextMeshProUGUI {
+    public class xTmp : TextMeshProUGUI, IObserver, IStringListener {
 
-        [SerializeField] protected string m_Key = string.Empty;
+        [SerializeField] private string m_Key = string.Empty;
 
         protected override void OnValidate()
         {
@@ -23,20 +20,20 @@ namespace LangSystem {
 
         protected override void OnEnable()
         {
-            StringManager.OnLangChanged.AddListener(OnLangChanged);
+            StringManager.Instance.AddObserver(this);
             SetText(m_Key);
             base.OnEnable();
         }
 
         override protected void OnDisable()
         {
-            StringManager.OnLangChanged.RemoveListener(OnLangChanged);
+            StringManager.Instance.RemoveObserver(this);
             base.OnDisable();
         }
 
         protected override void OnDestroy()
         {
-            StringManager.OnLangChanged.RemoveListener(OnLangChanged);
+            StringManager.Instance.RemoveObserver(this);
             base.OnDestroy();
         }
 
@@ -57,6 +54,10 @@ namespace LangSystem {
                 text = key;
             }
 
+        }
+
+        public void Notified() {
+            SetText(m_Key);
         }
 
 

@@ -39,7 +39,7 @@ public class GUIFullScreen : GUIWindow {
 
         if (!Physics.Raycast(ray, out hit, 100, selectionMask)) return Vector3Int.zero;
 
-        return HexGrid.Instance.GetClosestHex(hit.collider.gameObject.transform.position);
+        return HexGrid.GetClosestHex(hit.collider.gameObject.transform.position);
 
     }
 

@@ -15,6 +15,7 @@ public abstract class Effect : MonoBehaviour
         _eventWhenEffectEnd.Invoke();
     }
 
+    /*
     public static void PlayEffect(string key, Vector3 position, Transform parent)
     {
         Effect effect = ObjectPool.Instance.GetGameObject(key).GetComponent<Effect>();
@@ -28,5 +29,5 @@ public abstract class Effect : MonoBehaviour
         PlayEffect(key, targetTr.position, targetTr.parent);
 
     }
-
+    */
 }

@@ -1,5 +1,4 @@
 using System.Xml;
-using UnityEditor;
 using UnityEngine;
 
 public class AssetOpener : MonoBehaviour {

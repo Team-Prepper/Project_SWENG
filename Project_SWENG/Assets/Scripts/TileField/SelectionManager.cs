@@ -35,7 +35,7 @@ public class SelectionManager : MonoBehaviour
 
     private bool UnitSelected(GameObject result)
     {
-        return result.GetComponent<Unit>() != null;
+        return result.GetComponent<NetworkUnit>() != null;
     }
 
     private bool FindTarget(Vector3 mousePosition, out GameObject result)

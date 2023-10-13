@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.Serialization;
 
 namespace Character {
-    public class EnemyController : ControllerOfCharacter {
+    public class EnemyController : NetworkCharacterController {
 
         [SerializeField] GUI_EnemyHealth healthGUI;
         [SerializeField] LayerMask playerLayerMask;

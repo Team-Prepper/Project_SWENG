@@ -6,7 +6,7 @@ using static UnityEditor.PlayerSettings;
 
 public class GUI_Attack : GUIFullScreen {
 
-    public Character.ControllerOfCharacter _target;
+    public Character.NetworkCharacterController _target;
 
     [SerializeField] private Transform[] _attackMarkers;
 
@@ -20,9 +20,9 @@ public class GUI_Attack : GUIFullScreen {
 
     public void Set(GameObject target) {
 
-        _target = target.GetComponent<Character.ControllerOfCharacter>();
+        _target = target.GetComponent<Character.NetworkCharacterController>();
 
-        Vector3Int curHexPos = HexGrid.Instance.GetClosestHex(target.transform.position);
+        Vector3Int curHexPos = HexGrid.GetClosestHex(target.transform.position);
 
         int i = 0;
         _attackRange = new List<Vector3Int>();
