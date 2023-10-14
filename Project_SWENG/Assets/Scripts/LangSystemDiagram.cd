@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1" GroupingSetting="Access" MembersFormat="FullSignature">
   <Class Name="LangSystem.StringManager">
-    <Position X="0.5" Y="0.5" Width="3.25" />
+    <Position X="4.25" Y="1.75" Width="3.25" />
     <Members>
       <Method Name="_ReadStringFromXml" Hidden="true" />
       <Method Name="OnCreate" Hidden="true" />
@@ -21,10 +21,13 @@
       <HashCode>AAAEAAgAEAhAAAAAAAAAwAAAACBAAACAAAAgAAAAAAA=</HashCode>
       <FileName>Assets\Scripts\LangSystem\StringManager.cs</FileName>
     </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Field Name="_targets" />
+    </ShowAsCollectionAssociation>
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="LangSystem.xText" BaseTypeListCollapsed="true">
-    <Position X="4.75" Y="3.25" Width="2" />
+    <Position X="8.25" Y="4.25" Width="2" />
     <Members>
       <Method Name="OnDestroy" Hidden="true" />
       <Method Name="OnDisable" Hidden="true" />
@@ -38,7 +41,7 @@
     <Lollipop Position="0.171" />
   </Class>
   <Class Name="LangSystem.xTmp" BaseTypeListCollapsed="true">
-    <Position X="7.25" Y="3.25" Width="2" />
+    <Position X="10.75" Y="4.25" Width="2" />
     <Members>
       <Method Name="OnDestroy" Hidden="true" />
       <Method Name="OnDisable" Hidden="true" />
@@ -52,10 +55,24 @@
     <Lollipop Position="0.2" />
   </Class>
   <Interface Name="LangSystem.IStringListener">
-    <Position X="5.75" Y="0.5" Width="2" />
+    <Position X="10.75" Y="2.5" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Assets\Scripts\LangSystem\StringManager.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="ObserberPattern.ISubject">
+    <Position X="2.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAAAAAhAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Base\ObserverPattern.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="ObserberPattern.IObserver">
+    <Position X="8.25" Y="2.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Base\ObserverPattern.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Font Name="맑은 고딕" Size="9" />

@@ -11,11 +11,12 @@ public class ShopItemController : MonoBehaviour
     [SerializeField] Image itemIconBackground;
     [SerializeField] TextMeshProUGUI itemName;
     [SerializeField] Image skillIcon;
-                                        [SerializeField] TextMeshProUGUI itemInfo;
-                                        [SerializeField] TextMeshProUGUI itemCost;
+    
+    [SerializeField] TextMeshProUGUI itemInfo;
+    [SerializeField] TextMeshProUGUI itemCost;
                                     
-                                        private List<Color> colors = new List<Color>();
-                                        [SerializeField] private Item thisItem;
+    private List<Color> colors = new List<Color>();
+    [SerializeField] private Item thisItem;
 
     private void OnEnable()
     {

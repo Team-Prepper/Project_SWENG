@@ -11,7 +11,7 @@ public class GUI_PlayerInfor : GUIFullScreen
     [SerializeField] private TextMeshProUGUI _dicePoint;
     [SerializeField] private GUI_PlayerHealth _playerHealth;
 
-    NetworkUnit _targetUnit;
+    DicePoint _targetUnit;
     PlayerController _targetPlayer;
 
     protected override void Open(Vector2 openPos)
@@ -23,7 +23,7 @@ public class GUI_PlayerInfor : GUIFullScreen
 
         _target = target;
 
-        _targetUnit = target.GetComponent<NetworkUnit>();
+        _targetUnit = target.GetComponent<DicePoint>();
         _targetPlayer = target.GetComponent<PlayerController>();
         _playerHealth.SetPlayerHealth(target);
 
@@ -32,7 +32,7 @@ public class GUI_PlayerInfor : GUIFullScreen
     protected override void Update()
     {
         base.Update();
-        _dicePoint.text = _targetUnit.dicePoints.ToString();
+        _dicePoint.text = _targetUnit.GetPoint().ToString();
 
     }
 

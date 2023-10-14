@@ -14,12 +14,12 @@ namespace Character {
         public static event EventHandler<IntEventArgs> EventRecover;
         public static event EventHandler<IntEventArgs> EventDamaged;
 
-        private NetworkUnit unit;
+        private DicePoint unit;
 
         private void Awake()
         {
             stat.curHP = maxHealth;
-            unit = GetComponent<NetworkUnit>();
+            unit = GetComponent<DicePoint>();
             _PhotonView = GetComponent<PhotonView>();
         }
 
@@ -47,12 +47,12 @@ namespace Character {
 
         public bool CanAttack()
         {
-            return unit.dicePoints >= atkPoint;
+            return unit.GetPoint() >= atkPoint;
         }
 
         public override void AttackAct()
         {
-            unit.dicePoints -= atkPoint;
+            unit.UsePoint(atkPoint);
             _PhotonView.RPC("AttackVfx", RpcTarget.All, null);
         }
 

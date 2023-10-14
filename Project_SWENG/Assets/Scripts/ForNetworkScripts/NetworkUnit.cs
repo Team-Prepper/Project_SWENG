@@ -20,7 +20,7 @@ public class NetworkUnit : MonoBehaviourPun
     [SerializeField]
     private float movementDuration = 1, rotationDuration = 0.3f;
 
-    public int dicePoints { get; set; }
+    DicePoint dicePoints;
 
     private GlowHighlight glowHighlight;
     private Queue<Vector3> pathPositions = new Queue<Vector3>();
@@ -30,7 +30,8 @@ public class NetworkUnit : MonoBehaviourPun
         glowHighlight = GetComponent<GlowHighlight>();
         animator = GetComponentInChildren<Animator>();
 
-        dicePoints = 0;
+        dicePoints = GetComponent<DicePoint>();
+        dicePoints.SetPoint(0);
         _characterController = GetComponent<CharacterController>();
         _photonView = GetComponent<PhotonView>();
     }
@@ -76,7 +77,7 @@ public class NetworkUnit : MonoBehaviourPun
 
     private IEnumerator NewMovementCoroutine(Vector3 endPosition)
     {
-        _photonView.RPC("SetPlayerOnHex",RpcTarget.All,0);
+        _photonView.RPC("SetPlayerOnHex",RpcTarget.All,0, transform.position);
         HexGrid.Instance.GetTileAt(HexGrid.GetClosestHex(transform.position)).Entity = null;
 
         Vector3 startPosition = transform.position;
@@ -85,7 +86,7 @@ public class NetworkUnit : MonoBehaviourPun
         Vector3Int newHexPos = HexGrid.GetClosestHex(endPosition);
         NetworkCloudManager.Instance.CloudActiveFalse(newHexPos);
         Hex goalHex = HexGrid.Instance.GetTileAt(newHexPos);
-        dicePoints -= goalHex.cost;
+        dicePoints.UsePoint(goalHex.cost);
 
 
         float timeElapsed = 0;
@@ -110,14 +111,14 @@ public class NetworkUnit : MonoBehaviourPun
         else
         {
             Debug.Log("Movement finished!");
-            _photonView.RPC("SetPlayerOnHex",RpcTarget.All,1);
+            _photonView.RPC("SetPlayerOnHex",RpcTarget.All,1, transform.position);
         }
         if (animator)
             animator.SetBool("IsWalk", false);
     }
 
     [PunRPC]
-    private void SetPlayerOnHex(int type, Vector3 position)
+    public void SetPlayerOnHex(int type, Vector3 position)
     {
         if (type == 1)
         {

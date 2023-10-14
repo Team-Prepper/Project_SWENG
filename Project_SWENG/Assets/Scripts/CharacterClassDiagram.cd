@@ -7,7 +7,7 @@
       <FileName>Assets\Scripts\Chatacter\AttackManager.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Character.ControllerOfCharacter">
+  <Class Name="Character.NetworkCharacterController">
     <Position X="6.75" Y="0.5" Width="2.5" />
     <Members>
       <Method Name="AttackAct" Hidden="true" />
@@ -15,8 +15,8 @@
       <Method Name="DieAct" Hidden="true" />
     </Members>
     <TypeIdentifier>
-      <HashCode>AAAAAAQAIGCAAAAAAAAAgAAAAIABAgAAAQAIAAAAAAA=</HashCode>
-      <FileName>Assets\Scripts\Chatacter\ControllerOfCharacter.cs</FileName>
+      <HashCode>AQAAAAQAIGCAAAAAAAAAgAAAAIABAgAAAQAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Chatacter\NetworkCharacterController.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
       <Field Name="stat" />
@@ -31,7 +31,7 @@
       <Method Name="DieAct" Hidden="true" />
     </Members>
     <TypeIdentifier>
-      <HashCode>AAAAAAAIIACgIAAAIAEAgAQQAAABAAAAAAAAAAAAgEA=</HashCode>
+      <HashCode>AAAAAAAIIACgIAAAIAEAgAQQAAABAAAAAAAAAAAAiEA=</HashCode>
       <FileName>Assets\Scripts\Chatacter\PlayerController.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -59,7 +59,7 @@
       <Field Name="playerLayerMask" Hidden="true" />
     </Members>
     <TypeIdentifier>
-      <HashCode>AAAAAQAAIAAAACAAAAAAgAEAAAABAAAAACIAAAAACAA=</HashCode>
+      <HashCode>AAAAAQAAIAAAACAAAAAAgAEAAAABAAAAACIAAAAACIA=</HashCode>
       <FileName>Assets\Scripts\Chatacter\Enemy\EnemyController.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -70,11 +70,12 @@
       <FileName>Assets\Scripts\Chatacter\Enemy\EnemyStat.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="DicePoint">
+  <Class Name="NetworkUnit">
     <Position X="1" Y="4.5" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
-      <FileName>Assets\Scripts\Dice\DicePoint.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\ForNetworkScripts\DicePoint.cs</FileName>
+      <NewMemberFileName>Assets\Scripts\Dice\DicePoint.cs</NewMemberFileName>
     </TypeIdentifier>
   </Class>
   <Font Name="맑은 고딕" Size="9" />

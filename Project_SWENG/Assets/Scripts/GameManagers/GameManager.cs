@@ -47,7 +47,7 @@ public class GameManager : MonoSingleton<GameManager>
     {
         gamePhase = Phase.SetDice;
         changeDayNight();
-        UIManager.Instance.UseDice(player.GetComponent<NetworkUnit>());
+        UIManager.Instance.UseDice(player.GetComponent<DicePoint>());
         NextPhase();
     }
 
