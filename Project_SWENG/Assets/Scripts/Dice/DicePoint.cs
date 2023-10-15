@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class DicePoint : MonoBehaviour {
 
-    int _point;
+    [SerializeField] int _point;
 
     public void UsePoint(int usingAmount)
     {

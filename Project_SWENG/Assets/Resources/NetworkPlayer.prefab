@@ -17142,7 +17142,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac27f8cd4fa808044af77a1b8b8eb73a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enabledObjects: []
   allGender:
     headCoverings_Base_Hair:
     - {fileID: 830847085154827819}
@@ -17357,6 +17356,8 @@ MonoBehaviour:
   facialHairParent: {fileID: 829113066959114397}
   isMale: 0
   curEquipHelmet: {fileID: 0}
+  weaponSlot: {fileID: 2893188458773183081}
+  shieldSlot: {fileID: 2893188458871475086}
   curFaceCode: 0
   curEyebrowCode: 0
   curBeardCode: 0
@@ -17523,6 +17524,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ee1d2b788b83fa4ab621e5880d46cf4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _point: 0
 --- !u!1 &828904246111668701
 GameObject:
   m_ObjectHideFlags: 0

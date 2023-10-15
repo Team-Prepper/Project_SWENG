@@ -9,8 +9,6 @@ using static UnityEditor.Progress;
 public class EquipManager : MonoBehaviour
 {
     [HideInInspector]
-    public List<GameObject> enabledObjects = new List<GameObject>();
-    [HideInInspector]
     public CharacterObjectListsAllGender allGender;
     [HideInInspector]
     public CharacterObjectGroups body;
@@ -30,18 +28,18 @@ public class EquipManager : MonoBehaviour
     [Header("Current Equipment")]
     public Item curEquipHelmet;
 
-    private int curEquipHelmetCode;
-    private int curEquipHelmetType;
+    private int curEquipHelmetCode = 0;
+    private int curEquipHelmetType = 0;
     
     private Item curEquipArmor;
 
     private Item curEquipWeapon;
     private GameObject weaponModel;
-    private Transform weaponSlot;
+    [SerializeField] private Transform weaponSlot;
 
     private Item curEquipShield;
     private GameObject shieldModel;
-    private Transform shieldSlot;
+    [SerializeField] private Transform shieldSlot;
     
     private Material mat;
 
@@ -58,14 +56,6 @@ public class EquipManager : MonoBehaviour
     {
         _photonView = GetComponent<PhotonView>();
         _BuildLists();
-        if (enabledObjects.Count != 0)
-        {
-            foreach (GameObject g in enabledObjects)
-            {
-                g.SetActive(false);
-            }
-        }
-        enabledObjects.Clear();
         _SetupPlayer(0);
     }
 
@@ -126,7 +116,14 @@ public class EquipManager : MonoBehaviour
         _BuildList(body.leg_Right, "Female_11_Leg_Right");
         _BuildList(body.leg_Left, "Female_12_Leg_Left");
     }
-    
+
+    private void _SetFace()
+    {
+        allGender.all_Hair[0].SetActive(true);
+        body.headAllElements[0].SetActive(true);
+        body.eyebrow[0].SetActive(true);
+    }
+
     private void _BuildList(List<GameObject> targetList, string characterPart)
     {
         Transform[] rootTransform = gameObject.GetComponentsInChildren<Transform>();
@@ -163,6 +160,8 @@ public class EquipManager : MonoBehaviour
     {
         allGender.all_Hair[curHairCode].SetActive(true);
 
+        _SetFace();
+        _SetHelmetByBool(true);
         _SetArmorByBool(newArmorCode, true);
 
         if (isMale)
@@ -257,7 +256,15 @@ public class EquipManager : MonoBehaviour
 
     public void EquipArmor(Item item)
     {
-        _ResetArmor(item.id);
+        if(curEquipArmor == null)
+        {
+            _ResetArmor(0);
+        }
+        else
+        {
+            _ResetArmor(curEquipArmor.id);
+        }
+        
         _SetArmor(item.id);
     }
     
