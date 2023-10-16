@@ -4,8 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-using static GameManager;
-using Random = UnityEngine.Random;
+using UISystem;
 
 public class NetworkPlayerSpawner : MonoBehaviourPun
 {

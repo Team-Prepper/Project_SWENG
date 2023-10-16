@@ -8,7 +8,7 @@ namespace Character {
 
         public int Lv;
         public int Exp;
-        public int curHP;
+        public GaugeValue<int> HP = new GaugeValue<int>(10, 10, 0);
         public int attackPower;
 
     }

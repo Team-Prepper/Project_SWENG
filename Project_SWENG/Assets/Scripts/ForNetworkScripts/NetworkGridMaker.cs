@@ -176,7 +176,6 @@ public class NetworkGridMaker : MonoBehaviourPun
         tile.layer = LayerMask.NameToLayer("HexTile");
 
         Hex hex = Instantiate(_hexPrefab, spawnPos, Quaternion.identity).GetComponent<Hex>();
-        hex.WhenCreate(tile, transform, data.cost);
 
         GameObject iHexGround = Instantiate(hexGround, spawnPos, Quaternion.identity);
         iHexGround.layer = LayerMask.NameToLayer("HexTileGround");
@@ -188,13 +187,10 @@ public class NetworkGridMaker : MonoBehaviourPun
         else
             tile.transform.SetParent(hex.transform);
 
-        HexGrid.Instance.AddTile(hex);
-
         switch (data.tileType)
         {
             case 0://field
                 hex.tileType = Hex.Type.Field;
-                HexGrid.Instance.emptyHexTiles.Add(hex);
                 break;
             case 1://rock
                 hex.tileType = Hex.Type.Obstacle;
@@ -214,9 +210,10 @@ public class NetworkGridMaker : MonoBehaviourPun
                 break;
             case 6://water
                 hex.tileType = Hex.Type.Water;
-                hex.tile.transform.localPosition -= new Vector3(0f, 0.6f, 0f);
                 break;
         }
+
+        hex.WhenCreate(tile, transform, data.cost);
     }
 
     [PunRPC]

@@ -7,8 +7,6 @@ using UnityEngine;
 namespace Character {
     public class PlayerController : NetworkCharacterController {
 
-        public int maxHealth;
-
         [SerializeField] int atkPoint = 3;
 
         public static event EventHandler<IntEventArgs> EventRecover;
@@ -18,7 +16,7 @@ namespace Character {
 
         private void Awake()
         {
-            stat.curHP = maxHealth;
+            stat.HP.FillMax();
             unit = GetComponent<DicePoint>();
             _PhotonView = GetComponent<PhotonView>();
         }
@@ -32,17 +30,12 @@ namespace Character {
 
         public int Recover(int val)
         {
-            if (stat.curHP <= 0) return 0;
+            if (stat.HP.Value <= 0) return 0;
 
-            stat.curHP += val;
+            stat.HP.AddValue(val);
 
-            if (stat.curHP > maxHealth)
-            {
-                stat.curHP = maxHealth;
-            }
-
-            EventRecover?.Invoke(this, new IntEventArgs(stat.curHP));
-            return stat.curHP;
+            EventRecover?.Invoke(this, new IntEventArgs(stat.HP.Value));
+            return stat.HP.Value;
         }
 
         public bool CanAttack()
@@ -76,7 +69,7 @@ namespace Character {
         public override void DamageAct()
         {
             base.DamageAct();
-            EventDamaged?.Invoke(this, new IntEventArgs(stat.curHP));
+            EventDamaged?.Invoke(this, new IntEventArgs(stat.HP.Value));
         }
 
         public override void DieAct()

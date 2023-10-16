@@ -8,16 +8,24 @@ public class Hex : MonoBehaviour
 
     public static readonly float xOffset = 4.325f, yOffset = 0.5f, zOffset = 5.0f;
 
-    public int cost = 0;
-    private int originCost;
+    public int Cost {
+        get {
+            if (Entity == null)
+                return _originCost;
+            return -1;
+        }
+    }
+    private int _originCost;
 
     #region ItemInHex
     
     [Space(20)]
     [Header("Item")]
     private Item item;
-    [SerializeField] private GameObject itemZone; //parent
+    [SerializeField]
+    private GameObject itemZone; //parent
     private GameObject itemMesh;
+
     public Item Item
     {
         get { return item; }
@@ -29,7 +37,7 @@ public class Hex : MonoBehaviour
                 
                 if (value != null)
                 {
-                    SpawnItem();
+                    _SpawnItem();
                 }
                 else
                 {
@@ -50,30 +58,20 @@ public class Hex : MonoBehaviour
         get { return entity; }
         set
         {
-            if (entity != value)
+            if (entity == value) return;
+
+            entity = value;
+
+            if (!value) return;
+
+            if (item != null && entity.CompareTag("Player"))
             {
-                entity = value;
+                _InteractionPlayerWithItem();
+            }
 
-                if (value != null)
-                {
-                    cost = -1;
-
-                    if (item != null && entity.CompareTag("Player"))
-                    {
-                        InteractionPlayerWithItem();
-                    }
-
-                    if(tileType == Type.Shop)
-                    {
-                        InteractionPlayerWithShop(entity);
-                    }
-
-                }
-                else
-                {
-                    cost = originCost;
-                }
-                
+            if (tileType == Type.Shop)
+            {
+                _InteractionPlayerWithShop(entity);
             }
         }
     }
@@ -93,33 +91,29 @@ public class Hex : MonoBehaviour
         }
     }
 
-    public void WhenCreate(GameObject tile, Transform parent, int cost)
-    {
-        this.tile = tile;
-        transform.SetParent(parent);
-        this.cost = cost;
-        this.originCost = cost;
-        HexGrid.Instance.AddTile(this);
-    }
-
-    public enum Type
-    {
+    public enum Type {
         Object,
         Shop,
         Obstacle,
         Water,
         Field,
     }
-    public Type tileType;
+    public Type tileType { get; set; }
 
-    public int GetCost()
+    public void WhenCreate(GameObject tile, Transform parent, int cost)
     {
-        return cost;
+        transform.SetParent(parent);
+
+        this.tile = tile;
+        this._originCost = cost;
+        HexGrid.Instance.AddTile(this);
+        if (tileType == Type.Water)
+            tile.transform.localPosition -= new Vector3(0f, 0.6f, 0f);
     }
 
     public bool IsObstacle()
     {
-        if(cost == -1) 
+        if(Cost == -1) 
             return true;
         return false;
     }
@@ -154,17 +148,17 @@ public class Hex : MonoBehaviour
         highlight.HighlightValidPath();
     }
 
-    private void InteractionPlayerWithItem()
+    private void _InteractionPlayerWithItem()
     {
         item.Pick();
     }
 
-    private void InteractionPlayerWithShop(GameObject player)
+    private void _InteractionPlayerWithShop(GameObject player)
     {
         ShopManager.Instance.WelcomeToShop(player);
     }
 
-    private void SpawnItem()
+    private void _SpawnItem()
     {
         itemMesh = Instantiate(item.itemObject, itemZone.transform);
         itemMesh.transform.localScale = Vector3.one * 3f;

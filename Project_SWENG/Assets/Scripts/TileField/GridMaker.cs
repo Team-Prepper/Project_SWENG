@@ -129,8 +129,6 @@ public class GridMaker : MonoBehaviour
             Hex hexDefault = _SpawnHexTile(_tileNormal,  spawnPos);
             hexDefault.tileType = Hex.Type.Field;
 
-            HexGrid.Instance.emptyHexTiles.Add(hexDefault);
-
             return hexDefault;
         }
 

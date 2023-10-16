@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UISystem;
 
 public class GUI_ShopInterAction : GUIPopUp
 {

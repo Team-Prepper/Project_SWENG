@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
+using UISystem;
 
 public class GUI_Moving : GUIFullScreen {
 
@@ -61,7 +62,7 @@ public class GUI_Moving : GUIFullScreen {
         {
             Hex pathHex = HexGrid.Instance.GetTileAt(hexPosition);
             pathHex.HighlightPath();
-            moveNumPrefabs[Mathf.Clamp(i += pathHex.cost, 0, 9)].position = pathHex.transform.position;
+            moveNumPrefabs[Mathf.Clamp(i += pathHex.Cost, 0, 9)].position = pathHex.transform.position;
         }
     }
 

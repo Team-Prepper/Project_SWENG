@@ -16,7 +16,7 @@ public class HexGrid : Singleton<HexGrid>
     Dictionary<Vector3Int, List<Vector3Int>> hexTileNeighboursDict = new Dictionary<Vector3Int, List<Vector3Int>>();
     Dictionary<Vector3Int, List<Vector3Int>> hexTileNeighboursDoubleDict = new Dictionary<Vector3Int, List<Vector3Int>>();
 
-    public List<Hex> emptyHexTiles = new List<Hex>();
+    private List<Hex> _emptyHexTiles = new List<Hex>();
 
     Vector3Int topOffset = Vector3Int.up;
     Vector3Int bottomOffset = Vector3Int.down;
@@ -53,6 +53,8 @@ public class HexGrid : Singleton<HexGrid>
 
     public void AddTile(Hex hex) {
         hexTileDict[hex.HexCoords] = hex;
+
+        if (hex.tileType == Hex.Type.Field) _emptyHexTiles.Add(hex);
     }
 
 
@@ -126,14 +128,14 @@ public class HexGrid : Singleton<HexGrid>
 
     public Hex GetRandHexAtEmpty()
     {
-        if(emptyHexTiles.Count == 0) return null;
+        if(_emptyHexTiles.Count == 0) return null;
 
-        int randHexIndex = Random.Range(0, emptyHexTiles.Count);
-        Hex randHex = emptyHexTiles[randHexIndex];
-        emptyHexTiles.Remove(randHex);
+        int randHexIndex = Random.Range(0, _emptyHexTiles.Count);
+        Hex randHex = _emptyHexTiles[randHexIndex];
+        _emptyHexTiles.Remove(randHex);
         foreach(var hex in GetNeighboursFor(randHex.HexCoords))
         {
-            emptyHexTiles.Remove(GetTileAt(hex));
+            _emptyHexTiles.Remove(GetTileAt(hex));
         }
 
         return randHex;
@@ -143,7 +145,7 @@ public class HexGrid : Singleton<HexGrid>
     {
         foreach(var hex in GetNeighboursFor(setHex.HexCoords))
         {
-            emptyHexTiles.Remove(GetTileAt(hex));
+            _emptyHexTiles.Remove(GetTileAt(hex));
         }
     }
 }
