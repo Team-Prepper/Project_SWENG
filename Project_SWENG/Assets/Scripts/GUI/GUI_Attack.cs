@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Character;
-using static UnityEditor.PlayerSettings;
 using UISystem;
 
 public class GUI_Attack : GUIFullScreen {
 
     public Character.NetworkCharacterController _target;
 
+    [SerializeField] private Transform _markerParent;
     [SerializeField] private Transform[] _attackMarkers;
 
     [SerializeField] private List<Vector3Int> _attackRange;
@@ -21,9 +21,10 @@ public class GUI_Attack : GUIFullScreen {
 
     public void Set(GameObject target) {
 
-        _target = target.GetComponent<Character.NetworkCharacterController>();
+        _target = target.GetComponent<NetworkCharacterController>();
 
         Vector3Int curHexPos = HexGrid.GetClosestHex(target.transform.position);
+        _markerParent.localScale = Vector3.one / GameObject.Find("Canvas").GetComponent<RectTransform>().localScale.y;
 
         int i = 0;
         _attackRange = new List<Vector3Int>();
@@ -41,6 +42,7 @@ public class GUI_Attack : GUIFullScreen {
         CamMovement.Instance.ConvertMovementCamera();
         CamMovement.Instance.CamSetToPlayer(target);
 
+
     }
 
     public override void HexSelect(Vector3Int selectGridPos)
@@ -52,6 +54,7 @@ public class GUI_Attack : GUIFullScreen {
             AttackManager.Instance.BaseAtkHandler(_target, HexGrid.Instance.GetTileAt(selectGridPos));
             Debug.Log("Success");
         }
+
         Close();
     }
 }
