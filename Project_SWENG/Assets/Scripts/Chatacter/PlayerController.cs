@@ -74,6 +74,7 @@ namespace Character {
 
         public override void DieAct()
         {
+            EventDamaged?.Invoke(this, new IntEventArgs(stat.HP.Value));
             base.DieAct();
         }
     }

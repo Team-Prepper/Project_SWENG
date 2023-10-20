@@ -1625,7 +1625,10 @@ MonoBehaviour:
   stat:
     Lv: 0
     Exp: 0
-    curHP: 0
+    HP:
+      _curValue: 10
+      _maxValue: 10
+      _minValue: 0
     attackPower: 0
   healthGUI: {fileID: 5489798799045653859}
   playerLayerMask:

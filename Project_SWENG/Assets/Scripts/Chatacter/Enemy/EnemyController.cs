@@ -15,6 +15,7 @@ namespace Character {
 
         public Hex curHex;
 
+
         private void OnEnable()
         {
             Debug.Log("Enemy OnEnable");
@@ -24,7 +25,7 @@ namespace Character {
             if (healthGUI == null)
                 healthGUI = GetComponentInChildren<GUI_EnemyHealth>();
 
-            stat.HP.FillMax();
+            stat.HP = new GaugeValue<int>(enemyStat.maxHp, enemyStat.maxHp, 0);
             curHex = HexGrid.Instance.GetHexFromPosition(this.gameObject.transform.position);
             curHex.Entity = this.gameObject;
             
