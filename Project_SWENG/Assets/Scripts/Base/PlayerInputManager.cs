@@ -130,25 +130,27 @@ public class PlayerInputManager : MonoSingleton<PlayerInputManager>
 
     private void MouseMove()
     {
-        RaycastHit hit;
         Ray ray = Camera.main.ScreenPointToRay(mousePos);
-        if (Physics.Raycast(ray, out hit, 100, selectionMask))
+
+        if (!Physics.Raycast(ray, out RaycastHit hit, 100, selectionMask)) return;
+
+        GameObject selectedObject = hit.collider.gameObject;
+
+        if (originObj == selectedObject) return;
+
+        if (hex != null)
         {
-            GameObject selectedObject = hit.collider.gameObject;
-            if (originObj != selectedObject)
-            {
-                if (hex != null)
-                {
-                    // origin off
-                    hex.OnMouseToggle();
-                }
-                hex = selectedObject.GetComponent<Hex>();
-                if (hex != null)
-                {
-                    // New Obj on
-                    hex.OnMouseToggle();
-                }
-            }
+            // origin off
+            hex.OnMouseToggle();
         }
+
+        hex = selectedObject.GetComponent<Hex>();
+
+        if (hex != null)
+        {
+            // New Obj on
+            hex.OnMouseToggle();
+        }
+
     }
 }

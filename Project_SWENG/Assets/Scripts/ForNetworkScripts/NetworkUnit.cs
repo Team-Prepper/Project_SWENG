@@ -50,10 +50,10 @@ public class NetworkUnit : MonoBehaviourPun
     {
         pathPositions = new Queue<Vector3>(currentPath);
         Vector3 firstTarget = pathPositions.Dequeue();
-        StartCoroutine(RotationCoroutine(firstTarget, rotationDuration));
+        StartCoroutine(_RotationCoroutine(firstTarget, rotationDuration));
     }
 
-    private IEnumerator RotationCoroutine(Vector3 endPosition, float rotationDuration)
+    private IEnumerator _RotationCoroutine(Vector3 endPosition, float rotationDuration)
     {
         Quaternion startRotation = transform.rotation;
         endPosition.y = transform.position.y;
@@ -72,10 +72,10 @@ public class NetworkUnit : MonoBehaviourPun
             }
             transform.rotation = endRotation;
         }
-        StartCoroutine(NewMovementCoroutine(endPosition));
+        StartCoroutine(_NewMovementCoroutine(endPosition));
     }
 
-    private IEnumerator NewMovementCoroutine(Vector3 endPosition)
+    private IEnumerator _NewMovementCoroutine(Vector3 endPosition)
     {
         _photonView.RPC("SetPlayerOnHex",RpcTarget.All,0, transform.position);
         HexGrid.Instance.GetTileAt(HexGrid.GetClosestHex(transform.position)).Entity = null;
@@ -86,7 +86,7 @@ public class NetworkUnit : MonoBehaviourPun
         Vector3Int newHexPos = HexGrid.GetClosestHex(endPosition);
         NetworkCloudManager.Instance.CloudActiveFalse(newHexPos);
         Hex goalHex = HexGrid.Instance.GetTileAt(newHexPos);
-        dicePoints.UsePoint(goalHex.cost);
+        dicePoints.UsePoint(goalHex.Cost);
 
 
         float timeElapsed = 0;
@@ -106,7 +106,7 @@ public class NetworkUnit : MonoBehaviourPun
         if (pathPositions.Count > 0)
         {
             Debug.Log("Selecting the next position!");
-            StartCoroutine(RotationCoroutine(pathPositions.Dequeue(), rotationDuration));
+            StartCoroutine(_RotationCoroutine(pathPositions.Dequeue(), rotationDuration));
         }
         else
         {

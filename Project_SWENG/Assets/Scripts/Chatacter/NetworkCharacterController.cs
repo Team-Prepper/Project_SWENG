@@ -13,7 +13,7 @@ namespace Character {
 
         [SerializeField] protected Animator anim;
 
-        [SerializeField] protected Stat stat;
+        public Stat stat;
 
         // Start is called before the first frame update
         protected virtual void Start()
@@ -42,11 +42,11 @@ namespace Character {
         [PunRPC]
         public void TakeDamaged(int damage)
         {
-            if (stat.curHP <= 0) return;
+            if (stat.HP.Value <= 0) return;
 
-            stat.curHP -= damage;
+            stat.HP.SubValue(damage);
 
-            if (stat.curHP > 0)
+            if (stat.HP.Value > 0)
             {
                 _PhotonView.RPC("RunAnimation", RpcTarget.All, 1);
                 DamageAct();
@@ -54,7 +54,6 @@ namespace Character {
             }
 
             _PhotonView.RPC("RunAnimation", RpcTarget.All, 2);
-            stat.curHP = 0;
 
             DieAct();
         }

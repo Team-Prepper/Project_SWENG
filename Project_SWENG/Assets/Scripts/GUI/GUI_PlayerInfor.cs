@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using Character;
+using UISystem;
 
 public class GUI_PlayerInfor : GUIFullScreen
 {

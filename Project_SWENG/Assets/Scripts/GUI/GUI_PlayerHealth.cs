@@ -27,9 +27,9 @@ public class GUI_PlayerHealth : MonoBehaviour
     public void SetPlayerHealth(GameObject player)
     {
         _manger = player.GetComponent<PlayerController>();
-        SetHealth(_manger.maxHealth);
+        SetHealth(_manger.stat.HP.Value);
         afterimage.fillAmount = 1;
-        curValue = _manger.maxHealth;
+        curValue = _manger.stat.HP.Value;
     }
 
     void GUI_Damaged(object sender, IntEventArgs e)
@@ -45,7 +45,7 @@ public class GUI_PlayerHealth : MonoBehaviour
         while (elapsedTime < 1f)
         {
             curValue = Mathf.Lerp(startValue, endValue, elapsedTime);
-            afterimage.fillAmount = (float)(curValue / _manger.maxHealth);
+            afterimage.fillAmount = _manger.stat.HP.ConvertToRate();
             elapsedTime += Time.deltaTime * lerpSpeed;
             yield return null;
         }
@@ -53,8 +53,8 @@ public class GUI_PlayerHealth : MonoBehaviour
 
     void SetHealth(int newHealth)
     {
-        healthFront.fillAmount = ((float)newHealth / _manger.maxHealth);
-        healthBack.fillAmount  = ((float)newHealth / _manger.maxHealth);
-        hpText.text = newHealth.ToString() + " / " + _manger.maxHealth.ToString();
+        healthFront.fillAmount = _manger.stat.HP.ConvertToRate();
+        healthBack.fillAmount  = _manger.stat.HP.ConvertToRate();
+        hpText.text = newHealth.ToString() + " / " + _manger.stat.HP.MaxValue;
     }
 }

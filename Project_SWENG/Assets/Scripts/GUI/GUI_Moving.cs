@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
+using UISystem;
 
 public class GUI_Moving : GUIFullScreen {
 
@@ -14,8 +15,8 @@ public class GUI_Moving : GUIFullScreen {
     [SerializeField] private NetworkUnit _targetUnit;
     private Vector3Int _selectedPos;
 
-    public Transform[] moveNumPrefabs;
-    public GameObject moveNumParent;
+    [SerializeField] private Transform[] _moveNumPrefabs;
+    [SerializeField] private Transform _moveNumParent;
 
     private BFSResult movementRange = new BFSResult();
     private List<Vector3Int> currentPath = new List<Vector3Int>();
@@ -54,23 +55,23 @@ public class GUI_Moving : GUIFullScreen {
         Debug.Log("Target: " + selectedHexPosition);
         
         currentPath = movementRange.GetPathTo(selectedHexPosition);
-        moveNumParent.SetActive(true);
+        _moveNumParent.gameObject.SetActive(true);
 
         int i = 0;
         foreach (Vector3Int hexPosition in currentPath)
         {
             Hex pathHex = HexGrid.Instance.GetTileAt(hexPosition);
             pathHex.HighlightPath();
-            moveNumPrefabs[Mathf.Clamp(i += pathHex.cost, 0, 9)].position = pathHex.transform.position;
+            _moveNumPrefabs[Mathf.Clamp(i += pathHex.Cost, 0, 9)].position = pathHex.transform.position;
         }
     }
 
     private void _HideMoveNum()
     {
-        moveNumParent.SetActive(false);
-        for (int i = 0; i < moveNumPrefabs.Length; i++)
+        _moveNumParent.gameObject.SetActive(false);
+        for (int i = 0; i < _moveNumPrefabs.Length; i++)
         {
-            moveNumPrefabs[i].transform.localPosition = Vector3.zero;
+            _moveNumPrefabs[i].transform.localPosition = Vector3.zero;
         }
     }
 
@@ -104,7 +105,7 @@ public class GUI_Moving : GUIFullScreen {
 
         _CalcualteRange();
         _ShowRange();
-
+        _moveNumParent.localScale = Vector3.one / GameObject.Find("Canvas").GetComponent<RectTransform>().localScale.y;
     }
 
     public override void HexSelect(Vector3Int selectGridHex)

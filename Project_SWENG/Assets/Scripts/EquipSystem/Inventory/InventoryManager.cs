@@ -7,10 +7,10 @@ public class InventoryManager : MonoSingleton<InventoryManager>
 {
     private EquipManager _equipManager;
 
-    private Item Helmet = null;
-    private Item Armor  = null;
+    private Item _helmet = null;
+    private Item _armor  = null;
     public Item Weapon = null;
-    private Item Shield = null;
+    private Item _shield = null;
 
     // EquipManger.Instance,EquipItem -> resetItem + setItem
 
@@ -29,11 +29,11 @@ public class InventoryManager : MonoSingleton<InventoryManager>
         switch (item.type)
         {
             case Item.ItemType.Helmet:
-                Helmet = item;
+                _helmet = item;
                 _equipManager.EquipHelmet(item);
                 break;
             case Item.ItemType.Armor:
-                Armor = item;
+                _armor = item;
                 _equipManager.EquipArmor(item);
                 break;
             case Item.ItemType.Weapon:
@@ -41,7 +41,7 @@ public class InventoryManager : MonoSingleton<InventoryManager>
                 _equipManager.EquipWeapon(item);
                 break;
             case Item.ItemType.Shield:
-                Shield = item;
+                _shield = item;
                 _equipManager.EquipShield(item);
                 break;
         }
