@@ -26,7 +26,8 @@ namespace Character {
                 healthGUI = GetComponentInChildren<GUI_EnemyHealth>();
 
             stat.HP = new GaugeValue<int>(enemyStat.maxHp, enemyStat.maxHp, 0);
-            curHex = HexGrid.Instance.GetHexFromPosition(this.gameObject.transform.position);
+            curHex = HexGrid.Instance.GetTileAt(this.gameObject.transform.position);
+
             curHex.Entity = this.gameObject;
             
         }
@@ -43,12 +44,12 @@ namespace Character {
             if (colliders.Length > 0)
                 gameObject.transform.LookAt(colliders[0].transform);
 
-            healthGUI.UpdateGUI((float)stat.HP.Value / enemyStat.maxHp);
+            healthGUI.UpdateGUI((float)stat.GetHP().Value / enemyStat.maxHp);
         }
 
         public override void DieAct()
         {
-            curHex = HexGrid.Instance.GetHexFromPosition(this.gameObject.transform.position);
+            curHex = HexGrid.Instance.GetTileAt(this.gameObject.transform.position);
             curHex.Entity = null;
             enemySpawner.enemyList.Remove(this.gameObject);
 

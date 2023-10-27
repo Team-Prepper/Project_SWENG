@@ -6,11 +6,11 @@ using UnityEngine;
 
 public class GraphSearch
 {
-    public static BFSResult BFSGetRange(Vector3Int startPos, int point)
+    public static BFSResult BFSGetRange(HexCoordinate startPos, int point)
     {
-        Dictionary<Vector3Int, Vector3Int?> visitedNodes = new Dictionary<Vector3Int, Vector3Int?>();
-        Dictionary<Vector3Int, int> costSoFar = new Dictionary<Vector3Int, int>();
-        Queue<Vector3Int> nodesToVisitQueue = new Queue<Vector3Int>();
+        Dictionary<HexCoordinate, HexCoordinate?> visitedNodes = new Dictionary<HexCoordinate, HexCoordinate?>();
+        Dictionary<HexCoordinate, int> costSoFar = new Dictionary<HexCoordinate, int>();
+        Queue<HexCoordinate> nodesToVisitQueue = new Queue<HexCoordinate>();
 
         nodesToVisitQueue.Enqueue(startPos);
         costSoFar.Add(startPos, 0);
@@ -18,8 +18,8 @@ public class GraphSearch
 
         while (nodesToVisitQueue.Count > 0)
         {
-            Vector3Int currentNode = nodesToVisitQueue.Dequeue();
-            foreach (Vector3Int neighbourPosition in HexGrid.Instance.GetNeighboursFor(currentNode))
+            HexCoordinate currentNode = nodesToVisitQueue.Dequeue();
+            foreach (HexCoordinate neighbourPosition in HexGrid.Instance.GetNeighboursFor(currentNode))
             {
                 if (HexGrid.Instance.GetTileAt(neighbourPosition).IsObstacle())
                     continue;
@@ -47,9 +47,9 @@ public class GraphSearch
     }
     
 
-    public static List<Vector3Int> GeneratePathBFS(Vector3Int current, Dictionary<Vector3Int, Vector3Int?> visitedNodesDict)
+    public static List<HexCoordinate> GeneratePathBFS(HexCoordinate current, Dictionary<HexCoordinate, HexCoordinate?> visitedNodesDict)
     {
-        List<Vector3Int> path = new List<Vector3Int>();
+        List<HexCoordinate> path = new List<HexCoordinate>();
         path.Add(current);
         while (visitedNodesDict[current] != null)
         {
@@ -63,18 +63,18 @@ public class GraphSearch
 
 public struct BFSResult
 {
-    private Dictionary<Vector3Int, Vector3Int?> _visitedNodesDict;
+    private Dictionary<HexCoordinate, HexCoordinate?> _visitedNodesDict;
 
-    public BFSResult(Dictionary<Vector3Int, Vector3Int?> visitedNodesDict) {
+    public BFSResult(Dictionary<HexCoordinate, HexCoordinate?> visitedNodesDict) {
         _visitedNodesDict = visitedNodesDict;
     } 
 
-    public List<Vector3Int> GetPathTo(Vector3Int destination)
+    public List<HexCoordinate> GetPathTo(HexCoordinate destination)
     {
         if (_visitedNodesDict.ContainsKey(destination) == false)
-            return new List<Vector3Int>();
+            return new List<HexCoordinate>();
 
-        List<Vector3Int> path = new List<Vector3Int>();
+        List<HexCoordinate> path = new List<HexCoordinate>();
         path.Add(destination);
 
         while (_visitedNodesDict[destination] != null)
@@ -87,11 +87,11 @@ public struct BFSResult
         return path.Skip(1).ToList();
     }
 
-    public bool IsHexPositionInRange(Vector3Int position)
+    public bool IsHexPositionInRange(HexCoordinate position)
     {
         return _visitedNodesDict.ContainsKey(position);
     }
 
-    public IEnumerable<Vector3Int> GetRangePositions()
+    public IEnumerable<HexCoordinate> GetRangePositions()
         => _visitedNodesDict?.Keys;
 }

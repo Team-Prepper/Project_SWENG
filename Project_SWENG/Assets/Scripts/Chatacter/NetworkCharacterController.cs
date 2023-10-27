@@ -38,10 +38,10 @@ namespace Character {
             _photonView.RPC("RunAnimation", RpcTarget.All, 0);
             AttackAct();
         }
-
+        
         public virtual int GetAttackValue()
         {
-            return stat.attackPower;
+            return stat.GetAttackValue();
         }
 
         public void DamagedHandler(int damage)
@@ -52,11 +52,11 @@ namespace Character {
         [PunRPC]
         public void TakeDamaged(int damage)
         {
-            if (stat.HP.Value <= 0) return;
+            if (stat.GetHP().Value <= 0) return;
 
-            stat.HP.SubValue(damage);
+            stat.GetHP().SubValue(damage);
 
-            if (stat.HP.Value > 0)
+            if (stat.GetHP().Value > 0)
             {
                 _photonView.RPC("RunAnimation", RpcTarget.All, 1);
                 DamageAct();

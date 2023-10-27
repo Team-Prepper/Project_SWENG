@@ -12,9 +12,9 @@ public class NetworkCloudManager : MonoSingleton<NetworkCloudManager>
 
     [SerializeField] List<GameObject> clouds = new List<GameObject>();
 
-    public Dictionary<Vector3Int, GameObject> cloudBox = new Dictionary<Vector3Int, GameObject>();
+    public Dictionary<HexCoordinate, GameObject> cloudBox = new Dictionary<HexCoordinate, GameObject>();
 
-    List<Vector3Int> closeIndex = new List<Vector3Int>();
+    List<HexCoordinate> closeIndex = new List<HexCoordinate>();
 
     protected override void OnCreate()
     {
@@ -45,11 +45,11 @@ public class NetworkCloudManager : MonoSingleton<NetworkCloudManager>
         }
     }
 
-    public void CloudActiveFalse(Vector3Int hexCoordinate)
+    public void CloudActiveFalse(HexCoordinate hexCoordinate)
     {
-        foreach (Vector3Int cloudNeighbours in HexGrid.Instance.GetNeighboursDoubleFor(hexCoordinate))
+        foreach (HexCoordinate cloudNeighbours in HexGrid.Instance.GetNeighboursDoubleFor(hexCoordinate))
         {
-            foreach (Vector3Int cloud in HexGrid.Instance.GetNeighboursFor(cloudNeighbours))
+            foreach (HexCoordinate cloud in HexGrid.Instance.GetNeighboursFor(cloudNeighbours))
             {
                 if (!closeIndex.Contains(cloud))
                 {
@@ -61,7 +61,7 @@ public class NetworkCloudManager : MonoSingleton<NetworkCloudManager>
         }
     }
 
-    IEnumerator ActiveFalseCo(Vector3Int index)
+    IEnumerator ActiveFalseCo(HexCoordinate index)
     {
         for (int i = 0; i < 10; i++)
         {
