@@ -25,7 +25,8 @@ namespace Character {
             if (healthGUI == null)
                 healthGUI = GetComponentInChildren<GUI_EnemyHealth>();
 
-            stat.HP = new GaugeValue<int>(enemyStat.maxHp, enemyStat.maxHp, 0);
+            //stat.HP = new GaugeValue<int>(enemyStat.maxHp, enemyStat.maxHp, 0);
+            stat.SetHP(enemyStat.maxHp, enemyStat.maxHp, 0);
             curHex = HexGrid.Instance.GetTileAt(this.gameObject.transform.position);
 
             curHex.Entity = this.gameObject;
