@@ -37,7 +37,7 @@ public class GUI_PlayerInfor : GUIFullScreen
 
     }
 
-    public override void HexSelect(Vector3Int selectGridPos)
+    public override void HexSelect(HexCoordinate selectGridPos)
     {
         Hex selected = HexGrid.Instance.GetTileAt(selectGridPos);
 
