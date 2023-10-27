@@ -15,27 +15,13 @@
     </TypeIdentifier>
   </Class>
   <Class Name="InventoryManager">
-    <Position X="3.75" Y="1" Width="3.25" />
+    <Position X="5.25" Y="1" Width="3.25" />
     <Members>
       <Field Name="_equipManager" Hidden="true" />
     </Members>
     <TypeIdentifier>
-      <HashCode>EAAAAAAAAAEAAEAAAAAAAAAABAAAAAgAEAAAAAAAAAI=</HashCode>
+      <HashCode>EAAAAAAAAAAAREAAAAAAAAAABEAAAAgAAAAAAAAAAAA=</HashCode>
       <FileName>Assets\Scripts\EquipSystem\Inventory\InventoryManager.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="ItemController">
-    <Position X="0.5" Y="1" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAQAAAAAAAAAAAQAAAAABAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
-      <FileName>Assets\Scripts\EquipSystem\Inventory\ItemController.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="ItemPickup">
-    <Position X="0.5" Y="4.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAACAAAAEAAAAAAQgECAAAAAAAAAAAAAAAAAAAAI=</HashCode>
-      <FileName>Assets\Scripts\EquipSystem\Inventory\ItemPickup.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="ItemUI">
@@ -95,10 +81,37 @@
     </TypeIdentifier>
   </Class>
   <Class Name="ShopManager">
-    <Position X="3.75" Y="4.5" Width="4.5" />
+    <Position X="4.75" Y="4.5" Width="4.5" />
+    <Members>
+      <Field Name="GUI_ShopPrefab" Hidden="true" />
+    </Members>
     <TypeIdentifier>
       <HashCode>AUAAAQgAAAAAAAAAAAgCACAAQAAAAAgAAAAAAAAAAAA=</HashCode>
       <FileName>Assets\Scripts\EquipSystem\Shop\ShopManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Item">
+    <Position X="2" Y="1" Width="2" />
+    <Members>
+      <Field Name="icon" Hidden="true" />
+      <Field Name="itemObject" Hidden="true" />
+      <Field Name="skillIcon" Hidden="true" />
+    </Members>
+    <NestedTypes>
+      <Enum Name="Item.ItemTier" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Assets\Data\items\Item.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+      <Enum Name="Item.ItemType" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Assets\Data\items\Item.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAARBAAAAAEAAAABAAAAQARAGAEAQAAAAAAAoA=</HashCode>
+      <FileName>Assets\Data\items\Item.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="맑은 고딕" Size="9" />

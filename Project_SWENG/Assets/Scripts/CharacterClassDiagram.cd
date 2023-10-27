@@ -1,18 +1,23 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1" GroupingSetting="Access" MembersFormat="FullSignature">
   <Class Name="Character.AttackManager">
-    <Position X="1.25" Y="0.5" Width="5.25" />
+    <Position X="1.25" Y="0.5" Width="6" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAgAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Assets\Scripts\Chatacter\AttackManager.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Character.NetworkCharacterController">
-    <Position X="6.75" Y="0.5" Width="2.5" />
+    <Position X="8" Y="0.5" Width="2.5" />
     <Members>
+      <Field Name="_PhotonView" Hidden="true" />
+      <Field Name="anim" Hidden="true" />
       <Method Name="AttackAct" Hidden="true" />
       <Method Name="DamageAct" Hidden="true" />
+      <Method Name="DamagedHandler" Hidden="true" />
       <Method Name="DieAct" Hidden="true" />
+      <Method Name="RunAnimation" Hidden="true" />
+      <Method Name="Start" Hidden="true" />
     </Members>
     <TypeIdentifier>
       <HashCode>AQAAAAQAIGCAAAAAAAAAgAAAAIABAgAAAQAAAAAAAAA=</HashCode>
@@ -23,24 +28,31 @@
     </ShowAsAssociation>
   </Class>
   <Class Name="Character.PlayerController">
-    <Position X="4.25" Y="4.5" Width="3.25" />
+    <Position X="4.5" Y="4" Width="3.25" />
     <Members>
       <Method Name="AttackAct" Hidden="true" />
+      <Method Name="AttackVfx" Hidden="true" />
       <Method Name="Awake" Hidden="true" />
       <Method Name="DamageAct" Hidden="true" />
       <Method Name="DieAct" Hidden="true" />
+      <Event Name="EventDamaged" Hidden="true" />
+      <Event Name="EventRecover" Hidden="true" />
+      <Method Name="OnEnable" Hidden="true" />
     </Members>
     <TypeIdentifier>
-      <HashCode>AAAAAAAIIACgIAAAIAEAgAQQAAABAAAAAAAAAAAAiEA=</HashCode>
+      <HashCode>AAAAAAAAIACAIAAAIAEAgAQAAAABAAAAAAAAAAAAiEY=</HashCode>
       <FileName>Assets\Scripts\Chatacter\PlayerController.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Character.Stat">
     <Position X="11" Y="0.5" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAACQAAAAA=</HashCode>
+      <HashCode>AAAAAAAABAAAAAAAAAAAAAAAAAABAAACQAAACAAAQEA=</HashCode>
       <FileName>Assets\Scripts\Chatacter\Stat.cs</FileName>
     </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_hp" />
+    </ShowAsAssociation>
   </Class>
   <Class Name="EnemyAttack">
     <Position X="10.75" Y="4.5" Width="2.75" />
@@ -50,10 +62,12 @@
     </TypeIdentifier>
   </Class>
   <Class Name="Character.EnemyController">
-    <Position X="8.25" Y="4.5" Width="2" />
+    <Position X="8.25" Y="4" Width="2" />
     <Members>
+      <Field Name="curHex" Hidden="true" />
       <Method Name="DamageAct" Hidden="true" />
       <Method Name="DieAct" Hidden="true" />
+      <Field Name="enemyStat" Hidden="true" />
       <Field Name="healthGUI" Hidden="true" />
       <Method Name="OnEnable" Hidden="true" />
       <Field Name="playerLayerMask" Hidden="true" />
@@ -75,6 +89,19 @@
     <TypeIdentifier>
       <HashCode>AAAAIAAAAgAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAQ=</HashCode>
       <FileName>Assets\Scripts\Dice\DicePoint.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GaugeValue&lt;T&gt;">
+    <Position X="14" Y="0.5" Width="3.5" />
+    <Members>
+      <Method Name="ConvertToRate" Hidden="true" />
+      <Method Name="FillMax" Hidden="true" />
+      <Method Name="GaugeValue" Hidden="true" />
+      <Property Name="MaxValue" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAQAAAABAIAIAgAAACAAgECAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Chatacter\GaugeValue.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="맑은 고딕" Size="9" />

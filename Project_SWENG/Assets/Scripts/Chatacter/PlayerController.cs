@@ -7,17 +7,17 @@ using UnityEngine;
 namespace Character {
     public class PlayerController : NetworkCharacterController {
 
-        [SerializeField] int atkPoint = 3;
+        [SerializeField] int _usePointAtAttack = 3;
 
         public static event EventHandler<IntEventArgs> EventRecover;
         public static event EventHandler<IntEventArgs> EventDamaged;
 
-        private DicePoint unit;
+        private DicePoint _point;
 
         private void Awake()
         {
-            stat.HP.FillMax();
-            unit = GetComponent<DicePoint>();
+            stat.GetHP().FillMax();
+            _point = GetComponent<DicePoint>();
             _PhotonView = GetComponent<PhotonView>();
         }
 
@@ -30,28 +30,28 @@ namespace Character {
 
         public int Recover(int val)
         {
-            if (stat.HP.Value <= 0) return 0;
+            if (stat.GetHP().Value <= 0) return 0;
 
-            stat.HP.AddValue(val);
+            stat.GetHP().AddValue(val);
 
-            EventRecover?.Invoke(this, new IntEventArgs(stat.HP.Value));
-            return stat.HP.Value;
+            EventRecover?.Invoke(this, new IntEventArgs(stat.GetHP().Value));
+            return stat.GetHP().Value;
         }
 
         public bool CanAttack()
         {
-            return unit.GetPoint() >= atkPoint;
+            return _point.GetPoint() >= _usePointAtAttack;
         }
 
         public override void AttackAct()
         {
-            unit.UsePoint(atkPoint);
+            _point.UsePoint(_usePointAtAttack);
             _PhotonView.RPC("AttackVfx", RpcTarget.All, null);
         }
 
         public override int GetAttackValue()
         {
-            return stat.attackPower +
+            return stat.GetAttackValue() +
                 (InventoryManager.Instance.Weapon ? InventoryManager.Instance.Weapon.value : 0);
         }
 
@@ -69,12 +69,12 @@ namespace Character {
         public override void DamageAct()
         {
             base.DamageAct();
-            EventDamaged?.Invoke(this, new IntEventArgs(stat.HP.Value));
+            EventDamaged?.Invoke(this, new IntEventArgs(stat.GetHP().Value));
         }
 
         public override void DieAct()
         {
-            EventDamaged?.Invoke(this, new IntEventArgs(stat.HP.Value));
+            EventDamaged?.Invoke(this, new IntEventArgs(stat.GetHP().Value));
             base.DieAct();
         }
     }
