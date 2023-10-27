@@ -23,7 +23,7 @@ namespace Character {
 
         private void OnEnable()
         {
-            Hex curHex = HexGrid.Instance.GetHexFromPosition(this.gameObject.transform.position);
+            Hex curHex = HexGrid.Instance.GetTileAt(this.gameObject.transform.position);
             curHex.Entity = this.gameObject;
             HexGrid.Instance.RemoveAtEmeptyHexTiles(curHex);
         }

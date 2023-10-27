@@ -13,19 +13,19 @@ public class GUI_Moving : GUIFullScreen {
 
     private DicePoint _targetPoint;
     [SerializeField] private NetworkUnit _targetUnit;
-    private Vector3Int _selectedPos;
+    private HexCoordinate _selectedPos;
 
     [SerializeField] private Transform[] _moveNumPrefabs;
     [SerializeField] private Transform _moveNumParent;
 
     private BFSResult movementRange = new BFSResult();
-    private List<Vector3Int> currentPath = new List<Vector3Int>();
+    private List<HexCoordinate> currentPath = new List<HexCoordinate>();
 
     private void _HideRange()
     {
         if (movementRange.GetRangePositions() == null) return;
 
-        foreach (Vector3Int hexPosition in movementRange.GetRangePositions())
+        foreach (HexCoordinate hexPosition in movementRange.GetRangePositions())
         {
             HexGrid.Instance.GetTileAt(hexPosition).DisableHighlight();
         }
@@ -35,11 +35,11 @@ public class GUI_Moving : GUIFullScreen {
     private void _ShowRange()
     {
 
-        Vector3Int unitPos = HexGrid.GetClosestHex(_targetPoint.transform.position);
+        HexCoordinate unitPos = HexCoordinate.ConvertFromVector3(_targetPoint.transform.position);
 
-        foreach (Vector3Int hexPosition in movementRange.GetRangePositions())
+        foreach (HexCoordinate hexPosition in movementRange.GetRangePositions())
         {
-            if (unitPos == hexPosition)
+            if (unitPos.Equals(hexPosition))
                 continue;
 
             Debug.Log(hexPosition);
@@ -47,7 +47,7 @@ public class GUI_Moving : GUIFullScreen {
         }
     }
 
-    public void _ShowPath(Vector3Int selectedHexPosition)
+    public void _ShowPath(HexCoordinate selectedHexPosition)
     {
 
         _HideRange();
@@ -58,7 +58,7 @@ public class GUI_Moving : GUIFullScreen {
         _moveNumParent.gameObject.SetActive(true);
 
         int i = 0;
-        foreach (Vector3Int hexPosition in currentPath)
+        foreach (HexCoordinate hexPosition in currentPath)
         {
             Hex pathHex = HexGrid.Instance.GetTileAt(hexPosition);
             pathHex.HighlightPath();
@@ -77,7 +77,7 @@ public class GUI_Moving : GUIFullScreen {
 
     private void _CalcualteRange()
     {
-        movementRange = GraphSearch.BFSGetRange(HexGrid.GetClosestHex(_targetPoint.transform.position), _targetPoint.GetPoint());
+        movementRange = GraphSearch.BFSGetRange(HexCoordinate.ConvertFromVector3(_targetPoint.transform.position), _targetPoint.GetPoint());
     }
 
     private void _MoveUnit()
@@ -108,7 +108,7 @@ public class GUI_Moving : GUIFullScreen {
         _moveNumParent.localScale = Vector3.one / GameObject.Find("Canvas").GetComponent<RectTransform>().localScale.y;
     }
 
-    public override void HexSelect(Vector3Int selectGridHex)
+    public override void HexSelect(HexCoordinate selectGridHex)
     {
         if (!movementRange.IsHexPositionInRange(selectGridHex))
         {

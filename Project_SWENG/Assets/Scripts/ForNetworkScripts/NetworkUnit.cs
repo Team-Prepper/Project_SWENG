@@ -78,12 +78,12 @@ public class NetworkUnit : MonoBehaviourPun
     private IEnumerator _NewMovementCoroutine(Vector3 endPosition)
     {
         _photonView.RPC("SetPlayerOnHex",RpcTarget.All,0, transform.position);
-        HexGrid.Instance.GetTileAt(HexGrid.GetClosestHex(transform.position)).Entity = null;
+        HexGrid.Instance.GetTileAt(HexCoordinate.ConvertFromVector3(transform.position)).Entity = null;
 
         Vector3 startPosition = transform.position;
         endPosition.y = startPosition.y;
 
-        Vector3Int newHexPos = HexGrid.GetClosestHex(endPosition);
+        HexCoordinate newHexPos = HexCoordinate.ConvertFromVector3(endPosition);
         NetworkCloudManager.Instance.CloudActiveFalse(newHexPos);
         Hex goalHex = HexGrid.Instance.GetTileAt(newHexPos);
         dicePoints.UsePoint(goalHex.Cost);
@@ -122,11 +122,11 @@ public class NetworkUnit : MonoBehaviourPun
     {
         if (type == 1)
         {
-            HexGrid.Instance.GetTileAt(HexGrid.GetClosestHex(position)).Entity = gameObject;
+            HexGrid.Instance.GetTileAt(position).Entity = gameObject;
         }
         else
         {
-            HexGrid.Instance.GetTileAt(HexGrid.GetClosestHex(position)).Entity = null;
+            HexGrid.Instance.GetTileAt(position).Entity = null;
         }
     }
 

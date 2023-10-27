@@ -23,24 +23,27 @@ namespace UISystem {
 
             if (Input.GetMouseButtonDown(0))
             {
-                HexSelect(MousePointHex());
+                HexCoordinate coord = MousePointHex();
+
+                Debug.Log(coord);
+                HexSelect(coord);
             }
         }
 
-        public virtual void HexSelect(Vector3Int selectGridPos)
+        public virtual void HexSelect(HexCoordinate selectGridPos)
         {
 
         }
 
-        public Vector3Int MousePointHex()
+        public HexCoordinate MousePointHex()
         {
             Vector3 touchPos = PlayerInputManager.Instance.mousePos;
             RaycastHit hit;
             Ray ray = Camera.main.ScreenPointToRay(touchPos);
 
-            if (!Physics.Raycast(ray, out hit, 100, selectionMask)) return Vector3Int.zero;
+            if (!Physics.Raycast(ray, out hit, 100, selectionMask)) return new HexCoordinate(0, 0);
 
-            return HexGrid.GetClosestHex(hit.collider.gameObject.transform.position);
+            return HexCoordinate.ConvertFromVector3(hit.collider.gameObject.transform.position);
 
         }
 

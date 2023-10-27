@@ -6,8 +6,6 @@ public class Hex : MonoBehaviour
     [SerializeField]
     private GlowHighlight highlight;
 
-    public static readonly float xOffset = 4.325f, yOffset = 0.5f, zOffset = 5.0f;
-
     public int Cost {
         get {
             if (Entity == null)
@@ -80,13 +78,9 @@ public class Hex : MonoBehaviour
     
     public GameObject tile { set; get; }
 
-    public Vector3Int HexCoords {
+    public HexCoordinate HexCoords {
         get {
-            int x = Mathf.RoundToInt(transform.position.x / xOffset);
-            int y = Mathf.RoundToInt(transform.position.y / yOffset);
-            int z = Mathf.CeilToInt(transform.position.z / zOffset);
-
-            return new Vector3Int(x, y, z);
+            return HexCoordinate.ConvertFromVector3(transform.position);
 
         }
     }

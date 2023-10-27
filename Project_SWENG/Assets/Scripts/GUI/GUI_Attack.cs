@@ -11,7 +11,7 @@ public class GUI_Attack : GUIFullScreen {
     [SerializeField] private Transform _markerParent;
     [SerializeField] private Transform[] _attackMarkers;
 
-    [SerializeField] private List<Vector3Int> _attackRange;
+    [SerializeField] private List<HexCoordinate> _attackRange;
 
     // Start is called before the first frame update
     protected override void Open(Vector2 openPos)
@@ -23,11 +23,11 @@ public class GUI_Attack : GUIFullScreen {
 
         _target = target.GetComponent<NetworkCharacterController>();
 
-        Vector3Int curHexPos = HexGrid.GetClosestHex(target.transform.position);
+        HexCoordinate curHexPos = HexCoordinate.ConvertFromVector3(target.transform.position);
         _markerParent.localScale = Vector3.one / GameObject.Find("Canvas").GetComponent<RectTransform>().localScale.y;
 
         int i = 0;
-        _attackRange = new List<Vector3Int>();
+        _attackRange = new List<HexCoordinate>();
 
         foreach (var neighbour in HexGrid.Instance.GetNeighboursFor(curHexPos))
         {
@@ -45,7 +45,7 @@ public class GUI_Attack : GUIFullScreen {
 
     }
 
-    public override void HexSelect(Vector3Int selectGridPos)
+    public override void HexSelect(HexCoordinate selectGridPos)
     {
         Debug.Log("Try Attack At" + selectGridPos);
 

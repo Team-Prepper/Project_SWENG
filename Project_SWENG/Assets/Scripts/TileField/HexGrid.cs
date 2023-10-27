@@ -12,37 +12,34 @@ public class HexGrid : Singleton<HexGrid>
 
     //public Dictionary<Vector3Int, bool> hexTileDict = new Dictionary<Vector3Int, bool>();
 
-    public Dictionary<Vector3Int, Hex> hexTileDict = new Dictionary<Vector3Int, Hex>();
-    Dictionary<Vector3Int, List<Vector3Int>> hexTileNeighboursDict = new Dictionary<Vector3Int, List<Vector3Int>>();
-    Dictionary<Vector3Int, List<Vector3Int>> hexTileNeighboursDoubleDict = new Dictionary<Vector3Int, List<Vector3Int>>();
+    public Dictionary<HexCoordinate, Hex> hexTileDict = new Dictionary<HexCoordinate, Hex>();
+    Dictionary<HexCoordinate, List<HexCoordinate>> hexTileNeighboursDict = new Dictionary<HexCoordinate, List<HexCoordinate>>();
+    Dictionary<HexCoordinate, List<HexCoordinate>> hexTileNeighboursDoubleDict = new Dictionary<HexCoordinate, List<HexCoordinate>>();
 
     private List<Hex> _emptyHexTiles = new List<Hex>();
 
-    Vector3Int topOffset = Vector3Int.up;
-    Vector3Int bottomOffset = Vector3Int.down;
-
     static class Direction {
-        public static List<Vector3Int> directionsOffsetOdd = new List<Vector3Int>
+        public static List<HexCoordinate> directionsOffsetOdd = new List<HexCoordinate>
     {
-        new Vector3Int( 0, 0, 1), //N
-        new Vector3Int( 1, 0, 0), //E1
-        new Vector3Int( 1, 0,-1), //E2
-        new Vector3Int( 0, 0,-1), //S
-        new Vector3Int(-1, 0,-1), //W1
-        new Vector3Int(-1, 0, 0), //W2
+        new HexCoordinate( 0, 1), //N
+        new HexCoordinate( 1, 0), //E1
+        new HexCoordinate( 1, -1), //E2
+        new HexCoordinate( 0, -1), //S
+        new HexCoordinate(-1, -1), //W1
+        new HexCoordinate(-1, 0), //W2
     };
 
-        public static List<Vector3Int> directionsOffsetEven = new List<Vector3Int>
+        public static List<HexCoordinate> directionsOffsetEven = new List<HexCoordinate>
     {
-        new Vector3Int( 0, 0, 1), //N
-        new Vector3Int( 1, 0, 1), //E1
-        new Vector3Int( 1, 0, 0), //E2
-        new Vector3Int( 0, 0,-1), //S
-        new Vector3Int(-1, 0, 0), //W1
-        new Vector3Int(-1, 0, 1), //W2
+        new HexCoordinate( 0, 1), //N
+        new HexCoordinate( 1, 1), //E1
+        new HexCoordinate( 1, 0), //E2
+        new HexCoordinate( 0, -1), //S
+        new HexCoordinate(-1, 0), //W1
+        new HexCoordinate(-1, 1), //W2
     };
 
-        public static List<Vector3Int> GetDirectionList(int x)
+        public static List<HexCoordinate> GetDirectionList(int x)
             => x % 2 == 0 ? directionsOffsetEven : directionsOffsetOdd;
     }
 
@@ -58,29 +55,37 @@ public class HexGrid : Singleton<HexGrid>
     }
 
 
-    public Hex GetTileAt(Vector3Int hexCoordinates)
+    public Hex GetTileAt(Vector3 hexCoordinates)
     {
-        hexTileDict.TryGetValue(hexCoordinates, out Hex result);
+        return GetTileAt(HexCoordinate.ConvertFromVector3(hexCoordinates));
+    }
+
+    public Hex GetTileAt(HexCoordinate hexCoordinate)
+    {
+        hexTileDict.TryGetValue(hexCoordinate, out Hex result);
         return result;
+
     }
 
 
-    public List<Vector3Int> GetNeighboursFor(Vector3Int hexCoordinates)
+    public List<HexCoordinate> GetNeighboursFor(HexCoordinate hexCoordinates)
     {
         if (hexTileDict.ContainsKey(hexCoordinates) == false)
-            return new List<Vector3Int>();
+            return new List<HexCoordinate>();
 
         if (hexTileNeighboursDict.ContainsKey(hexCoordinates))
             return hexTileNeighboursDict[hexCoordinates];
 
-        hexTileNeighboursDict.Add(hexCoordinates, new List<Vector3Int>());
+        hexTileNeighboursDict.Add(hexCoordinates, new List<HexCoordinate>());
 
-        foreach (Vector3Int direction in Direction.GetDirectionList(hexCoordinates.x))
+        foreach (HexCoordinate direction in Direction.GetDirectionList(hexCoordinates.x))
         {
             if (hexTileDict.ContainsKey(hexCoordinates + direction))
             {
                 hexTileNeighboursDict[hexCoordinates].Add(hexCoordinates + direction);
             }
+            /*
+             * 이 부분이 의미하는 바를 모르겠음
             else if (hexTileDict.ContainsKey(hexCoordinates + direction + topOffset))
             {
                 hexTileNeighboursDict[hexCoordinates].Add(hexCoordinates + direction + topOffset);
@@ -89,19 +94,20 @@ public class HexGrid : Singleton<HexGrid>
             {
                 hexTileNeighboursDict[hexCoordinates].Add(hexCoordinates + direction + bottomOffset);
             }
+            */
         }
         return hexTileNeighboursDict[hexCoordinates];
     }
 
-    public List<Vector3Int> GetNeighboursDoubleFor(Vector3Int hexCoordinates)
+    public List<HexCoordinate> GetNeighboursDoubleFor(HexCoordinate hexCoordinates)
     {
         if (hexTileDict.ContainsKey(hexCoordinates) == false)
-            return new List<Vector3Int>();
+            return new List<HexCoordinate>();
 
         if (hexTileNeighboursDoubleDict.ContainsKey(hexCoordinates))
             return hexTileNeighboursDoubleDict[hexCoordinates];
 
-        hexTileNeighboursDoubleDict.Add(hexCoordinates, new List<Vector3Int>());
+        hexTileNeighboursDoubleDict.Add(hexCoordinates, new List<HexCoordinate>());
 
         foreach (var hexNeighbours in GetNeighboursFor(hexCoordinates))
         {
@@ -111,19 +117,6 @@ public class HexGrid : Singleton<HexGrid>
             }
         }
         return hexTileNeighboursDoubleDict[hexCoordinates];
-    }
-
-    static public Vector3Int GetClosestHex(Vector3 worldposition)
-    {
-        int x = Mathf.RoundToInt(worldposition.x / xOffset);
-        int y = 0;
-        int z = Mathf.CeilToInt(worldposition.z / zOffset);
-        return new Vector3Int(x, y, z);
-    }
-
-    public Hex GetHexFromPosition(Vector3 worldposition)
-    {
-        return GetTileAt(GetClosestHex(worldposition));
     }
 
     public Hex GetRandHexAtEmpty()
