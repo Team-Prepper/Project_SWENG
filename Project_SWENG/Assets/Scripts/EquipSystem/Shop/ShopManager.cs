@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Photon.Pun;
 using UnityEngine;
 using static Unity.VisualScripting.Antlr3.Runtime.Tree.TreeWizard;
 
@@ -14,10 +15,13 @@ public class ShopManager : MonoSingleton<ShopManager>
 
     public void WelcomeToShop(GameObject player)
     {
-        visitor = player.GetComponent<DicePoint>();
-        if(visitor != null )
+        if (player.GetPhotonView().IsMine == true)
         {
-            GUI_shop = Instantiate(GUI_ShopPrefab).GetComponent<GUI_ShopInterAction>();
+            visitor = player.GetComponent<DicePoint>();
+            if(visitor != null )
+            {
+                GUI_shop = Instantiate(GUI_ShopPrefab).GetComponent<GUI_ShopInterAction>();
+            }
         }
     }
 

@@ -18,7 +18,7 @@ namespace Character {
         {
             stat.HP.FillMax();
             unit = GetComponent<DicePoint>();
-            _PhotonView = GetComponent<PhotonView>();
+            _photonView = GetComponent<PhotonView>();
         }
 
         private void OnEnable()
@@ -46,7 +46,7 @@ namespace Character {
         public override void AttackAct()
         {
             unit.UsePoint(atkPoint);
-            _PhotonView.RPC("AttackVfx", RpcTarget.All, null);
+            _photonView.RPC("AttackVfx", RpcTarget.All, null);
         }
 
         public override int GetAttackValue()
