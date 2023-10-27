@@ -10,7 +10,7 @@ public class ShopManager : MonoSingleton<ShopManager>
     public List<Item> items = new List<Item>();
     private List<Item> selectedList = new List<Item>();
 
-    public DicePoint visitor;
+    private DicePoint visitor;
 
     public void WelcomeToShop(GameObject player)
     {

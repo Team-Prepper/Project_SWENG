@@ -10,6 +10,7 @@
       <Property Name="Cost" Hidden="true" />
       <Method Name="DisableHighlight" Hidden="true" />
       <Method Name="EnableHighlight" Hidden="true" />
+      <Field Name="highlight" Hidden="true" />
       <Method Name="HighlightPath" Hidden="true" />
       <Field Name="itemMesh" Hidden="true" />
       <Field Name="itemZone" Hidden="true" />
@@ -74,12 +75,18 @@
   <Class Name="NetworkUnit">
     <Position X="8.75" Y="5.5" Width="5.25" />
     <Members>
+      <Field Name="_characterController" Hidden="true" />
       <Method Name="_NewMovementCoroutine" Hidden="true" />
+      <Field Name="_photonView" Hidden="true" />
       <Method Name="_RotationCoroutine" Hidden="true" />
+      <Field Name="animator" Hidden="true" />
+      <Method Name="Deselect" Hidden="true" />
       <Field Name="glowHighlight" Hidden="true" />
       <Field Name="movementDuration" Hidden="true" />
+      <Method Name="NewMoveThroughPath" Hidden="true" />
       <Field Name="pathPositions" Hidden="true" />
       <Field Name="rotationDuration" Hidden="true" />
+      <Method Name="Select" Hidden="true" />
       <Method Name="Start" Hidden="true" />
     </Members>
     <TypeIdentifier>
@@ -90,6 +97,40 @@
     <ShowAsAssociation>
       <Field Name="dicePoints" />
     </ShowAsAssociation>
+  </Class>
+  <Class Name="GridMaker">
+    <Position X="15.25" Y="0.75" Width="3.75" />
+    <Members>
+      <Field Name="_hexPrefab" Hidden="true" />
+      <Method Name="_HexTileSpawn" Hidden="true" />
+      <Method Name="_SpawnHexTile" Hidden="true" />
+      <Field Name="_tileCastle" Hidden="true" />
+      <Field Name="_tileDungon" Hidden="true" />
+      <Field Name="_tileHill" Hidden="true" />
+      <Field Name="_tileNormal" Hidden="true" />
+      <Field Name="_tileOcean" Hidden="true" />
+      <Field Name="_tileRock" Hidden="true" />
+      <Field Name="_tileVillage" Hidden="true" />
+      <Method Name="Awake" Hidden="true" />
+      <Method Name="ConvertMaterials" Hidden="true" />
+      <Event Name="EventBuildComplete" Hidden="true" />
+      <Event Name="EventSetNavComplete" Hidden="true" />
+      <Field Name="gridSizeN" Hidden="true" />
+      <Field Name="hexGround" Hidden="true" />
+      <Field Name="hexHeight" Hidden="true" />
+      <Field Name="hexRiver" Hidden="true" />
+      <Field Name="hexWidth" Hidden="true" />
+      <Field Name="materials" Hidden="true" />
+      <Field Name="navMeshSurface" Hidden="true" />
+      <Field Name="objTilesGo" Hidden="true" />
+      <Field Name="oceanSizeN" Hidden="true" />
+      <Method Name="OceanSpawn" Hidden="true" />
+      <Method Name="Start" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>AAARAAACCCACACAIDBEAIKAACBAAAAGEAgBAAABAAEA=</HashCode>
+      <FileName>Assets\Scripts\TileField\GridMaker.cs</FileName>
+    </TypeIdentifier>
   </Class>
   <Struct Name="BFSResult">
     <Position X="3.5" Y="6" Width="4.5" />
