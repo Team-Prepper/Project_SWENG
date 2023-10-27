@@ -3,14 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Character {
 
-    public class NetworkCharacterController : MonoBehaviourPun {
+    public class NetworkCharacterController : MonoBehaviourPun 
+    {
+        protected PhotonView _photonView;
 
-        [Header("Network")]
-        [SerializeField] protected PhotonView _PhotonView;
-
+        [SerializeField] protected GameObject equipCam;
         [SerializeField] protected Animator anim;
 
         public Stat stat;
@@ -19,13 +20,22 @@ namespace Character {
         protected virtual void Start()
         {
             anim = GetComponent<Animator>();
-            _PhotonView = GetComponent<PhotonView>();
+            _photonView = GetComponent<PhotonView>();
+            SetPlayerCam();
+        }
+
+        private void SetPlayerCam()
+        {
+            if (_photonView.IsMine == false)
+            {
+                equipCam.SetActive(false);
+            }
         }
 
         public void Attack(Vector3 targetPos)
         {
             transform.LookAt(targetPos);
-            _PhotonView.RPC("RunAnimation", RpcTarget.All, 0);
+            _photonView.RPC("RunAnimation", RpcTarget.All, 0);
             AttackAct();
         }
         
@@ -36,7 +46,7 @@ namespace Character {
 
         public void DamagedHandler(int damage)
         {
-            _PhotonView.RPC("TakeDamaged", RpcTarget.All, damage);
+            _photonView.RPC("TakeDamaged", RpcTarget.All, damage);
         }
 
         [PunRPC]
@@ -48,12 +58,12 @@ namespace Character {
 
             if (stat.GetHP().Value > 0)
             {
-                _PhotonView.RPC("RunAnimation", RpcTarget.All, 1);
+                _photonView.RPC("RunAnimation", RpcTarget.All, 1);
                 DamageAct();
                 return;
             }
 
-            _PhotonView.RPC("RunAnimation", RpcTarget.All, 2);
+            _photonView.RPC("RunAnimation", RpcTarget.All, 2);
 
             DieAct();
         }

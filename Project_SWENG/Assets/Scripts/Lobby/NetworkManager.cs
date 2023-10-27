@@ -39,8 +39,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     int currentPage = 1, maxPage, multiple;
 
 
-    #region ¹æ¸®½ºÆ® °»½Å
-    // ¢¸¹öÆ° -2 , ¢º¹öÆ° -1 , ¼¿ ¼ıÀÚ
+    #region roomlist
     public void MyListClick(int num)
     {
         if (num == -2) --currentPage;
@@ -51,14 +50,11 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     void MyListRenewal()
     {
-        // ÃÖ´ëÆäÀÌÁö
         maxPage = (myList.Count % CellBtn.Length == 0) ? myList.Count / CellBtn.Length : myList.Count / CellBtn.Length + 1;
 
-        // ÀÌÀü, ´ÙÀ½¹öÆ°
         PreviousBtn.interactable = (currentPage <= 1) ? false : true;
         NextBtn.interactable = (currentPage >= maxPage) ? false : true;
 
-        // ÆäÀÌÁö¿¡ ¸Â´Â ¸®½ºÆ® ´ëÀÔ
         multiple = (currentPage - 1) * CellBtn.Length;
         for (int i = 0; i < CellBtn.Length; i++)
         {
@@ -85,11 +81,11 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     #endregion
 
 
-    #region ¼­¹ö¿¬°á
+    #region init
     void Awake()
     {
         PhotonNetwork.AutomaticallySyncScene = true;
-        PhotonNetwork.GameVersion = gameVersion;        // Á¢¼Ó¿¡ ÇÊ¿äÇÑ Á¤º¸(°ÔÀÓ ¹öÀü) ¼³Á¤
+        PhotonNetwork.GameVersion = gameVersion;        // ï¿½ï¿½ï¿½Ó¿ï¿½ ï¿½Ê¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½) ï¿½ï¿½ï¿½ï¿½
         Debug.Log(PhotonNetwork.SendRate);
     }
 
@@ -130,7 +126,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     #endregion
 
 
-    #region ¹æ
+    #region join
     public void CreateRoom() => PhotonNetwork.CreateRoom(RoomInput.text == "" ? "Room" + Random.Range(0, 100) : RoomInput.text, new RoomOptions { MaxPlayers = 4 });
 
     public void JoinRandomRoom() => PhotonNetwork.JoinRandomRoom();
@@ -180,14 +176,14 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     #endregion
 
 
-    #region Ã¤ÆÃ
+    #region chat
     public void Send()
     {
         PV.RPC("ChatRPC", RpcTarget.All, PhotonNetwork.NickName + " : " + ChatInput.text);
         ChatInput.text = "";
     }
 
-    [PunRPC] // RPC´Â ÇÃ·¹ÀÌ¾î°¡ ¼ÓÇØÀÖ´Â ¹æ ¸ğµç ÀÎ¿ø¿¡°Ô Àü´ŞÇÑ´Ù
+    [PunRPC]
     void ChatRPC(string msg)
     {
         bool isInput = false;
@@ -198,7 +194,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
                 ChatText[i].text = msg;
                 break;
             }
-        if (!isInput) // ²ËÂ÷¸é ÇÑÄ­¾¿ À§·Î ¿Ã¸²
+        if (!isInput)
         {
             for (int i = 1; i < ChatText.Length; i++) ChatText[i - 1].text = ChatText[i].text;
             ChatText[ChatText.Length - 1].text = msg;
