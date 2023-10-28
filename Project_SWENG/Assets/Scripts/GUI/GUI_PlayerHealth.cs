@@ -8,16 +8,16 @@ using Character;
 
 public class GUI_PlayerHealth : MonoBehaviour
 {
-    PlayerController _manger;
+    PlayerController _target;
 
-    [SerializeField] Image healthFront;
-    [SerializeField] Image healthBack;
-    [SerializeField] Image afterimage;
-    [SerializeField] TextMeshProUGUI hpText;
+    [SerializeField] Image _healthFront;
+    [SerializeField] Image _healthBack;
+    [SerializeField] Image _afterimage;
+    [SerializeField] TextMeshProUGUI _hpText;
     
     public float lerpSpeed = 100f;
 
-    float curValue;
+    float _curValue;
 
     private void Awake()
     {
@@ -26,35 +26,35 @@ public class GUI_PlayerHealth : MonoBehaviour
 
     public void SetPlayerHealth(GameObject player)
     {
-        _manger = player.GetComponent<PlayerController>();
-        SetHealth(_manger.stat.GetHP().Value);
-        afterimage.fillAmount = 1;
-        curValue = _manger.stat.GetHP().Value;
+        _target = player.GetComponent<PlayerController>();
+        SetHealth();
+        _afterimage.fillAmount = 1;
+        _curValue = _target.stat.HP.Value;
     }
 
     void GUI_Damaged(object sender, IntEventArgs e)
     {
-        SetHealth(e.Value);
+        SetHealth();
         StartCoroutine(LerpValue(e.Value));
     }
 
     private IEnumerator LerpValue(float endValue)
     {
         float elapsedTime = 0f;
-        float startValue = curValue;
+        float startValue = _curValue;
         while (elapsedTime < 1f)
         {
-            curValue = Mathf.Lerp(startValue, endValue, elapsedTime);
-            afterimage.fillAmount = _manger.stat.GetHP().ConvertToRate();
+            _curValue = Mathf.Lerp(startValue, endValue, elapsedTime);
+            _afterimage.fillAmount = _target.stat.HP.ConvertToRate();
             elapsedTime += Time.deltaTime * lerpSpeed;
             yield return null;
         }
     }
 
-    void SetHealth(int newHealth)
+    void SetHealth()
     {
-        healthFront.fillAmount = _manger.stat.GetHP().ConvertToRate();
-        healthBack.fillAmount  = _manger.stat.GetHP().ConvertToRate();
-        hpText.text = newHealth.ToString() + " / " + _manger.stat.GetHP().MaxValue;
+        _healthFront.fillAmount = _target.stat.HP.ConvertToRate();
+        _healthBack.fillAmount  = _target.stat.HP.ConvertToRate();
+        _hpText.text = _target.stat.HP.Value.ToString() + " / " + _target.stat.HP.MaxValue;
     }
 }

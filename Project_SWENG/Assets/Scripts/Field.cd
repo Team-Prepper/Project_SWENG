@@ -17,9 +17,6 @@
       <Method Name="OnEnable" Hidden="true" />
       <Method Name="OnMouseToggle" Hidden="true" />
       <Method Name="ResetHighlight" Hidden="true" />
-      <Field Name="xOffset" Hidden="true" />
-      <Field Name="yOffset" Hidden="true" />
-      <Field Name="zOffset" Hidden="true" />
     </Members>
     <NestedTypes>
       <Enum Name="Hex.Type" Collapsed="true">
@@ -29,17 +26,15 @@
       </Enum>
     </NestedTypes>
     <TypeIdentifier>
-      <HashCode>kAABABgBgAAAKEAhAAwACBAEEAQAAAAAAABxAgAACAA=</HashCode>
+      <HashCode>kAABABgBgAAAKEAhAAwACBAEEAQAAAAAAABBAgAACAA=</HashCode>
       <FileName>Assets\Scripts\TileField\Hex.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="HexGrid">
     <Position X="8.75" Y="0.75" Width="5.25" />
     <Members>
-      <Field Name="bottomOffset" Hidden="true" />
       <Field Name="hexTileNeighboursDict" Hidden="true" />
       <Field Name="hexTileNeighboursDoubleDict" Hidden="true" />
-      <Field Name="topOffset" Hidden="true" />
       <Field Name="xOffset" Hidden="true" />
       <Field Name="zOffset" Hidden="true" />
     </Members>
@@ -51,19 +46,19 @@
       </Class>
     </NestedTypes>
     <TypeIdentifier>
-      <HashCode>CCAAAAAAAAABAEAAQAAAIAAiACAgBAACAAAQAEAAAhg=</HashCode>
+      <HashCode>CAAAAAAAAAAAAEAAQAAAAAAiACAgBAACAAAQAAAAAhg=</HashCode>
       <FileName>Assets\Scripts\TileField\HexGrid.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="DicePoint">
-    <Position X="15" Y="5.5" Width="2.75" />
+    <Position X="15" Y="5.25" Width="2.75" />
     <TypeIdentifier>
       <HashCode>AAAAIAAAAgAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAQ=</HashCode>
       <FileName>Assets\Scripts\Dice\DicePoint.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="GraphSearch">
-    <Position X="3.5" Y="4.5" Width="4.5" />
+    <Position X="8.75" Y="7" Width="4.5" />
     <Members>
       <Method Name="GeneratePathBFS" Hidden="true" />
     </Members>
@@ -73,29 +68,29 @@
     </TypeIdentifier>
   </Class>
   <Class Name="NetworkUnit">
-    <Position X="8.75" Y="5.5" Width="5.25" />
+    <Position X="8.75" Y="5.25" Width="5.25" />
     <Members>
+      <Field Name="_animator" Hidden="true" />
       <Field Name="_characterController" Hidden="true" />
+      <Field Name="_glowHighlight" Hidden="true" />
+      <Field Name="_movementDuration" Hidden="true" />
       <Method Name="_NewMovementCoroutine" Hidden="true" />
+      <Field Name="_pathPositions" Hidden="true" />
       <Field Name="_photonView" Hidden="true" />
       <Method Name="_RotationCoroutine" Hidden="true" />
-      <Field Name="animator" Hidden="true" />
+      <Field Name="_rotationDuration" Hidden="true" />
       <Method Name="Deselect" Hidden="true" />
-      <Field Name="glowHighlight" Hidden="true" />
-      <Field Name="movementDuration" Hidden="true" />
-      <Method Name="NewMoveThroughPath" Hidden="true" />
-      <Field Name="pathPositions" Hidden="true" />
-      <Field Name="rotationDuration" Hidden="true" />
       <Method Name="Select" Hidden="true" />
+      <Method Name="SetPlayerOnHex" Hidden="true" />
       <Method Name="Start" Hidden="true" />
     </Members>
     <TypeIdentifier>
-      <HashCode>BAEAAABAAKAAAAEACAAACAAQAAAAAAgABAAAQAABIAA=</HashCode>
+      <HashCode>AgAAAAAAAKgAAAEACAAACAAAAAAAAQAgJAAAQAABAAA=</HashCode>
       <FileName>Assets\Scripts\ForNetworkScripts\NetworkUnit.cs</FileName>
       <NewMemberFileName>Assets\Scripts\Dice\DicePoint.cs</NewMemberFileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Field Name="dicePoints" />
+      <Field Name="_dicePoints" />
     </ShowAsAssociation>
   </Class>
   <Class Name="GridMaker">
@@ -133,11 +128,31 @@
     </TypeIdentifier>
   </Class>
   <Struct Name="BFSResult">
-    <Position X="3.5" Y="6" Width="4.5" />
+    <Position X="3.5" Y="5.5" Width="4.5" />
     <TypeIdentifier>
       <HashCode>AAAABCAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAACA=</HashCode>
       <FileName>Assets\Scripts\TileField\GraphSearch.cs</FileName>
     </TypeIdentifier>
+  </Struct>
+  <Struct Name="HexCoordinate">
+    <Position X="20.25" Y="0.75" Width="3.75" />
+    <Members>
+      <Method Name="ConvertFromVector3" Hidden="true" />
+      <Method Name="ConvertToVector3" Hidden="true" />
+      <Method Name="Equals" Hidden="true" />
+      <Method Name="GetHashCode" Hidden="true" />
+      <Method Name="operator !=" Hidden="true" />
+      <Method Name="operator +" Hidden="true" />
+      <Method Name="operator ==" Hidden="true" />
+      <Method Name="ToString" Hidden="true" />
+      <Field Name="xOffset" Hidden="true" />
+      <Field Name="zOffset" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAEAEwABAAAAEAAAAAIAAAABQAQAAAiA=</HashCode>
+      <FileName>Assets\Scripts\TileField\HexCoordinate.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
   </Struct>
   <Font Name="맑은 고딕" Size="9" />
 </ClassDiagram>

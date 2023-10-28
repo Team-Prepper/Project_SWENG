@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace Character {
+
     public class PlayerController : NetworkCharacterController {
 
         [SerializeField] int _usePointAtAttack = 3;
@@ -16,7 +17,7 @@ namespace Character {
 
         private void Awake()
         {
-            stat.GetHP().FillMax();
+            stat.HP.FillMax();
             _point = GetComponent<DicePoint>();
         }
 
@@ -29,12 +30,12 @@ namespace Character {
 
         public int Recover(int val)
         {
-            if (stat.GetHP().Value <= 0) return 0;
+            if (!stat.IsAlive()) return 0;
 
-            stat.GetHP().AddValue(val);
+            stat.Recover(val);
 
-            EventRecover?.Invoke(this, new IntEventArgs(stat.GetHP().Value));
-            return stat.GetHP().Value;
+            EventRecover?.Invoke(this, new IntEventArgs(stat.HP.Value));
+            return stat.HP.Value;
         }
 
         public bool CanAttack()
@@ -68,12 +69,12 @@ namespace Character {
         public override void DamageAct()
         {
             base.DamageAct();
-            EventDamaged?.Invoke(this, new IntEventArgs(stat.GetHP().Value));
+            EventDamaged?.Invoke(this, new IntEventArgs(stat.HP.Value));
         }
 
         public override void DieAct()
         {
-            EventDamaged?.Invoke(this, new IntEventArgs(stat.GetHP().Value));
+            EventDamaged?.Invoke(this, new IntEventArgs(stat.HP.Value));
             base.DieAct();
         }
     }

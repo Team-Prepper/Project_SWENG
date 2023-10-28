@@ -52,11 +52,11 @@ namespace Character {
         [PunRPC]
         public void TakeDamaged(int damage)
         {
-            if (stat.GetHP().Value <= 0) return;
+            if (!stat.IsAlive()) return;
 
-            stat.GetHP().SubValue(damage);
+            stat.Damaged(damage);
 
-            if (stat.GetHP().Value > 0)
+            if (stat.IsAlive())
             {
                 _photonView.RPC("RunAnimation", RpcTarget.All, 1);
                 DamageAct();
