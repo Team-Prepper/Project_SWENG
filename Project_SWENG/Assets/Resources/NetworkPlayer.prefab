@@ -17419,15 +17419,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   equipCam: {fileID: 2893188458808173948}
   anim: {fileID: 0}
-  stat:
-    Lv: 0
-    Exp: 0
-    HP:
-      _curValue: 100
-      _maxValue: 100
-      _minValue: 0
-    attackPower: 10
-  atkPoint: 3
+  _usePointAtAttack: 3
 --- !u!114 &8102839448773701026
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17510,9 +17502,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca81949a4e0cdb043b8c82bddf7f136c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 0}
-  movementDuration: 1
-  rotationDuration: 0.3
+  _animator: {fileID: 0}
+  _movementDuration: 1
+  _rotationDuration: 0.3
 --- !u!114 &345204137595152010
 MonoBehaviour:
   m_ObjectHideFlags: 0

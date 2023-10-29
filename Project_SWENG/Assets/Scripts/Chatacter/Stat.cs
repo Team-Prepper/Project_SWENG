@@ -6,10 +6,10 @@ namespace Character {
     [System.Serializable]
     public class Stat {
 
-        private int _lv;
-        private int _exp;
-        private GaugeValue<int> _hp = new GaugeValue<int>(100, 100, 0);
-        private int _attackPower;
+        [SerializeField] private int _lv = 1;
+        [SerializeField] private int _exp;
+        [SerializeField] private GaugeValue<int> _hp = new GaugeValue<int>(100, 100, 0);
+        [SerializeField] private int _attackPower = 10;
 
         public GaugeValue<int> HP {
             get {

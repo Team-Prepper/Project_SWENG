@@ -1289,10 +1289,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6db0b01ece3091b4fba420a93cfc96f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthFront: {fileID: 6995522102408466122}
-  healthBack: {fileID: 6995522102145021648}
-  afterimage: {fileID: 6995522102514797671}
-  hpText: {fileID: 6995522102892580982}
+  _healthFront: {fileID: 6995522102408466122}
+  _healthBack: {fileID: 6995522102145021648}
+  _afterimage: {fileID: 6995522102514797671}
+  _hpText: {fileID: 6995522102892580982}
   lerpSpeed: 0.5
 --- !u!1 &6995522103177973258
 GameObject:
@@ -2891,9 +2891,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   priority: 0
-  _target: {fileID: 0}
-  _dicePoint: {fileID: 6995522101713054052}
-  _playerHealth: {fileID: 6995522102989802996}
   selectionMask:
     serializedVersion: 2
     m_Bits: 64
+  _target: {fileID: 0}
+  _dicePoint: {fileID: 6995522101713054052}
+  _playerHealth: {fileID: 6995522102989802996}
