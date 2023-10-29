@@ -8,18 +8,37 @@ namespace Character {
 
         private int _lv;
         private int _exp;
-        private GaugeValue<int> _hp = new GaugeValue<int>(10, 10, 0);
+        private GaugeValue<int> _hp = new GaugeValue<int>(100, 100, 0);
         private int _attackPower;
 
-        public GaugeValue<int> GetHP() {
-            return _hp;
+        public GaugeValue<int> HP {
+            get {
+                return _hp;
+            }
         }
 
-        public void SetHP(int curValue, int maxValue, int minValue) {
+        public bool IsAlive()
+        {
+            return _hp.Value != 0;
+        }
+
+        public void Damaged(int amount)
+        {
+            _hp.SubValue(amount);
+        }
+
+        public void Recover(int amount)
+        {
+            _hp.AddValue(amount);
+        }
+
+        public void SetHP(int curValue, int maxValue, int minValue)
+        {
             _hp = new GaugeValue<int>(curValue, maxValue, minValue);
         }
 
-        public int GetAttackValue() {
+        public int GetAttackValue()
+        {
             return _attackPower;
         }
     }

@@ -13,44 +13,44 @@ public class NetworkUnit : MonoBehaviourPun
     
     [Header("Ref")]
     [SerializeField]
-    private Animator animator;
+    private Animator _animator;
 
     private CharacterController _characterController;
 
     [SerializeField]
-    private float movementDuration = 1, rotationDuration = 0.3f;
+    private float _movementDuration = 1, _rotationDuration = 0.3f;
 
-    DicePoint dicePoints;
+    private DicePoint _dicePoints;
 
-    private GlowHighlight glowHighlight;
-    private Queue<Vector3> pathPositions = new Queue<Vector3>();
+    private GlowHighlight _glowHighlight;
+    private Queue<Vector3> _pathPositions = new Queue<Vector3>();
 
     private void Start()
     {
-        glowHighlight = GetComponent<GlowHighlight>();
-        animator = GetComponentInChildren<Animator>();
+        _glowHighlight = GetComponent<GlowHighlight>();
+        _animator = GetComponentInChildren<Animator>();
 
-        dicePoints = GetComponent<DicePoint>();
-        dicePoints.SetPoint(0);
+        _dicePoints = GetComponent<DicePoint>();
+        _dicePoints.SetPoint(0);
         _characterController = GetComponent<CharacterController>();
         _photonView = GetComponent<PhotonView>();
     }
 
     public void Deselect()
     {
-        glowHighlight.ToggleGlow(false);
+        _glowHighlight.ToggleGlow(false);
     }
 
     public void Select()
     {
-        glowHighlight.ToggleGlow();
+        _glowHighlight.ToggleGlow();
     }
 
     public void NewMoveThroughPath(List<Vector3> currentPath)
     {
-        pathPositions = new Queue<Vector3>(currentPath);
-        Vector3 firstTarget = pathPositions.Dequeue();
-        StartCoroutine(_RotationCoroutine(firstTarget, rotationDuration));
+        _pathPositions = new Queue<Vector3>(currentPath);
+        Vector3 firstTarget = _pathPositions.Dequeue();
+        StartCoroutine(_RotationCoroutine(firstTarget, _rotationDuration));
     }
 
     private IEnumerator _RotationCoroutine(Vector3 endPosition, float rotationDuration)
@@ -86,35 +86,35 @@ public class NetworkUnit : MonoBehaviourPun
         HexCoordinate newHexPos = HexCoordinate.ConvertFromVector3(endPosition);
         NetworkCloudManager.Instance.CloudActiveFalse(newHexPos);
         Hex goalHex = HexGrid.Instance.GetTileAt(newHexPos);
-        dicePoints.UsePoint(goalHex.Cost);
+        _dicePoints.UsePoint(goalHex.Cost);
 
 
         float timeElapsed = 0;
 
-        while (timeElapsed < movementDuration)
+        while (timeElapsed < _movementDuration)
         {
-            if (animator)
-                animator.SetBool("IsWalk", true);
+            if (_animator)
+                _animator.SetBool("IsWalk", true);
 
             timeElapsed += Time.deltaTime;
-            float lerpStep = timeElapsed / movementDuration;
+            float lerpStep = timeElapsed / _movementDuration;
             transform.position = Vector3.Lerp(startPosition, endPosition, lerpStep);
             yield return null;
         }
         transform.position = endPosition;
 
-        if (pathPositions.Count > 0)
+        if (_pathPositions.Count > 0)
         {
             Debug.Log("Selecting the next position!");
-            StartCoroutine(_RotationCoroutine(pathPositions.Dequeue(), rotationDuration));
+            StartCoroutine(_RotationCoroutine(_pathPositions.Dequeue(), _rotationDuration));
         }
         else
         {
             Debug.Log("Movement finished!");
             _photonView.RPC("SetPlayerOnHex",RpcTarget.All,1, transform.position);
         }
-        if (animator)
-            animator.SetBool("IsWalk", false);
+        if (_animator)
+            _animator.SetBool("IsWalk", false);
     }
 
     [PunRPC]
