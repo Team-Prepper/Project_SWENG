@@ -80,4 +80,9 @@ public class GaugeValue<T> where T: IComparable, IConvertible {
             / (_maxValue.ConvertTo<float>() - _minValue.ConvertTo<float>());
     }
 
+    public override string ToString()
+    {
+        return _curValue.ToString() + "/" + _maxValue.ToString();
+    }
+
 }

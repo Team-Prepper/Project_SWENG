@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEditor.PackageManager;
 using UnityEngine;
 
@@ -9,16 +10,45 @@ public struct HexCoordinate : IEquatable<HexCoordinate> {
     public static readonly float xOffset = 4.325f;
     public static readonly float zOffset = 5.0f;
 
-    public int x;
-    public int z;
+    private int x;
+    private int z;
 
-    public HexCoordinate (int x, int z) {
+    public HexCoordinate(int x, int z)
+    {
         this.x = x;
         this.z = z;
     }
 
-    public Vector3 ConvertToVector3() {
+    public Vector3 ConvertToVector3()
+    {
         return new Vector3();
+    }
+
+    public static List<HexCoordinate> GetDirectionList(HexCoordinate target)
+    {
+
+        if (target.x % 2 == 0)
+        {
+            return new List<HexCoordinate>
+                {
+                    new HexCoordinate( target.x, target.z + 1), //N
+                    new HexCoordinate( target.x + 1,target.z + 1), //E1
+                    new HexCoordinate( target.x + 1, target.z), //E2
+                    new HexCoordinate( target.x, target.z - 1), //S
+                    new HexCoordinate( target.x - 1, target.z), //W1
+                    new HexCoordinate( target.x - 1, target.z + 1), //W2
+                };
+        }
+
+        return new List<HexCoordinate>
+            {
+                new HexCoordinate( target.x, target.z +1), //N
+                new HexCoordinate( target.x + 1, target.z), //E1
+                new HexCoordinate( target.x + 1, target.z - 1), //E2
+                new HexCoordinate( target.x, target.x - 1), //S
+                new HexCoordinate( target.x - 1, target.z - 1), //W1
+                new HexCoordinate( target.x - 1, target.z), //W2
+            };
     }
 
     public static HexCoordinate ConvertFromVector3(Vector3 source)
@@ -61,7 +91,8 @@ public struct HexCoordinate : IEquatable<HexCoordinate> {
         return c1.Equals(c2);
     }
 
-    public static bool operator !=(HexCoordinate c1, HexCoordinate c2) {
+    public static bool operator !=(HexCoordinate c1, HexCoordinate c2)
+    {
         if (c1 == null) return true;
         if (c2 == null) return true;
         return !c1.Equals(c2);

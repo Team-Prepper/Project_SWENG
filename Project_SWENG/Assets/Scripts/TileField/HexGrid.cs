@@ -78,11 +78,11 @@ public class HexGrid : Singleton<HexGrid>
 
         hexTileNeighboursDict.Add(hexCoordinates, new List<HexCoordinate>());
 
-        foreach (HexCoordinate direction in Direction.GetDirectionList(hexCoordinates.x))
+        foreach (HexCoordinate pos in HexCoordinate.GetDirectionList(hexCoordinates))
         {
-            if (hexTileDict.ContainsKey(hexCoordinates + direction))
+            if (hexTileDict.ContainsKey(pos))
             {
-                hexTileNeighboursDict[hexCoordinates].Add(hexCoordinates + direction);
+                hexTileNeighboursDict[hexCoordinates].Add(pos);
             }
             /*
              * 이 부분이 의미하는 바를 모르겠음

@@ -49,6 +49,11 @@ namespace Character {
             _photonView.RPC("AttackVfx", RpcTarget.All, null);
         }
 
+        public override string GetName()
+        {
+            return "Player";
+        }
+
         public override int GetAttackValue()
         {
             return stat.GetAttackValue() +
