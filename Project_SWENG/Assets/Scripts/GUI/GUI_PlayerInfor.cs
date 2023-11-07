@@ -41,7 +41,7 @@ public class GUI_PlayerInfor : GUIFullScreen
     {
         Hex selected = HexGrid.Instance.GetTileAt(selectGridPos);
 
-        if (!selected) return;
+        if (!selected || !selected.Entity) return;
 
         if (selected.Entity == _target)
         {
