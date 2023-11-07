@@ -32,6 +32,10 @@ namespace Character {
             }
         }
 
+        public virtual string GetName() {
+            return string.Empty;
+        }
+
         public void Attack(Vector3 targetPos)
         {
             transform.LookAt(targetPos);

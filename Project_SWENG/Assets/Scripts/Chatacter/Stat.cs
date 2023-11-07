@@ -22,6 +22,10 @@ namespace Character {
             return _hp.Value != 0;
         }
 
+        public int GetLevel() {
+            return _lv;
+        }
+
         public void Damaged(int amount)
         {
             _hp.SubValue(amount);

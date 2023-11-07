@@ -41,8 +41,16 @@ public class GUI_PlayerInfor : GUIFullScreen
     {
         Hex selected = HexGrid.Instance.GetTileAt(selectGridPos);
 
-        if (selected && selected.Entity == _target)
+        if (!selected || !selected.Entity) return;
+
+        if (selected.Entity == _target)
+        {
             UIManager.OpenGUI<GUI_ActionSelect>("ActionSelect").Set(_target);
+            return;
+        }
+        
+        if (!selected.Entity.TryGetComponent<NetworkCharacterController>(out NetworkCharacterController target)) return;
+        UIManager.OpenGUI<GUI_ShowCharacterInfor>("CharacterInfor").SetInfor(target.GetName(), target);
     }
 
     public void TurnEndButton() {

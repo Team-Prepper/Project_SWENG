@@ -15,7 +15,10 @@ namespace Character {
 
         public Hex curHex;
 
-
+        public override string GetName()
+        {
+            return enemyStat.monsterName;
+        }
         private void OnEnable()
         {
             Debug.Log("Enemy OnEnable");
