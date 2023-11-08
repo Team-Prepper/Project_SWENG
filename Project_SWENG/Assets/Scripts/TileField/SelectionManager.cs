@@ -27,7 +27,7 @@ public class SelectionManager : MonoBehaviour
                 Debug.Log("Click Player");
                 //OnUnitSelected?.Invoke(result);
                 
-                UIManager.OpenGUI<GUI_ActionSelect>("ActionSelect").Set(result);
+                //UIManager.OpenGUI<GUI_ActionSelect>("ActionSelect").Set(result);
             }
             
         }

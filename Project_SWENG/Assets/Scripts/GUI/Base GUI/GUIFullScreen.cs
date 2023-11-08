@@ -5,11 +5,35 @@ using UnityEngine;
 namespace UISystem {
     public class GUIFullScreen : GUIWindow {
         public LayerMask selectionMask;
+
+        private List<GUIPopUp> _popupUI;
+        [SerializeField] private GUIPopUp _nowPopUp;
+
         protected override void Open(Vector2 openPos)
         {
             base.Open(openPos);
             UIManager.Instance.EnrollmentGUI(this);
             gameObject.GetComponent<RectTransform>().sizeDelta = Vector3.zero;
+            _popupUI = new List<GUIPopUp>();
+        }
+
+        public void AddPopUp(GUIPopUp popup) {
+            if (_nowPopUp != null)
+            {
+                _popupUI.Add(_nowPopUp);
+                _nowPopUp.gameObject.SetActive(false);
+            }
+            popup.gameObject.transform.SetParent(transform);
+            _nowPopUp = popup;
+        }
+
+        public void PopPopUp() {
+            if (_popupUI.Count == 0) {
+                _nowPopUp = null;
+                return;
+            }
+            _nowPopUp = _popupUI[_popupUI.Count - 1];
+            _popupUI.RemoveAt(_popupUI.Count - 1);
         }
 
         public override void Close()
@@ -20,6 +44,7 @@ namespace UISystem {
 
         protected virtual void Update()
         {
+            if (_nowPopUp) return;
 
             if (Input.GetMouseButtonDown(0))
             {
