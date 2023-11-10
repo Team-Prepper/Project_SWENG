@@ -10,7 +10,7 @@ public class CloudGUI : MonoBehaviour
 
     private void Awake()
     {
-        GridMaker.EventSetNavComplete += StartCloud;
+
     }
 
     public void StartCloud(object sender, EventArgs e)
