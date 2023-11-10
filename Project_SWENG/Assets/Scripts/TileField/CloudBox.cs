@@ -16,7 +16,6 @@ public class CloudBox : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-        GridMaker.EventSetNavComplete += CreatCloud;
     }
 
     private void CreatCloud(object sender, EventArgs e)

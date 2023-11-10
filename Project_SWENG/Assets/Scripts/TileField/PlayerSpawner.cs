@@ -14,7 +14,7 @@ public class PlayerSpawner : MonoBehaviour
 
     void Awake()
     {
-        GridMaker.EventSetNavComplete += SpawnPlayer;
+
     }
 
     void SpawnPlayer(object sender, EventArgs e)
