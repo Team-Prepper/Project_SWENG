@@ -16,9 +16,13 @@ namespace UISystem {
             base.Open(new Vector2(-800, 0));
         }
 
+        public void ReOpen() {
+            gameObject.SetActive(true);
+            PopUpAction();
+        }
+
         public void SetPlayer(DicePoint target)
         {
-
             _targetPlayer = target;
 
         }
@@ -33,6 +37,8 @@ namespace UISystem {
         public override void Close()
         {
             gameObject.SetActive(false);
+            transform.SetParent(UIManager.Instance.NowDisplay.transform.parent);
+            UIManager.Instance.NowDisplay.PopPopUp();
         }
 
     }

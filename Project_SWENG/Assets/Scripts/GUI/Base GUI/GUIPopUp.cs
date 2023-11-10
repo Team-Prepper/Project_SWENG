@@ -8,17 +8,32 @@ namespace UISystem {
         protected override void Open(Vector2 openPos)
         {
             /*
-            if (UIManager.Instance.NowPopUp == null)
-            {
-                base.Open();
-                return;
-            }
 
             RectTransform rect = gameObject.GetComponent<RectTransform>();
 
             rect.SetParent(UIManager.Instance.NowPopUp.transform);
             */
+
             base.Open(openPos);
+
+            PopUpAction();
+        }
+
+        protected void PopUpAction()
+        {
+            if (UIManager.Instance.NowDisplay == null)
+            {
+                return;
+            }
+
+            UIManager.Instance.NowDisplay.AddPopUp(this);
+
+        }
+
+        public override void Close()
+        {
+            UIManager.Instance.NowDisplay.PopPopUp();
+            base.Close();
         }
     }
 

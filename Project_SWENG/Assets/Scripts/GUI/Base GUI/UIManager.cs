@@ -9,23 +9,23 @@ namespace UISystem {
 
         List<GUIFullScreen> uiStack;
 
-        public GUIFullScreen NowPopUp { get; set; }
+        public GUIFullScreen NowDisplay { get; private set; }
 
         private GUIMessageBox msgBox;
         private GUI_Dice _dice;
 
         public void EnrollmentGUI(GUIFullScreen newData)
         {
-            if (NowPopUp == null)
+            if (NowDisplay == null)
             {
-                NowPopUp = newData;
+                NowDisplay = newData;
                 return;
 
             }
             else
             {
-                NowPopUp.gameObject.SetActive(false);
-                uiStack.Add(NowPopUp);
+                NowDisplay.gameObject.SetActive(false);
+                uiStack.Add(NowDisplay);
                 uiStack.Add(newData);
 
             }
@@ -38,9 +38,9 @@ namespace UISystem {
             if (uiStack.Count < 1)
                 return;
 
-            NowPopUp = uiStack[uiStack.Count - 1];
+            NowDisplay = uiStack[uiStack.Count - 1];
             uiStack.RemoveAt(uiStack.Count - 1);
-            NowPopUp.gameObject.SetActive(true);
+            NowDisplay.gameObject.SetActive(true);
 
         }
 
@@ -59,7 +59,7 @@ namespace UISystem {
 
         protected override void OnCreate()
         {
-            NowPopUp = null;
+            NowDisplay = null;
             uiStack = new List<GUIFullScreen>();
 
             _dic = new Dictionary<string, GUIData>();
@@ -95,7 +95,7 @@ namespace UISystem {
         public void UseDice(DicePoint target)
         {
             if (_dice == null) _dice = OpenGUI<GUI_Dice>("Dice");
-            else _dice.gameObject.SetActive(true);
+            else _dice.ReOpen();
 
             _dice.SetPlayer(target);
         }
