@@ -1,5 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
+using ExitGames.Client.Photon;
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
@@ -85,7 +85,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     void Awake()
     {
         PhotonNetwork.AutomaticallySyncScene = true;
-        PhotonNetwork.GameVersion = gameVersion;        // ���ӿ� �ʿ��� ����(���� ����) ����
+        PhotonNetwork.GameVersion = gameVersion;       
         Debug.Log(PhotonNetwork.SendRate);
     }
 
@@ -127,14 +127,35 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
 
     #region join
-    public void CreateRoom() => PhotonNetwork.CreateRoom(RoomInput.text == "" ? "Room" + Random.Range(0, 100) : RoomInput.text, new RoomOptions { MaxPlayers = 4 });
+    
+    public void CreateRoom()
+    {
+        string roomName = (RoomInput.text == "" ? "Room" + Random.Range(0, 100) : RoomInput.text);
+        RoomOptions roomOptions = new RoomOptions
+        {
+            MaxPlayers = 4,
+            IsVisible = true,  // Make the room visible in the lobby
+            IsOpen = true,     // Allow other players to join the room
+            CustomRoomProperties = new Hashtable { { "GameStarted", false } } // Custom room properties
+        };
+
+        PhotonNetwork.CreateRoom(roomName, roomOptions);
+    }
 
     public void JoinRandomRoom() => PhotonNetwork.JoinRandomRoom();
-
+    
     public void LeaveRoom() => PhotonNetwork.LeaveRoom();
 
     public override void OnJoinedRoom()
     {
+        // chk is Started
+        if (PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("GameStarted", out object value))
+        {
+            if (value.Equals(true))
+            {
+                return;
+            }
+        }
         RoomPanel.SetActive(true);
         RoomRenewal();
         ChatInput.text = "";
@@ -204,6 +225,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     public void StartGame()
     {
-        PhotonNetwork.LoadLevel("NetworkGameLevel");
+        if(PhotonNetwork.IsMasterClient)
+            PhotonNetwork.LoadLevel("NetworkGameLevel");
     }
 }
