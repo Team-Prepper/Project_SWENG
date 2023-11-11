@@ -1,14 +1,7 @@
-using System;
 using System.Collections.Generic;
-using System.IO.Compression;
-using Unity.AI.Navigation;
 using UnityEngine;
-using UnityEngine.UIElements;
-using static UnityEditor.Experimental.GraphView.GraphView;
-using static UnityEngine.Rendering.DebugUI;
-using Random = UnityEngine.Random;
 
-public class GridMaker : MonoSingleton<GridMaker>
+public class GridMaker : MonoBehaviour
 {
     GameObject _nowWorking;
     [Header("Ref")]
@@ -34,12 +27,6 @@ public class GridMaker : MonoSingleton<GridMaker>
     private readonly float hexWidth = 4.325f; // horizontal
     private readonly float hexHeight = 5.0f;  // vertical
 
-    protected override void OnCreate()
-    {
-        _tileSetters = new List<HexTileSetter>();
-        base.OnCreate();
-    }
-
     public TileDataScript GetTileData(TileDataScript.TileType type) {
         switch (type)
         {
@@ -61,9 +48,11 @@ public class GridMaker : MonoSingleton<GridMaker>
 
     public void CreateHexGrid()
     {
+        _tileSetters = new List<HexTileSetter>();
         if (_nowWorking) DestroyImmediate(_nowWorking);
-        _nowWorking = new GameObject();
+        _nowWorking = new GameObject("Map");
         _nowWorking.transform.SetParent(transform);
+
         for (int q = -gridSizeN; q <= gridSizeN; q++)
         {
             int r1 = Mathf.Max(-gridSizeN, -q - gridSizeN);
@@ -78,29 +67,33 @@ public class GridMaker : MonoSingleton<GridMaker>
 
             }
         }
+
+        _nowWorking.transform.eulerAngles = new Vector3(-90, 0, 0);
     }
 
     public void EndEdit()
     {
+        _nowWorking.transform.eulerAngles = new Vector3(0, 0, 0);
         foreach (HexTileSetter setter in _tileSetters) {
             DestroyImmediate(setter);
         }
         _tileSetters = new List<HexTileSetter>();
+        _nowWorking = null;
     }
 
     public void RemoveAll()
     {
-        foreach (HexTileSetter setter in _tileSetters)
-        {
-            DestroyImmediate(setter.gameObject);
-        }
+        if (_nowWorking == null) return;
+        DestroyImmediate(_nowWorking);
         _tileSetters = new List<HexTileSetter>();
     }
 
     private Hex _SpawnHexTile(Vector3 spawnPos)
     {
         Hex hex = Instantiate(_hexPrefab, spawnPos, Quaternion.identity);
-        _tileSetters.Add(hex.gameObject.AddComponent<HexTileSetter>());
+        HexTileSetter tileSetter = hex.gameObject.AddComponent<HexTileSetter>();
+        tileSetter.SetInfor(this);
+        _tileSetters.Add(tileSetter);
         hex.transform.SetParent(_nowWorking.transform);
 
         GameObject iHexGround = Instantiate(hexGround, spawnPos, Quaternion.identity);
