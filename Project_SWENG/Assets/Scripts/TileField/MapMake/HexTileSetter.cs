@@ -7,7 +7,7 @@ using UnityEngine.InputSystem;
 [ExecuteInEditMode]
 public class HexTileSetter : MonoBehaviour {
 
-    [SerializeField] TileDataScript.TileType type = TileDataScript.TileType.normal;
+    public TileDataScript.TileType type = TileDataScript.TileType.normal;
 
     GridMaker _inforTarget;
     Transform container;

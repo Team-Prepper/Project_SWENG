@@ -17,7 +17,7 @@ public class GUI_ActionSelect : GUIFullScreen
     {
         _target = target;
         _targetUnit = target.GetComponent<DicePoint>();
-        CamMovement.Instance.CamSetToPlayer(target);
+        CamMovement.Instance.IsPlayerMove = true;
 
         if (_targetUnit.GetPoint() < 3)
         {
@@ -34,6 +34,7 @@ public class GUI_ActionSelect : GUIFullScreen
         if (_targetUnit.GetPoint() < 3) return;
 
         UIManager.OpenGUI<GUI_Attack>("Attack").Set(_target);
+        CamMovement.Instance.IsPlayerMove = true;
         _AfterAction();
     }
     public void OpenMove()
@@ -41,6 +42,7 @@ public class GUI_ActionSelect : GUIFullScreen
         if (_targetUnit.GetPoint() < 2) return;
 
         UIManager.OpenGUI<GUI_Moving>("Move").Set(_target);
+        CamMovement.Instance.IsPlayerMove = false;
         _AfterAction();
     }
 
@@ -64,7 +66,7 @@ public class GUI_ActionSelect : GUIFullScreen
 
     public override void Close()
     {
-        CamMovement.Instance.ConvertMovementCamera();
+        CamMovement.Instance.IsPlayerMove = false;
         base.Close();
     }
 }

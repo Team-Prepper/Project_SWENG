@@ -13,7 +13,7 @@ public class GUI_ShopInterAction : GUIPopUp
     protected override void Open(Vector2 openPos)
     {
         base.Open(new Vector2(-1000,0));
-
+        CamMovement.Instance.IsPlayerMove = true;
         DisplayItem();
     }
 
@@ -28,6 +28,7 @@ public class GUI_ShopInterAction : GUIPopUp
 
     public void ExitShop()
     {
+        CamMovement.Instance.IsPlayerMove = false;
         Destroy(gameObject);
     }
 

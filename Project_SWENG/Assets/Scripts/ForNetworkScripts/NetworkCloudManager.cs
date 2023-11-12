@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class NetworkCloudManager : MonoSingleton<NetworkCloudManager>
+public class NetworkCloudManager : MonoBehaviour
 {
     [Header("Network")]
     private PhotonView _PhotonView;
@@ -16,10 +16,16 @@ public class NetworkCloudManager : MonoSingleton<NetworkCloudManager>
 
     List<HexCoordinate> closeIndex = new List<HexCoordinate>();
 
-    protected override void OnCreate()
+    protected void Awake()
     {
         _PhotonView = GetComponent<PhotonView>();
-        NetworkGridMaker.EventConvertMaterials += CreatCloudHandler;
+        //NetworkGridMaker.EventConvertMaterials += CreatCloudHandler;
+        CreatCloudAtNetwork();
+    }
+
+    private void CreatCloudAtNetwork()
+    {
+        _PhotonView.RPC("CreatCloud", RpcTarget.All, null);
     }
 
     private void CreatCloudHandler(object sender, EventArgs e)
@@ -47,6 +53,7 @@ public class NetworkCloudManager : MonoSingleton<NetworkCloudManager>
 
     public void CloudActiveFalse(HexCoordinate hexCoordinate)
     {
+        Debug.Log(hexCoordinate + "Remove Cloud");
         foreach (HexCoordinate cloudNeighbours in HexGrid.Instance.GetNeighboursDoubleFor(hexCoordinate))
         {
             foreach (HexCoordinate cloud in HexGrid.Instance.GetNeighboursFor(cloudNeighbours))

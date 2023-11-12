@@ -12,6 +12,9 @@ public class NetworkPlayerSpawner : MonoBehaviourPun
     [Header("Network")]
     private PhotonView _PhotonView;
 
+    [Header("SpawnPos")]
+    [SerializeField] private List<Hex> spawnPosList = new List<Hex>();
+
 
     [Header("SystemManager")]
 
@@ -22,9 +25,16 @@ public class NetworkPlayerSpawner : MonoBehaviourPun
     void Awake()
     {
         _PhotonView = GetComponent<PhotonView>();
-        NetworkGridMaker.EventConvertMaterials += SpawnPlayerHandler;
+        //NetworkGridMaker.EventConvertMaterials += SpawnPlayerHandler;
+        SpawnPlayerAtNetwork();
     }
 
+    private void SpawnPlayerAtNetwork()
+    {
+        _PhotonView.RPC("SpawnPlayer", RpcTarget.All, null);
+    }
+
+    // legacy
     void SpawnPlayerHandler(object sender, EventArgs e)
     {
         _PhotonView.RPC("SpawnPlayer", RpcTarget.All, null);
@@ -35,12 +45,12 @@ public class NetworkPlayerSpawner : MonoBehaviourPun
     {
         Debug.Log("Spawing");
 
-        Hex spawnHex = HexGrid.Instance.GetRandHexAtEmpty();
+        Hex spawnHex = spawnPosList[NetworkManager.PlayerID];
 
         Transform spawnPos = spawnHex.transform;
-        Debug.Log("SpawnPos : " + spawnPos.position);
 
         GameObject player = PhotonNetwork.Instantiate(playerPrefab.name, spawnPos.position, spawnPos.rotation);
+        spawnHex.Entity = player;
 
         UIManager.OpenGUI<GUI_PlayerInfor>("UnitInfor").SetPlayer(player);
 
@@ -49,7 +59,8 @@ public class NetworkPlayerSpawner : MonoBehaviourPun
         GameManager.Instance.player = player;
         GameManager.Instance.gamePhase = GameManager.Phase.Start;
 
-        NetworkCloudManager.Instance.CloudActiveFalse(spawnHex.HexCoords);
+        
+        Debug.Log("Spawn End");
     }
 
 }

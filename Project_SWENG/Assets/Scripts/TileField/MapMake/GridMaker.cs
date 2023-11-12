@@ -28,22 +28,32 @@ public class GridMaker : MonoBehaviour
     private readonly float hexHeight = 5.0f;  // vertical
 
     public TileDataScript GetTileData(TileDataScript.TileType type) {
+        TileDataScript tileType = null;
         switch (type)
         {
             case TileDataScript.TileType.normal:
-                return _tileNormal;
-            case TileDataScript.TileType.rock:
-                return _tileRock;
+                tileType = _tileNormal;
+                break;
+            case TileDataScript.TileType.obstacle:
+                tileType = _tileRock;
+                break;
             case TileDataScript.TileType.hill:
-                return _tileHill;
+                tileType = _tileHill;
+                break;
             case TileDataScript.TileType.dungon:
-                return _tileDungon;
+                tileType = _tileDungon;
+                break;
             case TileDataScript.TileType.castle:
-                return _tileCastle;
+                tileType = _tileCastle;
+                break;
             case TileDataScript.TileType.village:
-                return _tileVillage;
+                tileType = _tileVillage;
+                break;
+            case TileDataScript.TileType.ocean:
+                tileType = _tileOcean;
+                break;
         }
-        return _tileOcean;
+        return tileType;
     }
 
     public void CreateHexGrid()
@@ -102,56 +112,7 @@ public class GridMaker : MonoBehaviour
 
         return hex;
     }
-    #region reference
-    /*
-    Hex OceanSpawn(TileDataScript data, float xPos, float zPos)
-    {
-        Vector3 spawnPos = new Vector3(xPos, -0.5f, zPos);
-
-        Hex hex = _SpawnHexTile(data, spawnPos);
-
-        hex.tileType = Hex.Type.Water;
-        hex.tile.transform.localPosition -= new Vector3(0f, 0.6f, 0f);
-
-        return hex;
-    }
-
-    private Hex _HexTileSpawn(TileDataScript selectedData, float xPos, float zPos, int percentage)
-    {
-        //float setHigh = Random.Range(0, 2) * 0.5f;
-        Vector3 spawnPos = new Vector3(xPos, 0, zPos);
-
-        // Empty Field
-        if (Random.Range(0, percentage) != 0) {
-            Hex hexDefault = _SpawnHexTile(_tileNormal,  spawnPos);
-            hexDefault.tileType = Hex.Type.Field;
-
-            return hexDefault;
-        }
-
-        Hex hex = _SpawnHexTile(selectedData,  spawnPos);
-
-        if (selectedData.cost == -1)
-        {
-            hex.tileType = Hex.Type.Obstacle;
-            return hex;
-        }
-
-        if (selectedData.cost == 1)
-        {
-            hex.tileType = Hex.Type.Shop;
-            return hex;
-        }
-
-        if (selectedData.cost != 3)
-        {
-            hex.tileType = Hex.Type.Object;
-        }
-        
-
-        return hex;
-    }
-    */
+    
     private Hex _SpawnHexTile(TileDataScript data, Vector3 spawnPos)
     {
 
@@ -159,7 +120,6 @@ public class GridMaker : MonoBehaviour
         tile.layer = LayerMask.NameToLayer("HexTile");
 
         Hex hex = Instantiate(_hexPrefab, spawnPos, Quaternion.identity);
-        hex.WhenCreate(tile, transform, data.cost);
 
         GameObject iHexGround = Instantiate(hexGround, spawnPos, Quaternion.identity);
         iHexGround.layer = LayerMask.NameToLayer("HexTileGround");
@@ -176,6 +136,5 @@ public class GridMaker : MonoBehaviour
 
         return hex;
     }
-#endregion
 }
 

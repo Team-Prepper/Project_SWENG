@@ -17,12 +17,16 @@ public class PlayerSpawner : MonoBehaviour
 
     }
 
-    void SpawnPlayer(object sender, EventArgs e)
+
+
+    public void SpawnPlayer(Hex spawnHex)
     {
         Debug.Log("Spawing");
+        if (spawnHex == null) {
+            Debug.Log("Spawn Hex is Null");
+            return;
+        }
        
-        Hex spawnHex = HexGrid.Instance.GetRandHexAtEmpty();
-
         Transform spawnPos = spawnHex.transform;
         Debug.Log("SpawnPos : " + spawnPos.position);
 

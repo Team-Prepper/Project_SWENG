@@ -6,11 +6,12 @@ using Photon.Realtime;
 using UnityEngine.UI;
 using TMPro;
 using UnityEditor.XR;
+using System.Runtime.InteropServices;
 
 
 public class NetworkManager : MonoBehaviourPunCallbacks
 {
-    private string gameVersion = "1";
+    private string gameVersion = "2";
     [Header("DisconnectPanel")]
     public TMP_InputField NickNameInput;
 
@@ -34,6 +35,9 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     [Header("ETC")]
     public TMP_Text StatusText;
     public PhotonView PV;
+
+
+    public static int PlayerID = -1;
 
     List<RoomInfo> myList = new List<RoomInfo>();
     int currentPage = 1, maxPage, multiple;
@@ -94,6 +98,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     {
         LobbyPanel.SetActive(false);
         RoomPanel.SetActive(false);
+        DontDestroyOnLoad(this);
     }
 
     void Update()
@@ -127,13 +132,13 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
 
     #region join
-    
+
     public void CreateRoom()
     {
         string roomName = (RoomInput.text == "" ? "Room" + Random.Range(0, 100) : RoomInput.text);
         RoomOptions roomOptions = new RoomOptions
         {
-            MaxPlayers = 4,
+            MaxPlayers = 3,
             IsVisible = true,  // Make the room visible in the lobby
             IsOpen = true,     // Allow other players to join the room
             CustomRoomProperties = new Hashtable { { "GameStarted", false } } // Custom room properties
@@ -156,6 +161,18 @@ public class NetworkManager : MonoBehaviourPunCallbacks
                 return;
             }
         }
+
+        int actorNumber = PhotonNetwork.LocalPlayer.ActorNumber;
+        Player[] sortedPlayers = PhotonNetwork.PlayerList;
+        for (int i = 0; i < sortedPlayers.Length; i += 1)
+        {
+            if (sortedPlayers[i].ActorNumber == actorNumber)
+            {
+                PlayerID = i;
+                break;
+            }
+        }
+
         RoomPanel.SetActive(true);
         RoomRenewal();
         ChatInput.text = "";
@@ -184,7 +201,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
         RoomRenewal();
-        ChatRPC("<color=yellow>" + otherPlayer.NickName + " Exit </color>");
+        ChatRPC("<color=yellow>" + otherPlayer.NickName + " "+ otherPlayer.ActorNumber + " Exit </color>");
     }
 
     void RoomRenewal()
@@ -207,6 +224,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     [PunRPC]
     void ChatRPC(string msg)
     {
+        // 차단은 여기서
         bool isInput = false;
         for (int i = 0; i < ChatText.Length; i++)
             if (ChatText[i].text == "")
@@ -226,6 +244,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public void StartGame()
     {
         if(PhotonNetwork.IsMasterClient)
-            PhotonNetwork.LoadLevel("NetworkGameLevel");
+            PhotonNetwork.LoadLevel("MapData02");
     }
 }
