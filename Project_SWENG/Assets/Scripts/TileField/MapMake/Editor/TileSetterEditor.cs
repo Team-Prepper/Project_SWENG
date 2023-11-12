@@ -3,17 +3,21 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
+[CanEditMultipleObjects]
 [CustomEditor(typeof(HexTileSetter))]
 public class TileSetterEditor : Editor {
     public override void OnInspectorGUI()
     {
         base.OnInspectorGUI();
 
-        HexTileSetter generator = (HexTileSetter)target;
 
         if (GUILayout.Button("Apply"))
         {
-            generator.SetTile();
+            foreach (Object targetObject in targets)
+            {
+                HexTileSetter generator = (HexTileSetter)targetObject;
+                generator.SetTile();
+            }
         }
     }
 }

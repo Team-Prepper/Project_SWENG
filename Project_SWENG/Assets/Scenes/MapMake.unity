@@ -176,8 +176,8 @@ Camera:
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
-  orthographic: 0
-  orthographic size: 5
+  orthographic: 1
+  orthographic size: 20
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -200,14 +200,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 540627866}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -10}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 10, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!114 &540627870
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -367,7 +367,7 @@ GameObject:
   - component: {fileID: 2046366949}
   - component: {fileID: 2046366950}
   m_Layer: 0
-  m_Name: Map
+  m_Name: MapMaker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -411,5 +411,5 @@ MonoBehaviour:
   _tileOcean: {fileID: 11400000, guid: 9a449d3dca10da849a7d08b4a65d23a6, type: 2}
   hexGround: {fileID: 2393347778414314731, guid: 83ac7145c40761b41b624b1fee3d5cdb,
     type: 3}
-  gridSizeN: 7
+  gridSizeN: 2
   oceanSizeN: 5

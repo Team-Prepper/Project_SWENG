@@ -8,9 +8,13 @@ using UnityEngine.InputSystem;
 public class HexTileSetter : MonoBehaviour {
 
     [SerializeField] TileDataScript.TileType type = TileDataScript.TileType.normal;
+
+    GridMaker _inforTarget;
     Transform container;
-    private void Start()
-    {
+
+    public void SetInfor(GridMaker inforTarget) {
+        _inforTarget = inforTarget;
+        SetContainer();
         SetTile();
     }
 
@@ -22,15 +26,17 @@ public class HexTileSetter : MonoBehaviour {
     }
 
     public void SetTile() {
-        if (container == null)
-            SetContainer();
         for (int i = 0; i < container.childCount; i++) {
             DestroyImmediate(container.GetChild(i).gameObject);
         }
-        TileDataScript tileData= GridMaker.Instance.GetTileData(type);
-        GameObject tile = Instantiate(tileData.tiles[Random.Range(0, tileData.tiles.Length)], transform.position, Quaternion.Euler(0f, Random.Range(0, 6) * 60, 0f));
+        Vector3 originAngle = transform.eulerAngles;
+        transform.eulerAngles = new Vector3(0, 0, 0);
+
+        TileDataScript tileData= _inforTarget.GetTileData(type);
+        GameObject tile = Instantiate(tileData.tiles[Random.Range(0, tileData.tiles.Length)], transform.position, Quaternion.Euler(0, Random.Range(0, 6) * 60, 0f));
         tile.layer = LayerMask.NameToLayer("HexTile");
 
         tile.transform.SetParent(container);
+        transform.eulerAngles = originAngle;
     }
 }
