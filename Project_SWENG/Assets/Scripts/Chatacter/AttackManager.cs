@@ -15,7 +15,7 @@ namespace Character {
         {
             attacker.Attack(targetHex.transform.position);
 
-            if (!targetHex.Entity || !targetHex.Entity.TryGetComponent(out NetworkCharacterController target)) return;
+            if (targetHex.Entity == null || !targetHex.Entity.TryGetComponent(out NetworkCharacterController target)) return;
 
             AttackTo(attacker, target);
         }

@@ -98,7 +98,7 @@ public class GUI_Moving : GUIFullScreen {
     public void Set(GameObject target)
     {
         _state = State.ready;
-
+        CamMovement.Instance.IsPlayerMove = true;
         _targetPoint = target.GetComponent<DicePoint>();
         _targetUnit = target.GetComponent<NetworkUnit>();
         CamMovement.Instance.CamSetToPlayer(target);
@@ -110,6 +110,7 @@ public class GUI_Moving : GUIFullScreen {
 
     public override void HexSelect(HexCoordinate selectGridHex)
     {
+        CamMovement.Instance.IsPlayerMove = false;
         if (!movementRange.IsHexPositionInRange(selectGridHex))
         {
             _HideRange();
@@ -122,6 +123,7 @@ public class GUI_Moving : GUIFullScreen {
             case State.ready:
                 _ShowPath(selectGridHex);
                 _state = State.select;
+                
                 _selectedPos = selectGridHex;
                 break;
             default:
@@ -132,6 +134,7 @@ public class GUI_Moving : GUIFullScreen {
                 }
                 _ShowPath(selectGridHex);
                 _state = State.select;
+                
                 _selectedPos = selectGridHex;
                 break;
         }

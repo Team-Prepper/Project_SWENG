@@ -21,13 +21,6 @@ namespace Character {
             _point = GetComponent<DicePoint>();
         }
 
-        private void OnEnable()
-        {
-            Hex curHex = HexGrid.Instance.GetTileAt(this.gameObject.transform.position);
-            curHex.Entity = this.gameObject;
-            HexGrid.Instance.RemoveAtEmeptyHexTiles(curHex);
-        }
-
         public int Recover(int val)
         {
             if (!stat.IsAlive()) return 0;

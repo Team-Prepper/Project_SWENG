@@ -21,7 +21,7 @@ public class EnemySpawner : MonoBehaviourPun
 
     private void Awake()
     {
-        NetworkGridMaker.EventConvertMaterials += SpawnEnemyHandler;
+        //NetworkGridMaker.EventConvertMaterials += SpawnEnemyHandler;
         enemyCnt = diff;
     }
 

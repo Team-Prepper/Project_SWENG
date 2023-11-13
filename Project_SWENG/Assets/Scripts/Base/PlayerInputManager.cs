@@ -78,7 +78,6 @@ public class PlayerInputManager : MonoSingleton<PlayerInputManager>
     {
         HandleAllInputs();
         MouseMove();
-        
     }
 
     private void HandleAllInputs()

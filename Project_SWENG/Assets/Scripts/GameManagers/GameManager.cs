@@ -11,6 +11,7 @@ public class GameManager : MonoSingleton<GameManager>
     public GameObject day;
     public GameObject night;
 
+
     public enum Phase
     {
         Ready,
@@ -23,15 +24,16 @@ public class GameManager : MonoSingleton<GameManager>
     }
     public Phase gamePhase;
 
-    private void Awake()
+    private void Start()
     {
-        gamePhase = Phase.Ready;
+        
     }
 
     private void Update()
     {
         if (gamePhase == Phase.Start)
         {
+            HexGrid.Instance.GetTileAt(player.transform.position).CloudActiveFalse();
             NextPhase();
             PlayerTurnStandBy();
         }

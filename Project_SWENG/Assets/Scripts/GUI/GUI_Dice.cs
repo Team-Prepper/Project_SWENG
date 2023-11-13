@@ -14,10 +14,12 @@ namespace UISystem {
         protected override void Open(Vector2 openPos)
         {
             base.Open(new Vector2(-800, 0));
+            CamMovement.Instance.IsPlayerMove = true;
         }
 
         public void ReOpen() {
             gameObject.SetActive(true);
+            CamMovement.Instance.IsPlayerMove = true;
             PopUpAction();
         }
 
@@ -36,6 +38,7 @@ namespace UISystem {
 
         public override void Close()
         {
+            CamMovement.Instance.IsPlayerMove = false;
             gameObject.SetActive(false);
             transform.SetParent(UIManager.Instance.NowDisplay.transform.parent);
             UIManager.Instance.NowDisplay.PopPopUp();

@@ -25,6 +25,8 @@ public class NetworkUnit : MonoBehaviourPun
     private GlowHighlight _glowHighlight;
     private Queue<Vector3> _pathPositions = new Queue<Vector3>();
 
+    public Hex curHex;
+
     private void Start()
     {
         _glowHighlight = GetComponent<GlowHighlight>();
@@ -34,6 +36,16 @@ public class NetworkUnit : MonoBehaviourPun
         _dicePoints.SetPoint(0);
         _characterController = GetComponent<CharacterController>();
         _photonView = GetComponent<PhotonView>();
+    }
+
+    private void Update()
+    {
+        Hex newHex = HexGrid.Instance.GetTileAt(transform.position);
+        if (curHex != newHex)
+        {
+            curHex.Entity = null;
+            curHex = newHex;
+        }
     }
 
     public void Deselect()
@@ -48,6 +60,7 @@ public class NetworkUnit : MonoBehaviourPun
 
     public void NewMoveThroughPath(List<Vector3> currentPath)
     {
+        CamMovement.Instance.IsPlayerMove = true;
         _pathPositions = new Queue<Vector3>(currentPath);
         Vector3 firstTarget = _pathPositions.Dequeue();
         StartCoroutine(_RotationCoroutine(firstTarget, _rotationDuration));
@@ -84,8 +97,9 @@ public class NetworkUnit : MonoBehaviourPun
         endPosition.y = startPosition.y;
 
         HexCoordinate newHexPos = HexCoordinate.ConvertFromVector3(endPosition);
-        NetworkCloudManager.Instance.CloudActiveFalse(newHexPos);
+        //NetworkCloudManager.Instance.CloudActiveFalse(newHexPos);
         Hex goalHex = HexGrid.Instance.GetTileAt(newHexPos);
+        goalHex.CloudActiveFalse();
         _dicePoints.UsePoint(goalHex.Cost);
 
 
@@ -111,6 +125,7 @@ public class NetworkUnit : MonoBehaviourPun
         else
         {
             Debug.Log("Movement finished!");
+            CamMovement.Instance.IsPlayerMove = false;
             _photonView.RPC("SetPlayerOnHex",RpcTarget.All,1, transform.position);
         }
         if (_animator)

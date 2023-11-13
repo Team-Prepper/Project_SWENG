@@ -18,6 +18,24 @@ public class CamMovement : MonoSingleton<CamMovement>
     [SerializeField] private bool isCamMove = false;
 
     private bool _isAttackPhase;
+
+    public bool IsPlayerMove
+    {
+        get { return isPlayerMove; }
+        set
+        {
+            if(value == true)
+            {
+                isPlayerMove = true;
+            }
+            else
+            {
+                isPlayerMove = false;
+                isCamMove = true;
+            }
+        }
+    }
+    private bool isPlayerMove = false;
     
     private void Awake()
     {
@@ -49,8 +67,14 @@ public class CamMovement : MonoSingleton<CamMovement>
     // Update is called once per frame
     void Update()
     {
-
-        if (isCamMove)
+        if(IsPlayerMove == true)
+        {
+            isCamMove = false;
+            virtualCamera.m_Lens.FieldOfView = _defFov;
+            virtualCamera.Follow = player.transform;
+            virtualCamera.LookAt = player.transform;
+        }
+        else if (isCamMove)
         {
             moveCam();
             AdjustFOV(PlayerInputManager.Instance.scrollValue);
@@ -143,7 +167,6 @@ public class CamMovement : MonoSingleton<CamMovement>
 
     public void ConvertMovementCamera()
     {
-        
         isCamMove = true;
         virtualCamera.gameObject.SetActive(true);
         battleCamera.gameObject.SetActive(false);

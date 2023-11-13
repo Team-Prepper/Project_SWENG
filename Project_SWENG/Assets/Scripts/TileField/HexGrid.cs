@@ -51,7 +51,7 @@ public class HexGrid : Singleton<HexGrid>
     public void AddTile(Hex hex) {
         hexTileDict[hex.HexCoords] = hex;
 
-        if (hex.tileType == Hex.Type.Field) _emptyHexTiles.Add(hex);
+        if (hex.tileType == TileDataScript.TileType.normal) _emptyHexTiles.Add(hex);
     }
 
 
@@ -84,17 +84,7 @@ public class HexGrid : Singleton<HexGrid>
             {
                 hexTileNeighboursDict[hexCoordinates].Add(pos);
             }
-            /*
-             * 이 부분이 의미하는 바를 모르겠음
-            else if (hexTileDict.ContainsKey(hexCoordinates + direction + topOffset))
-            {
-                hexTileNeighboursDict[hexCoordinates].Add(hexCoordinates + direction + topOffset);
-            }
-            else if (hexTileDict.ContainsKey(hexCoordinates + direction + bottomOffset))
-            {
-                hexTileNeighboursDict[hexCoordinates].Add(hexCoordinates + direction + bottomOffset);
-            }
-            */
+            
         }
         return hexTileNeighboursDict[hexCoordinates];
     }
