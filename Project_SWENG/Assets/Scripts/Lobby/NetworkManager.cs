@@ -35,9 +35,9 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     [Header("ETC")]
     public TMP_Text StatusText;
     public PhotonView PV;
-
-
+    
     public static int PlayerID = -1;
+    [SerializeField] private int showID;
 
     List<RoomInfo> myList = new List<RoomInfo>();
     int currentPage = 1, maxPage, multiple;
@@ -105,6 +105,8 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     {
         StatusText.text = PhotonNetwork.NetworkClientState.ToString();
         LobbyInfoText.text = (PhotonNetwork.CountOfPlayers - PhotonNetwork.CountOfPlayersInRooms) + "Lobby / " + PhotonNetwork.CountOfPlayers + "Connection";
+        //show
+        showID = PlayerID;
     }
 
     public void Connect() => PhotonNetwork.ConnectUsingSettings();
@@ -224,7 +226,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     [PunRPC]
     void ChatRPC(string msg)
     {
-        // Â÷´ÜÀº ¿©±â¼­
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½â¼­
         bool isInput = false;
         for (int i = 0; i < ChatText.Length; i++)
             if (ChatText[i].text == "")

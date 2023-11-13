@@ -1,6 +1,7 @@
 using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
+using Photon.Pun;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -55,7 +56,8 @@ namespace Character {
         {
             curHex = HexGrid.Instance.GetTileAt(this.gameObject.transform.position);
             curHex.Entity = null;
-            enemySpawner.enemyList.Remove(this.gameObject);
+            if(PhotonNetwork.IsMasterClient)
+                enemySpawner.enemyList.Remove(this.gameObject);
 
             healthGUI.UpdateGUI(0);
             DropItem();

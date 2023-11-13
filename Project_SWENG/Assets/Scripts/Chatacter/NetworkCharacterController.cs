@@ -28,7 +28,8 @@ namespace Character {
         {
             if (_photonView.IsMine == false)
             {
-                equipCam.SetActive(false);
+                if(equipCam != null)
+                    equipCam.SetActive(false);
             }
         }
 

@@ -36,6 +36,8 @@ public class NetworkUnit : MonoBehaviourPun
         _dicePoints.SetPoint(0);
         _characterController = GetComponent<CharacterController>();
         _photonView = GetComponent<PhotonView>();
+        
+        curHex = HexGrid.Instance.GetTileAt(transform.position);
     }
 
     private void Update()
@@ -45,6 +47,7 @@ public class NetworkUnit : MonoBehaviourPun
         {
             curHex.Entity = null;
             curHex = newHex;
+            curHex.Entity = this.gameObject;
         }
     }
 

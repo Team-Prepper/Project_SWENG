@@ -12,6 +12,8 @@ public class GUI_PlayerInfor : GUIFullScreen
     [SerializeField] private TextMeshProUGUI _dicePoint;
     [SerializeField] private GUI_PlayerHealth _playerHealth;
 
+    public Button turnEndButton;
+
     DicePoint _targetUnit;
     PlayerController _targetPlayer;
 

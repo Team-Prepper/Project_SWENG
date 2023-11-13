@@ -46,7 +46,7 @@ public class GUI_ActionSelect : GUIFullScreen
         _AfterAction();
     }
 
-    public void EndTurn()
+    public void EndTurn() // not used
     {
         GameManager.Instance.EnemyTurn();
         Close();

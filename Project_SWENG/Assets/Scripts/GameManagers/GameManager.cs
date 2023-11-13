@@ -1,15 +1,21 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Photon.Pun;
 using UnityEngine;
 using UISystem;
+using UnityEngine.UI;
 
-public class GameManager : MonoSingleton<GameManager>
+public class GameManager : MonoSingletonPun<GameManager>
 {
     public GameObject player;
     public List<GameObject> enemys;
     public GameObject day;
     public GameObject night;
+
+    [SerializeField] private bool[] _playerTurnEndArray;
+
+    public Button turnEndButton;
 
 
     public enum Phase
@@ -26,7 +32,8 @@ public class GameManager : MonoSingleton<GameManager>
 
     private void Start()
     {
-        
+        _playerTurnEndArray = new bool[PhotonNetwork.CurrentRoom.PlayerCount];
+        ResetPlayerTurn();
     }
 
     private void Update()
@@ -57,11 +64,39 @@ public class GameManager : MonoSingleton<GameManager>
     // Turn End Button Trigger
     public void PlayerTurnEnd()
     {
+        photonView.RPC("PlayerTurnEndToServer",RpcTarget.MasterClient,NetworkManager.PlayerID);
+        turnEndButton.interactable = false;
+    }
+
+    [PunRPC]
+    private void PlayerTurnEndToServer(int index)
+    {
+        _playerTurnEndArray[index] = true;
+        CheckAllPlayerTurnEnd();
+    }
+    
+    private void CheckAllPlayerTurnEnd()
+    {
+        foreach (var value in _playerTurnEndArray)
+        {
+            if (value == false) return;
+        }
+        photonView.RPC("ServerTurnEnd",RpcTarget.All, null);
+        
+        for (int i = 0; i < PhotonNetwork.CountOfPlayers; i++)
+        {
+            _playerTurnEndArray[i] = false;
+        }
+    }
+
+    [PunRPC]
+    private void ServerTurnEnd()
+    {
         gamePhase = Phase.EnemyPhase;
         EnemyTurn();
         Invoke("PlayerTurnStandBy", 3f);
     }
-
+    
     public void EnemyTurn()
     {
         changeDayNight();
@@ -88,6 +123,17 @@ public class GameManager : MonoSingleton<GameManager>
             night.SetActive(true);
         }
     }
+
+    private void ResetPlayerTurn()
+    {
+        turnEndButton.interactable = true;
+        for (int i = 0; i < PhotonNetwork.CountOfPlayers; i++)
+        {
+            _playerTurnEndArray[i] = false;
+        }
+    }
+
+    
 
     // NETWORK
 

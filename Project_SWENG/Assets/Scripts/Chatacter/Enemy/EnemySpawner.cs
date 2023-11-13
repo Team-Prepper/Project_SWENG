@@ -15,24 +15,25 @@ public class EnemySpawner : MonoBehaviourPun
     public List<GameObject> enemyList;
     //public Dictionary<GameObject, Hex> enemyDic = new Dictionary<GameObject, Hex>();
 
-    [SerializeField] private int diff = 20;
-    private int enemyCnt = 0;
+    public List<Hex> enemySpawnPos = new List<Hex>();
+
+    private int enemyCnt = 10;
     
 
-    private void Awake()
+    private void Start()
     {
-        //NetworkGridMaker.EventConvertMaterials += SpawnEnemyHandler;
-        enemyCnt = diff;
+        SpawnEnemyHandler();
     }
 
-    private void SpawnEnemyHandler(object sender, EventArgs e)
+    private void SpawnEnemyHandler()
     {
         if(PhotonNetwork.IsMasterClient)
         {
             Debug.Log("EnemySpawn");
             for (int i = 0; i < enemyCnt; i++)
             {
-                Hex spawnHex = HexGrid.Instance.GetRandHexAtEmpty();
+                Hex spawnHex = GetRandHex();
+                Debug.Log("EnemySpawnHex : " + spawnHex.name);
                 SpawnEnemy(spawnHex);
             }
             GameManager.Instance.enemys = enemyList;
@@ -44,8 +45,17 @@ public class EnemySpawner : MonoBehaviourPun
     {
         Transform spawnPos = spawnHex.transform;
         GameObject enemy = PhotonNetwork.Instantiate(enemyPrefabList[Random.Range(0,enemyPrefabList.Count)].name, spawnPos.position, spawnPos.rotation);
-        enemy.transform.SetParent(transform);
         enemy.GetComponent<EnemyController>().enemySpawner = this;
         enemyList.Add(enemy);
+    }
+    
+    private Hex GetRandHex()
+    {
+        if(enemySpawnPos.Count == 0) return null;
+
+        int randHexIndex = Random.Range(0, enemySpawnPos.Count);
+        Hex randHex = enemySpawnPos[randHexIndex];
+        enemySpawnPos.Remove(randHex);
+        return randHex;
     }
 }

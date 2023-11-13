@@ -82,7 +82,7 @@ public class Hex : MonoBehaviour
 
             entity = value;
 
-            if (!value) return;
+            if (value == null) return;
 
             if (entity.CompareTag("Player"))
             {
@@ -197,7 +197,7 @@ public class Hex : MonoBehaviour
             case TileDataScript.TileType.dungon:
                 _originCost = 5;
                 break;
-            default: _originCost = 2; 
+            default: _originCost = 10; 
                 break;
         }
     }

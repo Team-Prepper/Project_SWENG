@@ -2072,15 +2072,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 543f9e3fd40ac844ba57bfd061d5f67f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  equipCam: {fileID: 0}
   anim: {fileID: 0}
   stat:
-    Lv: 0
-    Exp: 0
-    curHP: 0
+    _lv: 1
+    _exp: 0
+    _hp:
+      _curValue: 100
+      _maxValue: 100
+      _minValue: 0
+    _attackPower: 10
   healthGUI: {fileID: 1496621896234190715}
   playerLayerMask:
     serializedVersion: 2
     m_Bits: 65536
+  enemySpawner: {fileID: 0}
   enemyStat: {fileID: 0}
   curHex: {fileID: 0}
 --- !u!114 &-4101537244910133708

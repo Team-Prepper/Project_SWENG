@@ -10,7 +10,7 @@ public class NetworkPlayerSpawner : MonoBehaviourPun
 {
 
     [Header("Network")]
-    private PhotonView _PhotonView;
+    private PhotonView _photonView;
 
     [Header("SpawnPos")]
     [SerializeField] private List<Hex> spawnPosList = new List<Hex>();
@@ -24,7 +24,7 @@ public class NetworkPlayerSpawner : MonoBehaviourPun
 
     void Awake()
     {
-        _PhotonView = GetComponent<PhotonView>();
+        _photonView = GetComponent<PhotonView>();
         SpawnPlayerAtNetwork();
     }
 
@@ -45,7 +45,9 @@ public class NetworkPlayerSpawner : MonoBehaviourPun
         GameObject player = PhotonNetwork.Instantiate(playerPrefab.name, spawnPos.position, spawnPos.rotation);
         spawnHex.Entity = player;
         player.GetComponent<NetworkUnit>().curHex = spawnHex;
-        UIManager.OpenGUI<GUI_PlayerInfor>("UnitInfor").SetPlayer(player);
+        GUI_PlayerInfor playerInfo = UIManager.OpenGUI<GUI_PlayerInfor>("UnitInfor");
+        playerInfo.SetPlayer(player);
+        GameManager.Instance.turnEndButton = playerInfo.turnEndButton;
 
         EventPlayerSpawn?.Invoke(player);
 
