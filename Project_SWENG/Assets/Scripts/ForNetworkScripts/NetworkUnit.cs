@@ -25,6 +25,8 @@ public class NetworkUnit : MonoBehaviourPun
     private GlowHighlight _glowHighlight;
     private Queue<Vector3> _pathPositions = new Queue<Vector3>();
 
+    public Hex curHex;
+
     private void Start()
     {
         _glowHighlight = GetComponent<GlowHighlight>();
@@ -34,8 +36,17 @@ public class NetworkUnit : MonoBehaviourPun
         _dicePoints.SetPoint(0);
         _characterController = GetComponent<CharacterController>();
         _photonView = GetComponent<PhotonView>();
+    }
 
-       }
+    private void Update()
+    {
+        Hex newHex = HexGrid.Instance.GetTileAt(transform.position);
+        if (curHex != newHex)
+        {
+            curHex.Entity = null;
+            curHex = newHex;
+        }
+    }
 
     public void Deselect()
     {

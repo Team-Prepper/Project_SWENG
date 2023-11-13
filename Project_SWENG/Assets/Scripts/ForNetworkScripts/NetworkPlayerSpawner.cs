@@ -25,22 +25,15 @@ public class NetworkPlayerSpawner : MonoBehaviourPun
     void Awake()
     {
         _PhotonView = GetComponent<PhotonView>();
-        //NetworkGridMaker.EventConvertMaterials += SpawnPlayerHandler;
         SpawnPlayerAtNetwork();
     }
 
     private void SpawnPlayerAtNetwork()
     {
-        _PhotonView.RPC("SpawnPlayer", RpcTarget.All, null);
+        SpawnPlayer();
     }
-
-    // legacy
-    void SpawnPlayerHandler(object sender, EventArgs e)
-    {
-        _PhotonView.RPC("SpawnPlayer", RpcTarget.All, null);
-    }
-
-    [PunRPC]
+    
+    
     void SpawnPlayer()
     {
         Debug.Log("Spawing");
@@ -51,7 +44,7 @@ public class NetworkPlayerSpawner : MonoBehaviourPun
 
         GameObject player = PhotonNetwork.Instantiate(playerPrefab.name, spawnPos.position, spawnPos.rotation);
         spawnHex.Entity = player;
-
+        player.GetComponent<NetworkUnit>().curHex = spawnHex;
         UIManager.OpenGUI<GUI_PlayerInfor>("UnitInfor").SetPlayer(player);
 
         EventPlayerSpawn?.Invoke(player);
