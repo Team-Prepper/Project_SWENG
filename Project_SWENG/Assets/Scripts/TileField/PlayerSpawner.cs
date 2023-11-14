@@ -32,7 +32,7 @@ public class PlayerSpawner : MonoBehaviour
 
         GameObject player = Instantiate(playerPrefab, spawnPos.position, spawnPos.rotation);
 
-        UIManager.OpenGUI<GUI_PlayerInfor>("UnitInfor").SetPlayer(player);
+        UIManager.OpenGUI<GUI_PlayerInfor>("PlayerInfor").SetPlayer(player);
         spawnHex.Entity = player;
 
         EventPlayerSpawn?.Invoke(player);

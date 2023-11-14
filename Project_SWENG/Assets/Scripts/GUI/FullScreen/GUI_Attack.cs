@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Character;
 using UISystem;
+using static UnityEditor.PlayerSettings;
 
 public class GUI_Attack : GUIFullScreen {
 
@@ -10,14 +11,11 @@ public class GUI_Attack : GUIFullScreen {
 
     [SerializeField] private Transform _markerParent;
     [SerializeField] private Transform[] _attackMarkers;
+    private int _useMarkCount;
 
     [SerializeField] private List<HexCoordinate> _attackRange;
 
-    // Start is called before the first frame update
-    protected override void Open(Vector2 openPos)
-    {
-        base.Open(openPos);
-    }
+    Hex _attackTarget;
 
     public void Set(GameObject target) {
 
@@ -26,7 +24,6 @@ public class GUI_Attack : GUIFullScreen {
         HexCoordinate curHexPos = HexCoordinate.ConvertFromVector3(target.transform.position);
         _markerParent.localScale = Vector3.one / GameObject.Find("Canvas").GetComponent<RectTransform>().localScale.y;
 
-        int i = 0;
         _attackRange = new List<HexCoordinate>();
 
         foreach (var neighbour in HexGrid.Instance.GetNeighboursFor(curHexPos))
@@ -36,7 +33,7 @@ public class GUI_Attack : GUIFullScreen {
             if (atkHex.tileType != TileDataScript.TileType.normal) continue;
 
             _attackRange.Add(neighbour);
-            _attackMarkers[i++].position = atkHex.transform.position;
+            _SetMarker(atkHex.transform.position);
         }
 
         CamMovement.Instance.ConvertMovementCamera();
@@ -45,16 +42,52 @@ public class GUI_Attack : GUIFullScreen {
 
     }
 
+    private void _SetMarker(Vector3 pos)
+    {
+        _attackMarkers[_useMarkCount].gameObject.SetActive(true);
+        _attackMarkers[_useMarkCount++].position = pos;
+
+    }
+
+    private void _ResetMarker()
+    {
+        for (int i = 0; i < _useMarkCount; i++)
+        {
+            _attackMarkers[i].gameObject.SetActive(false);
+        }
+
+        _useMarkCount = 0;
+
+    }
+
+    public void DoAttack()
+    {
+        if (_attackTarget == null) {
+            return;
+        }
+
+        AttackManager.Instance.BaseAtkHandler(_target, _attackTarget);
+        Close();
+
+    }
+
     public override void HexSelect(HexCoordinate selectGridPos)
     {
         Debug.Log("Try Attack At" + selectGridPos);
 
-        if (_attackRange.Contains(selectGridPos))
+        _ResetMarker();
+
+        if (!_attackRange.Contains(selectGridPos))
         {
-            AttackManager.Instance.BaseAtkHandler(_target, HexGrid.Instance.GetTileAt(selectGridPos));
-            Debug.Log("Success");
+            _attackTarget = null;
+            foreach (HexCoordinate pos in _attackRange) {
+                _SetMarker(pos.ConvertToVector3());
+            }
+            return;
+
         }
 
-        Close();
+        _attackTarget = HexGrid.Instance.GetTileAt(selectGridPos);
+        _SetMarker(_attackTarget.transform.position);
     }
 }

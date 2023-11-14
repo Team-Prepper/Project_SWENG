@@ -45,7 +45,7 @@ public class NetworkPlayerSpawner : MonoBehaviourPun
         GameObject player = PhotonNetwork.Instantiate(playerPrefab.name, spawnPos.position, spawnPos.rotation);
         spawnHex.Entity = player;
         player.GetComponent<NetworkUnit>().curHex = spawnHex;
-        GUI_PlayerInfor playerInfo = UIManager.OpenGUI<GUI_PlayerInfor>("UnitInfor");
+        GUI_PlayerInfor playerInfo = UIManager.OpenGUI<GUI_PlayerInfor>("PlayerInfor");
         playerInfo.SetPlayer(player);
         GameManager.Instance.turnEndButton = playerInfo.turnEndButton;
 

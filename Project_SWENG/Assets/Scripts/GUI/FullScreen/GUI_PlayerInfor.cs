@@ -41,6 +41,10 @@ public class GUI_PlayerInfor : GUIFullScreen
 
     public override void HexSelect(HexCoordinate selectGridPos)
     {
+        if (GameManager.Instance.gamePhase == GameManager.Phase.EnemyPhase) {
+            return;
+        }
+
         Hex selected = HexGrid.Instance.GetTileAt(selectGridPos);
 
         if (!selected || !selected.Entity) return;
