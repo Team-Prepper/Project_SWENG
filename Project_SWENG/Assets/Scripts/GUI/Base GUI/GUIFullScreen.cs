@@ -7,7 +7,7 @@ namespace UISystem {
         public LayerMask selectionMask;
 
         private List<GUIPopUp> _popupUI;
-        [SerializeField] private GUIPopUp _nowPopUp;
+        private GUIPopUp _nowPopUp;
 
         protected override void Open(Vector2 openPos)
         {
@@ -33,6 +33,7 @@ namespace UISystem {
                 return;
             }
             _nowPopUp = _popupUI[_popupUI.Count - 1];
+            _nowPopUp.gameObject.SetActive(true);
             _popupUI.RemoveAt(_popupUI.Count - 1);
         }
 
@@ -46,7 +47,7 @@ namespace UISystem {
         {
             if (_nowPopUp) return;
 
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonUp(0))
             {
                 HexCoordinate coord = MousePointHex();
 

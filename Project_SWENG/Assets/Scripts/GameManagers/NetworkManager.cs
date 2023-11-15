@@ -5,6 +5,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine.UI;
 using TMPro;
+using UISystem;
 using UnityEditor.XR;
 using System.Runtime.InteropServices;
 
@@ -12,27 +13,9 @@ using System.Runtime.InteropServices;
 public class NetworkManager : MonoBehaviourPunCallbacks
 {
     private string gameVersion = "2";
-    [Header("DisconnectPanel")]
-    public TMP_InputField NickNameInput;
 
-    [Header("LobbyPanel")]
-    public GameObject LobbyPanel;
-    public TMP_InputField RoomInput;
-    public TMP_Text WelcomeText;
-    public TMP_Text LobbyInfoText;
-    public Button[] CellBtn;
-    public Button PreviousBtn;
-    public Button NextBtn;
+    string _nickName;
 
-    [Header("RoomPanel")]
-    public GameObject RoomPanel;
-    public TMP_Text ListText;
-    public TMP_Text RoomInfoText;
-    public TMP_Text[] ChatText;
-    public TMP_InputField ChatInput;
-    public GameObject StartObj;
-
-    [Header("ETC")]
     public TMP_Text StatusText;
     public PhotonView PV;
     
@@ -42,6 +25,8 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     List<RoomInfo> myList = new List<RoomInfo>();
     int currentPage = 1, maxPage, multiple;
 
+    public GUI_Chat _chatting;
+    public GUI_Network_Room _room;
 
     #region roomlist
     public void MyListClick(int num)
@@ -49,9 +34,14 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         if (num == -2) --currentPage;
         else if (num == -1) ++currentPage;
         else PhotonNetwork.JoinRoom(myList[multiple + num].Name);
-        MyListRenewal();
+        //MyListRenewal();
     }
 
+    public List<RoomInfo> GetRoomInfor() {
+        return myList;
+    }
+
+    /*
     void MyListRenewal()
     {
         maxPage = (myList.Count % CellBtn.Length == 0) ? myList.Count / CellBtn.Length : myList.Count / CellBtn.Length + 1;
@@ -67,7 +57,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
             CellBtn[i].transform.GetChild(1).GetComponent<TMP_Text>().text = (multiple + i < myList.Count) ? myList[multiple + i].PlayerCount + "/" + myList[multiple + i].MaxPlayers : "";
         }
     }
-
+    */
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
         int roomCount = roomList.Count;
@@ -80,7 +70,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
             }
             else if (myList.IndexOf(roomList[i]) != -1) myList.RemoveAt(myList.IndexOf(roomList[i]));
         }
-        MyListRenewal();
     }
     #endregion
 
@@ -96,29 +85,24 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     private void Start()
     {
-        LobbyPanel.SetActive(false);
-        RoomPanel.SetActive(false);
         DontDestroyOnLoad(this);
     }
 
     void Update()
     {
         StatusText.text = PhotonNetwork.NetworkClientState.ToString();
-        LobbyInfoText.text = (PhotonNetwork.CountOfPlayers - PhotonNetwork.CountOfPlayersInRooms) + "Lobby / " + PhotonNetwork.CountOfPlayers + "Connection";
         //show
         showID = PlayerID;
     }
 
-    public void Connect() => PhotonNetwork.ConnectUsingSettings();
+    public void Connect(string nickName) { PhotonNetwork.ConnectUsingSettings(); _nickName = nickName; }
 
     public override void OnConnectedToMaster() => PhotonNetwork.JoinLobby();
 
     public override void OnJoinedLobby()
     {
-        LobbyPanel.SetActive(true);
-        RoomPanel.SetActive(false);
-        PhotonNetwork.LocalPlayer.NickName = NickNameInput.text;
-        WelcomeText.text = PhotonNetwork.LocalPlayer.NickName + " welcome";
+        UIManager.OpenGUI<GUI_Network_Lobby>("Network_Lobby");
+        PhotonNetwork.NickName = _nickName;
         myList.Clear();
     }
 
@@ -126,18 +110,15 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     public override void OnDisconnected(DisconnectCause cause)
     {
-        LobbyPanel.SetActive(false);
-        RoomPanel.SetActive(false);
-        PhotonNetwork.ConnectUsingSettings();
+        //PhotonNetwork.ConnectUsingSettings();
     }
     #endregion
 
 
     #region join
 
-    public void CreateRoom()
+    public void CreateRoom(string roomName)
     {
-        string roomName = (RoomInput.text == "" ? "Room" + Random.Range(0, 100) : RoomInput.text);
         RoomOptions roomOptions = new RoomOptions
         {
             MaxPlayers = 3,
@@ -175,71 +156,41 @@ public class NetworkManager : MonoBehaviourPunCallbacks
             }
         }
 
-        RoomPanel.SetActive(true);
-        RoomRenewal();
-        ChatInput.text = "";
-        for (int i = 0; i < ChatText.Length; i++) ChatText[i].text = "";
+        _room = UIManager.OpenGUI<GUI_Network_Room>("Network_Room");
 
-        if (PhotonNetwork.IsMasterClient)
-        {
-            StartObj.SetActive(true);
-        }
-        else
-        {
-            StartObj.SetActive(false);
-        }
     }
 
-    public override void OnCreateRoomFailed(short returnCode, string message) { RoomInput.text = ""; CreateRoom(); }
+    public override void OnCreateRoomFailed(short returnCode, string message) { CreateRoom(""); }
 
-    public override void OnJoinRandomFailed(short returnCode, string message) { RoomInput.text = ""; CreateRoom(); }
+    public override void OnJoinRandomFailed(short returnCode, string message) { CreateRoom(""); }
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
-        RoomRenewal();
+        _room.RoomRenewal();
         ChatRPC("<color=yellow>" + newPlayer.NickName + " ENTER </color>");
     }
 
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
-        RoomRenewal();
+        _room.RoomRenewal();
         ChatRPC("<color=yellow>" + otherPlayer.NickName + " "+ otherPlayer.ActorNumber + " Exit </color>");
     }
 
-    void RoomRenewal()
-    {
-        ListText.text = "";
-        for (int i = 0; i < PhotonNetwork.PlayerList.Length; i++)
-            ListText.text += PhotonNetwork.PlayerList[i].NickName + ((i + 1 == PhotonNetwork.PlayerList.Length) ? "" : ", ");
-        RoomInfoText.text = PhotonNetwork.CurrentRoom.Name + " / " + PhotonNetwork.CurrentRoom.PlayerCount + " / " + PhotonNetwork.CurrentRoom.MaxPlayers + "MAX";
-    }
     #endregion
 
 
     #region chat
-    public void Send()
+    public void Send(string msg)
     {
-        PV.RPC("ChatRPC", RpcTarget.All, PhotonNetwork.NickName + " : " + ChatInput.text);
-        ChatInput.text = "";
+        PV.RPC("ChatRPC", RpcTarget.All, PhotonNetwork.NickName + " : " + msg);
     }
 
     [PunRPC]
     void ChatRPC(string msg)
     {
-        // ������ ���⼭
-        bool isInput = false;
-        for (int i = 0; i < ChatText.Length; i++)
-            if (ChatText[i].text == "")
-            {
-                isInput = true;
-                ChatText[i].text = msg;
-                break;
-            }
-        if (!isInput)
-        {
-            for (int i = 1; i < ChatText.Length; i++) ChatText[i - 1].text = ChatText[i].text;
-            ChatText[ChatText.Length - 1].text = msg;
-        }
+        if (!_chatting) return;
+
+        _chatting.Chat(msg);
     }
     #endregion
 

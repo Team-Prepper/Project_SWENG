@@ -1,7 +1,6 @@
 using Photon.Pun;
 using UnityEngine;
 
-[ExecuteInEditMode]
 public class MonoSingletonPun<T> : MonoBehaviourPun where T : MonoBehaviour
 {
 
