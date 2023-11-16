@@ -18,6 +18,7 @@ namespace Character {
         public Sprite portrait;
         public bool isDie = false;
         public float percent;
+        public bool isBoss = false;
         public List<Item> dropItem;
 
         private void Awake()
@@ -36,6 +37,7 @@ namespace Character {
             portrait = enemyStatus.UIImage;
             Exp = enemyStatus.Exp;
             percent = enemyStatus.percent;
+            isBoss = enemyStatus.isBoss;
             dropItem = new List<Item>(enemyStatus.dropItem);
         }
 

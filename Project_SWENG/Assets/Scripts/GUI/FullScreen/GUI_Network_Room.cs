@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UISystem;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Windows;
 
 public class GUI_Network_Room : GUIFullScreen {
@@ -14,7 +15,8 @@ public class GUI_Network_Room : GUIFullScreen {
     public TMP_Text ListText;
     public TMP_Text RoomInfoText;
     public GameObject StartObj;
-
+    public GameObject ReadyObject;
+ 
     protected override void Open(Vector2 openPos)
     {
         base.Open(openPos);

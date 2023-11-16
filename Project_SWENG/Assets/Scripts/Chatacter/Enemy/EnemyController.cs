@@ -56,8 +56,13 @@ namespace Character {
         {
             curHex = HexGrid.Instance.GetTileAt(this.gameObject.transform.position);
             curHex.Entity = null;
-            if(PhotonNetwork.IsMasterClient)
-                enemySpawner.enemyList.Remove(this.gameObject);
+            if (PhotonNetwork.IsMasterClient)
+            {
+                GameManager.Instance.enemies.Remove(this.gameObject);
+                if (enemyStat.isBoss)
+                    GameManager.Instance.bossEnemies.Remove(gameObject);
+            }
+                
 
             healthGUI.UpdateGUI(0);
             DropItem();

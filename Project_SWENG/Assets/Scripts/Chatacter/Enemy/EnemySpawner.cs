@@ -12,13 +12,17 @@ public class EnemySpawner : MonoBehaviourPun
 {
     
     public List<GameObject> enemyPrefabList;
+    public List<GameObject> bossEnemyPrefabList;
+    
     public List<GameObject> enemyList;
+
+    public List<GameObject> bossEnemyList;
     //public Dictionary<GameObject, Hex> enemyDic = new Dictionary<GameObject, Hex>();
 
     public List<Hex> enemySpawnPos = new List<Hex>();
 
     private int enemyCnt = 10;
-    
+    private int bossEnemyCnt = 3;
 
     private void Start()
     {
@@ -30,23 +34,36 @@ public class EnemySpawner : MonoBehaviourPun
         if(PhotonNetwork.IsMasterClient)
         {
             Debug.Log("EnemySpawn");
+            for (int i = 0; i < bossEnemyCnt; i++)
+            {
+                Hex spawnHex = GetRandHex();
+                Debug.Log("BossEnemySpawnHex : " + spawnHex.name);
+                SpawnEnemy(spawnHex, bossEnemyPrefabList);
+            }
             for (int i = 0; i < enemyCnt; i++)
             {
                 Hex spawnHex = GetRandHex();
                 Debug.Log("EnemySpawnHex : " + spawnHex.name);
-                SpawnEnemy(spawnHex);
+                SpawnEnemy(spawnHex, enemyPrefabList);
             }
-            GameManager.Instance.enemys = enemyList;
         }
         
     }
 
-    private void SpawnEnemy(Hex spawnHex)
+    private void SpawnEnemy(Hex spawnHex, List<GameObject> spawnEnemyList)
     {
         Transform spawnPos = spawnHex.transform;
-        GameObject enemy = PhotonNetwork.Instantiate(enemyPrefabList[Random.Range(0,enemyPrefabList.Count)].name, spawnPos.position, spawnPos.rotation);
-        enemy.GetComponent<EnemyController>().enemySpawner = this;
-        enemyList.Add(enemy);
+        GameObject enemy = PhotonNetwork.Instantiate(spawnEnemyList[Random.Range(0,spawnEnemyList.Count)].name, spawnPos.position, spawnPos.rotation);
+        EnemyController enemyController = enemy.GetComponent<EnemyController>();
+        if (enemyController)
+        {
+            enemyController.enemySpawner = this;
+            if(enemyController.enemyStat.isBoss)
+                GameManager.Instance.bossEnemies.Add(enemy);
+        }
+            
+        GameManager.Instance.enemies.Add(enemy);
+        
     }
     
     private Hex GetRandHex()

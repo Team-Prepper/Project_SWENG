@@ -4,12 +4,14 @@ using System.Collections.Generic;
 using Photon.Pun;
 using UnityEngine;
 using UISystem;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class GameManager : MonoSingletonPun<GameManager>
 {
     public GameObject player;
-    public List<GameObject> enemys;
+    public List<GameObject> enemies;
+    public List<GameObject> bossEnemies;
     public GameObject day;
     public GameObject night;
 
@@ -81,7 +83,7 @@ public class GameManager : MonoSingletonPun<GameManager>
         {
             if (value == false) return;
         }
-        photonView.RPC("ServerTurnEnd",RpcTarget.All, null);
+        photonView.RPC("ServerTurnEnd",RpcTarget.All, bossEnemies.Count);
         
         for (int i = 0; i < PhotonNetwork.CountOfPlayers; i++)
         {
@@ -90,17 +92,21 @@ public class GameManager : MonoSingletonPun<GameManager>
     }
 
     [PunRPC]
-    private void ServerTurnEnd()
+    private void ServerTurnEnd(int bossCnt)
     {
         gamePhase = Phase.EnemyPhase;
         EnemyTurn();
+        if (bossCnt == 0)
+        {
+            Debug.Log("ALL BOSS IS DEAD");
+        }
         Invoke("PlayerTurnStandBy", 3f);
     }
     
     public void EnemyTurn()
     {
         changeDayNight();
-        foreach (GameObject enemy in enemys)
+        foreach (GameObject enemy in enemies)
         {
             EnemyAttack enemyAttack = enemy.GetComponent<EnemyAttack>();
             if (enemyAttack != null)
