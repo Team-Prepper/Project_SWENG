@@ -1,0 +1,118 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" GroupingSetting="Access" MembersFormat="FullSignature">
+  <Class Name="CharacterObjectGroups">
+    <Position X="19.5" Y="11" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAABAgAAIBAAAAAgEIAAAAAAQgAAAoACAAEQAAAAA=</HashCode>
+      <FileName>Assets\Scripts\EquipSystem\Inventory\EquipManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CharacterObjectListsAllGender">
+    <Position X="22.25" Y="2.5" Width="3.5" />
+    <TypeIdentifier>
+      <HashCode>EEABAAAAAgAAgQCAAAhAAAAAAAAQAAAACIACAAACAIg=</HashCode>
+      <FileName>Assets\Scripts\EquipSystem\Inventory\EquipManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="InventoryManager">
+    <Position X="5.25" Y="1" Width="3.25" />
+    <Members>
+      <Field Name="_equipManager" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAAAAAREAAAAAAAAAABEAAAAgAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\EquipSystem\Inventory\InventoryManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ItemUI">
+    <Position X="17.25" Y="3" Width="4" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAQIAAAAACAAAAAAAAAAACCAwAAAAAAAAMA=</HashCode>
+      <FileName>Assets\Scripts\EquipSystem\Inventory\ItemUI.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlayerInfo">
+    <Position X="20.25" Y="9" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Enum Name="PlayerInfo.Gender" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Assets\Scripts\EquipSystem\Inventory\PlayerInfo.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+      <Enum Name="PlayerInfo.Race" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Assets\Scripts\EquipSystem\Inventory\PlayerInfo.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+      <Enum Name="PlayerInfo.SkinColor" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Assets\Scripts\EquipSystem\Inventory\PlayerInfo.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+      <Enum Name="PlayerInfo.Elements" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Assets\Scripts\EquipSystem\Inventory\PlayerInfo.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+      <Enum Name="PlayerInfo.HeadCovering" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Assets\Scripts\EquipSystem\Inventory\PlayerInfo.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+      <Enum Name="PlayerInfo.FacialHair" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Assets\Scripts\EquipSystem\Inventory\PlayerInfo.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\EquipSystem\Inventory\PlayerInfo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ShopItemController">
+    <Position X="17.75" Y="7.5" Width="3" />
+    <TypeIdentifier>
+      <HashCode>QBAAAAAEBAAABAAAAABAAAAAABAAAACEgAAAAAAACQA=</HashCode>
+      <FileName>Assets\Scripts\EquipSystem\Shop\ShopItemController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ShopManager">
+    <Position X="4.75" Y="4.5" Width="4.5" />
+    <Members>
+      <Field Name="GUI_ShopPrefab" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>AUAAAQgAAAAAAAAAAAgCACAAQAAAAAgAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\EquipSystem\Shop\ShopManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Item">
+    <Position X="2" Y="1" Width="2" />
+    <Members>
+      <Field Name="icon" Hidden="true" />
+      <Field Name="itemObject" Hidden="true" />
+      <Field Name="skillIcon" Hidden="true" />
+    </Members>
+    <NestedTypes>
+      <Enum Name="Item.ItemTier" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Assets\Data\items\Item.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+      <Enum Name="Item.ItemType" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Assets\Data\items\Item.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAARBAAAAAEAAAABAAAAQARAGAEAQAAAAAAAoA=</HashCode>
+      <FileName>Assets\Data\items\Item.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="맑은 고딕" Size="9" />
+</ClassDiagram>

@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" GroupingSetting="Access" MembersFormat="FullSignature">
+  <Class Name="Dice">
+    <Position X="0.75" Y="0.5" Width="3.5" />
+    <Members>
+      <Field Name="_diceSet" Hidden="true" />
+      <Field Name="_diceStopEvent" Hidden="true" />
+      <Field Name="_waitTime" Hidden="true" />
+      <Method Name="Awake" Hidden="true" />
+      <Field Name="idleTime" Hidden="true" />
+      <Field Name="initialRotation" Hidden="true" />
+      <Field Name="lastPosition" Hidden="true" />
+      <Field Name="originPos" Hidden="true" />
+      <Field Name="rb" Hidden="true" />
+      <Method Name="RotateSmoothly" Hidden="true" />
+      <Field Name="rotationSpeed" Hidden="true" />
+      <Method Name="SetDicD20" Hidden="true" />
+      <Method Name="SetDicD6" Hidden="true" />
+      <Method Name="Start" Hidden="true" />
+      <Field Name="targetRotation" Hidden="true" />
+      <Field Name="throwStrength" Hidden="true" />
+      <Field Name="torqueMax" Hidden="true" />
+      <Field Name="torqueMin" Hidden="true" />
+      <Field Name="walls" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>AAAMyACAICAIMAAEAAAmIAAAAAAAAACAAIBgABCSAEA=</HashCode>
+      <FileName>Assets\Scripts\Dice\Dice.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DicePoint">
+    <Position X="5" Y="0.5" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAAgAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAQ=</HashCode>
+      <FileName>Assets\Scripts\Dice\DicePoint.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="맑은 고딕" Size="9" />
+</ClassDiagram>

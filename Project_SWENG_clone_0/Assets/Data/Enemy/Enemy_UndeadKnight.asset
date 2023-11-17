@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5bfb1b379276674e919c7b67ba75480, type: 3}
+  m_Name: Enemy_UndeadKnight
+  m_EditorClassIdentifier: 
+  monsterName: UndaedKnight
+  atk: 30
+  def: 10
+  maxHp: 100
+  percent: 100
+  speed: 50
+  Lv: 100
+  Exp: 10
+  isBoss: 1
+  UIImage: {fileID: 0}
+  dropItem:
+  - {fileID: 11400000, guid: 0409fa5f5395b5f4bab4d5a395500d58, type: 2}

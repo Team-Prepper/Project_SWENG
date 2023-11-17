@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" GroupingSetting="Access" MembersFormat="FullSignature">
+  <Class Name="LangSystem.StringManager">
+    <Position X="0.5" Y="2.5" Width="3.25" />
+    <Members>
+      <Method Name="_ReadStringFromXml" Hidden="true" />
+      <Method Name="OnCreate" Hidden="true" />
+      <Method Name="UpdateData" Hidden="true" />
+    </Members>
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Class Name="LangSystem.StringManager.StringData">
+        <TypeIdentifier>
+          <NewMemberFileName>Assets\Scripts\LangSystem\StringManager.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAEAAgAEAhAAAAAAAAAwAAAACBAAACAAAAgAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\LangSystem\StringManager.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Field Name="_targets" />
+    </ShowAsCollectionAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="LangSystem.xText" BaseTypeListCollapsed="true">
+    <Position X="4.5" Y="4.25" Width="2" />
+    <Members>
+      <Method Name="OnDestroy" Hidden="true" />
+      <Method Name="OnDisable" Hidden="true" />
+      <Method Name="OnEnable" Hidden="true" />
+      <Method Name="OnValidate" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>AAABEAAAAAAAABAAAIEAAAAAAAAAgAAIAAAAAAAACAA=</HashCode>
+      <FileName>Assets\Scripts\LangSystem\xText.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.171" />
+  </Class>
+  <Class Name="LangSystem.xTmp" BaseTypeListCollapsed="true">
+    <Position X="7" Y="4.25" Width="2" />
+    <Members>
+      <Method Name="OnDestroy" Hidden="true" />
+      <Method Name="OnDisable" Hidden="true" />
+      <Method Name="OnEnable" Hidden="true" />
+      <Method Name="OnValidate" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>AAABEAAAAAAAABAAAIEAAAAAAAAAgAAIAAAAAAAACAA=</HashCode>
+      <FileName>Assets\Scripts\LangSystem\xTmp.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Interface Name="LangSystem.IStringListener">
+    <Position X="7" Y="2.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\LangSystem\StringManager.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="ObserberPattern.ISubject">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAAAAAhAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Base\ObserverPattern.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="ObserberPattern.IObserver">
+    <Position X="4.5" Y="2.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Base\ObserverPattern.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="맑은 고딕" Size="9" />
+</ClassDiagram>
