@@ -167,30 +167,38 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
         _room.RoomRenewal();
-        ChatRPC("<color=yellow>" + newPlayer.NickName + " ENTER </color>");
+        ChatRPC("System", string.Format("<color=yellow>{0} Enter</color>", newPlayer.NickName));
     }
 
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
         _room.RoomRenewal();
-        ChatRPC("<color=yellow>" + otherPlayer.NickName + " "+ otherPlayer.ActorNumber + " Exit </color>");
+        ChatRPC("System", string.Format("<color=yellow>{0} Exit</color>", otherPlayer.NickName));
     }
 
     #endregion
+
+    List<string> _blockUser = new List<string>();
+
+    public void Block(string name) {
+        if (_blockUser.Contains(name)) return;
+        _blockUser.Add(name);
+    }
 
 
     #region chat
     public void Send(string msg)
     {
-        PV.RPC("ChatRPC", RpcTarget.All, PhotonNetwork.NickName + " : " + msg);
+        PV.RPC("ChatRPC", RpcTarget.All, PhotonNetwork.NickName, msg);
     }
 
     [PunRPC]
-    void ChatRPC(string msg)
+    void ChatRPC(string sender, string msg)
     {
         if (!_chatting) return;
+        if (_blockUser.Contains(sender)) return;
 
-        _chatting.Chat(msg);
+        _chatting.Chat(sender, msg);
     }
     #endregion
 

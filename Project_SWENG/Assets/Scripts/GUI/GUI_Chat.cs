@@ -24,8 +24,34 @@ public class GUI_Chat : MonoBehaviour {
 
     public void ChatSend()
     {
-        _network.Send(ChatInput.text);
+        string input = ChatInput.text;
         ChatInput.text = "";
+
+        if (input[0] != '/') {
+            _network.Send(input);
+        }
+
+        string command = input.Substring(1, input.IndexOf(' '));
+
+        switch (command)
+        {
+            case "block":
+                _network.Block(input.Substring(input.IndexOf(' '), -1));
+                return;
+            default:
+                return;
+        }
+    }
+
+    public void Chat(string sender, string msg) {
+
+        if (sender.Equals("System"))
+        {
+            Chat(string.Format("<color=yellow>{0}</color>", msg));
+            return;
+        }
+
+        Chat(sender + " : " + msg);
     }
 
     public void Chat(string msg)
