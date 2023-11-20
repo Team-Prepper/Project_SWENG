@@ -39,8 +39,9 @@ public struct HexCoordinate : IEquatable<HexCoordinate> {
                     new HexCoordinate( target.x - 1, target.z + 1), //W2
                 };
         }
-
-        return new List<HexCoordinate>
+        else
+        {
+            return new List<HexCoordinate>
             {
                 new HexCoordinate( target.x,     target.z + 1), //N
                 new HexCoordinate( target.x + 1, target.z), //E1
@@ -49,6 +50,7 @@ public struct HexCoordinate : IEquatable<HexCoordinate> {
                 new HexCoordinate( target.x - 1, target.z - 1), //W1
                 new HexCoordinate( target.x - 1, target.z), //W2
             };
+        }
     }
     
     public static HexCoordinate ConvertFromVector3(Vector3 source)
