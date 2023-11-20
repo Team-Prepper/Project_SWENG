@@ -88,7 +88,7 @@ GameObject:
   - component: {fileID: 3284038628569142890}
   - component: {fileID: 2384179297246288709}
   m_Layer: 5
-  m_Name: BackGround_out
+  m_Name: img_BackGround_out
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -315,7 +315,7 @@ GameObject:
   - component: {fileID: 7572882215870131779}
   - component: {fileID: 4817014714178625388}
   m_Layer: 5
-  m_Name: Equipment
+  m_Name: box_Equipment
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -439,7 +439,7 @@ GameObject:
   - component: {fileID: 5282739470443234939}
   - component: {fileID: 1696855904734499749}
   m_Layer: 5
-  m_Name: DiceValue
+  m_Name: tmp_DiceValue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -639,7 +639,7 @@ GameObject:
   - component: {fileID: 3221241584928142969}
   - component: {fileID: 2423400526574591176}
   m_Layer: 5
-  m_Name: Player_Info
+  m_Name: box_Player_Info
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -852,7 +852,7 @@ GameObject:
   - component: {fileID: 8650329567193194818}
   - component: {fileID: 1133183581599471064}
   m_Layer: 5
-  m_Name: Background
+  m_Name: btn_TurnEnd
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -984,7 +984,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5450157967073648481}
   m_Layer: 5
-  m_Name: TrunEnd
+  m_Name: box_TrunEnd
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1023,7 +1023,7 @@ GameObject:
   - component: {fileID: 5842590468690439233}
   - component: {fileID: 5094523709547420659}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: tmp_TurnEnd
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1079,8 +1079,9 @@ MonoBehaviour:
       m_Calls: []
   m_text: Turn End
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 125cb55b44b24c4393181402bc6200e6, type: 2}
-  m_sharedMaterial: {fileID: 2100000, guid: 125cb55b44b24c4393181402bc6200e6, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 05c6954db2b29eb45b14bbbe1906b8fc, type: 2}
+  m_sharedMaterial: {fileID: 3590147554829113309, guid: 05c6954db2b29eb45b14bbbe1906b8fc,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1309,7 +1310,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3889493907105976688}
   m_Layer: 5
-  m_Name: DiceBtn
+  m_Name: box_Dice
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1582,7 +1583,7 @@ GameObject:
   - component: {fileID: 1411740204198694704}
   - component: {fileID: 3605908245301961196}
   m_Layer: 5
-  m_Name: PlayerInfo
+  m_Name: btn_PlayerInfo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1930,7 +1931,7 @@ GameObject:
   - component: {fileID: 573011481806433666}
   - component: {fileID: 5658125866747908416}
   m_Layer: 5
-  m_Name: HealthBar
+  m_Name: box_HealthBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2195,7 +2196,7 @@ GameObject:
   - component: {fileID: 332723429943455496}
   - component: {fileID: 2478194364994944418}
   m_Layer: 5
-  m_Name: BackGround_in
+  m_Name: img_BackGround_in
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2315,9 +2316,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   _target: {fileID: 0}
-  _dicePoint: {fileID: 0}
-  _playerHealth: {fileID: 0}
-  turnEndButton: {fileID: 0}
+  _dicePoint: {fileID: 1696855904734499749}
+  _playerHealth: {fileID: 2423400526574591176}
+  turnEndButton: {fileID: 1133183581599471064}
 --- !u!1 &7862848642499199850
 GameObject:
   m_ObjectHideFlags: 0

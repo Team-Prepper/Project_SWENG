@@ -167,13 +167,37 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
         _room.RoomRenewal();
-        ChatRPC("System", string.Format("<color=yellow>{0} Enter</color>", newPlayer.NickName));
+        ChatRPC("System", string.Format("{0} Enter", newPlayer.NickName));
     }
 
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
         _room.RoomRenewal();
-        ChatRPC("System", string.Format("<color=yellow>{0} Exit</color>", otherPlayer.NickName));
+        ChatRPC("System", string.Format("{0} Exit", otherPlayer.NickName));
+    }
+
+    int _readyCount;
+
+    // Turn End Button Trigger
+    public void Ready()
+    {
+        photonView.RPC("ReadyToServer", RpcTarget.MasterClient, PlayerID);
+    }
+
+    public void ReadyCancle() {
+
+        photonView.RPC("ReadyCancleToServer", RpcTarget.MasterClient, PlayerID);
+    }
+
+    [PunRPC]
+    private void ReadyToServer(int index)
+    {
+        _readyCount++;
+    }
+    [PunRPC]
+    private void ReadyCancleToServer(int index)
+    {
+        _readyCount--;
     }
 
     #endregion
@@ -204,7 +228,9 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     public void StartGame()
     {
-        if(PhotonNetwork.IsMasterClient)
-            PhotonNetwork.LoadLevel("MapData02");
+        Debug.Log(_readyCount);
+        if (!PhotonNetwork.IsMasterClient || ((_readyCount + 1) < PhotonNetwork.PlayerList.Length)) return;
+        
+        PhotonNetwork.LoadLevel("MapData02");
     }
 }

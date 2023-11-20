@@ -1,3 +1,4 @@
+using Photon.Pun;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
@@ -117,7 +118,9 @@ public class PlayerInputManager : MonoSingleton<PlayerInputManager>
 
     public void HandleUnitSelect(InputAction.CallbackContext context)
     {
+        
         Debug.Log("SpaceBar");
+        Debug.Log(PhotonNetwork.NetworkClientState);
         
         if (GameManager.Instance.player != null)
         {
