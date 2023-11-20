@@ -25,18 +25,20 @@ public class GUI_Chat : MonoBehaviour {
     public void ChatSend()
     {
         string input = ChatInput.text;
-        ChatInput.text = "";
+        ChatInput.text = null;
 
         if (input[0] != '/') {
             _network.Send(input);
+            return;
         }
 
-        string command = input.Substring(1, input.IndexOf(' '));
-
+        string command = input.Substring(1, input.IndexOf(' ') - 1);
+        
         switch (command)
         {
             case "block":
-                _network.Block(input.Substring(input.IndexOf(' '), -1));
+                _network.Block(input.Substring(input.IndexOf(' ') + 1));
+                Debug.Log("block_do");
                 return;
             default:
                 return;
