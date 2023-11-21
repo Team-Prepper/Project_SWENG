@@ -167,36 +167,70 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
         _room.RoomRenewal();
-        ChatRPC("<color=yellow>" + newPlayer.NickName + " ENTER </color>");
+        ChatRPC("System", string.Format("{0} Enter", newPlayer.NickName));
     }
 
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
         _room.RoomRenewal();
-        ChatRPC("<color=yellow>" + otherPlayer.NickName + " "+ otherPlayer.ActorNumber + " Exit </color>");
+        ChatRPC("System", string.Format("{0} Exit", otherPlayer.NickName));
+    }
+
+    int _readyCount;
+
+    // Turn End Button Trigger
+    public void Ready()
+    {
+        photonView.RPC("ReadyToServer", RpcTarget.MasterClient, PlayerID);
+    }
+
+    public void ReadyCancle() {
+
+        photonView.RPC("ReadyCancleToServer", RpcTarget.MasterClient, PlayerID);
+    }
+
+    [PunRPC]
+    private void ReadyToServer(int index)
+    {
+        _readyCount++;
+    }
+    [PunRPC]
+    private void ReadyCancleToServer(int index)
+    {
+        _readyCount--;
     }
 
     #endregion
+
+    List<string> _blockUser = new List<string>();
+
+    public void Block(string name) {
+        if (_blockUser.Contains(name)) return;
+        _blockUser.Add(name);
+    }
 
 
     #region chat
     public void Send(string msg)
     {
-        PV.RPC("ChatRPC", RpcTarget.All, PhotonNetwork.NickName + " : " + msg);
+        PV.RPC("ChatRPC", RpcTarget.All, PhotonNetwork.NickName, msg);
     }
 
     [PunRPC]
-    void ChatRPC(string msg)
+    void ChatRPC(string sender, string msg)
     {
         if (!_chatting) return;
+        if (_blockUser.Contains(sender)) return;
 
-        _chatting.Chat(msg);
+        _chatting.Chat(sender, msg);
     }
     #endregion
 
     public void StartGame()
     {
-        if(PhotonNetwork.IsMasterClient)
-            PhotonNetwork.LoadLevel("MapData02");
+        Debug.Log(_readyCount);
+        if (!PhotonNetwork.IsMasterClient || ((_readyCount + 1) < PhotonNetwork.PlayerList.Length)) return;
+        
+        PhotonNetwork.LoadLevel("MapData02");
     }
 }

@@ -10,32 +10,58 @@ using UnityEngine.Windows;
 public class GUI_Network_Room : GUIFullScreen {
 
     NetworkManager _network;
+    [SerializeField] GUI_Network_Room_PlayerState[] _playerStates;
 
-    public GameObject RoomPanel;
-    public TMP_Text ListText;
-    public TMP_Text RoomInfoText;
-    public GameObject StartObj;
-    public GameObject ReadyObject;
+    [SerializeField] TMP_Text ListText;
+    [SerializeField] TMP_Text _roomInforText;
+    [SerializeField] GameObject _startBtn;
+    [SerializeField] GameObject _readyBtn;
+
+    bool _isReady;
  
     protected override void Open(Vector2 openPos)
     {
         base.Open(openPos);
 
         _network = GameObject.Find("NetworkManager").GetComponent<NetworkManager>();
-        StartObj.SetActive(PhotonNetwork.IsMasterClient);
+        _startBtn.SetActive(PhotonNetwork.IsMasterClient);
+        _readyBtn.SetActive(!PhotonNetwork.IsMasterClient);
         RoomRenewal();
     }
 
     public void RoomRenewal()
     {
+        /*
         ListText.text = "";
+
         for (int i = 0; i < PhotonNetwork.PlayerList.Length; i++)
             ListText.text += PhotonNetwork.PlayerList[i].NickName + ((i + 1 == PhotonNetwork.PlayerList.Length) ? "" : ", ");
-        RoomInfoText.text = PhotonNetwork.CurrentRoom.Name + " / " + PhotonNetwork.CurrentRoom.PlayerCount + " / " + PhotonNetwork.CurrentRoom.MaxPlayers + "MAX";
+        */
+
+        for (int i = 0; i < _playerStates.Length; i++) {
+            if (PhotonNetwork.PlayerList.Length <= i)
+            {
+                _playerStates[i].gameObject.SetActive(false);
+                continue;
+            }
+            _playerStates[i].gameObject.SetActive(true);
+            _playerStates[i].SetInfor(PhotonNetwork.PlayerList[i].NickName, false);
+        }
+
+        _roomInforText.text = string.Format("{0} / {1} / {2}Max",
+            PhotonNetwork.CurrentRoom.Name, PhotonNetwork.CurrentRoom.PlayerCount, PhotonNetwork.CurrentRoom.MaxPlayers);
     }
 
     public void StartGame() {
         _network.StartGame();
+    }
+
+    public void ReadyBtn() {
+        if (_isReady) {
+            _network.ReadyCancle();
+            return;
+        }
+        _network.Ready();
     }
 
     public void LeaveRoom() {
