@@ -37,7 +37,6 @@ public class GUI_Network_Room : GUIFullScreen {
         for (int i = 0; i < PhotonNetwork.PlayerList.Length; i++)
             ListText.text += PhotonNetwork.PlayerList[i].NickName + ((i + 1 == PhotonNetwork.PlayerList.Length) ? "" : ", ");
         */
-        Dictionary<string, bool> readyState = _network.GetReadyState();
 
         for (int i = 0; i < _playerStates.Length; i++) {
             if (PhotonNetwork.PlayerList.Length <= i)
@@ -46,7 +45,7 @@ public class GUI_Network_Room : GUIFullScreen {
                 continue;
             }
             _playerStates[i].gameObject.SetActive(true);
-            _playerStates[i].SetInfor(PhotonNetwork.PlayerList[i].NickName, readyState[PhotonNetwork.PlayerList[i].NickName]);
+            _playerStates[i].SetInfor(PhotonNetwork.PlayerList[i].NickName, false);
         }
 
         _roomInforText.text = string.Format("{0} / {1} / {2}Max",

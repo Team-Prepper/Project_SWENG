@@ -168,50 +168,47 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     {
         _room.RoomRenewal();
         ChatRPC("System", string.Format("{0} Enter", newPlayer.NickName));
+
     }
 
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
         _room.RoomRenewal();
-        photonView.RPC("PlayerLeave", RpcTarget.All, PhotonNetwork.NickName);
         ChatRPC("System", string.Format("{0} Exit", otherPlayer.NickName));
+
+        if (_isReady)
+        {
+            photonView.RPC("ReadyCancle", RpcTarget.MasterClient, PhotonNetwork.NickName);
+
+        }
     }
 
-    Dictionary<string, bool> _readyState = new Dictionary<string, bool>();
-
-    public Dictionary<string, bool> GetReadyState()
-    {
-        return _readyState;
-
-    }
+    int _readyPlayerCount;
+    bool _isReady;
 
     // Turn End Button Trigger
     public void Ready()
     {
-        photonView.RPC("ReadyToServer", RpcTarget.All, PhotonNetwork.NickName);
+        _isReady = true;
+        photonView.RPC("ReadyToServer", RpcTarget.MasterClient, PhotonNetwork.NickName);
     }
 
     public void ReadyCancle() {
-
-        photonView.RPC("ReadyCancleToServer", RpcTarget.All, PhotonNetwork.NickName);
+        _isReady = false;
+        photonView.RPC("ReadyCancleToServer", RpcTarget.MasterClient, PhotonNetwork.NickName);
     }
 
     [PunRPC]
     private void ReadyToServer(string name)
     {
-        _readyState.Add(name, true);
+        _readyPlayerCount++;
     }
     [PunRPC]
     private void ReadyCancleToServer(string name)
     {
-        _readyState.Add(name, false);
+        _readyPlayerCount--;
     }
 
-    [PunRPC]
-    private void PlayerLeave(string name)
-    {
-        _readyState.Remove(name);
-    }
     #endregion
 
     List<string> _blockUser = new List<string>();
@@ -241,9 +238,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public void StartGame()
     {
         if (!PhotonNetwork.IsMasterClient) return;
-
-        foreach (bool readyState in _readyState.Values)
-            if (readyState == false) return;
+        if (_readyPlayerCount + 1 < PhotonNetwork.CountOfPlayers) return;
 
         PhotonNetwork.LoadLevel("MapData02");
     }
