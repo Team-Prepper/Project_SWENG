@@ -173,33 +173,45 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
         _room.RoomRenewal();
+        photonView.RPC("PlayerLeave", RpcTarget.All, PhotonNetwork.NickName);
         ChatRPC("System", string.Format("{0} Exit", otherPlayer.NickName));
     }
 
-    int _readyCount;
+    Dictionary<string, bool> _readyState = new Dictionary<string, bool>();
+
+    public Dictionary<string, bool> GetReadyState()
+    {
+        return _readyState;
+
+    }
 
     // Turn End Button Trigger
     public void Ready()
     {
-        photonView.RPC("ReadyToServer", RpcTarget.MasterClient, PlayerID);
+        photonView.RPC("ReadyToServer", RpcTarget.All, PhotonNetwork.NickName);
     }
 
     public void ReadyCancle() {
 
-        photonView.RPC("ReadyCancleToServer", RpcTarget.MasterClient, PlayerID);
+        photonView.RPC("ReadyCancleToServer", RpcTarget.All, PhotonNetwork.NickName);
     }
 
     [PunRPC]
-    private void ReadyToServer(int index)
+    private void ReadyToServer(string name)
     {
-        _readyCount++;
+        _readyState.Add(name, true);
     }
     [PunRPC]
-    private void ReadyCancleToServer(int index)
+    private void ReadyCancleToServer(string name)
     {
-        _readyCount--;
+        _readyState.Add(name, false);
     }
 
+    [PunRPC]
+    private void PlayerLeave(string name)
+    {
+        _readyState.Remove(name);
+    }
     #endregion
 
     List<string> _blockUser = new List<string>();
@@ -228,9 +240,11 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     public void StartGame()
     {
-        Debug.Log(_readyCount);
-        if (!PhotonNetwork.IsMasterClient || ((_readyCount + 1) < PhotonNetwork.PlayerList.Length)) return;
-        
+        if (!PhotonNetwork.IsMasterClient) return;
+
+        foreach (bool readyState in _readyState.Values)
+            if (readyState == false) return;
+
         PhotonNetwork.LoadLevel("MapData02");
     }
 }
