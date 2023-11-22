@@ -30,7 +30,7 @@ public class GUI_Attack : GUIFullScreen {
         {
             Hex atkHex = HexGrid.Instance.GetTileAt(neighbour);
 
-            if ((atkHex.tileType != TileDataScript.TileType.normal) || (atkHex.tileType != TileDataScript.TileType.dungon)) continue;
+            if (!(atkHex.tileType == TileDataScript.TileType.normal || atkHex.tileType == TileDataScript.TileType.dungon)) continue;
 
             _attackRange.Add(neighbour);
             _SetMarker(atkHex.transform.position);
