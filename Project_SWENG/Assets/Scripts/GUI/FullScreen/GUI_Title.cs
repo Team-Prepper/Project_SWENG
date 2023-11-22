@@ -4,10 +4,11 @@ using System.Collections.Generic;
 using TMPro;
 using UISystem;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GUI_Title : GUIFullScreen
 {
-    [SerializeField] private TMP_InputField _nickNameInput;
+    [SerializeField] private InputField _nickNameInput;
 
     NetworkManager _network;
 

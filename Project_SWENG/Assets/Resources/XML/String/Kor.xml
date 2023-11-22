@@ -1,8 +1,62 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <List>
-  <!-- 잡몹 -->
-  <Element key="Hello"	          value="안녕하세요" />
-  <Element key="msg1"	            value="그쪽은 잘되가시나요?" />
-  <Element key="Alert"	          value="알림" />
+  <!-- GUI_Title -->
+  <Element key="title_EnterYourName"	  value="이름 입력" />
+  <Element key="title_Connection"	      value="로그인" />\
+  
+  <!-- GUI_Network_Lobby -->
+  <Element key="lobby_Welcom"	          value="안녕하세요" />
+  <Element key="lobby_RoomName"	        value="방 이름" />
+  <Element key="lobby_CreateRoom"	      value="방 만들기" />
+  <Element key="lobby_QuickStart"	      value="빠른 시작" />
+  <Element key="lobby_Logout"	          value="로그아웃" />
+  
+  <!-- GUI_Network_Room -->
+  <Element key="room_EnterText"	        value="채팅 입력" />
+  <Element key="room_Send"	            value="전송" />
+  <Element key="room_Ready"	            value="준비" />
+  <Element key="room_GameStart"	        value="게임 시작" />
+  <Element key="room_Disconnection"	    value="방 나가기" />
+  
+  <!-- GUI_PlayerInfor -->
+  <Element key="play_TurnEnd"	          value="턴 종료" />
+  
+  <!-- GUI_Dice -->
+  <Element key="dice_PressTheDice"	    value="주사위를 눌러주세요" />
+  
+  <!-- GUI_ItemInteraction -->
+  <Element key="itemInterAction_Name"   value="장비 이름" />
+  <Element key="itemInterAction_Equip"  value="장착" />
+  <Element key="itemInterAction_Cancle" value="닫기" />
+
+  <!-- GUI_GameState -->
+  <Element key="gameState_GameOver"	    value="게임 오버" />
+  <Element key="gameState_GameClear"    value="게임 클리어" />
+  <Element key="gameState_ToLobby"	    value="로비로" />
+  <Element key="gameState_ToRoom"	      value="방으로" />
+  
+  <!-- GUI_Notice -->
+  <Element key="notice_Notice"	        value="알림" />
+  <Element key="notice_OK"              value="확인" />
+
+  <!-- GUI_PlayerInforPopUp -->
+  <Element key="playerInforPopUp_Close" value="닫기" />
+  
+  <!-- GUI_Setting -->
+  <Element key="setting_Setting"        value="설정" />
+  <Element key="setting_SelectLanguage" value="언어 선택" />
+  <Element key="setting_Kor"            value="한국어" />
+  <Element key="setting_Eng"            value="영어" />
+  <Element key="setting_Vie"            value="베트남어" />
+  <Element key="setting_Close"          value="닫기" />
+  
+  <!-- GUI_Shop -->
+  <Element key="shop_Shop"              value="상점" />
+  
+  <!-- GUI_ShopItem -->
+  <Element key="shopItem_ATK"           value="공격력" />
+  
+  <!-- ItemInfor -->
+  <Element key="item_helmet_001"        value="기본헬멧" />
 
 </List>

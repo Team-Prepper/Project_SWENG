@@ -13,7 +13,7 @@ public class GUI_Network_Lobby : GUIFullScreen
 
     private NetworkManager _network;
 
-    [SerializeField] private TMP_InputField RoomInput;
+    [SerializeField] private InputField RoomInput;
     [SerializeField] private TMP_Text WelcomeText;
     [SerializeField] private TMP_Text LobbyInfoText;
     [SerializeField] private Button[] CellBtn;
