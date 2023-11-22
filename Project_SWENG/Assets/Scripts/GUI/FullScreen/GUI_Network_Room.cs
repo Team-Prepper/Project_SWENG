@@ -45,7 +45,7 @@ public class GUI_Network_Room : GUIFullScreen {
                 continue;
             }
             _playerStates[i].gameObject.SetActive(true);
-            _playerStates[i].SetInfor(PhotonNetwork.PlayerList[i].NickName, false);
+            _playerStates[i].SetInfor(PhotonNetwork.PlayerList[i].NickName, _network.IsIdxPlayerReady(i));
         }
 
         _roomInforText.text = string.Format("{0} / {1} / {2}Max",

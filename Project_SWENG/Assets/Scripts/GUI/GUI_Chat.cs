@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Windows;
 
 public class GUI_Chat : MonoBehaviour {
 
@@ -32,13 +33,16 @@ public class GUI_Chat : MonoBehaviour {
             return;
         }
 
-        string command = input.Substring(1, input.IndexOf(' ') - 1);
+        _CommandExecute(input.Substring(1, input.IndexOf(' ') - 1), input.Substring(input.IndexOf(' ') + 1));
         
+    }
+
+    private void _CommandExecute(string command, string input)
+    {
         switch (command)
         {
             case "block":
-                _network.Block(input.Substring(input.IndexOf(' ') + 1));
-                Debug.Log("block_do");
+                _network.Block(input);
                 return;
             default:
                 return;
