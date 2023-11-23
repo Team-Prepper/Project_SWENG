@@ -65,7 +65,7 @@ namespace Character {
 
         public void Revive()
         {
-            Recover(70);
+            Recover(1000);
         }
     }
 }

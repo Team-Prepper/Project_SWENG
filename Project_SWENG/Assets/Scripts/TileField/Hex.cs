@@ -91,7 +91,8 @@ public class Hex : MonoBehaviour
 
             if (item != null && entity.CompareTag("Player"))
             {
-                _InteractionPlayerWithItem();
+                if(entity.GetPhotonView().IsMine == true)
+                    _InteractionPlayerWithItem();
             }
 
             if (tileType == TileDataScript.TileType.village)

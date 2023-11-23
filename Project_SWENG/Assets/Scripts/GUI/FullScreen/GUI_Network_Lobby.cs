@@ -21,7 +21,7 @@ public class GUI_Network_Lobby : GUIFullScreen
     [SerializeField] private Button NextBtn;
 
     List<RoomInfo> _rooms;
-    int _currentPage = 0;
+    int _currentPage = 1;
 
     protected override void Open(Vector2 openPos)
     {

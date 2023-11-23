@@ -85,7 +85,7 @@ namespace Character {
                 if(GameManager.Instance.remainLife > 0)
                 {
                     GameManager.Instance.remainLife -= 1;
-                    photonView.RPC("RespawnPlayer", RpcTarget.All); 
+                    photonView.RPC("RespawnPlayer", RpcTarget.All, null); 
                 }
             }
         }
@@ -93,8 +93,10 @@ namespace Character {
         [PunRPC]
         public void RespawnPlayer()
         {
-            stat.Revive();
+            
             gameObject.transform.position = GameManager.Instance.respawnPos.position;
+            HexGrid.Instance.GetTileAt(GameManager.Instance.respawnPos.position).Entity = gameObject;
+            stat.Revive();
         }
 
         public void EquipItemHandler(Item item)

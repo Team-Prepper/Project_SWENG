@@ -53,9 +53,21 @@ public partial class NetworkManager
         _room.RoomRenewal();
         ChatRPC("System", string.Format("{0} Enter", newPlayer.NickName));
 
+        /*
         if (PhotonNetwork.IsMasterClient)
             photonView.RPC("ReadyStateChange", RpcTarget.All, _ReadyStateInt());
+        */
 
+        if(photonView.IsMine)
+        {
+            photonView.RPC("PlayerOnRoom", RpcTarget.MasterClient, PhotonNetwork.NickName);
+        }
+    }
+
+    [PunRPC]
+    private void PlayerOnRoom(string nickName)
+    {
+        _playerReadyState.Add(nickName, false);
     }
 
     public override void OnPlayerLeftRoom(Player otherPlayer)
@@ -63,7 +75,7 @@ public partial class NetworkManager
         _room.RoomRenewal();
         ChatRPC("System", string.Format("{0} Exit", otherPlayer.NickName));
 
-        if (PhotonNetwork.IsMasterClient)
+        if (photonView.IsMine)
         {
             _playerReadyState.Remove(otherPlayer.NickName);
             photonView.RPC("ReadyStateChange", RpcTarget.All, _ReadyStateInt());
@@ -105,14 +117,14 @@ public partial class NetworkManager
     private void ReadyToServer(string name)
     {
         _readyPlayerCount++;
-        _playerReadyState.Add(name, true);
+        _playerReadyState[name] = true;
         photonView.RPC("ReadyStateChange", RpcTarget.All, _ReadyStateInt());
     }
     [PunRPC]
     private void ReadyCancleToServer(string name)
     {
         _readyPlayerCount--;
-        _playerReadyState.Add(name, false);
+        _playerReadyState[name] = false;
         photonView.RPC("ReadyStateChange", RpcTarget.All, _ReadyStateInt());
     }
 

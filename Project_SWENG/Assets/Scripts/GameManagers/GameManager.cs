@@ -22,6 +22,8 @@ public class GameManager : MonoSingletonPun<GameManager>
     public int remainLife = 5;
     public Transform respawnPos;
 
+    [SerializeField] private bool StageBossSpawned = false;
+
     public enum Phase
     {
         Ready,
@@ -69,7 +71,7 @@ public class GameManager : MonoSingletonPun<GameManager>
     // Turn End Button Trigger
     public void PlayerTurnEnd()
     {
-        photonView.RPC("PlayerTurnEndToServer",RpcTarget.MasterClient,NetworkManager.PlayerID);
+        photonView.RPC("PlayerTurnEndToServer", RpcTarget.MasterClient, NetworkManager.PlayerID);
         turnEndButton.interactable = false;
     }
 
@@ -86,24 +88,34 @@ public class GameManager : MonoSingletonPun<GameManager>
         {
             if (value == false) return;
         }
-        photonView.RPC("ServerTurnEnd",RpcTarget.All, bossEnemies.Count);
+        photonView.RPC("ServerTurnEnd", RpcTarget.All, bossEnemies.Count);
         
-        for (int i = 0; i < PhotonNetwork.CountOfPlayers; i++)
-        {
-            _playerTurnEndArray[i] = false;
-        }
+        
     }
 
     [PunRPC]
     private void ServerTurnEnd(int bossCnt)
     {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            for (int i = 0; i < _playerTurnEndArray.Length; i++)
+            {
+                _playerTurnEndArray[i] = false;
+            }
+        }
+
         gamePhase = Phase.EnemyPhase;
         EnemyTurn();
-        if (bossCnt == 0)
+        if(PhotonNetwork.IsMasterClient)
         {
-            Debug.Log("ALL BOSS IS DEAD");
-            spawner.SpawnBoss();
+            if (StageBossSpawned == false && bossCnt == 0)
+            {
+                Debug.Log("ALL BOSS IS DEAD");
+                spawner.SpawnBoss();
+                StageBossSpawned = true;
+            }
         }
+        
         Invoke("PlayerTurnStandBy", 3f);
     }
     
