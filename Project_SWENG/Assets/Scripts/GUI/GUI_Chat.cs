@@ -10,7 +10,7 @@ public class GUI_Chat : MonoBehaviour {
     NetworkManager _network;
 
     public TMP_Text[] ChatText;
-    public TMP_InputField ChatInput;
+    public InputField ChatInput;
 
     public Scrollbar _scrollBar;
 
