@@ -70,7 +70,7 @@ public partial class NetworkManager
         }
     }
 
-    Dictionary<string, bool> _playerReadyState;
+    Dictionary<string, bool> _playerReadyState = new Dictionary<string, bool>();
 
     public int ReadyState { get; private set; }
     int _readyPlayerCount;

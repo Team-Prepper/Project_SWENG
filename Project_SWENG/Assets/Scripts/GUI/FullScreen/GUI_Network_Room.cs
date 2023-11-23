@@ -16,6 +16,7 @@ public class GUI_Network_Room : GUIFullScreen {
     [SerializeField] TMP_Text _roomInforText;
     [SerializeField] GameObject _startBtn;
     [SerializeField] GameObject _readyBtn;
+    [SerializeField] GameObject _readyCancleBtn;
 
     bool _isReady;
  
@@ -26,6 +27,8 @@ public class GUI_Network_Room : GUIFullScreen {
         _network = GameObject.Find("NetworkManager").GetComponent<NetworkManager>();
         _startBtn.SetActive(PhotonNetwork.IsMasterClient);
         _readyBtn.SetActive(!PhotonNetwork.IsMasterClient);
+
+        _isReady = false;
         RoomRenewal();
     }
 
@@ -57,10 +60,14 @@ public class GUI_Network_Room : GUIFullScreen {
     }
 
     public void ReadyBtn() {
+        _readyBtn.SetActive(!_isReady);
+        _readyCancleBtn.SetActive(_isReady);
         if (_isReady) {
+            _isReady = false;
             _network.ReadyCancle();
             return;
         }
+        _isReady = true;
         _network.Ready();
     }
 
