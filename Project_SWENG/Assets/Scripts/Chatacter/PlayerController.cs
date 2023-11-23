@@ -2,6 +2,7 @@ using Photon.Pun;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Character {
@@ -12,6 +13,8 @@ namespace Character {
 
         public static event EventHandler<IntEventArgs> EventRecover;
         public static event EventHandler<IntEventArgs> EventDamaged;
+
+        public static event EventHandler<EventArgs> EventEquip; 
         private DicePoint _point;
 
         private void Awake()
@@ -35,10 +38,14 @@ namespace Character {
             return _point.GetPoint() >= _usePointAtAttack;
         }
 
-        public override void AttackAct()
+        protected override void AttackAct(bool isSkill)
         {
+            if (isSkill)
+            {
+                _photonView.RPC("AttackVfx", RpcTarget.All, null);
+                return;
+            }
             _point.UsePoint(_usePointAtAttack);
-            _photonView.RPC("AttackVfx", RpcTarget.All, null);
         }
 
         public override string GetName()
@@ -63,7 +70,7 @@ namespace Character {
             }
         }
 
-        public override void DamageAct()
+        protected override void DamageAct()
         {
             EventDamaged?.Invoke(this, new IntEventArgs(stat.HP.Value));
         }
@@ -88,6 +95,90 @@ namespace Character {
         {
             stat.Revive();
             gameObject.transform.position = GameManager.Instance.respawnPos.position;
+        }
+
+        public void EquipItemHandler(Item item)
+        {
+            // itemType 0 : helmet
+            // itemType 1 : Armor
+            // itemType 2 : shield
+            
+            switch (item.type)
+            {
+                case Item.ItemType.Helmet:
+                    photonView.RPC("EquipItem", RpcTarget.All, 0, item.value); 
+                    break;
+                case Item.ItemType.Armor:
+                    photonView.RPC("EquipItem", RpcTarget.All, 1, item.value); 
+                    break;
+                case Item.ItemType.Shield:
+                    photonView.RPC("EquipItem", RpcTarget.All, 2, item.value); 
+                    break;
+            }
+            
+            EventEquip?.Invoke(this, null);
+        }
+        
+        [PunRPC]
+        public void EquipItem(int itemType, int value)
+        {
+            if (!stat.IsAlive()) return;
+
+            switch (itemType)
+            {
+                case 0:
+                    stat.HP.AddMaxValue(value);
+                    stat.SetDef(value, true);
+                    stat.SetAttackPower(value, true);
+                    break;
+                case 1:
+                    stat.HP.AddMaxValue(value);
+                    break;
+                case 2:
+                    stat.SetDef(value, true);
+                    break;
+            }
+        }
+        
+        public void UnEquipItemHandler(Item item)
+        {
+            // itemType 0 : helmet
+            // itemType 1 : Armor
+            // itemType 2 : shield
+            
+            switch (item.type)
+            {
+                case Item.ItemType.Helmet:
+                    photonView.RPC("EquipItem", RpcTarget.All, 0, item.value); 
+                    break;
+                case Item.ItemType.Armor:
+                    photonView.RPC("EquipItem", RpcTarget.All, 1, item.value); 
+                    break;
+                case Item.ItemType.Shield:
+                    stat.SetDef(item.value, false);
+                    break;
+            }
+        }
+        
+        [PunRPC]
+        public void UnEquipItem(int itemType, int value)
+        {
+            if (!stat.IsAlive()) return;
+
+            switch (itemType)
+            {
+                case 0:
+                    stat.HP.SubMaxValue(value);
+                    stat.SetDef(value, false);
+                    stat.SetAttackPower(value, false);
+                    break;
+                case 1:
+                    stat.HP.SubMaxValue(value);
+                    break;
+                case 2:
+                    stat.SetDef(value, false);
+                    break;
+            }
         }
     }
 }

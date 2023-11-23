@@ -3,6 +3,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Character;
+using Photon.Pun.Demo.SlotRacer;
 using UnityEngine;
 using static UnityEditor.Progress;
 
@@ -12,6 +14,8 @@ public class EquipManager : MonoBehaviour
     public CharacterObjectListsAllGender allGender;
     [HideInInspector]
     public CharacterObjectGroups body;
+
+    private PlayerController _playerController;
 
     [Header("Network")]
     private PhotonView _photonView;
@@ -55,6 +59,7 @@ public class EquipManager : MonoBehaviour
     private void Start()
     {
         _photonView = GetComponent<PhotonView>();
+        _playerController = GetComponent<PlayerController>();
         _BuildLists();
         _SetupPlayer(0);
     }
@@ -152,7 +157,6 @@ public class EquipManager : MonoBehaviour
 
             if (go.GetComponent<SkinnedMeshRenderer>())
                 mat = go.GetComponent<SkinnedMeshRenderer>().sharedMaterial;
-
         }
     }
     
@@ -168,9 +172,36 @@ public class EquipManager : MonoBehaviour
             body.facialHair[curBeardCode].SetActive(true);
     }
 
+    public Item GetEquipWeaponHasSkill()
+    {
+        if (curEquipWeapon != null && curEquipWeapon.hasSkill)
+            return curEquipWeapon;
+        
+        return null;
+    }
+
+    public Item GetEquipHelmet()
+    {
+        if (curEquipHelmet)
+            return curEquipHelmet;
+        return null;
+    }
+    public Item GetEquipArmor()
+    {
+        if (curEquipArmor)
+            return curEquipArmor;
+        return null;
+    }
+    
+    public Item GetEquipShield()
+    {
+        if (curEquipShield)
+            return curEquipShield;
+        return null;
+    }
+
     private void _SetHelmet(int itemID)
     {
-        
         //helmetType 0 : headCovering Base
         //helmetType 1 : headCovering No FacialHair
         //helmetType 2 : headCovering No Hair
@@ -180,7 +211,7 @@ public class EquipManager : MonoBehaviour
         curEquipHelmetType = itemID / 100; ;
 
         _photonView.RPC("_SetHelmetByBool", RpcTarget.All, true);
-
+       
     }
 
     public void _ResetHelmet()
@@ -217,15 +248,16 @@ public class EquipManager : MonoBehaviour
                 femaleHeadParent.SetActive(!tryEquip);
                 femaleEyebrowsParent.SetActive(!tryEquip);
                 break;
-
         }
-
     }
 
     public void EquipHelmet(Item item)
     {
         _ResetHelmet();
+        if(curEquipHelmet)
+            _playerController.UnEquipItemHandler(curEquipHelmet);
         _SetHelmet(item.id);
+        _playerController.EquipItemHandler(item);
     }
 
     private void _ResetArmor(int curArmorCode)
@@ -251,7 +283,6 @@ public class EquipManager : MonoBehaviour
         body.hips[newArmorCode].SetActive(tryEquip);
         body.leg_Right[newArmorCode].SetActive(tryEquip);
         body.leg_Left[newArmorCode].SetActive(tryEquip);
-
     }
 
     public void EquipArmor(Item item)
@@ -263,9 +294,11 @@ public class EquipManager : MonoBehaviour
         else
         {
             _ResetArmor(curEquipArmor.id);
+            _playerController.UnEquipItemHandler(curEquipArmor);
         }
         
         _SetArmor(item.id);
+        _playerController.EquipItemHandler(item);
     }
     
     // Equip Weapon
@@ -289,17 +322,25 @@ public class EquipManager : MonoBehaviour
     public void EquipShield(Item newShield)
     {
         if (curEquipShield != newShield)
+        {
             _photonView.RPC("UnEquipShield", RpcTarget.All);
-
+        }
+            
+        
         shieldModel = Instantiate(newShield.itemObject, shieldSlot);
         curEquipShield = newShield;
+        _playerController.EquipItemHandler(newShield);
     }
 
     [PunRPC]
     private void UnEquipShield()
     {
-        if(shieldModel != null) 
+        if (shieldModel != null)
+        {
             Destroy(shieldModel);
+            _playerController.UnEquipItemHandler(curEquipShield);
+        }
+            
         curEquipShield = null;
     }
 

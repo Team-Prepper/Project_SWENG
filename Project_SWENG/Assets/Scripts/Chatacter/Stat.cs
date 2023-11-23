@@ -9,6 +9,7 @@ namespace Character {
         [SerializeField] private int _lv = 1;
         [SerializeField] private int _exp;
         [SerializeField] private GaugeValue<int> _hp = new GaugeValue<int>(100, 100, 0);
+        [SerializeField] private int _def = 0;
         [SerializeField] private int _attackPower = 10;
 
         public GaugeValue<int> HP {
@@ -26,9 +27,25 @@ namespace Character {
             return _lv;
         }
 
+        public void SetDef(int value, bool add)
+        {
+            if(add)
+                _def += value;
+            else
+                _def -= value;
+        }
+        
+        public void SetAttackPower(int value, bool add)
+        {
+            if (add)
+                _attackPower += value;
+            else
+                _attackPower -= value;
+        }
+
         public void Damaged(int amount)
         {
-            _hp.SubValue(amount);
+            _hp.SubValue(amount - _def);
         }
 
         public void Recover(int amount)

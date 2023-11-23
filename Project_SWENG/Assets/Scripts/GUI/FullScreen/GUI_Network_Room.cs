@@ -31,12 +31,12 @@ public class GUI_Network_Room : GUIFullScreen {
 
     public void RoomRenewal()
     {
-        /*
+        
         ListText.text = "";
 
         for (int i = 0; i < PhotonNetwork.PlayerList.Length; i++)
             ListText.text += PhotonNetwork.PlayerList[i].NickName + ((i + 1 == PhotonNetwork.PlayerList.Length) ? "" : ", ");
-        */
+        
 
         for (int i = 0; i < _playerStates.Length; i++) {
             if (PhotonNetwork.PlayerList.Length <= i)

@@ -17,6 +17,7 @@ public class Item : ScriptableObject
     public int cost;
     public Sprite icon;
     public Sprite skillIcon;
+    public bool hasSkill = false;
     public int skillCost;
     public int skillDmg;
     public GameObject itemObject;

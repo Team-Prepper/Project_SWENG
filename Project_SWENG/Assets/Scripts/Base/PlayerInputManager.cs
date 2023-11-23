@@ -122,7 +122,7 @@ public class PlayerInputManager : MonoSingleton<PlayerInputManager>
         Debug.Log("SpaceBar");
         Debug.Log(PhotonNetwork.NetworkClientState);
         
-        if (GameManager.Instance.player != null)
+        if (!GameManager.IsNull())
         {
             OnUnitSelected?.Invoke(GameManager.Instance.player);
         }

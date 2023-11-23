@@ -43,7 +43,7 @@ namespace Character {
             return enemyStat.atk;
         }
 
-        public override void DamageAct()
+        protected override void DamageAct()
         {
             Collider[] colliders = Physics.OverlapSphere(transform.position, 10f, playerLayerMask);
             if (colliders.Length > 0)

@@ -47,6 +47,22 @@ public class GaugeValue<T> where T: IComparable, IConvertible {
         _minValue = minValue;
     }
 
+    public void AddMaxValue(T addAmount) {
+        _maxValue = (_maxValue.ConvertTo<double>()
+                     + addAmount.ConvertTo<double>()).ConvertTo<T>();
+        
+        _curValue = (_curValue.ConvertTo<double>()
+                     + addAmount.ConvertTo<double>()).ConvertTo<T>();
+
+        if (_curValue.CompareTo(_maxValue) > 0)
+            _curValue = _maxValue;
+    }
+
+    public void SubMaxValue(T addAmount)
+    {
+        _maxValue = (_maxValue.ConvertTo<double>()
+                     - addAmount.ConvertTo<double>()).ConvertTo<T>();
+    }
 
     public void AddValue(T addAmount) {
         _curValue = (_curValue.ConvertTo<double>()

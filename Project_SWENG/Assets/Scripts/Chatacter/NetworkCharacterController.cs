@@ -37,11 +37,11 @@ namespace Character {
             return string.Empty;
         }
 
-        public void Attack(Vector3 targetPos)
+        public void Attack(Vector3 targetPos, bool isSkill = false)
         {
             transform.LookAt(targetPos);
             _photonView.RPC("RunAnimation", RpcTarget.All, 0);
-            AttackAct();
+            AttackAct(isSkill);
         }
         
         public virtual int GetAttackValue()
@@ -73,12 +73,13 @@ namespace Character {
             DieAct();
         }
 
-        public virtual void AttackAct()
+        protected virtual void AttackAct(bool isSkill)
         {
 
         }
+   
 
-        public virtual void DamageAct()
+        protected virtual void DamageAct()
         {
 
         }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Character;
 using UISystem;
+using UnityEngine.UI;
 using static UnityEditor.PlayerSettings;
 
 public class GUI_Attack : GUIFullScreen {
@@ -12,15 +13,19 @@ public class GUI_Attack : GUIFullScreen {
     [SerializeField] private Transform _markerParent;
     [SerializeField] private Transform[] _attackMarkers;
     private int _useMarkCount;
-
+    
     [SerializeField] private List<HexCoordinate> _attackRange;
 
     Hex _attackTarget;
 
-    public void Set(GameObject target) {
+    private int _skillDmg = 0;
+    [SerializeField] private GameObject btnAttack;
+    [SerializeField] private GameObject btnSkill;
 
+    public void Set(GameObject target, int skillDmg = 0) {
+    
         _target = target.GetComponent<NetworkCharacterController>();
-
+        _skillDmg = skillDmg;
         HexCoordinate curHexPos = HexCoordinate.ConvertFromVector3(target.transform.position);
         _markerParent.localScale = Vector3.one / GameObject.Find("Canvas").GetComponent<RectTransform>().localScale.y;
 
@@ -38,8 +43,9 @@ public class GUI_Attack : GUIFullScreen {
 
         CamMovement.Instance.ConvertMovementCamera();
         CamMovement.Instance.CamSetToPlayer(target);
-
-
+        
+        btnAttack.SetActive(skillDmg == 0);
+        btnSkill.SetActive(skillDmg != 0); // (skillDmg > 0)
     }
 
     private void _SetMarker(Vector3 pos)
@@ -69,6 +75,16 @@ public class GUI_Attack : GUIFullScreen {
         AttackManager.Instance.BaseAtkHandler(_target, _attackTarget);
         Close();
 
+    }
+    
+    public void UseSkill()
+    {
+        if (_attackTarget == null) {
+            return;
+        }
+
+        AttackManager.Instance.SkillAtkHandler(_target, _attackTarget, _skillDmg);
+        Close();
     }
 
     public override void HexSelect(HexCoordinate selectGridPos)

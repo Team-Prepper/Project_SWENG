@@ -10,29 +10,36 @@ public class GUI_ActionSelect : GUIFullScreen
 
     DicePoint _targetUnit;
 
-    [SerializeField] Image btnAttack;
-    [SerializeField] Image btnMove;
+    private Item _curEquipWeapon;
 
+    [SerializeField] Button btnAttack;
+    [SerializeField] Button btnMove;
+    [SerializeField] private GameObject btnSkill;
+    
     public void Set(GameObject target)
     {
         _target = target;
         _targetUnit = target.GetComponent<DicePoint>();
+        _curEquipWeapon = target.GetComponent<EquipManager>().GetEquipWeaponHasSkill();
         CamMovement.Instance.IsPlayerMove = true;
 
-        if (_targetUnit.GetPoint() < 3)
-        {
-            btnAttack.color = new Color(.5f, .5f, .5f);
-        }
-        if (_targetUnit.GetPoint() < 2)
-        {
-            btnMove.color = new Color(.5f, .5f, .5f);
-        }
+        btnSkill.SetActive(_curEquipWeapon);
+        btnAttack.interactable = (_targetUnit.GetPoint() >= 3);
+        btnMove.interactable = (_targetUnit.GetPoint() >= 2);
+    }
+    
+    public void OpenSkill()
+    {
+        if (_targetUnit.GetPoint() < _curEquipWeapon.skillCost) return;
+        _targetUnit.UsePoint(_curEquipWeapon.skillCost);
+        UIManager.OpenGUI<GUI_Attack>("Attack").Set(_target, _curEquipWeapon.skillDmg);
+        CamMovement.Instance.IsPlayerMove = true;
+        _AfterAction();
     }
 
     public void OpenAttack()
     {
         if (_targetUnit.GetPoint() < 3) return;
-
         UIManager.OpenGUI<GUI_Attack>("Attack").Set(_target);
         CamMovement.Instance.IsPlayerMove = true;
         _AfterAction();
@@ -46,11 +53,6 @@ public class GUI_ActionSelect : GUIFullScreen
         _AfterAction();
     }
 
-    public void EndTurn() // not used
-    {
-        GameManager.Instance.EnemyTurn();
-        Close();
-    }
 
     private void _AfterAction() {
         Close();

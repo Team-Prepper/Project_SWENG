@@ -6,6 +6,10 @@ public class MonoSingletonPun<T> : MonoBehaviourPun where T : MonoBehaviour
 
     static T _instance;
 
+    public static bool IsNull()
+    {
+        return _instance == null;
+    }
     public static T Instance
     {
         get
