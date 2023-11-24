@@ -101,7 +101,7 @@ public partial class NetworkManager
 
     public bool IsIdxPlayerReady(int idx)
     {
-        return (idx & ReadyState) == 1;
+        return ((1 << idx) & ReadyState) > 0;
     }
 
     public void ReadyCancle()
@@ -137,23 +137,26 @@ public partial class NetworkManager
 
         int retval = 0;
 
-        for (int i = 0; i < PhotonNetwork.CountOfPlayersInRooms; i++)
+        for (int i = 0; i < PhotonNetwork.PlayerList.Length; i++)
         {
+            Debug.Log(PhotonNetwork.PlayerList[i].NickName);
             if (PhotonNetwork.PlayerList[i].NickName.Equals(PhotonNetwork.MasterClient.NickName)) continue;
             if (!_playerReadyState.ContainsKey(PhotonNetwork.PlayerList[i].NickName)) continue;
             if (!_playerReadyState[PhotonNetwork.PlayerList[i].NickName]) continue;
 
             retval += (1 << i);
         }
+        Debug.Log(retval);
+
         return retval;
     }
 
     public void StartGame()
     {
         if (!PhotonNetwork.IsMasterClient) return;
-        if (_readyPlayerCount + 1 < PhotonNetwork.CountOfPlayersInRooms) return;
+        if (_readyPlayerCount + 1 < PhotonNetwork.PlayerList.Length) return;
 
-        for (int i = 0; i < PhotonNetwork.CountOfPlayersInRooms; i++)
+        for (int i = 0; i < PhotonNetwork.PlayerList.Length; i++)
         {
             if (PhotonNetwork.PlayerList[i].NickName.Equals(PhotonNetwork.MasterClient.NickName)) continue;
             if (!_playerReadyState.ContainsKey(PhotonNetwork.PlayerList[i].NickName)) return;
