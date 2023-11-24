@@ -1,4 +1,5 @@
 using Photon.Pun;
+using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -37,18 +38,20 @@ public class GUI_Network_Room : GUIFullScreen {
         
         ListText.text = "";
 
-        for (int i = 0; i < PhotonNetwork.PlayerList.Length; i++)
-            ListText.text += PhotonNetwork.PlayerList[i].NickName + ((i + 1 == PhotonNetwork.PlayerList.Length) ? "" : ", ");
+        Player[] roomMember = _network.RoomMemberList();
+
+        for (int i = 0; i < roomMember.Length; i++)
+            ListText.text += roomMember[i].NickName + ((i + 1 == roomMember.Length) ? "" : ", ");
         
 
         for (int i = 0; i < _playerStates.Length; i++) {
-            if (PhotonNetwork.PlayerList.Length <= i)
+            if (roomMember.Length <= i)
             {
                 _playerStates[i].gameObject.SetActive(false);
                 continue;
             }
             _playerStates[i].gameObject.SetActive(true);
-            _playerStates[i].SetInfor(PhotonNetwork.PlayerList[i].NickName, _network.IsIdxPlayerReady(i));
+            _playerStates[i].SetInfor(roomMember[i].NickName, _network.IsIdxPlayerReady(i));
         }
 
         _roomInforText.text = string.Format("{0} / {1} / {2}Max",
@@ -60,8 +63,8 @@ public class GUI_Network_Room : GUIFullScreen {
     }
 
     public void ReadyBtn() {
-        _readyBtn.SetActive(!_isReady);
-        _readyCancleBtn.SetActive(_isReady);
+        _readyBtn.SetActive(_isReady);
+        _readyCancleBtn.SetActive(!_isReady);
         if (_isReady) {
             _isReady = false;
             _network.ReadyCancle();
