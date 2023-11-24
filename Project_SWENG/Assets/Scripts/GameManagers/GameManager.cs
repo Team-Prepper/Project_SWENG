@@ -149,7 +149,7 @@ public class GameManager : MonoSingletonPun<GameManager>
     private void ResetPlayerTurn()
     {
         turnEndButton.interactable = true;
-        for (int i = 0; i < PhotonNetwork.CountOfPlayers; i++)
+        for (int i = 0; i < PhotonNetwork.CountOfPlayersInRooms; i++)
         {
             _playerTurnEndArray[i] = false;
         }

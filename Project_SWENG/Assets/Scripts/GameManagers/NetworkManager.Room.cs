@@ -88,6 +88,10 @@ public partial class NetworkManager
     int _readyPlayerCount;
     bool _isReady;
 
+    public Player[] RoomMemberList() {
+        return PhotonNetwork.PlayerList;
+    }
+
     // Turn End Button Trigger
     public void Ready()
     {
@@ -133,7 +137,7 @@ public partial class NetworkManager
 
         int retval = 0;
 
-        for (int i = 0; i < PhotonNetwork.CountOfPlayers; i++)
+        for (int i = 0; i < PhotonNetwork.CountOfPlayersInRooms; i++)
         {
             if (PhotonNetwork.PlayerList[i].NickName.Equals(PhotonNetwork.MasterClient.NickName)) continue;
             if (!_playerReadyState.ContainsKey(PhotonNetwork.PlayerList[i].NickName)) continue;
@@ -147,9 +151,9 @@ public partial class NetworkManager
     public void StartGame()
     {
         if (!PhotonNetwork.IsMasterClient) return;
-        if (_readyPlayerCount + 1 < PhotonNetwork.CountOfPlayers) return;
+        if (_readyPlayerCount + 1 < PhotonNetwork.CountOfPlayersInRooms) return;
 
-        for (int i = 0; i < PhotonNetwork.CountOfPlayers; i++)
+        for (int i = 0; i < PhotonNetwork.CountOfPlayersInRooms; i++)
         {
             if (PhotonNetwork.PlayerList[i].NickName.Equals(PhotonNetwork.MasterClient.NickName)) continue;
             if (!_playerReadyState.ContainsKey(PhotonNetwork.PlayerList[i].NickName)) return;
