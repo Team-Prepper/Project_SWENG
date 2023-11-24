@@ -78,8 +78,7 @@ namespace Character {
         public override void DieAct()
         {
             EventDamaged?.Invoke(this, new IntEventArgs(stat.HP.Value));
-
-            Debug.Log("PlayerDead");
+            HexGrid.Instance.GetTileAt(this.transform.position).Entity = null;
             if(PhotonNetwork.IsMasterClient)
             {
                 if(GameManager.Instance.remainLife > 0)
@@ -93,7 +92,7 @@ namespace Character {
         [PunRPC]
         public void RespawnPlayer()
         {
-            
+            Debug.Log("REVIVE");
             gameObject.transform.position = GameManager.Instance.respawnPos.position;
             HexGrid.Instance.GetTileAt(GameManager.Instance.respawnPos.position).Entity = gameObject;
             stat.Revive();
