@@ -1,63 +1,81 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <List>
   <!-- GUI_Title -->
-  <Element key="title_EnterYourName"	  value="Enter Your Name" />
-  <Element key="title_Connection"	      value="Connection" />\
+  <Element key="title_EnterYourName"	    value="Enter Your Name" />
+  <Element key="title_Connection"	        value="Connection" />
   
   <!-- GUI_Network_Lobby -->
-  <Element key="lobby_Welcom"	          value="Welcom" />
-  <Element key="lobby_RoomName"	        value="Room Name" />
-  <Element key="lobby_CreateRoom"	      value="Create Room" />
-  <Element key="lobby_QuickStart"	      value="Quick Start" />
-  <Element key="lobby_Logout"	          value="Logout" />
+  <Element key="lobby_Welcom"	            value="Welcom" />
+  <Element key="lobby_RoomName"	          value="Room Name" />
+  <Element key="lobby_CreateRoom"	        value="Create Room" />
+  <Element key="lobby_QuickStart"	        value="Quick Start" />
+  <Element key="lobby_Logout"	            value="Logout" />
+  <Element key="lobby_Info"	              value="{0} Lobby / {1} Connection" />
   
   <!-- GUI_Network_Room -->
-  <Element key="room_EnterText"	        value="Enter Text" />
-  <Element key="room_Send"	            value="Send" />
-  <Element key="room_Ready"	            value="Ready" />
-  <Element key="room_ReadyCancle"	      value="Cancle" />
-  <Element key="room_GameStart"	        value="GameStart" />
-  <Element key="room_Disconnection"	    value="Disconnection" />
+  <Element key="room_EnterText"	          value="Enter Text" />
+  <Element key="room_Send"	              value="Send" />
+  <Element key="room_Ready"	              value="Ready" />
+  <Element key="room_ReadyCancle"	        value="Cancle" />
+  <Element key="room_GameStart"	          value="GameStart" />
+  <Element key="room_Disconnection"	      value="Disconnection" />
   
   <!-- GUI_PlayerInfor -->
-  <Element key="play_TurnEnd"	          value="Turn End" />
+  <Element key="play_TurnEnd"	            value="Turn End" />
   
   <!-- GUI_Dice -->
-  <Element key="dice_PressTheDice"	    value="Press The Dice" />
+  <Element key="dice_PressTheDice"	      value="Press The Dice" />
   
   <!-- GUI_ItemInteraction -->
-  <Element key="itemInterAction_Name"   value="Item Name" />
-  <Element key="itemInterAction_Equip"  value="Equip" />
-  <Element key="itemInterAction_Cancle" value="Close" />
+  <Element key="itemInterAction_Name"     value="Item Name" />
+  <Element key="itemInterAction_Attack"   value="Attack" />
+  <Element key="itemInterAction_Defense"  value="Defense" />
+  <Element key="itemInterAction_HP"       value="HP" />
+  <Element key="itemInterAction_Equip"    value="Equip" />
+  <Element key="itemInterAction_Cancle"   value="Close" />
 
   <!-- GUI_GameState -->
-  <Element key="gameState_GameOver"	    value="Game Over" />
-  <Element key="gameState_GameClear"    value="Game Clear" />
-  <Element key="gameState_ToLobby"	    value="Lobby" />
-  <Element key="gameState_ToRoom"	      value="Room" />
+  <Element key="gameState_GameOver"	      value="Game Over" />
+  <Element key="gameState_GameClear"      value="Game Clear" />
+  <Element key="gameState_ToLobby"	      value="Lobby" />
+  <Element key="gameState_ToRoom"	        value="Room" />
   
   <!-- GUI_Notice -->
-  <Element key="notice_Notice"	        value="Notice" />
-  <Element key="notice_OK"              value="OK" />
+  <Element key="notice_Notice"	          value="Notice" />
+  <Element key="notice_OK"                value="OK" />
 
   <!-- GUI_PlayerInforPopUp -->
-  <Element key="playerInforPopUp_Close" value="Close" />
+  <Element key="playerInforPopUp_Close"   value="Close" />
+
+  <!-- GUI_CharacterInfor -->
+  <Element key="characterInfor_Level"     value="Level" />
+  <Element key="characterInfor_HP"        value="HP" />
+  <Element key="characterInfor_Attack"    value="Attack" />
+
+  <!-- GUI_ActionSelect -->
+  <Element key="actionSelect_Attack"      value="Attack" />
+  <Element key="actionSelect_Skill"       value="Skill" />
+  <Element key="actionSelect_Move"        value="Move" />
+  <Element key="actionSelect_Close"       value="Close" />
   
   <!-- GUI_Setting -->
-  <Element key="setting_Setting"        value="Setting" />
-  <Element key="setting_SelectLanguage" value="Select Language" />
-  <Element key="setting_Kor"            value="Kor" />
-  <Element key="setting_Eng"            value="Eng" />
-  <Element key="setting_Vie"            value="Vie" />
-  <Element key="setting_Close"          value="Close" />
+  <Element key="setting_Setting"          value="Setting" />
+  <Element key="setting_SelectLanguage"   value="Select Language" />
+  <Element key="setting_Kor"              value="Kor" />
+  <Element key="setting_Eng"              value="Eng" />
+  <Element key="setting_Vie"              value="Vie" />
+  <Element key="setting_Close"            value="Close" />
   
   <!-- GUI_Shop -->
-  <Element key="shop_Shop"              value="Shop" />
+  <Element key="shop_Shop"                value="Shop" />
   
   <!-- GUI_ShopItem -->
-  <Element key="shopItem_ATK"           value="ATK" />
+  <Element key="shopItem_Name"            value="Item Name" />
+  <Element key="shopItem_Attack"          value="Attack : {0}" />
+  <Element key="shopItem_Defense"         value="Defense : {0}" />
+  <Element key="shopItem_HP"              value="HP : {0}" />
   
   <!-- ItemInfor -->
-  <Element key="item_helmet_001"        value="Basic Helmet" />
+  <Element key="item_helmet_001"          value="Basic Helmet" />
 
 </List>

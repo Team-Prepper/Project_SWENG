@@ -14,8 +14,8 @@ public class GUI_Network_Lobby : GUIFullScreen
     private NetworkManager _network;
 
     [SerializeField] private InputField RoomInput;
-    [SerializeField] private TMP_Text WelcomeText;
-    [SerializeField] private TMP_Text LobbyInfoText;
+    [SerializeField] private Text WelcomeText;          // TMP_Text->Text
+    [SerializeField] private Text LobbyInfoText;        // TMP_Text->Text
     [SerializeField] private Button[] CellBtn;
     [SerializeField] private Button PreviousBtn;
     [SerializeField] private Button NextBtn;
