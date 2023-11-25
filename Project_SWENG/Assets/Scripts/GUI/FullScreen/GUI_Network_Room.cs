@@ -13,8 +13,8 @@ public class GUI_Network_Room : GUIFullScreen {
     NetworkManager _network;
     [SerializeField] GUI_Network_Room_PlayerState[] _playerStates;
 
-    [SerializeField] TMP_Text ListText;
-    [SerializeField] TMP_Text _roomInforText;
+    [SerializeField] Text ListText;                 // TMP_Text -> Text
+    [SerializeField] Text _roomInforText;           // TMP_Text -> Text
     [SerializeField] GameObject _startBtn;
     [SerializeField] GameObject _readyBtn;
     [SerializeField] GameObject _readyCancleBtn;

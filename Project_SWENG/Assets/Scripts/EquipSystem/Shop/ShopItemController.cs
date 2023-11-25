@@ -9,10 +9,10 @@ public class ShopItemController : MonoBehaviour
 {
     [SerializeField] Image itemIcon;
     [SerializeField] Image itemIconBackground;
-    [SerializeField] TextMeshProUGUI itemName;
+    [SerializeField] Text itemName;                 // TextMeshProUGUI -> Text
     [SerializeField] Image skillIcon;
     
-    [SerializeField] TextMeshProUGUI itemInfo;
+    [SerializeField] Text itemInfo;                 // TextMeshProUGUI -> Text
     [SerializeField] TextMeshProUGUI itemCost;
                                     
     private List<Color> colors = new List<Color>();

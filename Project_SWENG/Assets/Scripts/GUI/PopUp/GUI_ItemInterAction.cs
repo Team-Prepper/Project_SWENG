@@ -13,7 +13,7 @@ public class GUI_ItemInterAction : GUIPopUp
     [SerializeField] private Image _itemIcon;
     [SerializeField] private Image _itemSkillIcon;
     [SerializeField] private Text _itemNameLabel;
-    [SerializeField] private TextMeshProUGUI _itemInforLabel;
+    [SerializeField] private Text _itemInforLabel;      // TextMeshProUGUI -> Text
     [SerializeField] private TextMeshProUGUI _itemSkillInfoLabel;
     protected override void Open(Vector2 openPos)
     {
