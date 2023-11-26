@@ -150,10 +150,10 @@ namespace Character {
             switch (item.type)
             {
                 case Item.ItemType.Helmet:
-                    photonView.RPC("EquipItem", RpcTarget.All, 0, item.value); 
+                    photonView.RPC("UnequipItem", RpcTarget.All, 0, item.value); 
                     break;
                 case Item.ItemType.Armor:
-                    photonView.RPC("EquipItem", RpcTarget.All, 1, item.value); 
+                    photonView.RPC("UnequipItem", RpcTarget.All, 1, item.value); 
                     break;
                 case Item.ItemType.Shield:
                     stat.SetDef(item.value, false);
@@ -162,7 +162,7 @@ namespace Character {
         }
         
         [PunRPC]
-        public void UnEquipItem(int itemType, int value)
+        public void UnequipItem(int itemType, int value)
         {
             if (!stat.IsAlive()) return;
 

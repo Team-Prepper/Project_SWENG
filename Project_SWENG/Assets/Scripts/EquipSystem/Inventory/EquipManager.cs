@@ -31,17 +31,18 @@ public class EquipManager : MonoBehaviour
     
     [Header("Current Equipment")]
     public Item curEquipHelmet;
+    [SerializeField] private Item curEquipArmor;
+    [SerializeField] private Item curEquipWeapon;
+    [SerializeField] private Item curEquipShield;
 
     private int curEquipHelmetCode = 0;
     private int curEquipHelmetType = 0;
-    
-    private Item curEquipArmor;
 
-    private Item curEquipWeapon;
-    private GameObject weaponModel;
+    
+    [SerializeField] private GameObject weaponModel;
     [SerializeField] private Transform weaponSlot;
 
-    private Item curEquipShield;
+    
     private GameObject shieldModel;
     [SerializeField] private Transform shieldSlot;
     
@@ -256,6 +257,7 @@ public class EquipManager : MonoBehaviour
         _ResetHelmet();
         if(curEquipHelmet)
             _playerController.UnEquipItemHandler(curEquipHelmet);
+        curEquipHelmet = item;
         _SetHelmet(item.id);
         _playerController.EquipItemHandler(item);
     }
@@ -274,15 +276,16 @@ public class EquipManager : MonoBehaviour
     private void _SetArmorByBool(int newArmorCode, bool tryEquip)
     {
         body.torso[newArmorCode].SetActive(tryEquip);
-        body.arm_Upper_Right[newArmorCode].SetActive(tryEquip);
-        body.arm_Upper_Left[newArmorCode].SetActive(tryEquip);
-        body.arm_Lower_Right[newArmorCode].SetActive(tryEquip);
-        body.arm_Lower_Left[newArmorCode].SetActive(tryEquip);
-        body.hand_Right[newArmorCode].SetActive(tryEquip);
-        body.hand_Left[newArmorCode].SetActive(tryEquip);
-        body.hips[newArmorCode].SetActive(tryEquip);
-        body.leg_Right[newArmorCode].SetActive(tryEquip);
-        body.leg_Left[newArmorCode].SetActive(tryEquip);
+        int setArmorCode = newArmorCode % 15;
+        body.arm_Upper_Right[setArmorCode].SetActive(tryEquip);
+        body.arm_Upper_Left[setArmorCode].SetActive(tryEquip);
+        body.arm_Lower_Right[setArmorCode].SetActive(tryEquip);
+        body.arm_Lower_Left[setArmorCode].SetActive(tryEquip);
+        body.hand_Right[setArmorCode].SetActive(tryEquip);
+        body.hand_Left[setArmorCode].SetActive(tryEquip);
+        body.hips[setArmorCode].SetActive(tryEquip);
+        body.leg_Right[setArmorCode].SetActive(tryEquip);
+        body.leg_Left[setArmorCode].SetActive(tryEquip);
     }
 
     public void EquipArmor(Item item)
@@ -296,7 +299,8 @@ public class EquipManager : MonoBehaviour
             _ResetArmor(curEquipArmor.id);
             _playerController.UnEquipItemHandler(curEquipArmor);
         }
-        
+
+        curEquipArmor = item;
         _SetArmor(item.id);
         _playerController.EquipItemHandler(item);
     }
@@ -304,15 +308,14 @@ public class EquipManager : MonoBehaviour
     // Equip Weapon
     public void EquipWeapon(Item newWeapon)
     {
-        if(curEquipWeapon != newWeapon) 
-            _photonView.RPC("UnEquipWeapon", RpcTarget.All);
+        if (curEquipWeapon != newWeapon)
+            UnequipWeapon();
 
         weaponModel = Instantiate(newWeapon.itemObject, weaponSlot);
         curEquipWeapon = newWeapon;
     }
 
-    [PunRPC]
-    private void UnEquipWeapon()
+    private void UnequipWeapon()
     {
         if(weaponModel != null)
             Destroy(weaponModel);
@@ -323,7 +326,7 @@ public class EquipManager : MonoBehaviour
     {
         if (curEquipShield != newShield)
         {
-            _photonView.RPC("UnEquipShield", RpcTarget.All);
+            UnequipShield();
         }
             
         
@@ -332,8 +335,7 @@ public class EquipManager : MonoBehaviour
         _playerController.EquipItemHandler(newShield);
     }
 
-    [PunRPC]
-    private void UnEquipShield()
+    private void UnequipShield()
     {
         if (shieldModel != null)
         {
