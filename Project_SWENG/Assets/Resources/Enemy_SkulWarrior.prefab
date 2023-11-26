@@ -2401,7 +2401,9 @@ MonoBehaviour:
   portrait: {fileID: 0}
   isDie: 0
   percent: 0
-  dropItem: []
+  isBoss: 0
+  dropItem:
+  - {fileID: 11400000, guid: a504f23aace7a494e9d26bbb4f95c74c, type: 2}
 --- !u!95 &2206973531236003403
 Animator:
   serializedVersion: 5
@@ -2444,6 +2446,7 @@ MonoBehaviour:
       _curValue: 100
       _maxValue: 100
       _minValue: 0
+    _def: 0
     _attackPower: 10
   healthGUI: {fileID: 7077351922033852203}
   playerLayerMask:
@@ -2465,7 +2468,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyController: {fileID: 0}
-  attackPower: 5
 --- !u!114 &-1472289238930318873
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -6,6 +6,7 @@ using UnityEngine;
 using UISystem;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
+using static UnityEngine.EventSystems.EventTrigger;
 
 public class GameManager : MonoSingletonPun<GameManager>
 {
@@ -111,7 +112,8 @@ public class GameManager : MonoSingletonPun<GameManager>
             if (StageBossSpawned == false && bossCnt == 0)
             {
                 Debug.Log("ALL BOSS IS DEAD");
-                spawner.SpawnBoss();
+                GameObject bossEnemy = spawner.SpawnBoss();
+                GameManager.Instance.enemies.Add(bossEnemy);
                 StageBossSpawned = true;
             }
         }
