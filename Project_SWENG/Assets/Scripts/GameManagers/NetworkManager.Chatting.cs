@@ -10,10 +10,10 @@ using UnityEditor.XR;
 using System.Runtime.InteropServices;
 
 
-public partial class NetworkManager
-{
+public partial class NetworkManager {
 
     public GUI_Chat _chatting;
+    public GUI_Emoji _emoji;
 
     public void Block(string name)
     {
@@ -23,11 +23,17 @@ public partial class NetworkManager
 
     List<string> _blockUser = new List<string>();
 
-    #region chat
-    public void Send(string msg)
+    public void SendChat(string msg)
     {
         PV.RPC("ChatRPC", RpcTarget.All, PhotonNetwork.NickName, msg);
     }
+
+    public void SendEmoji(string emojiKey)
+    {
+        PV.RPC("EmojiRPC", RpcTarget.All, PhotonNetwork.NickName, emojiKey);
+
+    }
+
 
     [PunRPC]
     void ChatRPC(string sender, string msg)
@@ -37,5 +43,14 @@ public partial class NetworkManager
 
         _chatting.Chat(sender, msg);
     }
-    #endregion
+
+    [PunRPC]
+    void EmojiRPC(string sender, string msg)
+    {
+        if (!_emoji) return;
+        if (_blockUser.Contains(sender)) return;
+
+        _emoji.RecieveEmoji(sender, msg);
+    } 
+
 }

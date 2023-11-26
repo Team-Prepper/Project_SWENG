@@ -13,10 +13,10 @@ public class GUI_Network_Lobby : GUIFullScreen
 
     private NetworkManager _network;
 
-    [SerializeField] private InputField RoomInput;
-    [SerializeField] private Text WelcomeText;          // TMP_Text->Text
-    [SerializeField] private Text LobbyInfoText;        // TMP_Text->Text
-    [SerializeField] private Button[] CellBtn;
+    [SerializeField] private InputField _roomNameInput;
+    [SerializeField] private Text _nickName;          // TMP_Text->Text
+    [SerializeField] private Text _lobbyInfor;        // TMP_Text->Text
+    [SerializeField] private Button[] _btnEnterRoom;
     [SerializeField] private Button PreviousBtn;
     [SerializeField] private Button NextBtn;
 
@@ -27,33 +27,35 @@ public class GUI_Network_Lobby : GUIFullScreen
     {
         base.Open(openPos);
 
-        WelcomeText.text = PhotonNetwork.LocalPlayer.NickName;
+        _nickName.text = PhotonNetwork.LocalPlayer.NickName;
         _network = GameObject.Find("NetworkManager").GetComponent<NetworkManager>();
+
+        UpdateData();
 
     }
 
     public void UpdateData() {
-        LobbyInfoText.text = (PhotonNetwork.CountOfPlayers - PhotonNetwork.CountOfPlayersInRooms) + "Lobby / " + PhotonNetwork.CountOfPlayers + "Connection";
+        _lobbyInfor.text = string.Format("{0}Lobby/ {1}Connection", (PhotonNetwork.CountOfPlayers - PhotonNetwork.CountOfPlayersInRooms), PhotonNetwork.CountOfPlayers);
 
         _rooms = _network.GetRoomInfor();
 
-        int maxPage = (_rooms.Count % CellBtn.Length == 0) ? _rooms.Count / CellBtn.Length : _rooms.Count / CellBtn.Length + 1;
+        int maxPage = (_rooms.Count % _btnEnterRoom.Length == 0) ? _rooms.Count / _btnEnterRoom.Length : _rooms.Count / _btnEnterRoom.Length + 1;
 
         PreviousBtn.interactable = (_currentPage <= 1) ? false : true;
         NextBtn.interactable = (_currentPage >= maxPage) ? false : true;
 
-        int _multiple = (_currentPage - 1) * CellBtn.Length;
-        for (int i = 0; i < CellBtn.Length; i++)
+        int _multiple = (_currentPage - 1) * _btnEnterRoom.Length;
+        for (int i = 0; i < _btnEnterRoom.Length; i++)
         {
-            CellBtn[i].interactable = (_multiple + i < _rooms.Count) ? true : false;
-            CellBtn[i].transform.GetChild(0).GetComponent<TMP_Text>().text = (_multiple + i < _rooms.Count) ? _rooms[_multiple + i].Name : "";
-            CellBtn[i].transform.GetChild(1).GetComponent<TMP_Text>().text = (_multiple + i < _rooms.Count) ? _rooms[_multiple + i].PlayerCount + "/" + _rooms[_multiple + i].MaxPlayers : "";
+            _btnEnterRoom[i].interactable = (_multiple + i < _rooms.Count) ? true : false;
+            _btnEnterRoom[i].transform.GetChild(0).GetComponent<TMP_Text>().text = (_multiple + i < _rooms.Count) ? _rooms[_multiple + i].Name : "";
+            _btnEnterRoom[i].transform.GetChild(1).GetComponent<TMP_Text>().text = (_multiple + i < _rooms.Count) ? _rooms[_multiple + i].PlayerCount + "/" + _rooms[_multiple + i].MaxPlayers : "";
         }
     }
 
     public void CreateRoom()
     {
-        string roomName = (RoomInput.text == "" ? "Room" + Random.Range(0, 100) : RoomInput.text);
+        string roomName = (_roomNameInput.text == "" ? "Room" + Random.Range(0, 100) : _roomNameInput.text);
         _network.CreateRoom(roomName);
     }
 
@@ -62,7 +64,7 @@ public class GUI_Network_Lobby : GUIFullScreen
     }
 
     public void JoinRoom(int num) {
-        PhotonNetwork.JoinRoom(_rooms[(_currentPage - 1) * CellBtn.Length + num].Name);
+        PhotonNetwork.JoinRoom(_rooms[(_currentPage - 1) * _btnEnterRoom.Length + num].Name);
     }
 
     public void Disconnect() {

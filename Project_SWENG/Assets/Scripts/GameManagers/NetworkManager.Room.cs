@@ -151,18 +151,20 @@ public partial class NetworkManager
         return retval;
     }
 
-    public void StartGame()
+    public bool StartGame()
     {
-        if (!PhotonNetwork.IsMasterClient) return;
-        if (_readyPlayerCount + 1 < PhotonNetwork.PlayerList.Length) return;
+        if (!PhotonNetwork.IsMasterClient) return false;
+        if (_readyPlayerCount + 1 < PhotonNetwork.PlayerList.Length) return false;
 
         for (int i = 0; i < PhotonNetwork.PlayerList.Length; i++)
         {
             if (PhotonNetwork.PlayerList[i].NickName.Equals(PhotonNetwork.MasterClient.NickName)) continue;
-            if (!_playerReadyState.ContainsKey(PhotonNetwork.PlayerList[i].NickName)) return;
-            if (!_playerReadyState[PhotonNetwork.PlayerList[i].NickName]) return;
+            if (!_playerReadyState.ContainsKey(PhotonNetwork.PlayerList[i].NickName)) return false;
+            if (!_playerReadyState[PhotonNetwork.PlayerList[i].NickName]) return false;
         }
 
         PhotonNetwork.LoadLevel("MapData02");
+
+        return true;
     }
 }

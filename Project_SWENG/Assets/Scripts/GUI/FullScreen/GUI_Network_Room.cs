@@ -59,7 +59,9 @@ public class GUI_Network_Room : GUIFullScreen {
     }
 
     public void StartGame() {
-        _network.StartGame();
+        if (!_network.StartGame()) {
+            UIManager.Instance.DisplayMessage("notice_PlayerNotReady");
+        }
     }
 
     public void ReadyBtn() {

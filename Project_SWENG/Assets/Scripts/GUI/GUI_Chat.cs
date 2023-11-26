@@ -29,7 +29,7 @@ public class GUI_Chat : MonoBehaviour {
         ChatInput.text = null;
 
         if (input[0] != '/') {
-            _network.Send(input);
+            _network.SendChat(input);
             return;
         }
 
