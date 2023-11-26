@@ -25,20 +25,18 @@ public class ShopManager : MonoSingleton<ShopManager>
         }
     }
 
-    public void BuyItemToShop(Item targetItem)
+    public bool BuyItemToShop(Item targetItem)
     {
         if(visitor.GetPoint() >= targetItem.cost)
         {
             visitor.UsePoint(targetItem.cost);
             InventoryManager.Instance.GetItem(targetItem);
             GUI_shop.showComment("Thank you for your purchase");
+            return true;
         }
-        else
-        {
-            GUI_shop.showComment("Not enough DicePoint");
-        }
-           
 
+        GUI_shop.showComment("Not enough DicePoint");
+        return false;
     }
 
     public List<Item> GetRandomItemList(int itemCounts)

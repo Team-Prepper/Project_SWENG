@@ -163,7 +163,7 @@ public partial class NetworkManager
             if (!_playerReadyState[PhotonNetwork.PlayerList[i].NickName]) return false;
         }
 
-        PhotonNetwork.LoadLevel("MapData02");
+        PhotonNetwork.LoadLevel(1);
 
         return true;
     }

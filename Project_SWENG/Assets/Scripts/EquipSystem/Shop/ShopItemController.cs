@@ -65,7 +65,7 @@ public class ShopItemController : MonoBehaviour
 
     public void BuyItemHandler()
     {
-        ShopManager.Instance.BuyItemToShop(thisItem);
-        Destroy(this.gameObject);
+        if(ShopManager.Instance.BuyItemToShop(thisItem))
+            Destroy(this.gameObject);
     }
 }

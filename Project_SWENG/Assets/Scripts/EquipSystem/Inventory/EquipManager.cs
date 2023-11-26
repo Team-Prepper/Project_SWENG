@@ -257,6 +257,7 @@ public class EquipManager : MonoBehaviour
         if(curEquipHelmet)
             _playerController.UnEquipItemHandler(curEquipHelmet);
         _SetHelmet(item.id);
+        curEquipHelmet = item;
         _playerController.EquipItemHandler(item);
     }
 
@@ -274,15 +275,16 @@ public class EquipManager : MonoBehaviour
     private void _SetArmorByBool(int newArmorCode, bool tryEquip)
     {
         body.torso[newArmorCode].SetActive(tryEquip);
-        body.arm_Upper_Right[newArmorCode].SetActive(tryEquip);
-        body.arm_Upper_Left[newArmorCode].SetActive(tryEquip);
-        body.arm_Lower_Right[newArmorCode].SetActive(tryEquip);
-        body.arm_Lower_Left[newArmorCode].SetActive(tryEquip);
-        body.hand_Right[newArmorCode].SetActive(tryEquip);
-        body.hand_Left[newArmorCode].SetActive(tryEquip);
-        body.hips[newArmorCode].SetActive(tryEquip);
-        body.leg_Right[newArmorCode].SetActive(tryEquip);
-        body.leg_Left[newArmorCode].SetActive(tryEquip);
+        int setArmorCode = newArmorCode % 18;
+        body.arm_Upper_Right[setArmorCode].SetActive(tryEquip);
+        body.arm_Upper_Left[setArmorCode].SetActive(tryEquip);
+        body.arm_Lower_Right[setArmorCode].SetActive(tryEquip);
+        body.arm_Lower_Left[setArmorCode].SetActive(tryEquip);
+        body.hand_Right[setArmorCode].SetActive(tryEquip);
+        body.hand_Left[setArmorCode].SetActive(tryEquip);
+        body.hips[setArmorCode].SetActive(tryEquip);
+        body.leg_Right[setArmorCode].SetActive(tryEquip);
+        body.leg_Left[setArmorCode].SetActive(tryEquip);
     }
 
     public void EquipArmor(Item item)
@@ -298,21 +300,21 @@ public class EquipManager : MonoBehaviour
         }
         
         _SetArmor(item.id);
+        curEquipArmor = item;
         _playerController.EquipItemHandler(item);
     }
     
     // Equip Weapon
     public void EquipWeapon(Item newWeapon)
     {
-        if(curEquipWeapon != newWeapon) 
-            _photonView.RPC("UnEquipWeapon", RpcTarget.All);
+        if (curEquipWeapon != newWeapon)
+            UnequipWeapon();
 
         weaponModel = Instantiate(newWeapon.itemObject, weaponSlot);
         curEquipWeapon = newWeapon;
     }
 
-    [PunRPC]
-    private void UnEquipWeapon()
+    private void UnequipWeapon()
     {
         if(weaponModel != null)
             Destroy(weaponModel);
@@ -323,7 +325,7 @@ public class EquipManager : MonoBehaviour
     {
         if (curEquipShield != newShield)
         {
-            _photonView.RPC("UnEquipShield", RpcTarget.All);
+            UnequipShield();
         }
             
         
@@ -332,8 +334,7 @@ public class EquipManager : MonoBehaviour
         _playerController.EquipItemHandler(newShield);
     }
 
-    [PunRPC]
-    private void UnEquipShield()
+    private void UnequipShield()
     {
         if (shieldModel != null)
         {
