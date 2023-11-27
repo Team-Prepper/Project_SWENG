@@ -12,7 +12,7 @@ using System.Runtime.InteropServices;
 
 public partial class NetworkManager : MonoBehaviourPunCallbacks
 {
-    private string gameVersion = "2";
+    private string gameVersion = "3";
 
     string _nickName;
 

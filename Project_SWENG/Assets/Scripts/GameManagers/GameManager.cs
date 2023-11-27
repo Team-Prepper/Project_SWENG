@@ -17,7 +17,8 @@ public class GameManager : MonoSingletonPun<GameManager>
     public GameObject night;
     [SerializeField] private EnemySpawner spawner;
     [SerializeField] private bool[] _playerTurnEndArray;
-
+    public int[] playerAttackDamage;
+    
     public Button turnEndButton;
 
     public int remainLife = 5;
@@ -40,6 +41,7 @@ public class GameManager : MonoSingletonPun<GameManager>
     private void Start()
     {
         _playerTurnEndArray = new bool[PhotonNetwork.CurrentRoom.PlayerCount];
+        playerAttackDamage = new int[PhotonNetwork.CurrentRoom.PlayerCount];
         ResetPlayerTurn();
     }
 
@@ -157,6 +159,16 @@ public class GameManager : MonoSingletonPun<GameManager>
         }
     }
 
+    public void CalTotalAttackDamageHandler(int damage)
+    {
+        photonView.RPC("CalAttackDamageToDashboard",RpcTarget.MasterClient, NetworkManager.PlayerID, damage);
+    }
+
+    [PunRPC]
+    private void CalAttackDamageToDashboard(int playerID, int damage)
+    {
+        playerAttackDamage[playerID] += damage;
+    }
     
 
     // NETWORK

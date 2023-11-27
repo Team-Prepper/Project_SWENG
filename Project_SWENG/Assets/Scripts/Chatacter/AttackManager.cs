@@ -7,8 +7,13 @@ namespace Character {
 
         private void AttackTo(NetworkCharacterController attacker, NetworkCharacterController defender, int skillDmg = 0)
         {
+            if (attacker.CompareTag("Player"))
+            {
+                int totalDmg = (skillDmg == 0) ? attacker.GetAttackValue() : skillDmg;
+                GameManager.Instance.CalTotalAttackDamageHandler(totalDmg);
+            }
             if(skillDmg > 0) // use skill
-                defender.DamagedHandler(attacker.GetAttackValue());
+                defender.DamagedHandler(skillDmg);
             else             // base attack
                 defender.DamagedHandler(attacker.GetAttackValue());
         }
