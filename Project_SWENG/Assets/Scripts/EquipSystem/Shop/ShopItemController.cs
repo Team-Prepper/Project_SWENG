@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using LangSystem;
 using TMPro;
 using Unity.VisualScripting;
 
@@ -39,28 +40,29 @@ public class ShopItemController : MonoBehaviour
         itemIcon.sprite = item.icon;
         itemIconBackground.color = colors[(int)item.tier];
         skillIcon.sprite = item.skillIcon;
-        itemName.text = item.name;
+        itemName.text = StringManager.Instance.GetStringByKey(item.name);
         itemCost.text = item.cost.ToString();
+
+        string format;
 
         switch (item.type)
         {
             case Item.ItemType.Helmet:
-                itemInfo.text = "ALL : ";
+                format = StringManager.Instance.GetStringByKey(item.name);
                 break;
             case Item.ItemType.Armor:
-                itemInfo.text = "HP : ";
+                format = StringManager.Instance.GetStringByKey("shopItem_HP");
                 break;
             case Item.ItemType.Weapon:
-                itemInfo.text = "ATK : ";
+                format = StringManager.Instance.GetStringByKey("shopItem_Attack");
                 break;
             case Item.ItemType.Shield:
-                itemInfo.text = "DEF : ";
+                format = StringManager.Instance.GetStringByKey("shopItem_Defense");
                 break;
             default:
-                itemInfo.text = "";
-                break;
+                return;
         }
-        itemInfo.text += item.value.ToString();
+        itemInfo.text += string.Format(format, item.value);
     }
 
     public void BuyItemHandler()

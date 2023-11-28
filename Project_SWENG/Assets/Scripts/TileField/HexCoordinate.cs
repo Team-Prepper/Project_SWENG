@@ -21,7 +21,9 @@ public struct HexCoordinate : IEquatable<HexCoordinate> {
 
     public Vector3 ConvertToVector3()
     {
-        return new Vector3();
+        if (x % 2 == 0)
+            return new Vector3(x * xOffset, 0, z * zOffset);
+        return new Vector3(x * xOffset, 0, (z - 0.5f) * zOffset);
     }
 
     public static List<HexCoordinate> GetDirectionList(HexCoordinate target)
