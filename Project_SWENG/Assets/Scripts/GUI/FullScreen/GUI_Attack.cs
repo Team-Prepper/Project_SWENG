@@ -68,6 +68,7 @@ public class GUI_Attack : GUIFullScreen {
 
     public void DoAttack()
     {
+
         if (_attackTarget == null) {
             return;
         }
@@ -111,5 +112,11 @@ public class GUI_Attack : GUIFullScreen {
         Debug.Log("이게 맞지");
         _attackTarget = HexGrid.Instance.GetTileAt(selectGridPos);
         _SetMarker(_attackTarget.transform.position);
+    }
+
+    public override void OpenWindow(string key)
+    {
+        if (_nowPopUp) return;
+        base.OpenWindow(key);
     }
 }

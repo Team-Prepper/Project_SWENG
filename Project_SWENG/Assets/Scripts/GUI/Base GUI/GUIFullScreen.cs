@@ -7,7 +7,7 @@ namespace UISystem {
         public LayerMask selectionMask;
 
         private List<GUIPopUp> _popupUI;
-        private GUIPopUp _nowPopUp;
+        protected GUIPopUp _nowPopUp;
 
         protected override void Open(Vector2 openPos)
         {

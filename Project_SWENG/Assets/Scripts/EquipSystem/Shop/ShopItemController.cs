@@ -40,7 +40,7 @@ public class ShopItemController : MonoBehaviour
         itemIcon.sprite = item.icon;
         itemIconBackground.color = colors[(int)item.tier];
         skillIcon.sprite = item.skillIcon;
-        itemName.text = StringManager.Instance.GetStringByKey(item.name);
+        itemName.text = StringManager.Instance.GetStringByKey(item.itemName);
         itemCost.text = item.cost.ToString();
 
         string format;
@@ -48,7 +48,7 @@ public class ShopItemController : MonoBehaviour
         switch (item.type)
         {
             case Item.ItemType.Helmet:
-                format = StringManager.Instance.GetStringByKey(item.name);
+                format = StringManager.Instance.GetStringByKey(item.itemName);
                 break;
             case Item.ItemType.Armor:
                 format = StringManager.Instance.GetStringByKey("shopItem_HP");
@@ -62,7 +62,7 @@ public class ShopItemController : MonoBehaviour
             default:
                 return;
         }
-        itemInfo.text += string.Format(format, item.value);
+        itemInfo.text = string.Format(format, item.value);
     }
 
     public void BuyItemHandler()

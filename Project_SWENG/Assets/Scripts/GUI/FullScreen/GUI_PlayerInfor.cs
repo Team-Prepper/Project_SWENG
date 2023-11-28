@@ -60,14 +60,17 @@ public class GUI_PlayerInfor : GUIFullScreen {
     }
 
     public void TurnEndButton() {
+        if (_nowPopUp) return;
         GameManager.Instance.PlayerTurnEnd();
     }
 
     public void AttackButton() {
+        if (_nowPopUp) return;
         if (!_targetPlayer.CanAttack()) return;
     }
 
     public void OpenInforPopUp() {
+        if (_nowPopUp) return;
         UIManager.OpenGUI<GUI_ShowCharacterInfor>("PlayerInforPopUp").SetInfor(_targetPlayer.name, _targetPlayer);
     }
 

@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UISystem;
 
-public class GUI_ActionSelect : GUIFullScreen
+public class GUI_ActionSelect : GUIPopUp
 {
     GameObject _target;
 
@@ -58,6 +58,7 @@ public class GUI_ActionSelect : GUIFullScreen
         Close();
     }
 
+    /*
     public override void HexSelect(HexCoordinate selectGridPos)
     {
         Hex selected = HexGrid.Instance.GetTileAt(selectGridPos);
@@ -65,7 +66,7 @@ public class GUI_ActionSelect : GUIFullScreen
         if (selected && selected.Entity == _target)
             Close();
     }
-
+    */
     public override void Close()
     {
         CamMovement.Instance.IsPlayerMove = false;
