@@ -24,6 +24,7 @@ public class EnemySpawner : MonoBehaviourPun
     private void Start()
     {
         SpawnEnemyHandler();
+        bossCam.SetActive(false);
     }
 
     private void SpawnEnemyHandler()
@@ -76,9 +77,16 @@ public class EnemySpawner : MonoBehaviourPun
     public GameObject SpawnBoss()
     {
         GameObject enemy = PhotonNetwork.Instantiate(bossEnemyPrefab.name, stageBossPos.transform.position, stageBossPos.transform.rotation);
+        photonView.RPC("SetBossCam", RpcTarget.All, null);
+        
+        return enemy;
+    }
+
+    [PunRPC]
+    private void SetBossCam()
+    {
         bossCam.SetActive(true);
         StartCoroutine(BossCamOut());
-        return enemy;
     }
 
     IEnumerator BossCamOut()
