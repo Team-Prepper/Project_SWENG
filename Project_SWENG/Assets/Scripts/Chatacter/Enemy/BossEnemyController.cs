@@ -11,6 +11,7 @@ public class BossEnemyController : EnemyController
         if (PhotonNetwork.IsMasterClient)
         {
             Debug.Log("YOU WIN");
+            GameManager.Instance.GameEnd(true);
         }
     }
 }

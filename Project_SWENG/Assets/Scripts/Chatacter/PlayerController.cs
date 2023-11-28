@@ -86,6 +86,10 @@ namespace Character {
                     GameManager.Instance.remainLife -= 1;
                     photonView.RPC("RespawnPlayer", RpcTarget.All, null); 
                 }
+                else
+                {
+                    GameManager.Instance.GameEnd(false);
+                }
             }
         }
 

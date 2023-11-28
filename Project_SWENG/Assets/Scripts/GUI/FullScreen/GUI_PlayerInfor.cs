@@ -11,7 +11,7 @@ public class GUI_PlayerInfor : GUIFullScreen
     [SerializeField] private GameObject _target;
     [SerializeField] private TextMeshProUGUI _dicePoint;
     [SerializeField] private GUI_PlayerHealth _playerHealth;
-
+    [SerializeField] private GameObject turnEndGlowLight;
     public Button turnEndButton;
 
     DicePoint _targetUnit;
@@ -37,7 +37,7 @@ public class GUI_PlayerInfor : GUIFullScreen
     {
         base.Update();
         _dicePoint.text = _targetUnit.GetPoint().ToString();
-
+        turnEndGlowLight.SetActive(turnEndButton.interactable);
     }
 
     public override void HexSelect(HexCoordinate selectGridPos)

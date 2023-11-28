@@ -15,6 +15,7 @@ public class EnemySpawner : MonoBehaviourPun
     public List<GameObject> bossEnemyPrefabList;
     public GameObject bossEnemyPrefab;
     public List<Hex> enemySpawnPos = new List<Hex>();
+    public GameObject bossCam;
     public Hex stageBossPos;
 
     private int enemyCnt = 9;
@@ -75,6 +76,14 @@ public class EnemySpawner : MonoBehaviourPun
     public GameObject SpawnBoss()
     {
         GameObject enemy = PhotonNetwork.Instantiate(bossEnemyPrefab.name, stageBossPos.transform.position, stageBossPos.transform.rotation);
+        bossCam.SetActive(true);
+        StartCoroutine(BossCamOut());
         return enemy;
+    }
+
+    IEnumerator BossCamOut()
+    {
+        yield return new WaitForSeconds(3f);
+        bossCam.SetActive(false);
     }
 }

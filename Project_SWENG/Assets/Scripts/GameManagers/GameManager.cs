@@ -17,7 +17,7 @@ public class GameManager : MonoSingletonPun<GameManager>
     public GameObject night;
     [SerializeField] private EnemySpawner spawner;
     [SerializeField] private bool[] _playerTurnEndArray;
-    public int[] playerAttackDamage;
+    public Dictionary<string, int> playerDmgDashboard = new Dictionary<string, int>();
     
     public Button turnEndButton;
 
@@ -25,6 +25,12 @@ public class GameManager : MonoSingletonPun<GameManager>
     public Transform respawnPos;
 
     [SerializeField] private bool StageBossSpawned = false;
+
+    [Header("GameEnd")] 
+    [SerializeField] private GameObject victoryLevel;
+    [SerializeField] private GameObject loseLevel;
+    [SerializeField] private GameObject dashboard;
+    [SerializeField] private DashboardManager dashboardManager;
 
     public enum Phase
     {
@@ -41,7 +47,6 @@ public class GameManager : MonoSingletonPun<GameManager>
     private void Start()
     {
         _playerTurnEndArray = new bool[PhotonNetwork.CurrentRoom.PlayerCount];
-        playerAttackDamage = new int[PhotonNetwork.CurrentRoom.PlayerCount];
         ResetPlayerTurn();
     }
 
@@ -161,15 +166,31 @@ public class GameManager : MonoSingletonPun<GameManager>
 
     public void CalTotalAttackDamageHandler(int damage)
     {
-        photonView.RPC("CalAttackDamageToDashboard",RpcTarget.MasterClient, NetworkManager.PlayerID, damage);
-    }
-
-    [PunRPC]
-    private void CalAttackDamageToDashboard(int playerID, int damage)
-    {
-        playerAttackDamage[playerID] += damage;
+        photonView.RPC("CalAttackDamageToDashboardNick",RpcTarget.MasterClient, PhotonNetwork.NickName, damage);
     }
     
+    [PunRPC]
+    private void CalAttackDamageToDashboardNick(string playerNickName, int damage)
+    {
+        if(playerDmgDashboard.ContainsKey(playerNickName))
+            playerDmgDashboard[playerNickName] += damage;
+        else
+            playerDmgDashboard.Add(playerNickName, damage);
+    }
+
+    public void GameEnd(bool victory)
+    {
+        if (victory)
+        {
+            victoryLevel.SetActive(true);
+        }
+        else
+        {
+            loseLevel.SetActive(false);
+        }
+        dashboardManager.ShowDashboardHandler(victory);
+        dashboard.SetActive(true);
+    }
 
     // NETWORK
 
