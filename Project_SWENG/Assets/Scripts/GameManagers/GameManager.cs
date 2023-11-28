@@ -17,6 +17,9 @@ public class GameManager : MonoSingletonPun<GameManager>
     public List<GameObject> bossEnemies;
     public GameObject day;
     public GameObject night;
+
+    private bool isGameOver = false;
+
     [SerializeField] private EnemySpawner spawner;
     [SerializeField] private bool[] _playerTurnEndArray;
     public Dictionary<string, int> playerDmgDashboard = new Dictionary<string, int>();
@@ -33,7 +36,9 @@ public class GameManager : MonoSingletonPun<GameManager>
 
     [Header("GameEnd")] 
     [SerializeField] private GameObject victoryLevel;
+    [SerializeField] private GameObject victoryCam;
     [SerializeField] private GameObject loseLevel;
+    [SerializeField] private GameObject loseCam;
     [SerializeField] private GameObject dashboard;
     [SerializeField] private DashboardManager dashboardManager;
 
@@ -54,6 +59,8 @@ public class GameManager : MonoSingletonPun<GameManager>
         _playerTurnEndArray = new bool[PhotonNetwork.CurrentRoom.PlayerCount];
         ResetPlayerTurn();
         dashboard.SetActive(false);
+        victoryCam.SetActive(false);
+        loseLevel.SetActive(false);
         HealthCountHandler();
     }
 
@@ -131,8 +138,9 @@ public class GameManager : MonoSingletonPun<GameManager>
                 StageBossSpawned = true;
             }
         }
-        
-        Invoke("PlayerTurnStandBy", 3f);
+
+        if(isGameOver == false)
+            Invoke("PlayerTurnStandBy", 3f);
     }
     
     public void EnemyTurn()
@@ -200,14 +208,16 @@ public class GameManager : MonoSingletonPun<GameManager>
 
     public void GameEnd(bool victory)
     {
-        Time.timeScale = 0;
+        isGameOver = true;
         if (victory)
         {
             victoryLevel.SetActive(true);
+            victoryCam.SetActive(true);
         }
         else
         {
-            loseLevel.SetActive(false);
+            loseLevel.SetActive(true);
+            loseCam.SetActive(true);
         }
         dashboardManager.ShowDashboardHandler(victory);
         dashboard.SetActive(true);
