@@ -21,7 +21,8 @@ public class GUI_PlayerHealth : MonoBehaviour
 
     private void Awake()
     {
-        PlayerController.EventDamaged += GUI_Damaged;
+        PlayerController.EventDamaged += GUI_ChangeHealth;
+        PlayerController.EventRecover += GUI_ChangeHealth;
         PlayerController.EventEquip += GUI_SetMaxHealth;
     }
 
@@ -33,7 +34,7 @@ public class GUI_PlayerHealth : MonoBehaviour
         _curValue = _target.stat.HP.Value;
     }
 
-    void GUI_Damaged(object sender, IntEventArgs e)
+    void GUI_ChangeHealth(object sender, IntEventArgs e)
     {
         SetHealth();
         StartCoroutine(LerpValue(e.Value));

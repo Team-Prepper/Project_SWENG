@@ -7,6 +7,8 @@ using UISystem;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 using static UnityEngine.EventSystems.EventTrigger;
+using System.Xml.Serialization;
+using TMPro;
 
 public class GameManager : MonoSingletonPun<GameManager>
 {
@@ -25,6 +27,9 @@ public class GameManager : MonoSingletonPun<GameManager>
     public Transform respawnPos;
 
     [SerializeField] private bool StageBossSpawned = false;
+
+    [Header("PlayerTotalHealth")]
+    [SerializeField] private TextMeshProUGUI healthCount;
 
     [Header("GameEnd")] 
     [SerializeField] private GameObject victoryLevel;
@@ -48,6 +53,8 @@ public class GameManager : MonoSingletonPun<GameManager>
     {
         _playerTurnEndArray = new bool[PhotonNetwork.CurrentRoom.PlayerCount];
         ResetPlayerTurn();
+        dashboard.SetActive(false);
+        HealthCountHandler();
     }
 
     private void Update()
@@ -164,6 +171,19 @@ public class GameManager : MonoSingletonPun<GameManager>
         }
     }
 
+    public void HealthCountHandler()
+    {
+        photonView.RPC("HealthCount", RpcTarget.All, remainLife);
+    }
+
+    [PunRPC]
+    private void HealthCount(int life)
+    {
+        healthCount.text = life.ToString();
+    }
+
+
+
     public void CalTotalAttackDamageHandler(int damage)
     {
         photonView.RPC("CalAttackDamageToDashboardNick",RpcTarget.MasterClient, PhotonNetwork.NickName, damage);
@@ -180,6 +200,7 @@ public class GameManager : MonoSingletonPun<GameManager>
 
     public void GameEnd(bool victory)
     {
+        Time.timeScale = 0;
         if (victory)
         {
             victoryLevel.SetActive(true);

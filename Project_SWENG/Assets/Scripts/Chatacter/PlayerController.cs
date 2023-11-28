@@ -14,7 +14,7 @@ namespace Character {
         public static event EventHandler<IntEventArgs> EventRecover;
         public static event EventHandler<IntEventArgs> EventDamaged;
 
-        public static event EventHandler<EventArgs> EventEquip; 
+        public static event EventHandler<EventArgs> EventEquip;
         private DicePoint _point;
 
         private void Awake()
@@ -84,6 +84,7 @@ namespace Character {
                 if(GameManager.Instance.remainLife > 0)
                 {
                     GameManager.Instance.remainLife -= 1;
+                    GameManager.Instance.HealthCountHandler();
                     photonView.RPC("RespawnPlayer", RpcTarget.All, null); 
                 }
                 else
@@ -99,7 +100,8 @@ namespace Character {
             Debug.Log("REVIVE");
             gameObject.transform.position = GameManager.Instance.respawnPos.position;
             HexGrid.Instance.GetTileAt(GameManager.Instance.respawnPos.position).Entity = gameObject;
-            stat.Revive();
+            stat.HP.FillMax();
+            Recover(100);
         }
 
         public void EquipItemHandler(Item item)
