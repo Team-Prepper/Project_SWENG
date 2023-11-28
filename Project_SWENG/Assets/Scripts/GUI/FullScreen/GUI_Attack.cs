@@ -89,12 +89,17 @@ public class GUI_Attack : GUIFullScreen {
 
     public override void HexSelect(HexCoordinate selectGridPos)
     {
-        Debug.Log("Try Attack At" + selectGridPos);
+
+        if (_attackTarget && _attackTarget == HexGrid.Instance.GetTileAt(selectGridPos)) {
+            DoAttack();
+            return;
+        }
 
         _ResetMarker();
 
         if (!_attackRange.Contains(selectGridPos))
         {
+            Debug.Log("여긴 아니지");
             _attackTarget = null;
             foreach (HexCoordinate pos in _attackRange) {
                 _SetMarker(pos.ConvertToVector3());
@@ -103,6 +108,7 @@ public class GUI_Attack : GUIFullScreen {
 
         }
 
+        Debug.Log("이게 맞지");
         _attackTarget = HexGrid.Instance.GetTileAt(selectGridPos);
         _SetMarker(_attackTarget.transform.position);
     }

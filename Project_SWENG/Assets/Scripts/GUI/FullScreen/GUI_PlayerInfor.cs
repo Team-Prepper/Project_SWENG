@@ -6,8 +6,7 @@ using TMPro;
 using Character;
 using UISystem;
 
-public class GUI_PlayerInfor : GUIFullScreen
-{
+public class GUI_PlayerInfor : GUIFullScreen {
     [SerializeField] private GameObject _target;
     [SerializeField] private TextMeshProUGUI _dicePoint;
     [SerializeField] private GUI_PlayerHealth _playerHealth;
@@ -55,7 +54,7 @@ public class GUI_PlayerInfor : GUIFullScreen
             UIManager.OpenGUI<GUI_ActionSelect>("ActionSelect").Set(_target);
             return;
         }
-        
+
         if (!selected.Entity.TryGetComponent<NetworkCharacterController>(out NetworkCharacterController target)) return;
         UIManager.OpenGUI<GUI_ShowCharacterInfor>("CharacterInfor").SetInfor(target.GetName(), target);
     }
@@ -66,6 +65,10 @@ public class GUI_PlayerInfor : GUIFullScreen
 
     public void AttackButton() {
         if (!_targetPlayer.CanAttack()) return;
+    }
+
+    public void OpenInforPopUp() {
+        UIManager.OpenGUI<GUI_ShowCharacterInfor>("PlayerInforPopUp").SetInfor(_targetPlayer.name, _targetPlayer);
     }
 
 }  
