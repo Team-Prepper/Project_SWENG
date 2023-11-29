@@ -21,6 +21,10 @@ public class GUI_Title : GUIFullScreen
     }
     public void Connect()
     {
+        if (_nickNameInput.text.Equals(string.Empty)) {
+            UIManager.Instance.DisplayMessage("title_NoNicknameError");
+            return;
+        }
         _network.Connect(_nickNameInput.text);
         PhotonNetwork.ConnectUsingSettings();
         PhotonNetwork.LocalPlayer.NickName = _nickNameInput.text;
