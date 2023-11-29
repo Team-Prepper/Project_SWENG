@@ -32,11 +32,9 @@ namespace Character {
             maxHp = enemyStatus.maxHp;
             atk = enemyStatus.atk;
             def = enemyStatus.def;
-            speed = enemyStatus.speed;
             Lv = enemyStatus.Lv;
             portrait = enemyStatus.UIImage;
             Exp = enemyStatus.Exp;
-            percent = enemyStatus.percent;
             isBoss = enemyStatus.isBoss;
             dropItem = new List<Item>(enemyStatus.dropItem);
         }

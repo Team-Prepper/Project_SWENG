@@ -10,9 +10,6 @@ public class EnemyStatus : ScriptableObject
     public int atk = 10;
     public int def = 10;
     public int maxHp = 60;
-    public float percent = 70;
-    
-    public int speed = 50;
     
     public int Lv = 1;
     public int Exp = 10;

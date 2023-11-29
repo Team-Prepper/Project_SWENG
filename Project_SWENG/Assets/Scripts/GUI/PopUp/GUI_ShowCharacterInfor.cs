@@ -18,7 +18,7 @@ public class GUI_ShowCharacterInfor : GUIPopUp
         _name.SetText(name);
         _lv.text = target.stat.GetLevel().ToString();
         _hp.text = target.stat.HP.ToString();
-        _attackValue.text = target.stat.GetAttackValue().ToString();
+        _attackValue.text = target.GetAttackValue().ToString();
 
     }
 }

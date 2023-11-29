@@ -51,7 +51,7 @@ namespace UISystem {
             {
                 HexCoordinate coord = MousePointHex();
 
-                Debug.Log(coord);
+                //Debug.Log(coord);
                 HexSelect(coord);
             }
         }

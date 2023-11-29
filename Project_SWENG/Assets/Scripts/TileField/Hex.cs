@@ -174,7 +174,7 @@ public class Hex : MonoBehaviour
     private void _SpawnItem()
     {
         itemMesh = Instantiate(item.itemObject, itemZone.transform);
-        itemMesh.transform.localScale = Vector3.one * 3f;
+        //itemMesh.transform.localScale = Vector3.one * 3f;
     }
 
     private void SetCost()

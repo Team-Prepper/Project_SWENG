@@ -16,9 +16,12 @@ MonoBehaviour:
   atk: 10
   def: 10
   maxHp: 60
-  percent: 70
-  speed: 50
   Lv: 1
   Exp: 10
+  isBoss: 0
   UIImage: {fileID: 0}
-  dropItem: []
+  dropItem:
+  - {fileID: 11400000, guid: ea19b87df2cf1864a9e41bc39f6c18e5, type: 2}
+  - {fileID: 11400000, guid: cc7cc37b5684fbf4a8735d758a2ce9a4, type: 2}
+  - {fileID: 11400000, guid: 192ce8f07c792fd4faabc8b86179e3e3, type: 2}
+  - {fileID: 11400000, guid: fef7e4baad3b5ce48ae85e730a557365, type: 2}

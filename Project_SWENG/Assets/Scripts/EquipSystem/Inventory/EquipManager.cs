@@ -237,6 +237,7 @@ public class EquipManager : MonoBehaviour
                 break;
             case 3:
                 body.headNoElements[curEquipHelmetCode].SetActive(tryEquip);
+                hairParent.SetActive(!tryEquip);
                 if (isMale)
                 {
                     maleHeadParent.SetActive(!tryEquip);
