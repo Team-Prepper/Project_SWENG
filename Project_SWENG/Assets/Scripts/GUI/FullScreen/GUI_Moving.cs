@@ -7,10 +7,6 @@ using UISystem;
 
 public class GUI_Moving : GUIFullScreen {
 
-    private enum State { ready, select }
-
-    private State _state;
-
     private DicePoint _targetPoint;
     [SerializeField] private NetworkUnit _targetUnit;
     private HexCoordinate _selectedPos;
@@ -97,7 +93,6 @@ public class GUI_Moving : GUIFullScreen {
 
     public void Set(GameObject target)
     {
-        _state = State.ready;
         CamMovement.Instance.IsPlayerMove = true;
         _targetPoint = target.GetComponent<DicePoint>();
         _targetUnit = target.GetComponent<NetworkUnit>();
@@ -108,36 +103,27 @@ public class GUI_Moving : GUIFullScreen {
         _moveNumParent.localScale = Vector3.one / GameObject.Find("Canvas").GetComponent<RectTransform>().localScale.y;
     }
 
-    public override void HexSelect(HexCoordinate selectGridHex)
+    public override void HexSelect(HexCoordinate selectGridPos)
     {
         CamMovement.Instance.IsPlayerMove = false;
-        if (!movementRange.IsHexPositionInRange(selectGridHex))
+
+        if (_selectedPos != null && selectGridPos == _selectedPos)
+        {
+            _MoveUnit();
+            return;
+        }
+
+        if (!movementRange.IsHexPositionInRange(selectGridPos) ||
+            selectGridPos == HexCoordinate.ConvertFromVector3(_targetPoint.transform.position))
         {
             _HideRange();
             Close();
             return;
         }
 
-        switch (_state)
-        {
-            case State.ready:
-                _ShowPath(selectGridHex);
-                _state = State.select;
-                
-                _selectedPos = selectGridHex;
-                break;
-            default:
-                if (selectGridHex == _selectedPos)
-                {
-                    _MoveUnit();
-                    break;
-                }
-                _ShowPath(selectGridHex);
-                _state = State.select;
-                
-                _selectedPos = selectGridHex;
-                break;
-        }
+
+        _ShowPath(selectGridPos);
+        _selectedPos = selectGridPos;
 
     }
 }
