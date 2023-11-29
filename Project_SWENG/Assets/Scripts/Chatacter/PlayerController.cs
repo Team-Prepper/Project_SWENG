@@ -123,7 +123,7 @@ namespace Character {
                     break;
             }
 
-            //EventEquip?.Invoke(this, null); <- no option to take it off
+            EventEquip?.Invoke(this, null);
         }
 
         [PunRPC]
@@ -165,7 +165,7 @@ namespace Character {
                     stat.SetDef(item.value, false);
                     break;
             }
-            EventEquip?.Invoke(this, null);
+            //EventEquip?.Invoke(this, null);
         }
         
         [PunRPC]

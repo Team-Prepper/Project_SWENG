@@ -8,10 +8,10 @@ using TMPro;
 
 public class GUI_ShowCharacterInfor : GUIPopUp
 {
-    [SerializeField] xText _name;
-    [SerializeField] TextMeshProUGUI _lv;
-    [SerializeField] TextMeshProUGUI _hp;
-    [SerializeField] TextMeshProUGUI _attackValue;
+    [SerializeField] protected xText _name;
+    [SerializeField] protected TextMeshProUGUI _lv;
+    [SerializeField] protected TextMeshProUGUI _hp;
+    [SerializeField] protected TextMeshProUGUI _attackValue;
 
 
     public void SetInfor(string name, NetworkCharacterController target) {

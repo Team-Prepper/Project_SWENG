@@ -2,13 +2,13 @@ using LangSystem;
 using ObserberPattern;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class GUI_ItemEquiped : MonoBehaviour, IObserver
 {
-
     [SerializeField] Image slotHelmet;
     [SerializeField] Image iconHelmet;
     [SerializeField] Image slotArmor;
@@ -17,6 +17,13 @@ public class GUI_ItemEquiped : MonoBehaviour, IObserver
     [SerializeField] Image iconHandL;
     [SerializeField] Image slotHandR;
     [SerializeField] Image iconHandR;
+
+    [Header("MyCharacterPopUp")]
+    [SerializeField] TextMeshProUGUI helmetValue;
+    [SerializeField] TextMeshProUGUI armorValue;
+    [SerializeField] TextMeshProUGUI weaponValue;
+    [SerializeField] TextMeshProUGUI weaponSkillValue;
+    [SerializeField] TextMeshProUGUI shieldValue;
 
     readonly List<Color> colors = new List<Color>()
     {
@@ -44,21 +51,31 @@ public class GUI_ItemEquiped : MonoBehaviour, IObserver
                 slotHelmet.color = tierColor;
                 if(item.icon != null)
                     iconHelmet.sprite = item.icon;
+                if(helmetValue != null)
+                    helmetValue.text = item.value.ToString();
                 break;
             case Item.ItemType.Armor:
                 slotArmor.color = tierColor;
                 if (item.icon != null)
                     iconArmor.sprite = item.icon;
+                if (armorValue != null)
+                    armorValue.text = item.value.ToString();
                 break;
             case Item.ItemType.Weapon:
                 slotHandL.color = tierColor;
                 if (item.icon != null)
                     iconHandL.sprite = item.icon;
+                if (weaponValue != null)
+                    weaponValue.text = item.value.ToString();
+                if(weaponSkillValue != null && item.hasSkill)
+                    weaponSkillValue.text = "Cost" + item.skillCost.ToString() + " / DMG :" + item.skillDmg.ToString();
                 break;
             case Item.ItemType.Shield:
                 slotHandR.color = tierColor;
                 if (item.icon != null)
                     iconHandR.sprite = item.icon;
+                if (shieldValue != null)
+                    shieldValue.text = item.value.ToString();
                 break;
         }
     }
