@@ -11,11 +11,11 @@ namespace Character {
 
         [SerializeField] int _usePointAtAttack = 3;
 
-        public static event EventHandler<IntEventArgs> EventRecover;
-        public static event EventHandler<IntEventArgs> EventDamaged;
-
+        public static event EventHandler<IntEventArgs> EventChangeHp;
         public static event EventHandler<EventArgs> EventEquip;
         private DicePoint _point;
+
+        [SerializeField] ParticleSystem LevelUpEffect;
 
         private void Awake()
         {
@@ -29,7 +29,7 @@ namespace Character {
 
             stat.Recover(val);
 
-            EventRecover?.Invoke(this, new IntEventArgs(stat.HP.Value));
+            EventChangeHp?.Invoke(this, new IntEventArgs(stat.HP.Value));
             return stat.HP.Value;
         }
 
@@ -72,12 +72,12 @@ namespace Character {
 
         protected override void DamageAct()
         {
-            EventDamaged?.Invoke(this, new IntEventArgs(stat.HP.Value));
+            EventChangeHp?.Invoke(this, new IntEventArgs(stat.HP.Value));
         }
 
         public override void DieAct()
         {
-            EventDamaged?.Invoke(this, new IntEventArgs(stat.HP.Value));
+            EventChangeHp?.Invoke(this, new IntEventArgs(stat.HP.Value));
             HexGrid.Instance.GetTileAt(this.transform.position).Entity = null;
             if(PhotonNetwork.IsMasterClient)
             {
@@ -122,10 +122,10 @@ namespace Character {
                     photonView.RPC("EquipItem", RpcTarget.All, 2, item.value); 
                     break;
             }
-            
-            EventEquip?.Invoke(this, null);
+
+            //EventEquip?.Invoke(this, null); <- no option to take it off
         }
-        
+
         [PunRPC]
         public void EquipItem(int itemType, int value)
         {
@@ -165,6 +165,7 @@ namespace Character {
                     stat.SetDef(item.value, false);
                     break;
             }
+            EventEquip?.Invoke(this, null);
         }
         
         [PunRPC]
@@ -186,6 +187,16 @@ namespace Character {
                     stat.SetDef(value, false);
                     break;
             }
+        }
+
+        public void GetExp(int val)
+        {
+            if (stat.GetExp(val))
+            {
+                LevelUpEffect.Play();
+                EventEquip?.Invoke(this, null);
+            }
+            
         }
     }
 }

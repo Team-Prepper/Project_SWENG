@@ -12,12 +12,9 @@ namespace Character {
         public int atk;
         public int def;
 
-        public int speed;
         public int Lv;
         public int Exp;
-        public Sprite portrait;
         public bool isDie = false;
-        public float percent;
         public bool isBoss = false;
         public List<Item> dropItem;
 
@@ -33,7 +30,6 @@ namespace Character {
             atk = enemyStatus.atk;
             def = enemyStatus.def;
             Lv = enemyStatus.Lv;
-            portrait = enemyStatus.UIImage;
             Exp = enemyStatus.Exp;
             isBoss = enemyStatus.isBoss;
             dropItem = new List<Item>(enemyStatus.dropItem);

@@ -62,10 +62,9 @@ namespace Character {
                 if (enemyStat.isBoss)
                     GameManager.Instance.bossEnemies.Remove(gameObject);
             }
-                
-
             healthGUI.UpdateGUI(0);
             DropItem();
+            DropExp();
             Destroy(this.gameObject, 1f);
         }
 
@@ -75,6 +74,19 @@ namespace Character {
             Item dropitem = enemyStat.dropItem[Random.Range(0, enemyStat.dropItem.Count)];
             curHex.Item = dropitem;
             dropitem.itemHex = this.curHex;
+        }
+
+        private void DropExp()
+        {
+            foreach (var neighbours in HexGrid.Instance.GetNeighboursFor(curHex.HexCoords))
+            {
+                Hex curHex = HexGrid.Instance.GetTileAt(neighbours);
+                GameObject entity = curHex.Entity;
+                if (entity != null && entity.CompareTag("Player"))
+                {
+                    entity.GetComponent<PlayerController>()?.GetExp(enemyStat.Exp);
+                }
+            }
         }
     }
 }

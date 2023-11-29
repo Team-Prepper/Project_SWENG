@@ -7,7 +7,7 @@ namespace Character {
     public class Stat {
 
         [SerializeField] private int _lv = 1;
-        [SerializeField] private int _exp;
+        [SerializeField] private int _exp = 0;
         [SerializeField] private GaugeValue<int> _hp = new GaugeValue<int>(100, 100, 0);
         [SerializeField] private int _def = 0;
         [SerializeField] private int _attackPower = 10;
@@ -43,9 +43,30 @@ namespace Character {
                 _attackPower -= value;
         }
 
+        public bool GetExp(int val)
+        {
+            _exp += val;
+            if(_exp >= 10 * _lv)
+            {
+                LevelUp(_exp / (10 * _lv));
+                _exp = _exp % (10 * _lv);
+                return true;
+            }
+            return false;
+        }
+
+        private void LevelUp(int val)
+        {
+            _lv += val;
+            _attackPower += 5;
+            _def += 2;
+            _hp.AddMaxValue(10);
+        }
+
         public void Damaged(int amount)
         {
-            _hp.SubValue(amount - _def);
+            int totalDmg = amount - _def;
+            _hp.SubValue((totalDmg > 0) ? totalDmg : 1);
         }
 
         public void Recover(int amount)

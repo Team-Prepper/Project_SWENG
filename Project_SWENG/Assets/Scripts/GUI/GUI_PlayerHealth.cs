@@ -21,8 +21,7 @@ public class GUI_PlayerHealth : MonoBehaviour
 
     private void Awake()
     {
-        PlayerController.EventDamaged += GUI_ChangeHealth;
-        PlayerController.EventRecover += GUI_ChangeHealth;
+        PlayerController.EventChangeHp += GUI_ChangeHealth;
         PlayerController.EventEquip += GUI_SetMaxHealth;
     }
 
