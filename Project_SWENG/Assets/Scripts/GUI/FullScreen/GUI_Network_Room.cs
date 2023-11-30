@@ -18,6 +18,7 @@ public class GUI_Network_Room : GUIFullScreen {
     [SerializeField] GameObject _startBtn;
     [SerializeField] GameObject _readyBtn;
     [SerializeField] GameObject _readyCancleBtn;
+    [SerializeField] private GameObject _dicePointSetter;
 
     bool _isReady;
  
@@ -27,8 +28,10 @@ public class GUI_Network_Room : GUIFullScreen {
 
         _network = GameObject.Find("NetworkManager").GetComponent<NetworkManager>();
         _startBtn.SetActive(PhotonNetwork.IsMasterClient);
+        _dicePointSetter.SetActive(PhotonNetwork.IsMasterClient);
+        
         _readyBtn.SetActive(!PhotonNetwork.IsMasterClient);
-
+        
         _isReady = false;
         RoomRenewal();
     }

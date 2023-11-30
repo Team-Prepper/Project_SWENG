@@ -14,6 +14,7 @@ public partial class NetworkManager : MonoBehaviourPunCallbacks
 {
     private string gameVersion = "3";
 
+    public int baseDiceValue = 0;
     string _nickName;
 
     public TMP_Text StatusText;
@@ -37,6 +38,11 @@ public partial class NetworkManager : MonoBehaviourPunCallbacks
     void Update()
     {
         StatusText.text = PhotonNetwork.NetworkClientState.ToString();
+    }
+
+    public void SetBaseDicePoint(int value)
+    {
+        baseDiceValue = value;
     }
 
     public void Connect(string nickName) { PhotonNetwork.ConnectUsingSettings(); _nickName = nickName; }

@@ -26,7 +26,6 @@ namespace UISystem {
         public void SetPlayer(DicePoint target)
         {
             _targetPlayer = target;
-
         }
 
         public void SetDiceValue()

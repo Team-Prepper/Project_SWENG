@@ -4,8 +4,14 @@ using UnityEngine;
 public class DicePoint : MonoBehaviour
 {
 
-    public int basePoint = 5;
+    [SerializeField] private int basePoint = 5;
     [SerializeField] int _point;
+
+    private void Start()
+    {
+        basePoint = GameObject.Find("NetworkManager").GetComponent<NetworkManager>().baseDiceValue;
+        SetPoint(0);
+    }
 
     public void UsePoint(int usingAmount)
     {
