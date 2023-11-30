@@ -14,19 +14,11 @@
       <Method Name="HighlightPath" Hidden="true" />
       <Field Name="itemMesh" Hidden="true" />
       <Field Name="itemZone" Hidden="true" />
-      <Method Name="OnEnable" Hidden="true" />
       <Method Name="OnMouseToggle" Hidden="true" />
       <Method Name="ResetHighlight" Hidden="true" />
     </Members>
-    <NestedTypes>
-      <Enum Name="Hex.Type" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>Assets\Scripts\TileField\Hex.cs</NewMemberFileName>
-        </TypeIdentifier>
-      </Enum>
-    </NestedTypes>
     <TypeIdentifier>
-      <HashCode>kAABABgBgAAAKEAhAAwACBAEEAQAAAAAAABBAgAACAA=</HashCode>
+      <HashCode>kAAAABgBgAAAKEAhABwACBIEEAQCAAQAAABBAAAQgEA=</HashCode>
       <FileName>Assets\Scripts\TileField\Hex.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -59,7 +51,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="GraphSearch">
-    <Position X="8.75" Y="7" Width="4.5" />
+    <Position X="8.75" Y="7.5" Width="4.5" />
     <Members>
       <Method Name="GeneratePathBFS" Hidden="true" />
     </Members>
@@ -86,7 +78,7 @@
       <Method Name="Start" Hidden="true" />
     </Members>
     <TypeIdentifier>
-      <HashCode>AgAAAAAAAKgAAAEACAAACAAAAAAAAQAgJAAAQAABAAA=</HashCode>
+      <HashCode>AgAAAAAAAKgAAAEACAAACAAAAAAAAQAgJCIAQAABAAA=</HashCode>
       <FileName>Assets\Scripts\ForNetworkScripts\NetworkUnit.cs</FileName>
       <NewMemberFileName>Assets\Scripts\Dice\DicePoint.cs</NewMemberFileName>
     </TypeIdentifier>
@@ -94,66 +86,12 @@
       <Field Name="_dicePoints" />
     </ShowAsAssociation>
   </Class>
-  <Class Name="GridMaker">
-    <Position X="15.25" Y="0.75" Width="3.75" />
-    <Members>
-      <Field Name="_hexPrefab" Hidden="true" />
-      <Method Name="_HexTileSpawn" Hidden="true" />
-      <Method Name="_SpawnHexTile" Hidden="true" />
-      <Field Name="_tileCastle" Hidden="true" />
-      <Field Name="_tileDungon" Hidden="true" />
-      <Field Name="_tileHill" Hidden="true" />
-      <Field Name="_tileNormal" Hidden="true" />
-      <Field Name="_tileOcean" Hidden="true" />
-      <Field Name="_tileRock" Hidden="true" />
-      <Field Name="_tileVillage" Hidden="true" />
-      <Method Name="Awake" Hidden="true" />
-      <Method Name="ConvertMaterials" Hidden="true" />
-      <Event Name="EventBuildComplete" Hidden="true" />
-      <Event Name="EventSetNavComplete" Hidden="true" />
-      <Field Name="gridSizeN" Hidden="true" />
-      <Field Name="hexGround" Hidden="true" />
-      <Field Name="hexHeight" Hidden="true" />
-      <Field Name="hexRiver" Hidden="true" />
-      <Field Name="hexWidth" Hidden="true" />
-      <Field Name="materials" Hidden="true" />
-      <Field Name="navMeshSurface" Hidden="true" />
-      <Field Name="objTilesGo" Hidden="true" />
-      <Field Name="oceanSizeN" Hidden="true" />
-      <Method Name="OceanSpawn" Hidden="true" />
-      <Method Name="Start" Hidden="true" />
-    </Members>
-    <TypeIdentifier>
-      <HashCode>AAARAAACCCACACAIDBEAIKAACBAAAAGEAgBAAABAAEA=</HashCode>
-      <FileName>Assets\Scripts\TileField\GridMaker.cs</FileName>
-    </TypeIdentifier>
-  </Class>
   <Struct Name="BFSResult">
     <Position X="3.5" Y="5.5" Width="4.5" />
     <TypeIdentifier>
       <HashCode>AAAABCAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAACA=</HashCode>
       <FileName>Assets\Scripts\TileField\GraphSearch.cs</FileName>
     </TypeIdentifier>
-  </Struct>
-  <Struct Name="HexCoordinate">
-    <Position X="20.25" Y="0.75" Width="4.25" />
-    <Members>
-      <Method Name="ConvertFromVector3" Hidden="true" />
-      <Method Name="ConvertToVector3" Hidden="true" />
-      <Method Name="Equals" Hidden="true" />
-      <Method Name="GetHashCode" Hidden="true" />
-      <Method Name="operator !=" Hidden="true" />
-      <Method Name="operator +" Hidden="true" />
-      <Method Name="operator ==" Hidden="true" />
-      <Method Name="ToString" Hidden="true" />
-      <Field Name="xOffset" Hidden="true" />
-      <Field Name="zOffset" Hidden="true" />
-    </Members>
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAEAEwABAAAAEBAAAAIAAAABQAQAAAiA=</HashCode>
-      <FileName>Assets\Scripts\TileField\HexCoordinate.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" />
   </Struct>
   <Font Name="맑은 고딕" Size="9" />
 </ClassDiagram>

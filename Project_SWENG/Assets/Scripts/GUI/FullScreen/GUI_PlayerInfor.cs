@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 using Character;
 using UISystem;
+using Photon.Pun;
 
 public class GUI_PlayerInfor : GUIFullScreen {
     [SerializeField] private GameObject _target;
@@ -71,7 +72,7 @@ public class GUI_PlayerInfor : GUIFullScreen {
 
     public void OpenInforPopUp() {
         if (_nowPopUp) return;
-        UIManager.OpenGUI<GUI_ShowCharacterInfor>("PlayerInforPopUp").SetInfor(_targetPlayer.name, _targetPlayer);
+        UIManager.OpenGUI<GUI_ShowCharacterInfor>("PlayerInforPopUp").SetInfor(PhotonNetwork.NickName, _targetPlayer);
     }
 
 }  
