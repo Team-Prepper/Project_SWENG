@@ -19,11 +19,11 @@ public class GUI_ItemEquiped : MonoBehaviour, IObserver
     [SerializeField] Image iconHandR;
 
     [Header("MyCharacterPopUp")]
-    [SerializeField] TextMeshProUGUI helmetValue;
-    [SerializeField] TextMeshProUGUI armorValue;
-    [SerializeField] TextMeshProUGUI weaponValue;
+    [SerializeField] Text helmetValue;
+    [SerializeField] Text armorValue;
+    [SerializeField] Text weaponValue;
     [SerializeField] TextMeshProUGUI weaponSkillValue;
-    [SerializeField] TextMeshProUGUI shieldValue;
+    [SerializeField] Text shieldValue;
 
     readonly List<Color> colors = new List<Color>()
     {
@@ -44,38 +44,40 @@ public class GUI_ItemEquiped : MonoBehaviour, IObserver
     public void SetItemGUI(Item item)
     {
         Color tierColor = colors[(int)item.tier];
-
+        
         switch (item.type)
         {
             case Item.ItemType.Helmet:
                 slotHelmet.color = tierColor;
                 if(item.icon != null)
                     iconHelmet.sprite = item.icon;
-                if(helmetValue != null)
-                    helmetValue.text = item.value.ToString();
+                if (helmetValue != null)
+                    helmetValue.text = string.Format(StringManager.Instance.GetStringByKey("shopItem_All"), item.value);
+                
+                    
                 break;
             case Item.ItemType.Armor:
                 slotArmor.color = tierColor;
                 if (item.icon != null)
                     iconArmor.sprite = item.icon;
                 if (armorValue != null)
-                    armorValue.text = item.value.ToString();
+                    armorValue.text = string.Format(StringManager.Instance.GetStringByKey("shopItem_HP"), item.value);
                 break;
             case Item.ItemType.Weapon:
                 slotHandL.color = tierColor;
                 if (item.icon != null)
                     iconHandL.sprite = item.icon;
                 if (weaponValue != null)
-                    weaponValue.text = item.value.ToString();
+                    weaponValue.text = string.Format(StringManager.Instance.GetStringByKey("shopItem_Attack"), item.value);
                 if(weaponSkillValue != null && item.hasSkill)
-                    weaponSkillValue.text = "Cost" + item.skillCost.ToString() + " / DMG :" + item.skillDmg.ToString();
+                    weaponSkillValue.text = "Cost : " + item.skillCost.ToString() + "\nDMG : " + item.skillDmg.ToString();
                 break;
             case Item.ItemType.Shield:
                 slotHandR.color = tierColor;
                 if (item.icon != null)
                     iconHandR.sprite = item.icon;
                 if (shieldValue != null)
-                    shieldValue.text = item.value.ToString();
+                    shieldValue.text = string.Format(StringManager.Instance.GetStringByKey("shopItem_Defense"), item.value);
                 break;
         }
     }

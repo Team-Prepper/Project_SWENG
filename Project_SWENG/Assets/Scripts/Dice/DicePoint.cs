@@ -1,8 +1,10 @@
 using System;
 using UnityEngine;
 
-public class DicePoint : MonoBehaviour {
+public class DicePoint : MonoBehaviour
+{
 
+    public int basePoint = 5;
     [SerializeField] int _point;
 
     public void UsePoint(int usingAmount)
@@ -21,7 +23,7 @@ public class DicePoint : MonoBehaviour {
 
     public void SetPoint(int setValue)
     {
-        _point = setValue;
+        _point = setValue + basePoint;
     }
 
 

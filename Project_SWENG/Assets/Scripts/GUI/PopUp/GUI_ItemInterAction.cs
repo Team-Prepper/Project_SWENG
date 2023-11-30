@@ -27,10 +27,12 @@ public class GUI_ItemInterAction : GUIPopUp
         _itemIcon.sprite = item.icon;
         _itemSkillIcon.sprite = item.skillIcon;
 
+        _itemNameLabel.text = StringManager.Instance.GetStringByKey(item.itemName);
+
         switch (item.type)
         {
             case Item.ItemType.Helmet:
-                _itemInforLabel.text = "ALL : ";
+                _itemInforLabel.text = StringManager.Instance.GetStringByKey("itemInterAction_All");
                 break;
             case Item.ItemType.Armor:
                 _itemInforLabel.text = StringManager.Instance.GetStringByKey("itemInterAction_HP"); ;

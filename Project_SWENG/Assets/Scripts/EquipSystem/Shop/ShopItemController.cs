@@ -48,7 +48,7 @@ public class ShopItemController : MonoBehaviour
         switch (item.type)
         {
             case Item.ItemType.Helmet:
-                format = StringManager.Instance.GetStringByKey(item.itemName);
+                format = StringManager.Instance.GetStringByKey("shopItem_All");
                 break;
             case Item.ItemType.Armor:
                 format = StringManager.Instance.GetStringByKey("shopItem_HP");
