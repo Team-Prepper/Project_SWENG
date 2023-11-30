@@ -76,8 +76,12 @@ namespace UISystem {
             }
 
         }
+
         public static T OpenGUI<T>(string guiName)
         {
+            if (Instance._dice && Instance._dice.isActiveAndEnabled)
+                return default;
+
             string path = Instance._dic[guiName].path;
             T result = AssetOpener.Import<GameObject>(path).GetComponent<T>();
 
