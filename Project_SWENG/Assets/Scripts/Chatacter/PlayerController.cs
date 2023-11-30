@@ -15,6 +15,8 @@ namespace Character {
         public static event EventHandler<EventArgs> EventEquip;
         private DicePoint _point;
 
+        public bool canUseSkill = true;
+
         [SerializeField] ParticleSystem LevelUpEffect;
 
         private void Awake()

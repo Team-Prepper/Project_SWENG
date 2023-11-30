@@ -9,12 +9,13 @@ namespace LangSystem {
         // Start is called before the first frame update
         [SerializeField] private string m_Key = string.Empty;
 
+        /*
         protected override void OnValidate()
         {
             SetText(m_Key);
             base.OnValidate();
         }
-
+        */
         protected override void OnEnable()
         {
             StringManager.Instance.AddObserver(this);
@@ -40,7 +41,6 @@ namespace LangSystem {
 
         public void SetText(string key)
         {
-
             m_Key = key;
 
             text = StringManager.Instance.GetStringByKey(key);

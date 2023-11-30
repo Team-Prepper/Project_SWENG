@@ -1,14 +1,11 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using Photon.Pun;
 using UnityEngine;
 using UISystem;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
-using static UnityEngine.EventSystems.EventTrigger;
-using System.Xml.Serialization;
 using TMPro;
+using Character;
 
 public class GameManager : MonoSingletonPun<GameManager>
 {
@@ -87,6 +84,7 @@ public class GameManager : MonoSingletonPun<GameManager>
         turnEndButton.interactable = true;
         changeDayNight();
         UIManager.Instance.UseDice(player.GetComponent<DicePoint>());
+        player.GetComponent<PlayerController>().canUseSkill = true;
         NextPhase();
     }
 

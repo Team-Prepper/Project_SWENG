@@ -3,29 +3,34 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UISystem;
+using Character;
 
 public class GUI_ActionSelect : GUIPopUp
 {
     GameObject _target;
 
     DicePoint _targetUnit;
+    PlayerController _playerController;
 
     private Item _curEquipWeapon;
 
     [SerializeField] Button btnAttack;
+    [SerializeField] Button btnSkill;
     [SerializeField] Button btnMove;
-    [SerializeField] private GameObject btnSkill;
+    [SerializeField] private GameObject btnSkillObj;
     
     public void Set(GameObject target)
     {
         _target = target;
         _targetUnit = target.GetComponent<DicePoint>();
         _curEquipWeapon = target.GetComponent<EquipManager>().GetEquipWeaponHasSkill();
+        _playerController = target.GetComponent<PlayerController>();
         CamMovement.Instance.IsPlayerMove = true;
 
-        btnSkill.SetActive(_curEquipWeapon);
+        btnSkillObj.SetActive(_curEquipWeapon);
         btnAttack.interactable = (_targetUnit.GetPoint() >= 3);
-        btnMove.interactable = (_targetUnit.GetPoint() >= 2);
+        btnSkill.interactable = _playerController.canUseSkill;
+        btnMove.interactable = (_targetUnit.GetPoint() >= 1);
     }
     
     public void OpenSkill()
@@ -33,6 +38,7 @@ public class GUI_ActionSelect : GUIPopUp
         if (_targetUnit.GetPoint() < _curEquipWeapon.skillCost) return;
         _targetUnit.UsePoint(_curEquipWeapon.skillCost);
         UIManager.OpenGUI<GUI_Attack>("Attack").Set(_target, _curEquipWeapon.skillDmg);
+        _playerController.canUseSkill = false;
         CamMovement.Instance.IsPlayerMove = true;
         _AfterAction();
     }

@@ -1,3 +1,4 @@
+/*
 using UnityEngine;
 using UnityEditor;
 
@@ -17,3 +18,4 @@ namespace LangSystem {
         }
     }
 }
+*/

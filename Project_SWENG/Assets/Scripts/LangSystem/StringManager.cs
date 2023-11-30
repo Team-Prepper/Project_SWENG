@@ -44,7 +44,7 @@ namespace LangSystem {
 
         Dictionary<string, string> _dic;
 
-        string _nowLang = "Kor";
+        string _nowLang = "Eng";
 
         protected override void OnCreate()
         {
@@ -56,7 +56,7 @@ namespace LangSystem {
         {
 
             _dic = new Dictionary<string, string>();
-            XmlDocument xmlDoc = AssetOpener.ReadXML("String/" + _nowLang);
+            XmlDocument xmlDoc = AssetOpener.ReadXML(_nowLang);
 
             XmlNodeList nodes = xmlDoc.SelectNodes("List/Element");
 
