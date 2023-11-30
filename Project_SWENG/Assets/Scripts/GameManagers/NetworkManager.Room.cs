@@ -1,13 +1,8 @@
 using System.Collections.Generic;
-using ExitGames.Client.Photon;
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
-using UnityEngine.UI;
-using TMPro;
 using UISystem;
-using UnityEditor.XR;
-using System.Runtime.InteropServices;
 
 
 public partial class NetworkManager

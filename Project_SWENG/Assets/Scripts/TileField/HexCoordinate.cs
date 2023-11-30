@@ -1,8 +1,5 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.InteropServices.WindowsRuntime;
-using UnityEditor.PackageManager;
 using UnityEngine;
 
 public struct HexCoordinate : IEquatable<HexCoordinate> {

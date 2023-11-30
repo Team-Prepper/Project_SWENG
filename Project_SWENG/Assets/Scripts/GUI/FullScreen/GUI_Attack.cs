@@ -1,10 +1,7 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Character;
 using UISystem;
-using UnityEngine.UI;
-using static UnityEditor.PlayerSettings;
 
 public class GUI_Attack : GUIFullScreen {
 
@@ -100,7 +97,7 @@ public class GUI_Attack : GUIFullScreen {
 
         if (!_attackRange.Contains(selectGridPos))
         {
-            Debug.Log("¿©±ä ¾Æ´ÏÁö");
+            Debug.Log("ï¿½ï¿½ï¿½ï¿½ ï¿½Æ´ï¿½ï¿½ï¿½");
             _attackTarget = null;
             foreach (HexCoordinate pos in _attackRange) {
                 _SetMarker(pos.ConvertToVector3());
@@ -109,7 +106,7 @@ public class GUI_Attack : GUIFullScreen {
 
         }
 
-        Debug.Log("ÀÌ°Ô ¸ÂÁö");
+        Debug.Log("ï¿½Ì°ï¿½ ï¿½ï¿½ï¿½ï¿½");
         _attackTarget = HexGrid.Instance.GetTileAt(selectGridPos);
         _SetMarker(_attackTarget.transform.position);
     }
