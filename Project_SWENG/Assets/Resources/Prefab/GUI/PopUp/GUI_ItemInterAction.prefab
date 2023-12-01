@@ -67,17 +67,17 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: ab62a3aaae985e04380fa2a618385f79, type: 3}
-    m_FontSize: 72
+    m_Font: {fileID: 12800000, guid: d8d1dc9879f584c94b2cbab34f20a090, type: 3}
+    m_FontSize: 108
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 7
-    m_MaxSize: 72
+    m_MinSize: 0
+    m_MaxSize: 108
     m_Alignment: 3
     m_AlignByGeometry: 0
     m_RichText: 1
-    m_HorizontalOverflow: 0
-    m_VerticalOverflow: 0
+    m_HorizontalOverflow: 1
+    m_VerticalOverflow: 1
     m_LineSpacing: 1
   m_Text: 100
 --- !u!1 &2611614488499082108
@@ -249,7 +249,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: ab62a3aaae985e04380fa2a618385f79, type: 3}
+    m_Font: {fileID: 0}
     m_FontSize: 48
     m_FontStyle: 0
     m_BestFit: 0
@@ -261,7 +261,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\uC7A5\uCC29"
+  m_Text: Equip
   m_Key: itemInterAction_Equip
 --- !u!1 &3059760187553985576
 GameObject:
@@ -485,11 +485,11 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: ab62a3aaae985e04380fa2a618385f79, type: 3}
-    m_FontSize: 72
+    m_Font: {fileID: 0}
+    m_FontSize: 64
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 7
+    m_MinSize: 0
     m_MaxSize: 72
     m_Alignment: 4
     m_AlignByGeometry: 0
@@ -497,7 +497,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: "\uC7A5\uBE44 \uC774\uB984"
+  m_Text: Item Name
   m_Key: itemInterAction_Name
 --- !u!1 &5200889511084292621
 GameObject:
@@ -776,7 +776,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: ab62a3aaae985e04380fa2a618385f79, type: 3}
+    m_Font: {fileID: 0}
     m_FontSize: 48
     m_FontStyle: 0
     m_BestFit: 0
@@ -788,7 +788,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\uB2EB\uAE30"
+  m_Text: Close
   m_Key: itemInterAction_Cancle
 --- !u!1 &7373197391663704979
 GameObject:
@@ -1080,8 +1080,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 5
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 05c6954db2b29eb45b14bbbe1906b8fc, type: 2}
-  m_sharedMaterial: {fileID: 3590147554829113309, guid: 05c6954db2b29eb45b14bbbe1906b8fc,
+  m_fontAsset: {fileID: 11400000, guid: e7d188802aa7046c8beb478df268f4b2, type: 2}
+  m_sharedMaterial: {fileID: 8762091732837001765, guid: e7d188802aa7046c8beb478df268f4b2,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -1106,8 +1106,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 72
-  m_fontSizeBase: 72
+  m_fontSize: 108
+  m_fontSizeBase: 108
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1294,7 +1294,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: ab62a3aaae985e04380fa2a618385f79, type: 3}
+    m_Font: {fileID: 0}
     m_FontSize: 72
     m_FontStyle: 1
     m_BestFit: 0
@@ -1306,7 +1306,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\uACF5\uACA9\uB825"
+  m_Text: Attack
   m_Key: itemInterAction_Attack
 --- !u!1 &8127190197699926219
 GameObject:

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Xml;
 using ObserberPattern;
+using UnityEngine;
 
 namespace LangSystem {
 
@@ -13,7 +14,7 @@ namespace LangSystem {
         // Start is called before the first frame update
 
         List<IObserver> _targets;
-
+        public Font NamuGothic;
         public void AddObserver(IObserver ops)
         {
             _targets.Add(ops);
@@ -49,6 +50,7 @@ namespace LangSystem {
         protected override void OnCreate()
         {
             _targets = new List<IObserver>();
+            NamuGothic = AssetOpener.Import<Font>("NamuGothic");
             _ReadStringFromXml();
         }
 

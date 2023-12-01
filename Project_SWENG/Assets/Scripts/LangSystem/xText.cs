@@ -18,6 +18,7 @@ namespace LangSystem {
         */
         protected override void OnEnable()
         {
+            this.font = StringManager.Instance.NamuGothic;
             StringManager.Instance.AddObserver(this);
             SetText(m_Key);
             base.OnEnable();

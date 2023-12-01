@@ -67,7 +67,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: ab62a3aaae985e04380fa2a618385f79, type: 3}
+    m_Font: {fileID: 0}
     m_FontSize: 32
     m_FontStyle: 0
     m_BestFit: 0
@@ -79,7 +79,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\uBE60\uB978 \uC2DC\uC791"
+  m_Text: Quick Start
   m_Key: lobby_QuickStart
 --- !u!1 &1418157492893396778
 GameObject:
@@ -148,11 +148,11 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: ab62a3aaae985e04380fa2a618385f79, type: 3}
-    m_FontSize: 48
+    m_Font: {fileID: 0}
+    m_FontSize: 32
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 10
+    m_MinSize: 3
     m_MaxSize: 48
     m_Alignment: 4
     m_AlignByGeometry: 0
@@ -160,7 +160,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\uBC29 \uC774\uB984"
+  m_Text: Room Name
   m_Key: lobby_RoomName
 --- !u!1 &1508031353416212630
 GameObject:
@@ -229,12 +229,12 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: ab62a3aaae985e04380fa2a618385f79, type: 3}
+    m_Font: {fileID: 12800000, guid: d8d1dc9879f584c94b2cbab34f20a090, type: 3}
     m_FontSize: 48
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 4
-    m_MaxSize: 48
+    m_MinSize: 0
+    m_MaxSize: 72
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 0
@@ -309,13 +309,13 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: ab62a3aaae985e04380fa2a618385f79, type: 3}
-    m_FontSize: 200
+    m_Font: {fileID: 12800000, guid: d8d1dc9879f584c94b2cbab34f20a090, type: 3}
+    m_FontSize: 180
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 2
+    m_MinSize: 0
     m_MaxSize: 200
-    m_Alignment: 0
+    m_Alignment: 3
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
@@ -754,11 +754,11 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: ab62a3aaae985e04380fa2a618385f79, type: 3}
-    m_FontSize: 80
+    m_Font: {fileID: 0}
+    m_FontSize: 72
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 10
+    m_MinSize: 0
     m_MaxSize: 80
     m_Alignment: 0
     m_AlignByGeometry: 0
@@ -766,7 +766,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\uC548\uB155\uD558\uC138\uC694"
+  m_Text: Welcom
   m_Key: lobby_Welcom
 --- !u!1 &6445361705917706790
 GameObject:
@@ -3411,7 +3411,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: ab62a3aaae985e04380fa2a618385f79, type: 3}
+    m_Font: {fileID: 0}
     m_FontSize: 32
     m_FontStyle: 0
     m_BestFit: 0
@@ -3423,7 +3423,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\uBC29 \uB9CC\uB4E4\uAE30"
+  m_Text: Create Room
   m_Key: lobby_CreateRoom
 --- !u!1 &6445361707434394716
 GameObject:
@@ -4527,7 +4527,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: ab62a3aaae985e04380fa2a618385f79, type: 3}
+    m_Font: {fileID: 0}
     m_FontSize: 32
     m_FontStyle: 0
     m_BestFit: 0
@@ -4539,5 +4539,5 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\uB85C\uADF8\uC544\uC6C3"
+  m_Text: Logout
   m_Key: lobby_Logout
