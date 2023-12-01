@@ -29,6 +29,7 @@ public class EffectManager : MonoSingleton<EffectManager>
     [PunRPC]
     private void ShowImpactVfxCoHandler(int impactCode)
     {
+        Debug.Log("ShowEffect");
         StartCoroutine(ShowImpactVfx(impactCode));
     }
 

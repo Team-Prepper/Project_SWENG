@@ -38,7 +38,7 @@ public class GUI_ActionSelect : GUIPopUp
         if (_targetUnit.GetPoint() < _curEquipWeapon.skillCost) return;
         _targetUnit.UsePoint(_curEquipWeapon.skillCost);
         UIManager.OpenGUI<GUI_Attack>("Attack").Set(_target, _curEquipWeapon.skillDmg);
-        _playerController.canUseSkill = false;
+        //_playerController.canUseSkill = false;
         CamMovement.Instance.IsPlayerMove = true;
         _AfterAction();
     }

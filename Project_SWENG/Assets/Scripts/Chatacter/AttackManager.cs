@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Character {
     public class AttackManager : Singleton<AttackManager> {
@@ -29,6 +30,7 @@ namespace Character {
 
         public void SkillAtkHandler(NetworkCharacterController attacker, Hex targetHex, int skillDmg)
         {
+            attacker.gameObject.GetComponent<PlayerController>().canUseSkill = false;
             attacker.Attack(targetHex.transform.position, true);
 
             if (targetHex.Entity == null || !targetHex.Entity.TryGetComponent(out NetworkCharacterController target)) return;

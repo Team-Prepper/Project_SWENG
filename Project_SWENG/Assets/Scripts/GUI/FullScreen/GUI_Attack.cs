@@ -80,7 +80,7 @@ public class GUI_Attack : GUIFullScreen {
         if (_attackTarget == null) {
             return;
         }
-
+        
         AttackManager.Instance.SkillAtkHandler(_target, _attackTarget, _skillDmg);
         Close();
     }
@@ -89,7 +89,15 @@ public class GUI_Attack : GUIFullScreen {
     {
 
         if (_attackTarget && _attackTarget == HexGrid.Instance.GetTileAt(selectGridPos)) {
-            DoAttack();
+            if(_skillDmg != 0)
+            {
+                UseSkill();
+            }
+            else
+            {
+                DoAttack();
+            }
+            
             return;
         }
 
@@ -97,7 +105,6 @@ public class GUI_Attack : GUIFullScreen {
 
         if (!_attackRange.Contains(selectGridPos))
         {
-            Debug.Log("���� �ƴ���");
             _attackTarget = null;
             foreach (HexCoordinate pos in _attackRange) {
                 _SetMarker(pos.ConvertToVector3());
@@ -106,7 +113,6 @@ public class GUI_Attack : GUIFullScreen {
 
         }
 
-        Debug.Log("�̰� ����");
         _attackTarget = HexGrid.Instance.GetTileAt(selectGridPos);
         _SetMarker(_attackTarget.transform.position);
     }

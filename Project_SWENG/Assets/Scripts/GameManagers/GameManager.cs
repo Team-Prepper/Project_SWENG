@@ -206,6 +206,12 @@ public class GameManager : MonoSingletonPun<GameManager>
 
     public void GameEnd(bool victory)
     {
+        photonView.RPC("NetworkGameEnd", RpcTarget.All, victory);
+    }
+
+    [PunRPC]
+    private void NetworkGameEnd(bool victory)
+    {
         isGameOver = true;
         if (victory)
         {
