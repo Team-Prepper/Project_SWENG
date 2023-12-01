@@ -44,7 +44,7 @@ namespace LangSystem {
 
         Dictionary<string, string> _dic;
 
-        string _nowLang = "Eng";
+        string _nowLang = "Kor";
 
         protected override void OnCreate()
         {
