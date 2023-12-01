@@ -32,7 +32,7 @@ public class GUI_Emoji : MonoBehaviour {
         Player[] memberList = _network.RoomMemberList();
 
         for (int i = 0; i < _players.Length; i++) {
-            if (memberList[i].Equals(sender)) continue;
+            if (!memberList[i].NickName.Equals(sender)) continue;
             _players[i].DisplayEmoji(_atlas.GetSprite(emojiKey));
             return;
         }

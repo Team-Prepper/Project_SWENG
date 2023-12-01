@@ -10,7 +10,7 @@ namespace Character {
     public class PlayerController : NetworkCharacterController {
 
         [SerializeField] int _usePointAtAttack = 3;
-
+        [SerializeField] GameObject playerLight; 
         public static event EventHandler<IntEventArgs> EventChangeHp;
         public static event EventHandler<EventArgs> EventEquip;
         private DicePoint _point;
@@ -23,6 +23,15 @@ namespace Character {
         {
             stat.HP.FillMax();
             _point = GetComponent<DicePoint>();
+        }
+
+        protected override void Start()
+        {
+            base.Start();
+            if(!PhotonNetwork.IsMasterClient)
+            {
+                playerLight.SetActive(false);
+            }
         }
 
         public int Recover(int val)

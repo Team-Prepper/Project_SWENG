@@ -183,7 +183,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 573011481806433666}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -427,6 +427,11 @@ MonoBehaviour:
   iconHandL: {fileID: 7567719513970036576}
   slotHandR: {fileID: 8829652233156957151}
   iconHandR: {fileID: 5841135043313661737}
+  helmetValue: {fileID: 0}
+  armorValue: {fileID: 0}
+  weaponValue: {fileID: 0}
+  weaponSkillValue: {fileID: 0}
+  shieldValue: {fileID: 0}
 --- !u!1 &1507098452141084043
 GameObject:
   m_ObjectHideFlags: 0
@@ -1674,7 +1679,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 573011481806433666}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
@@ -1786,7 +1791,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: ab62a3aaae985e04380fa2a618385f79, type: 3}
+    m_Font: {fileID: 0}
     m_FontSize: 72
     m_FontStyle: 0
     m_BestFit: 0
@@ -1798,7 +1803,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\uD134 \uC885\uB8CC"
+  m_Text: Turn End
   m_Key: play_TurnEnd
 --- !u!1 &7014368054914196540
 GameObject:
@@ -1909,8 +1914,8 @@ RectTransform:
   - {fileID: 7117418496295568416}
   - {fileID: 8827315065211927796}
   - {fileID: 382388638801812382}
-  - {fileID: 1786053183678899941}
   - {fileID: 3364531105337652320}
+  - {fileID: 1786053183678899941}
   - {fileID: 3643973421976409115}
   - {fileID: 8550034129436979451}
   m_Father: {fileID: 3221241584928142969}
