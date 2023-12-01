@@ -15,7 +15,7 @@ public class GUI_DiceSetter : MonoBehaviour
 
     public void SetBaseDicePoint(int value)
     {
-        _network.SetBaseDicePoint(value);
+        _network.SetBaseDicePointHandler(value);
         SetPointImg(value);
     }
 

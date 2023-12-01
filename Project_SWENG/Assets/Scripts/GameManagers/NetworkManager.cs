@@ -33,7 +33,13 @@ public partial class NetworkManager : MonoBehaviourPunCallbacks
         StatusText.text = PhotonNetwork.NetworkClientState.ToString();
     }
 
-    public void SetBaseDicePoint(int value)
+    public void SetBaseDicePointHandler(int value)
+    {
+        PV.RPC("SetBaseDicePoint",RpcTarget.All, value);
+    }
+
+    [PunRPC]
+    private void SetBaseDicePoint(int value)
     {
         baseDiceValue = value;
     }
