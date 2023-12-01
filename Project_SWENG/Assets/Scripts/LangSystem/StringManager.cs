@@ -50,7 +50,7 @@ namespace LangSystem {
         protected override void OnCreate()
         {
             _targets = new List<IObserver>();
-            NamuGothic = AssetOpener.Import<Font>("NamuGothic");
+            NamuGothic = AssetOpener.Import<Font>("KyoboHandwriting");
             _ReadStringFromXml();
         }
 
