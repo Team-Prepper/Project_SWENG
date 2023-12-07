@@ -25,7 +25,6 @@ public class GameManager : MonoSingletonPun<GameManager>
 
     public int remainLife = 5;
     public Transform respawnPos;
-
     [SerializeField] private bool StageBossSpawned = false;
 
     [Header("PlayerTotalHealth")]
@@ -59,6 +58,10 @@ public class GameManager : MonoSingletonPun<GameManager>
         victoryCam.SetActive(false);
         loseLevel.SetActive(false);
         HealthCountHandler();
+        foreach(var player in PhotonNetwork.CurrentRoom.Players)
+        {
+            playerDmgDashboard.Add(player.Value.NickName,0);
+        }
     }
 
     private void Update()
@@ -80,6 +83,7 @@ public class GameManager : MonoSingletonPun<GameManager>
 
     public void PlayerTurnStandBy()
     {
+        if (isGameOver) return;
         gamePhase = Phase.SetDice;
         turnEndButton.interactable = true;
         changeDayNight();
