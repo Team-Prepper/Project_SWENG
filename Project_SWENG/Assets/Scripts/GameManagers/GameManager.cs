@@ -223,8 +223,9 @@ public class GameManager : MonoSingletonPun<GameManager>
             loseLevel.SetActive(true);
             loseCam.SetActive(true);
         }
-        dashboardManager.ShowDashboardHandler(victory);
         dashboard.SetActive(true);
+        dashboardManager.ShowDashboardHandler(victory);
+        
     }
 
     // NETWORK

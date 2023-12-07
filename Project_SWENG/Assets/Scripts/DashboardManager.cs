@@ -16,6 +16,7 @@ public class DashboardManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI vicOrLoseText;
     [SerializeField] private Color winColor;
     [SerializeField] private Color loseColor;
+    [SerializeField] private GameObject dashboard;
     private void Awake()
     {
         _photonView = GetComponent<PhotonView>();
@@ -57,6 +58,7 @@ public class DashboardManager : MonoBehaviour
     [PunRPC]
     private void ShowDashboard(int index, string playerNickName, string playerDmg)
     {
+        dashboard.SetActive(true);
         totalDamageDashboard[index].SetActive(true);
         playerName[index].text = playerNickName;
         damageText[index].text = playerDmg;
