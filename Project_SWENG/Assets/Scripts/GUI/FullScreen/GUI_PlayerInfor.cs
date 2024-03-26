@@ -9,13 +9,14 @@ using Photon.Pun;
 
 public class GUI_PlayerInfor : GUIFullScreen {
     [SerializeField] private GameObject _target;
-    [SerializeField] private TextMeshProUGUI _dicePoint;
+    [SerializeField] private GameObject _turnEndGlowLight;
     [SerializeField] private GUI_PlayerHealth _playerHealth;
-    [SerializeField] private GameObject turnEndGlowLight;
-    public Button turnEndButton;
+    [SerializeField] private TextMeshProUGUI _dicePoint;
+
+    public Button _turnEndButton;
 
     DicePoint _targetUnit;
-    PlayerController _targetPlayer;
+    PlayerCharacter _targetPlayer;
 
     protected override void Open(Vector2 openPos)
     {
@@ -27,8 +28,8 @@ public class GUI_PlayerInfor : GUIFullScreen {
         _target = target;
 
         _targetUnit = target.GetComponent<DicePoint>();
-        _targetPlayer = target.GetComponent<PlayerController>();
-        GameManager.Instance.turnEndButton = turnEndButton;
+        _targetPlayer = target.GetComponent<PlayerCharacter>();
+        GameManager.Instance.turnEndButton = _turnEndButton;
         _playerHealth.SetPlayerHealth(target);
 
     }
@@ -37,7 +38,7 @@ public class GUI_PlayerInfor : GUIFullScreen {
     {
         base.Update();
         _dicePoint.text = _targetUnit.GetPoint().ToString();
-        turnEndGlowLight.SetActive(turnEndButton.interactable);
+        _turnEndGlowLight.SetActive(_turnEndButton.interactable);
     }
 
     public override void HexSelect(HexCoordinate selectGridPos)

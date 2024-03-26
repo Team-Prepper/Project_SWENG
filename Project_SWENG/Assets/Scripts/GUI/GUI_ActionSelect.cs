@@ -10,7 +10,7 @@ public class GUI_ActionSelect : GUIPopUp
     GameObject _target;
 
     DicePoint _targetUnit;
-    PlayerController _playerController;
+    PlayerCharacter _playerController;
 
     private Item _curEquipWeapon;
 
@@ -24,7 +24,7 @@ public class GUI_ActionSelect : GUIPopUp
         _target = target;
         _targetUnit = target.GetComponent<DicePoint>();
         _curEquipWeapon = target.GetComponent<EquipManager>().GetEquipWeaponHasSkill();
-        _playerController = target.GetComponent<PlayerController>();
+        _playerController = target.GetComponent<PlayerCharacter>();
         CamMovement.Instance.IsPlayerMove = true;
 
         btnSkillObj.SetActive(_curEquipWeapon);

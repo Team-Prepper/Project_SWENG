@@ -10,7 +10,7 @@ public class EquipManager : MonoBehaviour
     [HideInInspector]
     public CharacterObjectGroups body;
 
-    private PlayerController _playerController;
+    private PlayerCharacter _playerController;
 
     [Header("Network")]
     private PhotonView _photonView;
@@ -54,7 +54,7 @@ public class EquipManager : MonoBehaviour
     private void Start()
     {
         _photonView = GetComponent<PhotonView>();
-        _playerController = GetComponent<PlayerController>();
+        _playerController = GetComponent<PlayerCharacter>();
         _BuildLists();
         _SetupPlayer(0);
     }

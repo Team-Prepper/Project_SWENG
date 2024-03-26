@@ -8,7 +8,7 @@ using Character;
 
 public class GUI_PlayerHealth : MonoBehaviour
 {
-    PlayerController _target;
+    PlayerCharacter _target;
 
     [SerializeField] Image _healthFront;
     [SerializeField] Image _healthBack;
@@ -21,13 +21,13 @@ public class GUI_PlayerHealth : MonoBehaviour
 
     private void Awake()
     {
-        PlayerController.EventChangeHp += GUI_ChangeHealth;
-        PlayerController.EventEquip += GUI_SetMaxHealth;
+        PlayerCharacter.EventChangeHp += GUI_ChangeHealth;
+        PlayerCharacter.EventEquip += GUI_SetMaxHealth;
     }
 
     public void SetPlayerHealth(GameObject player)
     {
-        _target = player.GetComponent<PlayerController>();
+        _target = player.GetComponent<PlayerCharacter>();
         SetHealth();
         _afterimage.fillAmount = 1;
         _curValue = _target.stat.HP.Value;

@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Character {
 
-    public class PlayerController : NetworkCharacterController {
+    public class PlayerCharacter : NetworkCharacterController {
 
         [SerializeField] int _usePointAtAttack = 3;
         [SerializeField] GameObject playerLight; 

@@ -48,7 +48,7 @@ public class NetworkPlayerSpawner : MonoBehaviourPun
         player.GetComponent<NetworkUnit>().curHex = spawnHex;
         GUI_PlayerInfor playerInfo = UIManager.OpenGUI<GUI_PlayerInfor>("PlayerInfor");
         playerInfo.SetPlayer(player);
-        GameManager.Instance.turnEndButton = playerInfo.turnEndButton;
+        GameManager.Instance.turnEndButton = playerInfo._turnEndButton;
 
         EventPlayerSpawn?.Invoke(player);
 

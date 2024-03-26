@@ -84,7 +84,7 @@ namespace Character {
                 GameObject entity = curHex.Entity;
                 if (entity != null && entity.CompareTag("Player"))
                 {
-                    entity.GetComponent<PlayerController>()?.GetExp(enemyStat.Exp);
+                    entity.GetComponent<PlayerCharacter>()?.GetExp(enemyStat.Exp);
                 }
             }
         }
