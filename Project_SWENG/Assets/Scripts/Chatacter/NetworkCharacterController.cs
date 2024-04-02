@@ -1,4 +1,5 @@
 using Photon.Pun;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -7,14 +8,21 @@ using UnityEngine.Serialization;
 
 namespace Character {
 
-    public class NetworkCharacterController : MonoBehaviourPun 
+    public class NetworkCharacterController : MonoBehaviourPun, IDamagable
     {
         protected PhotonView _photonView;
+
+        [SerializeField] protected IHealthUI _healthUI;
 
         [SerializeField] protected GameObject equipCam;
         [SerializeField] protected Animator anim;
 
         public Stat stat;
+
+        void IDamagable.TakeDamage(int amount)
+        {
+            throw new NotImplementedException();
+        }
 
         // Start is called before the first frame update
         protected virtual void Start()
@@ -64,12 +72,14 @@ namespace Character {
             if (stat.IsAlive())
             {
                 _photonView.RPC("RunAnimation", RpcTarget.All, 1);
+                _healthUI.UpdateGUI(stat.HP);
                 DamageAct();
                 return;
             }
 
             _photonView.RPC("RunAnimation", RpcTarget.All, 2);
 
+            _healthUI.UpdateGUI(stat.HP);
             DieAct();
         }
 

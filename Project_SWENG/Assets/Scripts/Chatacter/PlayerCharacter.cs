@@ -7,19 +7,23 @@ using UnityEngine;
 namespace Character {
 
     public class PlayerCharacter : NetworkCharacterController,
-        ICharacter, IDamagable, IDicePoint  {
+        IMoveable, IDicePoint  {
 
         [SerializeField] int _usePointAtAttack = 3;
-        [SerializeField] GameObject playerLight; 
+        [SerializeField] float _movementDuration = 1f;
+        [SerializeField] GameObject playerLight;
+
+        [Header("Ref")]
+        [SerializeField]
+        private Animator _animator;
 
         public bool canUseSkill = true;
 
         [SerializeField] ParticleSystem LevelUpEffect;
 
-
-        void IDamagable.TakeDamage(int amount)
-        {
-            throw new NotImplementedException();
+        public void SetHealthUI(IHealthUI ui) {
+            _healthUI = ui;
+            _healthUI.UpdateGUI(stat.HP);
         }
 
         public void Move(Queue<Vector3> path)
@@ -31,16 +35,16 @@ namespace Character {
         {
             Quaternion startRotation = transform.rotation;
 
-            while (true)
+            foreach (Vector3 targetPos in path)
             {
-                Vector3 targetPos = path.Dequeue();
-                if (targetPos == null) break;
                 Vector3 direction = targetPos - transform.position;
                 Quaternion endRotation = Quaternion.LookRotation(direction, Vector3.up);
 
+                float timeElapsed = 0;
+
                 if (Mathf.Approximately(Mathf.Abs(Quaternion.Dot(startRotation, endRotation)), 1.0f) == false)
                 {
-                    float timeElapsed = 0;
+
                     while (timeElapsed < rotationDuration)
                     {
                         timeElapsed += Time.deltaTime;
@@ -50,15 +54,57 @@ namespace Character {
                     }
                     transform.rotation = endRotation;
                 }
+                _photonView.RPC("SetPlayerOnHex", RpcTarget.All, 0, transform.position);
+                HexGrid.Instance.GetTileAt(HexCoordinate.ConvertFromVector3(transform.position)).Entity = null;
+
+                Vector3 startPosition = transform.position;
+
+                HexCoordinate newHexPos = HexCoordinate.ConvertFromVector3(targetPos);
+                //NetworkCloudManager.Instance.CloudActiveFalse(newHexPos);
+                Hex goalHex = HexGrid.Instance.GetTileAt(newHexPos);
+                goalHex.CloudActiveFalse();
+                UsePoint(goalHex.Cost);
+
+
+                timeElapsed = 0;
+
+                while (timeElapsed < _movementDuration)
+                {
+                    if (_animator)
+                        _animator.SetBool("IsWalk", true);
+
+                    timeElapsed += Time.deltaTime;
+                    float lerpStep = timeElapsed / _movementDuration;
+                    transform.position = Vector3.Lerp(startPosition, targetPos, lerpStep);
+                    yield return null;
+                }
+                transform.position = targetPos;
+
+                Debug.Log("Selecting the next position!");
+
+            }
+            Debug.Log("Movement finished!");
+            CamMovement.Instance.IsPlayerMove = false;
+            _photonView.RPC("SetPlayerOnHex", RpcTarget.All, 1, transform.position);
+
+            if (_animator)
+                _animator.SetBool("IsWalk", false);
+        }
+
+        [PunRPC]
+        public void SetPlayerOnHex(int type, Vector3 position)
+        {
+            if (type == 1)
+            {
+                HexGrid.Instance.GetTileAt(position).Entity = gameObject;
+            }
+            else
+            {
+                HexGrid.Instance.GetTileAt(position).Entity = null;
             }
         }
 
-        void ICharacter.Attack(Vector3 targetPos)
-        {
-            throw new NotImplementedException();
-        }
-
-        string ICharacter.GetName()
+        string IMoveable.GetName()
         {
             return "Player";
         }

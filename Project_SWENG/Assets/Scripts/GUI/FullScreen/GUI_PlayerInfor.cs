@@ -28,7 +28,7 @@ public class GUI_PlayerInfor : GUIFullScreen {
 
         _targetPlayer = target.GetComponent<PlayerCharacter>();
         GameManager.Instance.turnEndButton = _turnEndButton;
-        _playerHealth.SetPlayerHealth(target);
+        _targetPlayer.SetHealthUI(_playerHealth);
 
     }
 

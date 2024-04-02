@@ -8,7 +8,6 @@ using UnityEngine.Serialization;
 namespace Character {
     public class EnemyController : NetworkCharacterController {
 
-        [SerializeField] GUI_EnemyHealth healthGUI;
         [SerializeField] LayerMask playerLayerMask;
         public EnemySpawner enemySpawner;
         
@@ -26,8 +25,8 @@ namespace Character {
             if (enemyStat == null)
                 enemyStat = GetComponent<EnemyStat>();
 
-            if (healthGUI == null)
-                healthGUI = GetComponentInChildren<GUI_EnemyHealth>();
+            if (_healthUI == null)
+                _healthUI = GetComponentInChildren<GUI_EnemyHealth>();
 
             //stat.HP = new GaugeValue<int>(enemyStat.maxHp, enemyStat.maxHp, 0);
             stat.SetHP(enemyStat.maxHp, enemyStat.maxHp, 0);
@@ -48,8 +47,6 @@ namespace Character {
             Collider[] colliders = Physics.OverlapSphere(transform.position, 10f, playerLayerMask);
             if (colliders.Length > 0)
                 gameObject.transform.LookAt(colliders[0].transform);
-
-            healthGUI.UpdateGUI((float)stat.HP.Value / enemyStat.maxHp);
         }
 
         public override void DieAct()
@@ -62,7 +59,6 @@ namespace Character {
                 if (enemyStat.isBoss)
                     GameManager.Instance.bossEnemies.Remove(gameObject);
             }
-            healthGUI.UpdateGUI(0);
             DropItem();
             DropExp();
             Destroy(this.gameObject, 1f);
