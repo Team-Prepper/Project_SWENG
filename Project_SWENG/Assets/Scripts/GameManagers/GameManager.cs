@@ -83,7 +83,7 @@ public class GameManager : MonoSingletonPun<GameManager>
         gamePhase = Phase.SetDice;
         turnEndButton.interactable = true;
         changeDayNight();
-        UIManager.Instance.UseDice(player.GetComponent<DicePoint>());
+        UIManager.Instance.UseDice(player.GetComponent<PlayerCharacter>());
         player.GetComponent<PlayerCharacter>().canUseSkill = true;
         NextPhase();
     }

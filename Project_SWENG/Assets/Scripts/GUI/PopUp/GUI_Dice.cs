@@ -8,7 +8,7 @@ namespace UISystem {
 
     public class GUI_Dice : GUIPopUp {
 
-        [SerializeField] private DicePoint _targetPlayer;
+        [SerializeField] private IDicePoint _targetPlayer;
         [SerializeField] private Dice _dice;
 
         protected override void Open(Vector2 openPos)
@@ -23,7 +23,7 @@ namespace UISystem {
             PopUpAction();
         }
 
-        public void SetPlayer(DicePoint target)
+        public void SetPlayer(IDicePoint target)
         {
             _targetPlayer = target;
         }

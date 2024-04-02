@@ -21,8 +21,7 @@ public class GUI_PlayerHealth : MonoBehaviour
 
     private void Awake()
     {
-        PlayerCharacter.EventChangeHp += GUI_ChangeHealth;
-        PlayerCharacter.EventEquip += GUI_SetMaxHealth;
+
     }
 
     public void SetPlayerHealth(GameObject player)

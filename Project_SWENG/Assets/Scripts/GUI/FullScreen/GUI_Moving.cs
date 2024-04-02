@@ -4,11 +4,11 @@ using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UISystem;
+using Character;
 
 public class GUI_Moving : GUIFullScreen {
 
-    private DicePoint _targetPoint;
-    [SerializeField] private NetworkUnit _targetUnit;
+    [SerializeField] private PlayerCharacter _target;
     private HexCoordinate _selectedPos;
 
     [SerializeField] private Transform[] _moveNumPrefabs;
@@ -31,7 +31,7 @@ public class GUI_Moving : GUIFullScreen {
     private void _ShowRange()
     {
 
-        HexCoordinate unitPos = HexCoordinate.ConvertFromVector3(_targetPoint.transform.position);
+        HexCoordinate unitPos = HexCoordinate.ConvertFromVector3(_target.transform.position);
 
         foreach (HexCoordinate hexPosition in movementRange.GetRangePositions())
         {
@@ -73,13 +73,14 @@ public class GUI_Moving : GUIFullScreen {
 
     private void _CalcualteRange()
     {
-        movementRange = GraphSearch.BFSGetRange(HexCoordinate.ConvertFromVector3(_targetPoint.transform.position), _targetPoint.GetPoint());
+        movementRange = GraphSearch.BFSGetRange(HexCoordinate.ConvertFromVector3(_target.transform.position), _target.GetPoint());
     }
 
     private void _MoveUnit()
     {
-        Debug.Log("Moving unit " + _targetUnit.name);
-        _targetUnit.NewMoveThroughPath(currentPath.Select(pos => HexGrid.Instance.GetTileAt(pos).transform.position).ToList());
+        Debug.Log("Moving unit " + _target.name);
+        Queue<Vector3> path = new Queue<Vector3>(currentPath.Select(pos => HexGrid.Instance.GetTileAt(pos).transform.position).ToList());
+        _target.Move(path);
         _HideRange();
         Close();
     }
@@ -91,12 +92,12 @@ public class GUI_Moving : GUIFullScreen {
         CamMovement.Instance.ConvertMovementCamera();
     }
 
-    public void Set(GameObject target)
+    public void Set(PlayerCharacter target)
     {
         CamMovement.Instance.IsPlayerMove = true;
-        _targetPoint = target.GetComponent<DicePoint>();
-        _targetUnit = target.GetComponent<NetworkUnit>();
-        CamMovement.Instance.CamSetToPlayer(target);
+        CamMovement.Instance.CamSetToPlayer(target.gameObject);
+
+        _target = target;
 
         _CalcualteRange();
         _ShowRange();
@@ -114,7 +115,7 @@ public class GUI_Moving : GUIFullScreen {
         }
 
         if (!movementRange.IsHexPositionInRange(selectGridPos) ||
-            selectGridPos == HexCoordinate.ConvertFromVector3(_targetPoint.transform.position))
+            selectGridPos == HexCoordinate.ConvertFromVector3(_target.transform.position))
         {
             _HideRange();
             Close();

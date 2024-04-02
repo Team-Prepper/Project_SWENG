@@ -14,8 +14,7 @@ public class GUI_PlayerInfor : GUIFullScreen {
     [SerializeField] private TextMeshProUGUI _dicePoint;
 
     public Button _turnEndButton;
-
-    DicePoint _targetUnit;
+    
     PlayerCharacter _targetPlayer;
 
     protected override void Open(Vector2 openPos)
@@ -27,7 +26,6 @@ public class GUI_PlayerInfor : GUIFullScreen {
 
         _target = target;
 
-        _targetUnit = target.GetComponent<DicePoint>();
         _targetPlayer = target.GetComponent<PlayerCharacter>();
         GameManager.Instance.turnEndButton = _turnEndButton;
         _playerHealth.SetPlayerHealth(target);
@@ -37,7 +35,7 @@ public class GUI_PlayerInfor : GUIFullScreen {
     protected override void Update()
     {
         base.Update();
-        _dicePoint.text = _targetUnit.GetPoint().ToString();
+        _dicePoint.text = _targetPlayer.GetPoint().ToString();
         _turnEndGlowLight.SetActive(_turnEndButton.interactable);
     }
 
