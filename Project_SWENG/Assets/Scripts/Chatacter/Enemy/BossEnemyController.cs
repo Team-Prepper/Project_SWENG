@@ -1,4 +1,4 @@
-using Character;
+using CharacterSystem;
 using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
@@ -8,10 +8,7 @@ public class BossEnemyController : EnemyController
 {
     public override void DieAct()
     {
-        if (PhotonNetwork.IsMasterClient)
-        {
-            Debug.Log("YOU WIN");
-            GameManager.Instance.GameEnd(true);
-        }
+        Debug.Log("YOU WIN");
+        GameManager.Instance.GameMaster.GameEnd(true);
     }
 }

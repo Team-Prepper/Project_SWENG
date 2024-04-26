@@ -1,6 +1,6 @@
 using Photon.Pun;
 using System.Collections.Generic;
-using Character;
+using CharacterSystem;
 using UnityEngine;
 
 public class EquipManager : MonoBehaviour

@@ -132,7 +132,7 @@ public class Dice : MonoBehaviour {
             lastPosition = rb.position;
         }
 
-        Debug.Log("is Stop");
+        //Debug.Log("is Stop");
         ChkRoll();
     }
     public void ChkRoll()

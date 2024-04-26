@@ -3,7 +3,6 @@ using UnityEngine;
 
 public interface IMoveable {
     public void Move(Queue<Vector3> currentPath);
-    public string GetName();
 }
 
 public interface IAttackable {

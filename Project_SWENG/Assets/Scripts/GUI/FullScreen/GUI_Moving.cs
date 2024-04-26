@@ -4,7 +4,7 @@ using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UISystem;
-using Character;
+using CharacterSystem;
 
 public class GUI_Moving : GUIFullScreen {
 
@@ -38,7 +38,7 @@ public class GUI_Moving : GUIFullScreen {
             if (unitPos.Equals(hexPosition))
                 continue;
 
-            Debug.Log(hexPosition);
+            //Debug.Log(hexPosition);
             HexGrid.Instance.GetTileAt(hexPosition).EnableHighlight();
         }
     }
@@ -48,7 +48,7 @@ public class GUI_Moving : GUIFullScreen {
 
         _HideRange();
 
-        Debug.Log("Target: " + selectedHexPosition);
+        //Debug.Log("Target: " + selectedHexPosition);
         
         currentPath = movementRange.GetPathTo(selectedHexPosition);
         _moveNumParent.gameObject.SetActive(true);
@@ -78,7 +78,6 @@ public class GUI_Moving : GUIFullScreen {
 
     private void _MoveUnit()
     {
-        Debug.Log("Moving unit " + _target.name);
         Queue<Vector3> path = new Queue<Vector3>(currentPath.Select(pos => HexGrid.Instance.GetTileAt(pos).transform.position).ToList());
         _target.Move(path);
         _HideRange();

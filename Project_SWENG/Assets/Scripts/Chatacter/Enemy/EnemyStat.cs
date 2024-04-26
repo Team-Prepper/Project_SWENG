@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Character {
+namespace CharacterSystem {
     [RequireComponent(typeof(EnemyAttack)), RequireComponent(typeof(EnemyController))]
     public class EnemyStat : MonoBehaviour {
         [Header("Enemy stat")]

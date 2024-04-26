@@ -19,7 +19,7 @@ public partial class NetworkManager : MonoBehaviourPunCallbacks
     {
         PhotonNetwork.AutomaticallySyncScene = true;
         PhotonNetwork.GameVersion = gameVersion;       
-        Debug.Log(PhotonNetwork.SendRate);
+        //Debug.Log(PhotonNetwork.SendRate);
     }
 
 

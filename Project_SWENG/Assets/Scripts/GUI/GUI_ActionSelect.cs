@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UISystem;
-using Character;
+using CharacterSystem;
 
 public class GUI_ActionSelect : GUIPopUp
 {

@@ -31,7 +31,6 @@ namespace UISystem {
         public void SetDiceValue()
         {
             _targetPlayer.SetPoint(_dice.Value);
-            GameManager.Instance.gamePhase = GameManager.Phase.ActionPhase;
             Close();
         }
 

@@ -5,11 +5,10 @@ using Photon.Pun;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-namespace Character {
-    public class EnemyController : NetworkCharacterController {
+namespace CharacterSystem {
+    public class EnemyController : Character {
 
         [SerializeField] LayerMask playerLayerMask;
-        public EnemySpawner enemySpawner;
         
         public EnemyStat enemyStat;
 
@@ -21,7 +20,7 @@ namespace Character {
         }
         private void OnEnable()
         {
-            Debug.Log("Enemy OnEnable");
+            //Debug.Log("Enemy OnEnable");
             if (enemyStat == null)
                 enemyStat = GetComponent<EnemyStat>();
 
@@ -53,12 +52,13 @@ namespace Character {
         {
             curHex = HexGrid.Instance.GetTileAt(this.gameObject.transform.position);
             curHex.Entity = null;
+            /*
             if (PhotonNetwork.IsMasterClient)
             {
                 GameManager.Instance.enemies.Remove(this.gameObject);
                 if (enemyStat.isBoss)
                     GameManager.Instance.bossEnemies.Remove(gameObject);
-            }
+            }*/
             DropItem();
             DropExp();
             Destroy(this.gameObject, 1f);

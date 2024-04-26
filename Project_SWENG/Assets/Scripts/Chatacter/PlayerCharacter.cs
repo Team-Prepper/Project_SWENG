@@ -1,25 +1,23 @@
-using Photon.Pun;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UISystem;
 using UnityEngine;
 
-namespace Character {
+namespace CharacterSystem {
 
-    public class PlayerCharacter : NetworkCharacterController,
+    public class PlayerCharacter : Character,
         IMoveable, IDicePoint  {
 
         [SerializeField] int _usePointAtAttack = 3;
         [SerializeField] float _movementDuration = 1f;
         [SerializeField] GameObject playerLight;
 
-        [Header("Ref")]
-        [SerializeField]
-        private Animator _animator;
-
         public bool canUseSkill = true;
 
         [SerializeField] ParticleSystem LevelUpEffect;
+
+        [SerializeField] int _dicePoint;
 
         public void SetHealthUI(IHealthUI ui) {
             _healthUI = ui;
@@ -34,6 +32,10 @@ namespace Character {
         private IEnumerator _RotationCoroutine(Queue<Vector3> path, float rotationDuration)
         {
             Quaternion startRotation = transform.rotation;
+            HexGrid.Instance.GetTileAt(HexCoordinate.ConvertFromVector3(transform.position)).Entity = null;
+
+            if (anim)
+                anim.SetBool("IsWalk", true);
 
             foreach (Vector3 targetPos in path)
             {
@@ -42,6 +44,11 @@ namespace Character {
 
                 float timeElapsed = 0;
 
+                // È¸Àü
+
+                transform.rotation = endRotation;
+
+                /*
                 if (Mathf.Approximately(Mathf.Abs(Quaternion.Dot(startRotation, endRotation)), 1.0f) == false)
                 {
 
@@ -54,24 +61,19 @@ namespace Character {
                     }
                     transform.rotation = endRotation;
                 }
-                _photonView.RPC("SetPlayerOnHex", RpcTarget.All, 0, transform.position);
-                HexGrid.Instance.GetTileAt(HexCoordinate.ConvertFromVector3(transform.position)).Entity = null;
+                */
 
                 Vector3 startPosition = transform.position;
 
                 HexCoordinate newHexPos = HexCoordinate.ConvertFromVector3(targetPos);
-                //NetworkCloudManager.Instance.CloudActiveFalse(newHexPos);
                 Hex goalHex = HexGrid.Instance.GetTileAt(newHexPos);
                 goalHex.CloudActiveFalse();
                 UsePoint(goalHex.Cost);
-
 
                 timeElapsed = 0;
 
                 while (timeElapsed < _movementDuration)
                 {
-                    if (_animator)
-                        _animator.SetBool("IsWalk", true);
 
                     timeElapsed += Time.deltaTime;
                     float lerpStep = timeElapsed / _movementDuration;
@@ -80,36 +82,14 @@ namespace Character {
                 }
                 transform.position = targetPos;
 
-                Debug.Log("Selecting the next position!");
-
             }
-            Debug.Log("Movement finished!");
             CamMovement.Instance.IsPlayerMove = false;
-            _photonView.RPC("SetPlayerOnHex", RpcTarget.All, 1, transform.position);
 
-            if (_animator)
-                _animator.SetBool("IsWalk", false);
+            HexGrid.Instance.GetTileAt(HexCoordinate.ConvertFromVector3(transform.position)).Entity = gameObject;
+            if (anim)
+                anim.SetBool("IsWalk", false);
+
         }
-
-        [PunRPC]
-        public void SetPlayerOnHex(int type, Vector3 position)
-        {
-            if (type == 1)
-            {
-                HexGrid.Instance.GetTileAt(position).Entity = gameObject;
-            }
-            else
-            {
-                HexGrid.Instance.GetTileAt(position).Entity = null;
-            }
-        }
-
-        string IMoveable.GetName()
-        {
-            return "Player";
-        }
-
-        [SerializeField] int _dicePoint;
 
         public void UsePoint(int usingAmount)
         {
@@ -130,18 +110,17 @@ namespace Character {
             _dicePoint = setValue;
         }
 
-        private void Awake()
+        public override void SetPlay()
         {
-            stat.HP.FillMax();
+            base.SetPlay();
+            UIManager.Instance.UseDice(this);
         }
 
         protected override void Start()
         {
             base.Start();
-            if(!PhotonNetwork.IsMasterClient)
-            {
-                playerLight.SetActive(false);
-            }
+            stat.HP.FillMax();
+            //playerLight.SetActive(false);
         }
 
         public int Recover(int val)
@@ -163,7 +142,6 @@ namespace Character {
         {
             if (isSkill)
             {
-                _photonView.RPC("AttackVfx", RpcTarget.All, null);
                 return;
             }
             UsePoint(_usePointAtAttack);
@@ -175,7 +153,6 @@ namespace Character {
                 (InventoryManager.Instance.Weapon ? InventoryManager.Instance.Weapon.value : 0);
         }
 
-        [PunRPC]
         public void AttackVfx()
         {
             EffectManager.Instance.SetTarget(gameObject);
@@ -186,38 +163,23 @@ namespace Character {
             }
         }
 
-        protected override void DamageAct()
-        {
-            //EventChangeHp?.Invoke(this, new IntEventArgs(stat.HP.Value));
-        }
-
         public override void DieAct()
         {
             //EventChangeHp?.Invoke(this, new IntEventArgs(stat.HP.Value));
-            HexGrid.Instance.GetTileAt(this.transform.position).Entity = null;
+            HexGrid.Instance.GetTileAt(transform.position).Entity = null;
+            /*
             if(PhotonNetwork.IsMasterClient)
             {
                 if(GameManager.Instance.remainLife > 0)
                 {
                     GameManager.Instance.remainLife -= 1;
                     GameManager.Instance.HealthCountHandler();
-                    photonView.RPC("RespawnPlayer", RpcTarget.All, null); 
                 }
                 else
                 {
                     GameManager.Instance.GameEnd(false);
                 }
-            }
-        }
-
-        [PunRPC]
-        public void RespawnPlayer()
-        {
-            Debug.Log("REVIVE");
-            gameObject.transform.position = GameManager.Instance.respawnPos.position;
-            HexGrid.Instance.GetTileAt(GameManager.Instance.respawnPos.position).Entity = gameObject;
-            stat.HP.FillMax();
-            Recover(100);
+            }*/
         }
 
         public void EquipItemHandler(Item item)
@@ -229,20 +191,19 @@ namespace Character {
             switch (item.type)
             {
                 case Item.ItemType.Helmet:
-                    photonView.RPC("EquipItem", RpcTarget.All, 0, item.value); 
+                    EquipItem(0, item.value);
                     break;
                 case Item.ItemType.Armor:
-                    photonView.RPC("EquipItem", RpcTarget.All, 1, item.value); 
+                    EquipItem(1, item.value);
                     break;
                 case Item.ItemType.Shield:
-                    photonView.RPC("EquipItem", RpcTarget.All, 2, item.value); 
+                    EquipItem(2, item.value);
                     break;
             }
 
             //EventEquip?.Invoke(this, null);
         }
 
-        [PunRPC]
         public void EquipItem(int itemType, int value)
         {
             if (!stat.IsAlive()) return;
@@ -272,10 +233,10 @@ namespace Character {
             switch (item.type)
             {
                 case Item.ItemType.Helmet:
-                    photonView.RPC("UnequipItem", RpcTarget.All, 0, item.value); 
+                    UnequipItem(0, item.value); 
                     break;
                 case Item.ItemType.Armor:
-                    photonView.RPC("UnequipItem", RpcTarget.All, 1, item.value); 
+                    UnequipItem(1, item.value);
                     break;
                 case Item.ItemType.Shield:
                     stat.SetDef(item.value, false);
@@ -284,7 +245,6 @@ namespace Character {
             //EventEquip?.Invoke(this, null);
         }
         
-        [PunRPC]
         public void UnequipItem(int itemType, int value)
         {
             if (!stat.IsAlive()) return;

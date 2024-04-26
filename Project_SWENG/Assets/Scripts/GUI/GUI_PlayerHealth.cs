@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System;
-using Character;
+using CharacterSystem;
 
 public class GUI_PlayerHealth : MonoBehaviour, IHealthUI
 {

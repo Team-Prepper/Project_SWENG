@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 using UnityEngine;
-using Character;
+using CharacterSystem;
 using UISystem;
 
 public class GUI_Attack : GUIFullScreen {
 
-    public Character.NetworkCharacterController _target;
+    public CharacterSystem.Character _target;
 
     [SerializeField] private Transform _markerParent;
     [SerializeField] private Transform[] _attackMarkers;
@@ -21,7 +21,7 @@ public class GUI_Attack : GUIFullScreen {
 
     public void Set(GameObject target, int skillDmg = 0) {
     
-        _target = target.GetComponent<NetworkCharacterController>();
+        _target = target.GetComponent<Character>();
         _skillDmg = skillDmg;
         HexCoordinate curHexPos = HexCoordinate.ConvertFromVector3(target.transform.position);
         _markerParent.localScale = Vector3.one / GameObject.Find("Canvas").GetComponent<RectTransform>().localScale.y;
