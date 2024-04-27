@@ -1,6 +1,7 @@
 using UnityEngine;
 using Photon.Pun;
 using TMPro;
+using UnityEngine.UI;
 
 
 public partial class NetworkManager : MonoBehaviourPunCallbacks
@@ -10,7 +11,7 @@ public partial class NetworkManager : MonoBehaviourPunCallbacks
     public int baseDiceValue = 0;
     string _nickName;
 
-    public TMP_Text StatusText;
+    public Text StatusText;
     public PhotonView PV;
     
     public static int PlayerID { get; private set; }

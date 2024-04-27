@@ -9,6 +9,7 @@ using UnityEngine.Serialization;
 namespace CharacterSystem {
     public class Character : MonoBehaviour, IDamagable
     {
+        protected ICharacterController _cc;
 
         [SerializeField] protected IHealthUI _healthUI;
 
@@ -22,30 +23,12 @@ namespace CharacterSystem {
             if (!stat.IsAlive()) return;
 
             stat.Damaged(amount);
-
-            if (stat.IsAlive())
-            {
-                RunAnimation(1);
-                _healthUI.UpdateGUI(stat.HP);
-                DamageAct();
-                return;
-            }
-
-            RunAnimation(2);
-
             _healthUI.UpdateGUI(stat.HP);
-            DieAct();
+
         }
 
         public virtual string GetName() {
             return string.Empty;
-        }
-
-        public void Attack(Vector3 targetPos, bool isSkill = false)
-        {
-            transform.LookAt(targetPos);
-            RunAnimation(0);
-            AttackAct(isSkill);
         }
         
         public virtual int GetAttackValue()
@@ -53,19 +36,32 @@ namespace CharacterSystem {
             return stat.GetAttackValue();
         }
 
-        protected virtual void AttackAct(bool isSkill)
+        public virtual int GetTeamIdx() {
+            return 1;
+        }
+
+        public virtual void Initial(ICharacterController cc) {
+
+            anim = GetComponent<Animator>();
+            _cc = cc;
+        }
+
+        public virtual void AttackAct(bool isSkill)
         {
+            RunAnimation(0);
 
         }
    
 
-        protected virtual void DamageAct()
+        public virtual void DamageAct()
         {
+            RunAnimation(1);
 
         }
 
         public virtual void DieAct()
         {
+            RunAnimation(2);
 
         }
 
@@ -91,10 +87,5 @@ namespace CharacterSystem {
             }
         }
 
-        // Start is called before the first frame update
-        protected virtual void Start()
-        {
-            anim = GetComponent<Animator>();
-        }
     }
 }

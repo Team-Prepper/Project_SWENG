@@ -38,14 +38,9 @@ public class LocalGameMaster : MonoBehaviour, IGameMaster {
         _teams[0].StartTurn();
     }
 
-    public void AddPlayerTeamMember(ICharacterController c)
+    public void AddTeamMember(ICharacterController c, int teamIdx)
     {
-        _teams[0].AddMember(c);
-
-    }
-    public void AddEnemyTeamMember(ICharacterController c)
-    {
-        _teams[1].AddMember(c);
+        _teams[teamIdx].AddMember(c);
 
     }
 

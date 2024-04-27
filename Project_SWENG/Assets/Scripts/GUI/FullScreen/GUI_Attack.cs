@@ -5,6 +5,8 @@ using UISystem;
 
 public class GUI_Attack : GUIFullScreen {
 
+    ICharacterController _cc;
+
     public CharacterSystem.Character _target;
 
     [SerializeField] private Transform _markerParent;
@@ -19,16 +21,18 @@ public class GUI_Attack : GUIFullScreen {
     [SerializeField] private GameObject btnAttack;
     [SerializeField] private GameObject btnSkill;
 
-    public void Set(GameObject target, int skillDmg = 0) {
-    
+    public void Set(PlayerCharacter target, int skillDmg = 0) {
+
+
         _target = target.GetComponent<Character>();
+        _cc = target.GetComponent<ICharacterController>();
+
         _skillDmg = skillDmg;
-        HexCoordinate curHexPos = HexCoordinate.ConvertFromVector3(target.transform.position);
         _markerParent.localScale = Vector3.one / GameObject.Find("Canvas").GetComponent<RectTransform>().localScale.y;
 
         _attackRange = new List<HexCoordinate>();
 
-        foreach (var neighbour in HexGrid.Instance.GetNeighboursFor(curHexPos))
+        foreach (var neighbour in HexGrid.Instance.GetNeighboursFor(HexCoordinate.ConvertFromVector3(target.transform.position)))
         {
             Hex atkHex = HexGrid.Instance.GetTileAt(neighbour);
 
@@ -39,7 +43,7 @@ public class GUI_Attack : GUIFullScreen {
         }
 
         CamMovement.Instance.ConvertMovementCamera();
-        CamMovement.Instance.CamSetToPlayer(target);
+        CamMovement.Instance.CamSetToPlayer(_target.gameObject);
         
         btnAttack.SetActive(skillDmg == 0);
         btnSkill.SetActive(skillDmg != 0); // (skillDmg > 0)
@@ -70,7 +74,8 @@ public class GUI_Attack : GUIFullScreen {
             return;
         }
 
-        AttackManager.Instance.BaseAtkHandler(_target, _attackTarget);
+        _cc.Attack(_attackTarget.transform.position, false);
+        //AttackManager.Instance.BaseAtkHandler(_target, _attackTarget);
         Close();
 
     }
@@ -80,8 +85,8 @@ public class GUI_Attack : GUIFullScreen {
         if (_attackTarget == null) {
             return;
         }
-        
-        AttackManager.Instance.SkillAtkHandler(_target, _attackTarget, _skillDmg);
+
+        _cc.Attack(_attackTarget.transform.position, true);
         Close();
     }
 

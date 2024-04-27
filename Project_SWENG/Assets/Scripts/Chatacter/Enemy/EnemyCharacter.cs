@@ -4,9 +4,11 @@ using System.Collections.Generic;
 using Photon.Pun;
 using UnityEngine;
 using UnityEngine.Serialization;
+using UnityEngine.Scripting;
 
 namespace CharacterSystem {
-    public class EnemyController : Character {
+
+    public class EnemyCharacter : Character {
 
         [SerializeField] LayerMask playerLayerMask;
         
@@ -14,10 +16,17 @@ namespace CharacterSystem {
 
         public Hex curHex;
 
+        enum State { 
+            ready, move, attack
+        }
+
+        State _state;
+
         public override string GetName()
         {
             return enemyStat.monsterName;
         }
+
         private void OnEnable()
         {
             //Debug.Log("Enemy OnEnable");
@@ -31,8 +40,54 @@ namespace CharacterSystem {
             stat.SetHP(enemyStat.maxHp, enemyStat.maxHp, 0);
             curHex = HexGrid.Instance.GetTileAt(this.gameObject.transform.position);
 
-            curHex.Entity = this.gameObject;
+            curHex.Entity = gameObject;
             
+        }
+
+        public override void SetPlay()
+        {
+            base.SetPlay();
+            _state = State.attack;
+        }
+
+        private void Update()
+        {
+            switch (_state) { 
+                case State.ready:
+                    return;
+                case State.move:
+                    break;
+                case State.attack:
+                    EnemyAttackHandler();
+                    break;
+            }
+        }
+
+        public void EnemyAttackHandler()
+        {
+            List<HexCoordinate> list = new List<HexCoordinate>();
+
+            foreach (var neighbours in HexGrid.Instance.GetNeighboursDoubleFor(curHex.HexCoords))
+            {
+                Hex curHex = HexGrid.Instance.GetTileAt(neighbours);
+                GameObject entity = curHex.Entity;
+
+                if (entity != null && entity.CompareTag("Player"))
+                {
+                    list.Add(neighbours);
+                }
+            }
+
+            if (list.Count == 0) {
+                _cc.TurnEnd();
+                return;
+            }
+
+            foreach (HexCoordinate h in list) {
+                _cc.Attack(h.ConvertToVector3(), false);
+            }
+
+            _cc.TurnEnd();
         }
 
         public override int GetAttackValue()
@@ -41,8 +96,9 @@ namespace CharacterSystem {
             return enemyStat.atk;
         }
 
-        protected override void DamageAct()
+        public override void DamageAct()
         {
+            base.DamageAct();
             Collider[] colliders = Physics.OverlapSphere(transform.position, 10f, playerLayerMask);
             if (colliders.Length > 0)
                 gameObject.transform.LookAt(colliders[0].transform);
@@ -50,6 +106,7 @@ namespace CharacterSystem {
 
         public override void DieAct()
         {
+            base.DieAct();
             curHex = HexGrid.Instance.GetTileAt(this.gameObject.transform.position);
             curHex.Entity = null;
             /*

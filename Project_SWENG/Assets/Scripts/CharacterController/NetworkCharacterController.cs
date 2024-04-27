@@ -12,7 +12,21 @@ public class NetworkCharacterController : MonoBehaviourPun, ICharacterController
 
     public void Attack(Vector3 targetPos, bool isSkill = false)
     {
-        _character.Attack(targetPos, isSkill);
+        transform.LookAt(targetPos);
+        _view.RPC("_AttackAct", RpcTarget.All, isSkill);
+
+        Hex targetHex = HexGrid.Instance.GetTileAt(targetPos);
+        if (targetHex.Entity == null || !targetHex.Entity.TryGetComponent(out IDamagable target)) return;
+
+        int totalDmg = _character.GetAttackValue();
+        target.TakeDamage(totalDmg);
+    }
+
+    [PunRPC]
+    private void _AttackAct(bool isSkill)
+    {
+        _character.AttackAct(isSkill);
+
     }
 
     public void TakeDamage(int amount)
@@ -26,8 +40,14 @@ public class NetworkCharacterController : MonoBehaviourPun, ICharacterController
     {
         _character.TakeDamage(amount);
 
+        if (_character.stat.IsAlive())
+        {
+            _character.DamageAct();
+            return;
+        }
+        _character.DieAct();
+
         if (!PhotonNetwork.IsMasterClient) return;
-        if (_character.stat.IsAlive()) return;
 
         // 죽었을 때 네트워크에서 처리해야 할 것들 실행
 
@@ -54,13 +74,14 @@ public class NetworkCharacterController : MonoBehaviourPun, ICharacterController
         _character = GetComponent<Character>();
         _view = GetComponent<PhotonView>();
 
+        _character.Initial(this);
         _view.RPC("_AddMember", RpcTarget.MasterClient);
     }
 
     [PunRPC]
     private void _AddMember()
     {
-        GameManager.Instance.GameMaster.AddPlayerTeamMember(this);
+        GameManager.Instance.GameMaster.AddTeamMember(this, _character.GetTeamIdx());
 
     }
 }

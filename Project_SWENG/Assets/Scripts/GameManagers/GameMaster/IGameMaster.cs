@@ -57,8 +57,7 @@ public interface IGameMaster
 
     public GameObject InstantiateCharacter(GameObject prefab, Vector3 position, Quaternion rotation);
 
-    public void AddPlayerTeamMember(ICharacterController c);
-    public void AddEnemyTeamMember(ICharacterController c);
+    public void AddTeamMember(ICharacterController c, int teamIdx);
     public void TurnEnd(ICharacterController c);
 
     public void GameEnd(bool victory);

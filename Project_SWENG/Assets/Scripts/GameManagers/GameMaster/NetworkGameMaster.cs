@@ -39,14 +39,9 @@ public class NetworkGameMaster : MonoBehaviourPun, IGameMaster {
         _teams[0].StartTurn();
     }
 
-    public void AddPlayerTeamMember(ICharacterController c)
+    public void AddTeamMember(ICharacterController c, int teamIdx)
     {
-        _teams[0].AddMember(c);
-
-    }
-    public void AddEnemyTeamMember(ICharacterController c)
-    {
-        _teams[1].AddMember(c);
+        _teams[teamIdx].AddMember(c);
 
     }
 
@@ -63,22 +58,6 @@ public class NetworkGameMaster : MonoBehaviourPun, IGameMaster {
 
     private void Update()
     {
-    }
-
-    void changeDayNight()
-    {
-        return;
-        /*
-        if (gamePhase != IGameMaster.Phase.EnemyPhase)
-        {
-            day.SetActive(true);
-            night.SetActive(false);
-        }
-        else
-        {
-            day.SetActive(false);
-            night.SetActive(true);
-        }*/
     }
 
     public void GameEnd(bool victory)

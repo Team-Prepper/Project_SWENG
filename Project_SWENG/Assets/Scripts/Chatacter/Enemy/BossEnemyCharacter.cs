@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BossEnemyController : EnemyController
+public class BossEnemyCharacter : EnemyCharacter
 {
     public override void DieAct()
     {

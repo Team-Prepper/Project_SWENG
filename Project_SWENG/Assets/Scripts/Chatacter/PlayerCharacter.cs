@@ -91,6 +91,11 @@ namespace CharacterSystem {
 
         }
 
+        public override int GetTeamIdx()
+        {
+            return 0;
+        }
+
         public void UsePoint(int usingAmount)
         {
             if (_dicePoint < usingAmount)
@@ -116,9 +121,9 @@ namespace CharacterSystem {
             UIManager.Instance.UseDice(this);
         }
 
-        protected override void Start()
+        public override void Initial(ICharacterController cc)
         {
-            base.Start();
+            base.Initial(cc);
             stat.HP.FillMax();
             //playerLight.SetActive(false);
         }
@@ -138,8 +143,9 @@ namespace CharacterSystem {
             return GetPoint() >= _usePointAtAttack;
         }
 
-        protected override void AttackAct(bool isSkill)
+        public override void AttackAct(bool isSkill)
         {
+            base.AttackAct(isSkill);
             if (isSkill)
             {
                 return;
