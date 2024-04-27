@@ -79,7 +79,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Vie
+  m_Text: "\uBCA0\uD2B8\uB0A8\uC5B4"
   m_Key: setting_Vie
 --- !u!1 &1055890604652017778
 GameObject:
@@ -160,7 +160,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Select Language
+  m_Text: "\uC5B8\uC5B4 \uC120\uD0DD"
   m_Key: setting_SelectLanguage
 --- !u!1 &1555436978153468395
 GameObject:
@@ -172,7 +172,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4946057303370186238}
   - component: {fileID: 6594690459251685882}
-  - component: {fileID: 596115468332760039}
+  - component: {fileID: 8262626189198373463}
   m_Layer: 5
   m_Name: txt_label
   m_TagString: Untagged
@@ -208,7 +208,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1555436978153468395}
   m_CullTransparentMesh: 1
---- !u!114 &596115468332760039
+--- !u!114 &8262626189198373463
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -217,7 +217,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1555436978153468395}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 400d0541b7e395c42af8b20a90b6a982, type: 3}
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -230,19 +230,18 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: ef54a80dd7536bd46bc0414f1db4208a, type: 3}
-    m_FontSize: 120
+    m_FontSize: 72
     m_FontStyle: 0
-    m_BestFit: 1
-    m_MinSize: 1
-    m_MaxSize: 300
+    m_BestFit: 0
+    m_MinSize: 4
+    m_MaxSize: 72
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
-    m_HorizontalOverflow: 0
+    m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: Setting
-  m_Key: setting_Setting
 --- !u!1 &2487529360821858885
 GameObject:
   m_ObjectHideFlags: 0
@@ -446,7 +445,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: ef54a80dd7536bd46bc0414f1db4208a, type: 3}
+    m_Font: {fileID: 12800000, guid: d8d1dc9879f584c94b2cbab34f20a090, type: 3}
     m_FontSize: 48
     m_FontStyle: 0
     m_BestFit: 0
@@ -458,7 +457,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Close
+  m_Text: "\uB2EB\uAE30"
   m_Key: setting_Close
 --- !u!1 &4734513364201677110
 GameObject:
@@ -887,7 +886,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Eng
+  m_Text: "\uC601\uC5B4"
   m_Key: setting_Eng
 --- !u!1 &6552255819187591451
 GameObject:
@@ -968,7 +967,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Kor
+  m_Text: "\uD55C\uAD6D\uC5B4"
   m_Key: setting_Kor
 --- !u!1 &6590349857763459850
 GameObject:
