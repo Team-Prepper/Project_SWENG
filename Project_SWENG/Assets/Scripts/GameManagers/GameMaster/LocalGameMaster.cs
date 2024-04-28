@@ -29,10 +29,12 @@ public class LocalGameMaster : MonoBehaviour, IGameMaster {
     private void Start()
     {
         GameManager.Instance.SetGameMaster(this);
-        _teams = new Team[1];
+        _teams = new Team[2];
         _teams[0] = new Team();
+        _teams[1] = new Team();
 
         _playerSpawner.SpawnPlayer(0);
+        _enemySpawner.SpawnEnemy();
 
         gamePhase = IGameMaster.Phase.Play;
         _teams[0].StartTurn();
@@ -41,6 +43,12 @@ public class LocalGameMaster : MonoBehaviour, IGameMaster {
     public void AddTeamMember(ICharacterController c, int teamIdx)
     {
         _teams[teamIdx].AddMember(c);
+
+    }
+
+    public void RemoveTeamMember(ICharacterController c, int teamIdx)
+    {
+        _teams[teamIdx].RemoveMember(c);
 
     }
 

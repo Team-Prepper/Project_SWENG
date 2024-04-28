@@ -29,19 +29,33 @@ public class NetworkGameMaster : MonoBehaviourPun, IGameMaster {
 
     private void Start()
     {
-        GameManager.Instance.SetGameMaster(this);
-        _teams = new Team[1];
-        _teams[0] = new Team();
+        if (PhotonNetwork.IsMasterClient)
+        {
+            GameManager.Instance.SetGameMaster(this);
+            _teams = new Team[2];
+            _teams[0] = new Team();
+            _teams[1] = new Team();
+            _enemySpawner.SpawnEnemy();
+        }
 
-        _playerSpawner.SpawnPlayer(NetworkManager.PlayerID);
-
-        gamePhase = IGameMaster.Phase.Play;
-        _teams[0].StartTurn();
+        _playerSpawner.SpawnPlayer(0);
+        
+        if (PhotonNetwork.IsMasterClient)
+        {
+            gamePhase = IGameMaster.Phase.Play;
+            _teams[0].StartTurn();
+        }
     }
 
     public void AddTeamMember(ICharacterController c, int teamIdx)
     {
         _teams[teamIdx].AddMember(c);
+
+    }
+
+    public void RemoveTeamMember(ICharacterController c, int teamIdx)
+    {
+        _teams[teamIdx].RemoveMember(c);
 
     }
 

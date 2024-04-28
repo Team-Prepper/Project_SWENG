@@ -14,18 +14,12 @@ public class EnemySpawner : MonoBehaviour
     public GameObject bossCam;
     public Hex stageBossPos;
 
-    private int enemyCnt = 9;
-    private int bossEnemyCnt = 3;
+    [SerializeField] private int enemyCnt = 9;
+    [SerializeField] private int bossEnemyCnt = 3;
 
     public void SpawnEnemy()
     {
-        /*
-        if(PhotonNetwork.IsMasterClient)
-        {
-        }
-        */
-
-        //Debug.Log("EnemySpawn");
+        Debug.Log("EnemySpawn");
         for (int i = 0; i < bossEnemyCnt; i++)
         {
             //Debug.Log("BossEnemySpawnHex : " + spawnHex.name);

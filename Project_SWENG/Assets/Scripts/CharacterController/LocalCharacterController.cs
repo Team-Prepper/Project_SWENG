@@ -24,8 +24,14 @@ public class LocalCharacterController : MonoBehaviour, ICharacterController
     public void TakeDamage(int amount)
     {
         _character.TakeDamage(amount);
-        
-        if (_character.stat.IsAlive()) return;
+
+        if (_character.stat.IsAlive()) {
+            _character.DamageAct();
+            return;
+        }
+        _character.DieAct();
+        // 죽었을 때 GameMaster에서 처리할 것
+        GameManager.Instance.GameMaster.RemoveTeamMember(this, _character.GetTeamIdx());
 
     }
 

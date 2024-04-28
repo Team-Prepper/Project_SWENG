@@ -3,9 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface ICharacterController {
-
-    public void TakeDamage(int amount);
+public interface ICharacterController : IDamagable {
 
     public void Attack(Vector3 targetPos, bool isSkill = false);
 

@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.Serialization;
 
 namespace CharacterSystem {
-    public class Character : MonoBehaviour, IDamagable
+    public class Character : MonoBehaviour
     {
         protected ICharacterController _cc;
 

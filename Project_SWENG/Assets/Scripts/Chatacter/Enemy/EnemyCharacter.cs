@@ -47,20 +47,7 @@ namespace CharacterSystem {
         public override void SetPlay()
         {
             base.SetPlay();
-            _state = State.attack;
-        }
-
-        private void Update()
-        {
-            switch (_state) { 
-                case State.ready:
-                    return;
-                case State.move:
-                    break;
-                case State.attack:
-                    EnemyAttackHandler();
-                    break;
-            }
+            EnemyAttackHandler();
         }
 
         public void EnemyAttackHandler()
@@ -79,7 +66,7 @@ namespace CharacterSystem {
             }
 
             if (list.Count == 0) {
-                _cc.TurnEnd();
+                TurnEnd();
                 return;
             }
 
@@ -87,12 +74,18 @@ namespace CharacterSystem {
                 _cc.Attack(h.ConvertToVector3(), false);
             }
 
+            Invoke("TurnEnd", 3f);
+        }
+
+        private void TurnEnd()
+        {
+
             _cc.TurnEnd();
+
         }
 
         public override int GetAttackValue()
         {
-            Debug.Log(enemyStat.atk);
             return enemyStat.atk;
         }
 

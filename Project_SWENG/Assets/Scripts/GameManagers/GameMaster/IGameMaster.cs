@@ -24,16 +24,27 @@ public class Team {
         _members[c] = true;
     }
 
+    public void RemoveMember(ICharacterController c) {
+        _members.Remove(c);
+    }
+
     public void StartTurn() {
 
         Dictionary<ICharacterController, bool> members = new Dictionary<ICharacterController, bool>();
+        List<ICharacterController> list = new List<ICharacterController>();
 
-        foreach (ICharacterController m in _members.Keys) {
-            m.SetPlay();
+        foreach (ICharacterController m in _members.Keys)
+        {
             members.Add(m, false);
+            list.Add(m);
         }
 
         _members = members;
+
+        foreach (ICharacterController m in list)
+        {
+            m.SetPlay();
+        }
 
     }
 
@@ -58,6 +69,7 @@ public interface IGameMaster
     public GameObject InstantiateCharacter(GameObject prefab, Vector3 position, Quaternion rotation);
 
     public void AddTeamMember(ICharacterController c, int teamIdx);
+    public void RemoveTeamMember(ICharacterController c, int teamIdx);
     public void TurnEnd(ICharacterController c);
 
     public void GameEnd(bool victory);

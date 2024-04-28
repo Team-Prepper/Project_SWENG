@@ -1788,11 +1788,10 @@ GameObject:
   - component: {fileID: 3719267907849167959}
   - component: {fileID: 8708793842863733948}
   - component: {fileID: 4194769173895620059}
-  - component: {fileID: 1113448305632638224}
-  - component: {fileID: 8909115769715850742}
   - component: {fileID: 359098693676354363}
   - component: {fileID: 8758659048458748555}
   - component: {fileID: -6813351338438368152}
+  - component: {fileID: 1725268840709878225}
   m_Layer: 0
   m_Name: Net_Enemy_Cockatrice
   m_TagString: Enemy
@@ -1875,48 +1874,6 @@ CapsuleCollider:
   m_Height: 0.03
   m_Direction: 1
   m_Center: {x: 0, y: 0.025, z: 0}
---- !u!114 &1113448305632638224
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6719478820052443104}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 543f9e3fd40ac844ba57bfd061d5f67f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  equipCam: {fileID: 0}
-  anim: {fileID: 0}
-  stat:
-    _lv: 1
-    _exp: 0
-    _hp:
-      _curValue: 100
-      _maxValue: 100
-      _minValue: 0
-    _def: 0
-    _attackPower: 10
-  playerLayerMask:
-    serializedVersion: 2
-    m_Bits: 65536
-  enemySpawner: {fileID: 0}
-  enemyStat: {fileID: 0}
-  curHex: {fileID: 0}
---- !u!114 &8909115769715850742
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6719478820052443104}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a37a6f251b8e8439d9be072ed3f38dfd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemyController: {fileID: 0}
 --- !u!114 &359098693676354363
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1990,6 +1947,34 @@ MonoBehaviour:
   m_SynchronizeLayers:
   - SynchronizeType: 2
     LayerIndex: 0
+--- !u!114 &1725268840709878225
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6719478820052443104}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f6e40e72dacfc642a3e1ffe86111ee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  equipCam: {fileID: 0}
+  anim: {fileID: 0}
+  stat:
+    _lv: 1
+    _exp: 0
+    _hp:
+      _curValue: 100
+      _maxValue: 100
+      _minValue: 0
+    _def: 0
+    _attackPower: 10
+  playerLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
+  enemyStat: {fileID: 0}
+  curHex: {fileID: 0}
 --- !u!1 &6781244801108911403
 GameObject:
   m_ObjectHideFlags: 0

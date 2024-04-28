@@ -275,7 +275,7 @@ namespace CharacterSystem {
         {
             if (stat.GetExp(val))
             {
-                LevelUpEffect.Play();
+                //LevelUpEffect.Play();
                 //EventEquip?.Invoke(this, null);
             }
             

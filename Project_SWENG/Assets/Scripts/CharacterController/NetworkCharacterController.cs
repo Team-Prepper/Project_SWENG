@@ -49,7 +49,7 @@ public class NetworkCharacterController : MonoBehaviourPun, ICharacterController
 
         if (!PhotonNetwork.IsMasterClient) return;
 
-        // 죽었을 때 네트워크에서 처리해야 할 것들 실행
+        // 죽었을 때 GameMaster에서 처리할 것
 
     }
 
