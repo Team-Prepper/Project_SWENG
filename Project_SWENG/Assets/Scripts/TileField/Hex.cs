@@ -130,7 +130,6 @@ public class Hex : MonoBehaviour
         cloud.SetActive(true);
         isCloud = true;
 
-        tileType = GetComponent<HexTileSetter>().type;
         SetCost();
     }
 

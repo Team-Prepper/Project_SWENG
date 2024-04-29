@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UISystem;
-using Character;
+using CharacterSystem;
 
 public class GUI_ActionSelect : GUIPopUp
 {
     GameObject _target;
 
-    DicePoint _targetUnit;
-    PlayerCharacter _playerController;
+    PlayerCharacter _targetUnit;
 
     private Item _curEquipWeapon;
 
@@ -22,14 +21,13 @@ public class GUI_ActionSelect : GUIPopUp
     public void Set(GameObject target)
     {
         _target = target;
-        _targetUnit = target.GetComponent<DicePoint>();
+        _targetUnit = target.GetComponent<PlayerCharacter>();
         _curEquipWeapon = target.GetComponent<EquipManager>().GetEquipWeaponHasSkill();
-        _playerController = target.GetComponent<PlayerCharacter>();
         CamMovement.Instance.IsPlayerMove = true;
 
         btnSkillObj.SetActive(_curEquipWeapon);
         btnAttack.interactable = (_targetUnit.GetPoint() >= 3);
-        btnSkill.interactable = _playerController.canUseSkill;
+        btnSkill.interactable = _targetUnit.canUseSkill;
         btnMove.interactable = (_targetUnit.GetPoint() >= 1);
     }
     
@@ -37,7 +35,7 @@ public class GUI_ActionSelect : GUIPopUp
     {
         if (_targetUnit.GetPoint() < _curEquipWeapon.skillCost) return;
         _targetUnit.UsePoint(_curEquipWeapon.skillCost);
-        UIManager.OpenGUI<GUI_Attack>("Attack").Set(_target, _curEquipWeapon.skillDmg);
+        UIManager.OpenGUI<GUI_Attack>("Attack").Set(_targetUnit, _curEquipWeapon.skillDmg);
         //_playerController.canUseSkill = false;
         CamMovement.Instance.IsPlayerMove = true;
         _AfterAction();
@@ -46,7 +44,7 @@ public class GUI_ActionSelect : GUIPopUp
     public void OpenAttack()
     {
         if (_targetUnit.GetPoint() < 3) return;
-        UIManager.OpenGUI<GUI_Attack>("Attack").Set(_target);
+        UIManager.OpenGUI<GUI_Attack>("Attack").Set(_targetUnit);
         CamMovement.Instance.IsPlayerMove = true;
         _AfterAction();
     }
@@ -54,7 +52,7 @@ public class GUI_ActionSelect : GUIPopUp
     {
         if (_targetUnit.GetPoint() < 2) return;
 
-        UIManager.OpenGUI<GUI_Moving>("Move").Set(_target);
+        UIManager.OpenGUI<GUI_Moving>("Move").Set(_targetUnit);
         CamMovement.Instance.IsPlayerMove = false;
         _AfterAction();
     }

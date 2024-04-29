@@ -96,7 +96,7 @@ namespace UISystem {
             msgBox.SetMessage(messageContent);
         }
 
-        public void UseDice(DicePoint target)
+        public void UseDice(IDicePoint target)
         {
             if (_dice == null) _dice = OpenGUI<GUI_Dice>("Dice");
             else _dice.ReOpen();

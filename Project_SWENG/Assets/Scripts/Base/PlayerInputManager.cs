@@ -121,11 +121,11 @@ public class PlayerInputManager : MonoSingleton<PlayerInputManager>
         
         Debug.Log("SpaceBar");
         Debug.Log(PhotonNetwork.NetworkClientState);
-        
+        /*
         if (!GameManager.IsNull())
         {
             OnUnitSelected?.Invoke(GameManager.Instance.player);
-        }
+        }*/
         
     }
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using Character;
+using CharacterSystem;
 using UISystem;
 using Photon.Pun;
 
@@ -15,7 +15,7 @@ public class GUI_PlayerInfor : GUIFullScreen {
 
     public Button _turnEndButton;
 
-    DicePoint _targetUnit;
+    ICharacterController _targetCC;
     PlayerCharacter _targetPlayer;
 
     protected override void Open(Vector2 openPos)
@@ -27,25 +27,26 @@ public class GUI_PlayerInfor : GUIFullScreen {
 
         _target = target;
 
-        _targetUnit = target.GetComponent<DicePoint>();
+        _targetCC = target.GetComponent<ICharacterController>();
         _targetPlayer = target.GetComponent<PlayerCharacter>();
-        GameManager.Instance.turnEndButton = _turnEndButton;
-        _playerHealth.SetPlayerHealth(target);
+        //GameManager.Instance.turnEndButton = _turnEndButton;
+        _targetPlayer.SetHealthUI(_playerHealth);
 
     }
 
     protected override void Update()
     {
         base.Update();
-        _dicePoint.text = _targetUnit.GetPoint().ToString();
+        _dicePoint.text = _targetPlayer.GetPoint().ToString();
         _turnEndGlowLight.SetActive(_turnEndButton.interactable);
     }
 
     public override void HexSelect(HexCoordinate selectGridPos)
     {
-        if (GameManager.Instance.gamePhase == GameManager.Phase.EnemyPhase) {
+        /*
+        if (GameManager.Instance.GameMaster.gamePhase == IGameMaster.Phase.EnemyPhase) {
             return;
-        }
+        }*/
 
         Hex selected = HexGrid.Instance.GetTileAt(selectGridPos);
 
@@ -57,13 +58,14 @@ public class GUI_PlayerInfor : GUIFullScreen {
             return;
         }
 
-        if (!selected.Entity.TryGetComponent<NetworkCharacterController>(out NetworkCharacterController target)) return;
+        if (!selected.Entity.TryGetComponent<Character>(out Character target)) return;
+
         UIManager.OpenGUI<GUI_ShowCharacterInfor>("CharacterInfor").SetInfor(target.GetName(), target);
     }
 
     public void TurnEndButton() {
         if (_nowPopUp) return;
-        GameManager.Instance.PlayerTurnEnd();
+        _targetCC.TurnEnd();
     }
 
     public void AttackButton() {

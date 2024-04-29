@@ -11,11 +11,10 @@ GameObject:
   - component: {fileID: 5110700302637738397}
   - component: {fileID: 5167814934297746353}
   - component: {fileID: 3307650390993169689}
-  - component: {fileID: 8541738688539648228}
-  - component: {fileID: 2704694391395156812}
   - component: {fileID: 5626877546270922298}
   - component: {fileID: -1575516335997127636}
   - component: {fileID: 6762001258820426159}
+  - component: {fileID: 3334478628410244932}
   m_Layer: 0
   m_Name: Net_Enemy_Nomad_M
   m_TagString: Enemy
@@ -84,49 +83,6 @@ MonoBehaviour:
   isDie: 0
   isBoss: 0
   dropItem: []
---- !u!114 &8541738688539648228
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5107100726514873987}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a37a6f251b8e8439d9be072ed3f38dfd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemyController: {fileID: 0}
---- !u!114 &2704694391395156812
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5107100726514873987}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 543f9e3fd40ac844ba57bfd061d5f67f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  equipCam: {fileID: 0}
-  anim: {fileID: 0}
-  stat:
-    _lv: 1
-    _exp: 0
-    _hp:
-      _curValue: 100
-      _maxValue: 100
-      _minValue: 0
-    _def: 0
-    _attackPower: 10
-  healthGUI: {fileID: 5069026101904300249}
-  playerLayerMask:
-    serializedVersion: 2
-    m_Bits: 65536
-  enemySpawner: {fileID: 0}
-  enemyStat: {fileID: 3307650390993169689}
-  curHex: {fileID: 0}
 --- !u!114 &5626877546270922298
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -197,6 +153,34 @@ MonoBehaviour:
   m_SynchronizeLayers:
   - SynchronizeType: 2
     LayerIndex: 0
+--- !u!114 &3334478628410244932
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5107100726514873987}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f6e40e72dacfc642a3e1ffe86111ee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  equipCam: {fileID: 0}
+  anim: {fileID: 0}
+  stat:
+    _lv: 1
+    _exp: 0
+    _hp:
+      _curValue: 100
+      _maxValue: 100
+      _minValue: 0
+    _def: 0
+    _attackPower: 10
+  playerLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
+  enemyStat: {fileID: 0}
+  curHex: {fileID: 0}
 --- !u!1 &5107101363861206323
 GameObject:
   m_ObjectHideFlags: 0
@@ -2599,18 +2583,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6b35e559e2048424d8b237e3718e2058, type: 3}
---- !u!114 &5069026101904300249 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2134647276887054886, guid: 6b35e559e2048424d8b237e3718e2058,
-    type: 3}
-  m_PrefabInstance: {fileID: 6613261181105455871}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5c2f6ff36458f1742b1f7fd7e8e9b0d0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!224 &6798777227032426313 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 404512375063164342, guid: 6b35e559e2048424d8b237e3718e2058,

@@ -4,65 +4,111 @@ using System.Collections.Generic;
 using Photon.Pun;
 using UnityEngine;
 using UnityEngine.Serialization;
+using UnityEngine.Scripting;
 
-namespace Character {
-    public class EnemyController : NetworkCharacterController {
+namespace CharacterSystem {
 
-        [SerializeField] GUI_EnemyHealth healthGUI;
+    public class EnemyCharacter : Character {
+
         [SerializeField] LayerMask playerLayerMask;
-        public EnemySpawner enemySpawner;
         
         public EnemyStat enemyStat;
 
         public Hex curHex;
 
+        enum State { 
+            ready, move, attack
+        }
+
+        State _state;
+
         public override string GetName()
         {
             return enemyStat.monsterName;
         }
+
         private void OnEnable()
         {
-            Debug.Log("Enemy OnEnable");
+            //Debug.Log("Enemy OnEnable");
             if (enemyStat == null)
                 enemyStat = GetComponent<EnemyStat>();
 
-            if (healthGUI == null)
-                healthGUI = GetComponentInChildren<GUI_EnemyHealth>();
+            if (_healthUI == null)
+                _healthUI = GetComponentInChildren<GUI_EnemyHealth>();
 
             //stat.HP = new GaugeValue<int>(enemyStat.maxHp, enemyStat.maxHp, 0);
             stat.SetHP(enemyStat.maxHp, enemyStat.maxHp, 0);
             curHex = HexGrid.Instance.GetTileAt(this.gameObject.transform.position);
 
-            curHex.Entity = this.gameObject;
+            curHex.Entity = gameObject;
             
+        }
+
+        public override void SetPlay()
+        {
+            base.SetPlay();
+            EnemyAttackHandler();
+        }
+
+        public void EnemyAttackHandler()
+        {
+            List<HexCoordinate> list = new List<HexCoordinate>();
+
+            foreach (var neighbours in HexGrid.Instance.GetNeighboursDoubleFor(curHex.HexCoords))
+            {
+                Hex curHex = HexGrid.Instance.GetTileAt(neighbours);
+                GameObject entity = curHex.Entity;
+
+                if (entity != null && entity.CompareTag("Player"))
+                {
+                    list.Add(neighbours);
+                }
+            }
+
+            if (list.Count == 0) {
+                TurnEnd();
+                return;
+            }
+
+            foreach (HexCoordinate h in list) {
+                _cc.Attack(h.ConvertToVector3(), false);
+            }
+
+            Invoke("TurnEnd", 3f);
+        }
+
+        private void TurnEnd()
+        {
+
+            _cc.TurnEnd();
+
         }
 
         public override int GetAttackValue()
         {
-            Debug.Log(enemyStat.atk);
             return enemyStat.atk;
         }
 
-        protected override void DamageAct()
+        public override void DamageAct()
         {
+            base.DamageAct();
             Collider[] colliders = Physics.OverlapSphere(transform.position, 10f, playerLayerMask);
             if (colliders.Length > 0)
                 gameObject.transform.LookAt(colliders[0].transform);
-
-            healthGUI.UpdateGUI((float)stat.HP.Value / enemyStat.maxHp);
         }
 
         public override void DieAct()
         {
+            base.DieAct();
             curHex = HexGrid.Instance.GetTileAt(this.gameObject.transform.position);
             curHex.Entity = null;
+            /*
             if (PhotonNetwork.IsMasterClient)
             {
                 GameManager.Instance.enemies.Remove(this.gameObject);
                 if (enemyStat.isBoss)
                     GameManager.Instance.bossEnemies.Remove(gameObject);
-            }
-            healthGUI.UpdateGUI(0);
+            }*/
             DropItem();
             DropExp();
             Destroy(this.gameObject, 1f);

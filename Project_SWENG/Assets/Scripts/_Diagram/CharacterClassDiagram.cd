@@ -26,11 +26,11 @@
       <FileName>Assets\Scripts\Chatacter\NetworkCharacterController.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Field Name="stat" />
       <Field Name="equipCam" />
+      <Field Name="stat" />
     </ShowAsAssociation>
   </Class>
-  <Class Name="Character.PlayerController">
+  <Class Name="Character.PlayerCharacter">
     <Position X="4.5" Y="4" Width="3.25" />
     <Members>
       <Method Name="AttackAct" Hidden="true" />
@@ -40,9 +40,10 @@
       <Method Name="DieAct" Hidden="true" />
     </Members>
     <TypeIdentifier>
-      <HashCode>BAAAAABAIACCAAAAIAEAgAAAAAABAAAAAAIAAAEEhMY=</HashCode>
-      <FileName>Assets\Scripts\Chatacter\PlayerController.cs</FileName>
+      <HashCode>BAAgAABAICCCACAAIQEAgEAAAAABAAAACAIAEAEEgMY=</HashCode>
+      <FileName>Assets\Scripts\Chatacter\PlayerCharacter.cs</FileName>
     </TypeIdentifier>
+    <Lollipop Position="0.2" />
   </Class>
   <Class Name="Character.Stat">
     <Position X="11" Y="0.5" Width="2" />
@@ -87,7 +88,7 @@
   <Class Name="DicePoint">
     <Position X="1.25" Y="4.5" Width="2.5" />
     <TypeIdentifier>
-      <HashCode>AAAAIAAAAgAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAQ=</HashCode>
+      <HashCode>AAAAIAAAAiAAAAAAAAAAAAAAAAAAAAAAAIAAAAAACAQ=</HashCode>
       <FileName>Assets\Scripts\Dice\DicePoint.cs</FileName>
     </TypeIdentifier>
   </Class>

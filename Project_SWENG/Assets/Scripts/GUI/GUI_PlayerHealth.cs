@@ -4,11 +4,10 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System;
-using Character;
+using CharacterSystem;
 
-public class GUI_PlayerHealth : MonoBehaviour
+public class GUI_PlayerHealth : MonoBehaviour, IHealthUI
 {
-    PlayerCharacter _target;
 
     [SerializeField] Image _healthFront;
     [SerializeField] Image _healthBack;
@@ -19,48 +18,29 @@ public class GUI_PlayerHealth : MonoBehaviour
 
     float _curValue;
 
-    private void Awake()
+    public void UpdateGUI(GaugeValue<int> value)
     {
-        PlayerCharacter.EventChangeHp += GUI_ChangeHealth;
-        PlayerCharacter.EventEquip += GUI_SetMaxHealth;
-    }
+        _healthFront.fillAmount = value.ConvertToRate();
+        _healthBack.fillAmount = value.ConvertToRate();
+        _hpText.text = value.Value.ToString() + " / " + value.MaxValue;
 
-    public void SetPlayerHealth(GameObject player)
-    {
-        _target = player.GetComponent<PlayerCharacter>();
-        SetHealth();
-        _afterimage.fillAmount = 1;
-        _curValue = _target.stat.HP.Value;
-    }
+        StartCoroutine(LerpValue(value.Value));
 
-    void GUI_ChangeHealth(object sender, IntEventArgs e)
-    {
-        SetHealth();
-        StartCoroutine(LerpValue(e.Value));
     }
     
-    void GUI_SetMaxHealth(object sender, EventArgs e)
-    {
-        SetHealth();
-    }
-
     private IEnumerator LerpValue(float endValue)
     {
         float elapsedTime = 0f;
         float startValue = _curValue;
+
+        _afterimage.fillAmount = endValue;
+
         while (elapsedTime < 1f)
         {
             _curValue = Mathf.Lerp(startValue, endValue, elapsedTime);
-            _afterimage.fillAmount = _target.stat.HP.ConvertToRate();
             elapsedTime += Time.deltaTime * lerpSpeed;
             yield return null;
         }
     }
 
-    void SetHealth()
-    {
-        _healthFront.fillAmount = _target.stat.HP.ConvertToRate();
-        _healthBack.fillAmount  = _target.stat.HP.ConvertToRate();
-        _hpText.text = _target.stat.HP.Value.ToString() + " / " + _target.stat.HP.MaxValue;
-    }
 }

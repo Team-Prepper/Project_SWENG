@@ -17074,12 +17074,10 @@ GameObject:
   - component: {fileID: 4189250705815023951}
   - component: {fileID: 8123138769544760882}
   - component: {fileID: 2804843534456360368}
-  - component: {fileID: 8361008152914709463}
-  - component: {fileID: 6620839370624530811}
   - component: {fileID: 8102839448773701026}
   - component: {fileID: 2779337017599802044}
   - component: {fileID: 9200518021391384173}
-  - component: {fileID: 345204137595152010}
+  - component: {fileID: 4212140811108887116}
   m_Layer: 16
   m_Name: NetworkPlayer
   m_TagString: Player
@@ -17406,49 +17404,6 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 1, z: 0}
---- !u!114 &8361008152914709463
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 828901899843211881}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 089c783dd8891bb41be505d50b4b7d6a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  equipCam: {fileID: 2893188458808173948}
-  anim: {fileID: 779403298883173109}
-  stat:
-    _lv: 1
-    _exp: 0
-    _hp:
-      _curValue: 100
-      _maxValue: 100
-      _minValue: 0
-    _def: 0
-    _attackPower: 10
-  _usePointAtAttack: 3
-  playerLight: {fileID: 2893188459070781686}
-  canUseSkill: 1
-  LevelUpEffect: {fileID: 449468695216728443}
---- !u!114 &6620839370624530811
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 828901899843211881}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca81949a4e0cdb043b8c82bddf7f136c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _animator: {fileID: 0}
-  _movementDuration: 1
-  _rotationDuration: 0.3
-  curHex: {fileID: 0}
 --- !u!114 &8102839448773701026
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17519,7 +17474,7 @@ MonoBehaviour:
   m_SynchronizeLayers:
   - SynchronizeType: 2
     LayerIndex: 0
---- !u!114 &345204137595152010
+--- !u!114 &4212140811108887116
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -17528,11 +17483,27 @@ MonoBehaviour:
   m_GameObject: {fileID: 828901899843211881}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8ee1d2b788b83fa4ab621e5880d46cf4, type: 3}
+  m_Script: {fileID: 11500000, guid: 010283020cde67d4592801796451f029, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  basePoint: 5
-  _point: 0
+  equipCam: {fileID: 0}
+  anim: {fileID: 779403298883173109}
+  stat:
+    _lv: 1
+    _exp: 0
+    _hp:
+      _curValue: 100
+      _maxValue: 100
+      _minValue: 0
+    _def: 0
+    _attackPower: 10
+  _usePointAtAttack: 3
+  _movementDuration: 1
+  playerLight: {fileID: 0}
+  _animator: {fileID: 0}
+  canUseSkill: 1
+  LevelUpEffect: {fileID: 0}
+  _dicePoint: 0
 --- !u!1 &828904246111668701
 GameObject:
   m_ObjectHideFlags: 0
@@ -70217,12 +70188,6 @@ PrefabInstance:
 --- !u!4 &356408659753702899 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4273026355654284, guid: 71ddefbf8ed2721459d84322d1ef877a,
-    type: 3}
-  m_PrefabInstance: {fileID: 359471595111414655}
-  m_PrefabAsset: {fileID: 0}
---- !u!198 &449468695216728443 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 198665152188928516, guid: 71ddefbf8ed2721459d84322d1ef877a,
     type: 3}
   m_PrefabInstance: {fileID: 359471595111414655}
   m_PrefabAsset: {fileID: 0}
