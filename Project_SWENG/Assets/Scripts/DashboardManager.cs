@@ -46,11 +46,12 @@ public class DashboardManager : MonoBehaviour
         int index = 0;
         foreach (var player in PhotonNetwork.CurrentRoom.Players)
         {
+            /*
             _photonView.RPC("ShowDashboard",RpcTarget.All,
                 index,
                 player.Value.NickName,
                 GameManager.Instance.playerDmgDashboard[player.Value.NickName].ToString());
-            
+            */
             index++;
         }
     }

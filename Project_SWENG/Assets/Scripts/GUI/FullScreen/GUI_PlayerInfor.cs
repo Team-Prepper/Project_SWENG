@@ -3,19 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using Character;
+using CharacterSystem;
 using UISystem;
 using Photon.Pun;
 
 public class GUI_PlayerInfor : GUIFullScreen {
     [SerializeField] private GameObject _target;
-    [SerializeField] private TextMeshProUGUI _dicePoint;
+    [SerializeField] private GameObject _turnEndGlowLight;
     [SerializeField] private GUI_PlayerHealth _playerHealth;
-    [SerializeField] private GameObject turnEndGlowLight;
-    public Button turnEndButton;
+    [SerializeField] private TextMeshProUGUI _dicePoint;
 
-    DicePoint _targetUnit;
-    PlayerController _targetPlayer;
+    public Button _turnEndButton;
+
+    ICharacterController _targetCC;
+    PlayerCharacter _targetPlayer;
 
     protected override void Open(Vector2 openPos)
     {
@@ -26,25 +27,26 @@ public class GUI_PlayerInfor : GUIFullScreen {
 
         _target = target;
 
-        _targetUnit = target.GetComponent<DicePoint>();
-        _targetPlayer = target.GetComponent<PlayerController>();
-        GameManager.Instance.turnEndButton = turnEndButton;
-        _playerHealth.SetPlayerHealth(target);
+        _targetCC = target.GetComponent<ICharacterController>();
+        _targetPlayer = target.GetComponent<PlayerCharacter>();
+        //GameManager.Instance.turnEndButton = _turnEndButton;
+        _targetPlayer.SetHealthUI(_playerHealth);
 
     }
 
     protected override void Update()
     {
         base.Update();
-        _dicePoint.text = _targetUnit.GetPoint().ToString();
-        turnEndGlowLight.SetActive(turnEndButton.interactable);
+        _dicePoint.text = _targetPlayer.GetPoint().ToString();
+        _turnEndGlowLight.SetActive(_turnEndButton.interactable);
     }
 
     public override void HexSelect(HexCoordinate selectGridPos)
     {
-        if (GameManager.Instance.gamePhase == GameManager.Phase.EnemyPhase) {
+        /*
+        if (GameManager.Instance.GameMaster.gamePhase == IGameMaster.Phase.EnemyPhase) {
             return;
-        }
+        }*/
 
         Hex selected = HexGrid.Instance.GetTileAt(selectGridPos);
 
@@ -56,13 +58,14 @@ public class GUI_PlayerInfor : GUIFullScreen {
             return;
         }
 
-        if (!selected.Entity.TryGetComponent<NetworkCharacterController>(out NetworkCharacterController target)) return;
+        if (!selected.Entity.TryGetComponent<Character>(out Character target)) return;
+
         UIManager.OpenGUI<GUI_ShowCharacterInfor>("CharacterInfor").SetInfor(target.GetName(), target);
     }
 
     public void TurnEndButton() {
         if (_nowPopUp) return;
-        GameManager.Instance.PlayerTurnEnd();
+        _targetCC.TurnEnd();
     }
 
     public void AttackButton() {

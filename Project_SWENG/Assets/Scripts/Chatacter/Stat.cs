@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Character {
+namespace CharacterSystem {
     [System.Serializable]
     public class Stat {
 

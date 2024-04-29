@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-public class GUI_EnemyHealth : MonoBehaviour
+public class GUI_EnemyHealth : MonoBehaviour, IHealthUI
 {
     [SerializeField] Image healthBar;
 
@@ -13,8 +13,8 @@ public class GUI_EnemyHealth : MonoBehaviour
         healthBar.fillAmount = 1;
     }
 
-    public void UpdateGUI(float value)
+    public void UpdateGUI(GaugeValue<int> value)
     {
-        healthBar.fillAmount = value;
+        healthBar.fillAmount = value.ConvertToRate();
     }
 }

@@ -709,11 +709,10 @@ GameObject:
   - component: {fileID: 5092680823703077441}
   - component: {fileID: 2450530541402074309}
   - component: {fileID: 2249882306818113445}
-  - component: {fileID: 2868529706404146149}
-  - component: {fileID: 2575584186239218085}
   - component: {fileID: -6000116167109071966}
   - component: {fileID: 3541152825905162724}
   - component: {fileID: -683466114717033297}
+  - component: {fileID: 3181868398779517664}
   m_Layer: 0
   m_Name: Net_Enemy_Fairy
   m_TagString: Enemy
@@ -796,49 +795,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &2868529706404146149
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1687034426028266533}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 543f9e3fd40ac844ba57bfd061d5f67f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  equipCam: {fileID: 0}
-  anim: {fileID: 0}
-  stat:
-    _lv: 1
-    _exp: 0
-    _hp:
-      _curValue: 100
-      _maxValue: 100
-      _minValue: 0
-    _def: 0
-    _attackPower: 10
-  healthGUI: {fileID: 4615092111065079343}
-  playerLayerMask:
-    serializedVersion: 2
-    m_Bits: 65536
-  enemySpawner: {fileID: 0}
-  enemyStat: {fileID: 0}
-  curHex: {fileID: 0}
---- !u!114 &2575584186239218085
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1687034426028266533}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a37a6f251b8e8439d9be072ed3f38dfd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemyController: {fileID: 0}
 --- !u!114 &-6000116167109071966
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -909,6 +865,34 @@ MonoBehaviour:
   m_SynchronizeLayers:
   - SynchronizeType: 0
     LayerIndex: 0
+--- !u!114 &3181868398779517664
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1687034426028266533}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f6e40e72dacfc642a3e1ffe86111ee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  equipCam: {fileID: 0}
+  anim: {fileID: 0}
+  stat:
+    _lv: 1
+    _exp: 0
+    _hp:
+      _curValue: 100
+      _maxValue: 100
+      _minValue: 0
+    _def: 0
+    _attackPower: 10
+  playerLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
+  enemyStat: {fileID: 0}
+  curHex: {fileID: 0}
 --- !u!1 &2050031097269433564
 GameObject:
   m_ObjectHideFlags: 0
@@ -3325,18 +3309,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6b35e559e2048424d8b237e3718e2058, type: 3}
---- !u!114 &4615092111065079343 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2134647276887054886, guid: 6b35e559e2048424d8b237e3718e2058,
-    type: 3}
-  m_PrefabInstance: {fileID: 6742965827725050889}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5c2f6ff36458f1742b1f7fd7e8e9b0d0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!224 &6345235894316167615 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 404512375063164342, guid: 6b35e559e2048424d8b237e3718e2058,

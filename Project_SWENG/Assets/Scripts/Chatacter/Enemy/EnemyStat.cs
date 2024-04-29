@@ -2,9 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Character {
-    [RequireComponent(typeof(EnemyAttack)), RequireComponent(typeof(EnemyController))]
+namespace CharacterSystem {
+
+    [RequireComponent(typeof(EnemyCharacter))]
+
     public class EnemyStat : MonoBehaviour {
+
         [Header("Enemy stat")]
         [SerializeField] EnemyStatus enemyStatus;
         public string monsterName;
