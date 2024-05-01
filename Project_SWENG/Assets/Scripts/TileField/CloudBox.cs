@@ -37,17 +37,13 @@ public class CloudBox : MonoBehaviour
 
     public void CloudActiveFalse(HexCoordinate hexCoordinate)
     {
-        foreach (HexCoordinate cloudNeighbours in HexGrid.Instance.GetNeighboursDoubleFor(hexCoordinate))
+        foreach (HexCoordinate cloud in HexGrid.Instance.GetNeighboursFor(hexCoordinate, 3))
         {
-            foreach(HexCoordinate cloud in HexGrid.Instance.GetNeighboursFor(cloudNeighbours))
+            if (!closeIndex.Contains(cloud))
             {
-                if (!closeIndex.Contains(cloud))
-                {
-                    closeIndex.Add(cloud);
-                    StartCoroutine(ActiveFalseCo(cloud));
-                }
+                closeIndex.Add(cloud);
+                StartCoroutine(ActiveFalseCo(cloud));
             }
-            
         }     
     }
 

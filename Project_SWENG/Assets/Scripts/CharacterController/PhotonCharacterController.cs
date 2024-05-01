@@ -4,29 +4,41 @@ using UnityEngine;
 using CharacterSystem;
 using Photon.Pun;
 using System.Security.Cryptography;
+using System.Linq;
 
-public class NetworkCharacterController : MonoBehaviourPun, ICharacterController {
+public class PhotonCharacterController : MonoBehaviourPun, ICharacterController {
 
+    IActionSelector _actionSelector;
     PhotonView _view;
     Character _character;
 
-    public void Attack(Vector3 targetPos, bool isSkill = false)
+    public void Attack(IList<HexCoordinate> targetPos, int dmg)
     {
-        transform.LookAt(targetPos);
-        _view.RPC("_AttackAct", RpcTarget.All, isSkill);
+        transform.LookAt(targetPos.ElementAt(0).ConvertToVector3());
 
-        Hex targetHex = HexGrid.Instance.GetTileAt(targetPos);
-        if (targetHex.Entity == null || !targetHex.Entity.TryGetComponent(out IDamagable target)) return;
+        foreach (HexCoordinate hexPos in targetPos)
+        {
+            Hex targetHex = HexGrid.Instance.GetTileAt(hexPos);
+            if (targetHex.Entity == null || !targetHex.Entity.TryGetComponent(out IDamagable target)) return;
 
-        int totalDmg = _character.GetAttackValue();
-        target.TakeDamage(totalDmg);
+            target.TakeDamage(dmg);
+
+        }
+        _view.RPC("_AttackAct", RpcTarget.All, false);
     }
+
+    public void UseAttack(int idx) { }
 
     [PunRPC]
     private void _AttackAct(bool isSkill)
     {
         _character.AttackAct(isSkill);
 
+    }
+
+    public void ActionEnd()
+    {
+        //_actionSelector.SetSelector(_character.GetCanDoAction());
     }
 
     public void TakeDamage(int amount)
@@ -55,6 +67,11 @@ public class NetworkCharacterController : MonoBehaviourPun, ICharacterController
 
     public void SetPlay() {
         _character.SetPlay();
+    }
+
+    public void SetActionSelector(IActionSelector actionSelector)
+    {
+        _actionSelector = actionSelector;
     }
 
     public void TurnEnd()

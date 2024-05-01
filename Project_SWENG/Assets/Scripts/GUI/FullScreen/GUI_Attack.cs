@@ -42,8 +42,8 @@ public class GUI_Attack : GUIFullScreen {
             _SetMarker(atkHex.transform.position);
         }
 
-        CamMovement.Instance.ConvertMovementCamera();
-        CamMovement.Instance.CamSetToPlayer(_target.gameObject);
+        CamMovement.Instance.ConvertWideCamera();
+        CamMovement.Instance.SetCamTarget(_target.gameObject);
         
         btnAttack.SetActive(skillDmg == 0);
         btnSkill.SetActive(skillDmg != 0); // (skillDmg > 0)
@@ -51,6 +51,7 @@ public class GUI_Attack : GUIFullScreen {
 
     private void _SetMarker(Vector3 pos)
     {
+        if (_useMarkCount >= _attackMarkers.Length) return;
         _attackMarkers[_useMarkCount].gameObject.SetActive(true);
         _attackMarkers[_useMarkCount++].position = pos;
 
@@ -74,8 +75,9 @@ public class GUI_Attack : GUIFullScreen {
             return;
         }
 
-        _cc.Attack(_attackTarget.transform.position, false);
-        //AttackManager.Instance.BaseAtkHandler(_target, _attackTarget);
+        _cc.UseAttack(0);
+
+        CamMovement.Instance.ConvertCharacterCam();
         Close();
 
     }
@@ -86,7 +88,9 @@ public class GUI_Attack : GUIFullScreen {
             return;
         }
 
-        _cc.Attack(_attackTarget.transform.position, true);
+        _cc.UseAttack(1);
+
+        CamMovement.Instance.ConvertCharacterCam();
         Close();
     }
 

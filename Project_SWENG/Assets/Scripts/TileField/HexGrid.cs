@@ -3,8 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.UIElements;
 using Random = UnityEngine.Random;
 
 public class HexGrid : Singleton<HexGrid>
@@ -13,9 +11,8 @@ public class HexGrid : Singleton<HexGrid>
 
     //public Dictionary<Vector3Int, bool> hexTileDict = new Dictionary<Vector3Int, bool>();
 
-    public Dictionary<HexCoordinate, Hex> hexTileDict = new Dictionary<HexCoordinate, Hex>();
-    Dictionary<HexCoordinate, List<HexCoordinate>> hexTileNeighboursDict = new Dictionary<HexCoordinate, List<HexCoordinate>>();
-    Dictionary<HexCoordinate, List<HexCoordinate>> hexTileNeighboursDoubleDict = new Dictionary<HexCoordinate, List<HexCoordinate>>();
+    public IDictionary<HexCoordinate, Hex> hexTileDict = new Dictionary<HexCoordinate, Hex>();
+    IDictionary<HexCoordinate, ISet<HexCoordinate>> hexTileNeighboursDict = new Dictionary<HexCoordinate, ISet<HexCoordinate>>();
 
     private List<Hex> _emptyHexTiles = new List<Hex>();
 
@@ -68,50 +65,37 @@ public class HexGrid : Singleton<HexGrid>
 
     }
 
+    public ISet<HexCoordinate> GetNeighboursFor(HexCoordinate hexCoordinates, uint len) {
+        if (len < 1) return new HashSet<HexCoordinate>();
+        if (len == 1) return GetNeighboursFor(hexCoordinates);
 
-    public List<HexCoordinate> GetNeighboursFor(HexCoordinate hexCoordinates)
-    {
-        if (hexTileDict.ContainsKey(hexCoordinates) == false)
-            return new List<HexCoordinate>();
+        ISet<HexCoordinate> retval = new HashSet<HexCoordinate>();
 
-        if (hexTileNeighboursDict.ContainsKey(hexCoordinates))
-            return hexTileNeighboursDict[hexCoordinates];
-
-        hexTileNeighboursDict.Add(hexCoordinates, new List<HexCoordinate>());
-
-        foreach (HexCoordinate pos in HexCoordinate.GetDirectionList(hexCoordinates))
+        foreach (HexCoordinate coord in HexCoordinate.GetDirectionList(hexCoordinates))
         {
-            if (hexTileDict.ContainsKey(pos))
-            {
-                hexTileNeighboursDict[hexCoordinates].Add(pos);
-            }
-            
+            retval.UnionWith(GetNeighboursFor(coord, len - 1));
         }
-        return hexTileNeighboursDict[hexCoordinates];
+
+        return retval;
     }
 
-    public List<HexCoordinate> GetNeighboursDoubleFor(HexCoordinate hexCoordinates)
+    public ISet<HexCoordinate> GetNeighboursFor(HexCoordinate hexCoordinates)
     {
         if (hexTileDict.ContainsKey(hexCoordinates) == false)
-            return new List<HexCoordinate>();
+            return new HashSet<HexCoordinate>();
 
-        if (hexTileNeighboursDoubleDict.ContainsKey(hexCoordinates))
-            return hexTileNeighboursDoubleDict[hexCoordinates];
-
-        hexTileNeighboursDoubleDict.Add(hexCoordinates, new List<HexCoordinate>());
-
-        foreach (var hexNeighbours in GetNeighboursFor(hexCoordinates))
+        if (!hexTileNeighboursDict.ContainsKey(hexCoordinates))
         {
-            foreach(var hex in GetNeighboursFor(hexNeighbours))
+            hexTileNeighboursDict.Add(hexCoordinates, new HashSet<HexCoordinate>());
+
+            foreach (HexCoordinate pos in HexCoordinate.GetDirectionList(hexCoordinates))
             {
-                
-                hexTileNeighboursDoubleDict[hexCoordinates].Add(hex);
+                if (!hexTileDict.ContainsKey(pos)) continue;
+                hexTileNeighboursDict[hexCoordinates].Add(pos);
+
             }
         }
-        HashSet<HexCoordinate> unduplicate = new HashSet<HexCoordinate>(hexTileNeighboursDoubleDict[hexCoordinates]);
-        hexTileNeighboursDoubleDict[hexCoordinates] = unduplicate.ToList();
-
-        return hexTileNeighboursDoubleDict[hexCoordinates];
+        return hexTileNeighboursDict[hexCoordinates];
     }
 
     public Hex GetRandHexAtEmpty()

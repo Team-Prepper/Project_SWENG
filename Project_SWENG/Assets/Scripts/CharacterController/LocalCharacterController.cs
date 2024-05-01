@@ -3,22 +3,33 @@ using System.Collections.Generic;
 using UnityEngine;
 using CharacterSystem;
 using UnityEditor.Experimental.GraphView;
+using TMPro.Examples;
+using System.Linq;
 
-public class LocalCharacterController : MonoBehaviour, ICharacterController
-{
+public class LocalCharacterController : MonoBehaviour, ICharacterController {
 
     Character _character;
+    IActionSelector _actionSelector;
 
-    public void Attack(Vector3 targetPos, bool isSkill = false)
+    public void Attack(IList<HexCoordinate> targetPos, int dmg)
     {
-        transform.LookAt(targetPos);
-        _character.AttackAct(isSkill);
+        transform.LookAt(targetPos.ElementAt(0).ConvertToVector3());
+        _character.AttackAct(false);
 
-        Hex targetHex = HexGrid.Instance.GetTileAt(targetPos);
-        if (targetHex.Entity == null || !targetHex.Entity.TryGetComponent(out IDamagable target)) return;
+        Debug.Log(targetPos.Count);
 
-        int totalDmg = _character.GetAttackValue();
-        target.TakeDamage(totalDmg);
+        foreach (HexCoordinate hexPos in targetPos)
+        {
+            Hex targetHex = HexGrid.Instance.GetTileAt(hexPos);
+            if (targetHex.Entity == null || !targetHex.Entity.TryGetComponent(out IDamagable target)) return;
+
+            target.TakeDamage(dmg);
+
+        }
+    }
+
+    public void UseAttack(int idx) {
+        _character.DoAttact(idx);
     }
 
     public void TakeDamage(int amount)
@@ -37,6 +48,18 @@ public class LocalCharacterController : MonoBehaviour, ICharacterController
 
     public void SetPlay() {
         _character.SetPlay();
+    }
+
+    public void SetActionSelector(IActionSelector actionSelector) {
+        _actionSelector = actionSelector;
+    }
+
+    public void ActionEnd()
+    {
+        if (_actionSelector == null) {
+            return;
+        }
+        _actionSelector.Ready(_character.GetCanDoAction());
     }
 
     public void TurnEnd() {

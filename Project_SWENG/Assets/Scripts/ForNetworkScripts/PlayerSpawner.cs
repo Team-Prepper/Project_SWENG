@@ -28,8 +28,10 @@ public class PlayerSpawner : MonoBehaviour
 
         GameObject player = GM.InstantiateCharacter(playerPrefab, spawnPos.position, spawnPos.rotation);
         GUI_PlayerInfor playerInfo = UIManager.OpenGUI<GUI_PlayerInfor>("PlayerInfor");
-        spawnHex.Entity = player;
         playerInfo.SetPlayer(player);
+
+        player.GetComponent<ICharacterController>().SetActionSelector(playerInfo);
+        spawnHex.Entity = player;
 
         EventPlayerSpawn?.Invoke(player);
 

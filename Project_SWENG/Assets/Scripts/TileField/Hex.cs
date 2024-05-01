@@ -127,9 +127,11 @@ public class Hex : MonoBehaviour
         highlight = GetComponent<GlowHighlight>();
 
         HexGrid.Instance.AddTile(this);
-        cloud.SetActive(true);
-        isCloud = true;
+        //cloud.SetActive(true);
+        //isCloud = true;
 
+        //CloudActiveFalse();
+        
         SetCost();
     }
 
@@ -211,13 +213,9 @@ public class Hex : MonoBehaviour
 
     public void CloudActiveFalse()
     {
-        foreach (HexCoordinate cloudNeighbours in HexGrid.Instance.GetNeighboursDoubleFor(HexCoords))
+        foreach (HexCoordinate cloud in HexGrid.Instance.GetNeighboursFor(HexCoords, 3))
         {
-            foreach (HexCoordinate cloud in HexGrid.Instance.GetNeighboursFor(cloudNeighbours))
-            {
-                //StartCoroutine(HexGrid.Instance.GetTileAt(cloud).ActiveFalseCloud());
-                HexGrid.Instance.GetTileAt(cloud).IsCloud = false;  
-            }
+            HexGrid.Instance.GetTileAt(cloud).IsCloud = false;
 
         }
     }

@@ -7,8 +7,13 @@ using UnityEngine;
 using UnityEngine.Serialization;
 
 namespace CharacterSystem {
+
     public class Character : MonoBehaviour
     {
+        public enum Action { 
+            Dice, Move, Attack
+        }
+
         protected ICharacterController _cc;
 
         [SerializeField] protected IHealthUI _healthUI;
@@ -40,6 +45,11 @@ namespace CharacterSystem {
             return 1;
         }
 
+        public virtual void DoAttact(int idx) {
+            IAttack attack = new BasicAttack(_cc, transform.position, 3);
+            attack.Attack();
+        }
+
         public virtual void Initial(ICharacterController cc) {
 
             anim = GetComponent<Animator>();
@@ -51,7 +61,6 @@ namespace CharacterSystem {
             RunAnimation(0);
 
         }
-   
 
         public virtual void DamageAct()
         {
@@ -67,6 +76,10 @@ namespace CharacterSystem {
 
         public virtual void SetPlay() { 
             
+        }
+
+        public virtual IList<Action> GetCanDoAction() {
+            return null;
         }
 
         public void RunAnimation(int type)

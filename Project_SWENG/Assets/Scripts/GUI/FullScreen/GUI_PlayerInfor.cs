@@ -6,12 +6,20 @@ using TMPro;
 using CharacterSystem;
 using UISystem;
 using Photon.Pun;
+using Unity.VisualScripting;
 
-public class GUI_PlayerInfor : GUIFullScreen {
+public class GUI_PlayerInfor : GUIFullScreen, IActionSelector {
+
     [SerializeField] private GameObject _target;
     [SerializeField] private GameObject _turnEndGlowLight;
     [SerializeField] private GUI_PlayerHealth _playerHealth;
     [SerializeField] private TextMeshProUGUI _dicePoint;
+
+    [SerializeField] GameObject panelBtn;
+    [SerializeField] Button btnAttack;
+    [SerializeField] Button btnSkill;
+    [SerializeField] Button btnMove;
+    [SerializeField] Button btnDice;
 
     public Button _turnEndButton;
 
@@ -23,15 +31,62 @@ public class GUI_PlayerInfor : GUIFullScreen {
         base.Open(openPos);
     }
 
-    public void SetPlayer(GameObject target) {
+    public void SetPlayer(GameObject target)
+    {
 
         _target = target;
-
+        CamMovement.Instance.SetCamTarget(target);
         _targetCC = target.GetComponent<ICharacterController>();
         _targetPlayer = target.GetComponent<PlayerCharacter>();
-        //GameManager.Instance.turnEndButton = _turnEndButton;
+
         _targetPlayer.SetHealthUI(_playerHealth);
 
+    }
+
+    public void SetCharacterController(ICharacterController cc)
+    {
+        _targetCC = cc;
+
+    }
+
+    public void Ready(IList<Character.Action> actionList)
+    {
+        panelBtn.SetActive(true);
+        CamMovement.Instance.ConvertCharacterCam();
+        btnDice.interactable = actionList.Contains(Character.Action.Dice);
+        btnAttack.interactable = actionList.Contains(Character.Action.Attack);
+        btnMove.interactable = actionList.Contains(Character.Action.Move);
+
+    }
+
+    public void OpenAttack()
+    {
+        UIManager.OpenGUI<GUI_Attack>("Attack").Set(_targetPlayer);
+        _AfterAction();
+    }
+
+    public void OpenDice()
+    {
+        UIManager.Instance.UseDice(_targetPlayer);
+        _AfterAction();
+    }
+
+    public void OpenMove()
+    {
+        UIManager.OpenGUI<GUI_Moving>("Move").Set(_targetPlayer);
+        _AfterAction();
+    }
+
+    public void TurnEndButton()
+    {
+        if (_nowPopUp) return;
+        _targetCC.TurnEnd();
+        _AfterAction();
+    }
+
+    void _AfterAction() {
+
+        panelBtn.SetActive(false);
     }
 
     protected override void Update()
@@ -48,13 +103,15 @@ public class GUI_PlayerInfor : GUIFullScreen {
             return;
         }*/
 
+        return;
+
         Hex selected = HexGrid.Instance.GetTileAt(selectGridPos);
 
         if (!selected || !selected.Entity) return;
 
         if (selected.Entity == _target)
         {
-            UIManager.OpenGUI<GUI_ActionSelect>("ActionSelect").Set(_target);
+            //UIManager.OpenGUI<GUI_ActionSelect>("ActionSelect").Set(_target);
             return;
         }
 
@@ -63,11 +120,8 @@ public class GUI_PlayerInfor : GUIFullScreen {
         UIManager.OpenGUI<GUI_ShowCharacterInfor>("CharacterInfor").SetInfor(target.GetName(), target);
     }
 
-    public void TurnEndButton() {
-        if (_nowPopUp) return;
-        _targetCC.TurnEnd();
-    }
 
+    /*
     public void AttackButton() {
         if (_nowPopUp) return;
         if (!_targetPlayer.CanAttack()) return;
@@ -77,5 +131,6 @@ public class GUI_PlayerInfor : GUIFullScreen {
         if (_nowPopUp) return;
         UIManager.OpenGUI<GUI_ShowCharacterInfor>("PlayerInforPopUp").SetInfor(PhotonNetwork.NickName, _targetPlayer);
     }
+    */
 
-}  
+}

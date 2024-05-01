@@ -5,133 +5,155 @@ using Photon.Pun;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.Scripting;
+using CharacterSystem;
 
-namespace CharacterSystem {
+public class EnemyCharacter : Character {
 
-    public class EnemyCharacter : Character {
+    [SerializeField] LayerMask playerLayerMask;
 
-        [SerializeField] LayerMask playerLayerMask;
-        
-        public EnemyStat enemyStat;
+    public EnemyStat enemyStat;
 
-        public Hex curHex;
+    public Hex curHex;
 
-        enum State { 
-            ready, move, attack
-        }
+    enum State {
+        ready, move, attack
+    }
 
-        State _state;
+    State _state;
 
-        public override string GetName()
+    public override string GetName()
+    {
+        return enemyStat.monsterName;
+    }
+
+    private void OnEnable()
+    {
+        //Debug.Log("Enemy OnEnable");
+        if (enemyStat == null)
+            enemyStat = GetComponent<EnemyStat>();
+
+        if (_healthUI == null)
+            _healthUI = GetComponentInChildren<GUI_EnemyHealth>();
+
+        //stat.HP = new GaugeValue<int>(enemyStat.maxHp, enemyStat.maxHp, 0);
+        stat.SetHP(enemyStat.maxHp, enemyStat.maxHp, 0);
+        curHex = HexGrid.Instance.GetTileAt(this.gameObject.transform.position);
+
+        curHex.Entity = gameObject;
+
+    }
+
+    public override void SetPlay()
+    {
+        base.SetPlay();
+        EnemyAttackHandler();
+    }
+
+
+    public override IList<Action> GetCanDoAction()
+    {
+        IList<Action> list = new List<Action>();
+        bool containsPlayer = false;
+
+        foreach (var neighbours in HexGrid.Instance.GetNeighboursFor(curHex.HexCoords, 2))
         {
-            return enemyStat.monsterName;
-        }
+            Hex curHex = HexGrid.Instance.GetTileAt(neighbours);
+            GameObject entity = curHex.Entity;
 
-        private void OnEnable()
-        {
-            //Debug.Log("Enemy OnEnable");
-            if (enemyStat == null)
-                enemyStat = GetComponent<EnemyStat>();
-
-            if (_healthUI == null)
-                _healthUI = GetComponentInChildren<GUI_EnemyHealth>();
-
-            //stat.HP = new GaugeValue<int>(enemyStat.maxHp, enemyStat.maxHp, 0);
-            stat.SetHP(enemyStat.maxHp, enemyStat.maxHp, 0);
-            curHex = HexGrid.Instance.GetTileAt(this.gameObject.transform.position);
-
-            curHex.Entity = gameObject;
-            
-        }
-
-        public override void SetPlay()
-        {
-            base.SetPlay();
-            EnemyAttackHandler();
-        }
-
-        public void EnemyAttackHandler()
-        {
-            List<HexCoordinate> list = new List<HexCoordinate>();
-
-            foreach (var neighbours in HexGrid.Instance.GetNeighboursDoubleFor(curHex.HexCoords))
+            if (entity != null && entity.CompareTag("Player"))
             {
-                Hex curHex = HexGrid.Instance.GetTileAt(neighbours);
-                GameObject entity = curHex.Entity;
-
-                if (entity != null && entity.CompareTag("Player"))
-                {
-                    list.Add(neighbours);
-                }
+                containsPlayer = true;
             }
-
-            if (list.Count == 0) {
-                TurnEnd();
-                return;
-            }
-
-            foreach (HexCoordinate h in list) {
-                _cc.Attack(h.ConvertToVector3(), false);
-            }
-
-            Invoke("TurnEnd", 3f);
         }
 
-        private void TurnEnd()
+        if (containsPlayer)
         {
-
-            _cc.TurnEnd();
-
+            list.Add(Action.Attack);
         }
 
-        public override int GetAttackValue()
-        {
-            return enemyStat.atk;
-        }
+        return list;
+    }
 
-        public override void DamageAct()
-        {
-            base.DamageAct();
-            Collider[] colliders = Physics.OverlapSphere(transform.position, 10f, playerLayerMask);
-            if (colliders.Length > 0)
-                gameObject.transform.LookAt(colliders[0].transform);
-        }
+    public void EnemyAttackHandler()
+    {
+        List<HexCoordinate> list = new List<HexCoordinate>();
 
-        public override void DieAct()
+        foreach (var neighbours in HexGrid.Instance.GetNeighboursFor(curHex.HexCoords, 2))
         {
-            base.DieAct();
-            curHex = HexGrid.Instance.GetTileAt(this.gameObject.transform.position);
-            curHex.Entity = null;
-            /*
-            if (PhotonNetwork.IsMasterClient)
+            Hex curHex = HexGrid.Instance.GetTileAt(neighbours);
+            GameObject entity = curHex.Entity;
+
+            if (entity != null && entity.CompareTag("Player"))
             {
-                GameManager.Instance.enemies.Remove(this.gameObject);
-                if (enemyStat.isBoss)
-                    GameManager.Instance.bossEnemies.Remove(gameObject);
-            }*/
-            DropItem();
-            DropExp();
-            Destroy(this.gameObject, 1f);
+                list.Add(neighbours);
+            }
         }
 
-        private void DropItem()
+        if (list.Count == 0)
         {
-            if (enemyStat.dropItem.Count == 0) return;
-            Item dropitem = enemyStat.dropItem[Random.Range(0, enemyStat.dropItem.Count)];
-            curHex.Item = dropitem;
-            dropitem.itemHex = this.curHex;
+            TurnEnd();
+            return;
         }
 
-        private void DropExp()
+        _cc.Attack(list, 3);
+
+        Invoke("TurnEnd", 3f);
+    }
+
+    private void TurnEnd()
+    {
+
+        _cc.TurnEnd();
+
+    }
+
+    public override int GetAttackValue()
+    {
+        return enemyStat.atk;
+    }
+
+    public override void DamageAct()
+    {
+        base.DamageAct();
+        Collider[] colliders = Physics.OverlapSphere(transform.position, 10f, playerLayerMask);
+        if (colliders.Length > 0)
+            gameObject.transform.LookAt(colliders[0].transform);
+    }
+
+    public override void DieAct()
+    {
+        base.DieAct();
+        curHex = HexGrid.Instance.GetTileAt(this.gameObject.transform.position);
+        curHex.Entity = null;
+        /*
+        if (PhotonNetwork.IsMasterClient)
         {
-            foreach (var neighbours in HexGrid.Instance.GetNeighboursFor(curHex.HexCoords))
+            GameManager.Instance.enemies.Remove(this.gameObject);
+            if (enemyStat.isBoss)
+                GameManager.Instance.bossEnemies.Remove(gameObject);
+        }*/
+        DropItem();
+        DropExp();
+        Destroy(this.gameObject, 1f);
+    }
+
+    private void DropItem()
+    {
+        if (enemyStat.dropItem.Count == 0) return;
+        Item dropitem = enemyStat.dropItem[Random.Range(0, enemyStat.dropItem.Count)];
+        curHex.Item = dropitem;
+        dropitem.itemHex = this.curHex;
+    }
+
+    private void DropExp()
+    {
+        foreach (var neighbours in HexGrid.Instance.GetNeighboursFor(curHex.HexCoords))
+        {
+            Hex curHex = HexGrid.Instance.GetTileAt(neighbours);
+            GameObject entity = curHex.Entity;
+            if (entity != null && entity.CompareTag("Player"))
             {
-                Hex curHex = HexGrid.Instance.GetTileAt(neighbours);
-                GameObject entity = curHex.Entity;
-                if (entity != null && entity.CompareTag("Player"))
-                {
-                    entity.GetComponent<PlayerCharacter>()?.GetExp(enemyStat.Exp);
-                }
+                entity.GetComponent<PlayerCharacter>()?.GetExp(enemyStat.Exp);
             }
         }
     }

@@ -12,7 +12,8 @@ public class CamMovement : MonoSingleton<CamMovement>
     private float _minFOV = 10.0f;
     private float _maxFOV = 100.0f;
 
-    [SerializeField] private CinemachineVirtualCamera virtualCamera;
+    [SerializeField] private CinemachineVirtualCameraBase characterCam;
+    [SerializeField] private CinemachineVirtualCameraBase wideCam;
     [SerializeField] private CinemachineFreeLook battleCamera;
     [SerializeField] private GameObject player;
     [SerializeField] private bool isCamMove = false;
@@ -39,17 +40,18 @@ public class CamMovement : MonoSingleton<CamMovement>
     
     private void Awake()
     {
-        if (virtualCamera == null)
-            virtualCamera = GetComponent<CinemachineVirtualCamera>();
+        if (characterCam == null)
+            characterCam = GetComponent<CinemachineVirtualCamera>();
     }
 
-    public void CamSetToPlayer(GameObject player)
+    public void SetCamTarget(GameObject player)
     {
         isCamMove = false;
         this.player = player;
-        virtualCamera.m_Lens.FieldOfView = _defFov;
-        virtualCamera.Follow = player.transform;
-        virtualCamera.LookAt = player.transform;
+        characterCam.Follow = player.transform;
+        characterCam.LookAt = player.transform;
+        wideCam.Follow = player.transform;
+        wideCam.LookAt = player.transform;
         StartCoroutine(ResetMode());
     }
 
@@ -60,35 +62,17 @@ public class CamMovement : MonoSingleton<CamMovement>
     }
     void CamReset()
     {
-        virtualCamera.Follow = null;
-        virtualCamera.LookAt = null;
+        characterCam.Follow = null;
+        characterCam.LookAt = null;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        if(IsPlayerMove == true)
-        {
-            isCamMove = false;
-            virtualCamera.m_Lens.FieldOfView = _defFov;
-            virtualCamera.Follow = player.transform;
-            virtualCamera.LookAt = player.transform;
-        }
-        else if (isCamMove)
-        {
-            moveCam();
-            AdjustFOV(PlayerInputManager.Instance.scrollValue);
-        }
-        
-    }
-
+    /*
     // ReSharper disable Unity.PerformanceAnalysis
     private void moveCam()
     {
-        CamReset();
-        virtualCamera.gameObject.transform.Translate(PlayerInputManager.Instance.moveDirection * moveSpeed * Time.deltaTime, Space.World);
-        virtualCamera.gameObject.transform.Translate(MoveCamWithMouse() * (moveSpeed * Time.deltaTime), Space.World);
-    }
+        wideCam.gameObject.transform.Translate(PlayerInputManager.Instance.moveDirection * moveSpeed * Time.deltaTime, Space.World);
+        wideCam.gameObject.transform.Translate(MoveCamWithMouse() * (moveSpeed * Time.deltaTime), Space.World);
+    }*/
 
     private Vector3 MoveCamWithMouse()
     {
@@ -119,11 +103,6 @@ public class CamMovement : MonoSingleton<CamMovement>
 
     private void AdjustFOV(float scrollValue)
     {
-        float currentFOV = virtualCamera.m_Lens.FieldOfView;
-
-        float newFOV = Mathf.Clamp(currentFOV - (scrollValue/12), _minFOV, _maxFOV);
-
-        virtualCamera.m_Lens.FieldOfView = newFOV;
     }
 
     // 1 : inside 2 : left, 3 : right, 5 : top, 7 : bottom
@@ -132,11 +111,11 @@ public class CamMovement : MonoSingleton<CamMovement>
         int outValue = 1;
         float px = player.transform.position.x;
         float pz = player.transform.position.z;
-        float tx = virtualCamera.gameObject.transform.position.x;
-        float tz = virtualCamera.gameObject.transform.position.z;
+        //float tx = characterCam.gameObject.transform.position.x;
+        //float tz = characterCam.gameObject.transform.position.z;
 
-        float xOffset = px - tx;
-        float zOffset = pz - tz;
+        float xOffset = px;
+        float zOffset = pz;
 
         if (xOffset > 12)
             outValue *= 2;
@@ -153,7 +132,7 @@ public class CamMovement : MonoSingleton<CamMovement>
 
     public void ConvertBattleCamera()
     {
-        virtualCamera.gameObject.SetActive(false);
+        //characterCam.gameObject.SetActive(false);
         battleCamera.gameObject.SetActive(true);
         isCamMove = false;  
         
@@ -165,10 +144,16 @@ public class CamMovement : MonoSingleton<CamMovement>
         }
     }
 
-    public void ConvertMovementCamera()
+    public void ConvertCharacterCam() {
+        isCamMove = true;
+        characterCam.Priority = 10;
+        wideCam.Priority = 0;
+    }
+
+    public void ConvertWideCamera()
     {
         isCamMove = true;
-        virtualCamera.gameObject.SetActive(true);
-        battleCamera.gameObject.SetActive(false);
+        characterCam.Priority = 0;
+        wideCam.Priority = 10;
     }
 }

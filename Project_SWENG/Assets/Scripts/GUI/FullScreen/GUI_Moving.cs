@@ -88,13 +88,13 @@ public class GUI_Moving : GUIFullScreen {
     protected override void Open(Vector2 openPos)
     {
         base.Open(openPos);
-        CamMovement.Instance.ConvertMovementCamera();
+        CamMovement.Instance.ConvertWideCamera();
     }
 
     public void Set(PlayerCharacter target)
     {
         CamMovement.Instance.IsPlayerMove = true;
-        CamMovement.Instance.CamSetToPlayer(target.gameObject);
+        CamMovement.Instance.SetCamTarget(target.gameObject);
 
         _target = target;
 
@@ -110,6 +110,8 @@ public class GUI_Moving : GUIFullScreen {
         if (_selectedPos != null && selectGridPos == _selectedPos)
         {
             _MoveUnit();
+
+            CamMovement.Instance.ConvertCharacterCam();
             return;
         }
 
@@ -117,6 +119,8 @@ public class GUI_Moving : GUIFullScreen {
             selectGridPos == HexCoordinate.ConvertFromVector3(_target.transform.position))
         {
             _HideRange();
+
+            CamMovement.Instance.ConvertCharacterCam();
             Close();
             return;
         }
