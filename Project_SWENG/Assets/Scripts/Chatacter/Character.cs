@@ -8,8 +8,8 @@ using UnityEngine.Serialization;
 
 namespace CharacterSystem {
 
-    public class Character : MonoBehaviour
-    {
+    public class Character : MonoBehaviour,
+    IMoveable, IDicePoint {
         public enum Action { 
             Dice, Move, Attack
         }
@@ -17,6 +17,9 @@ namespace CharacterSystem {
         protected ICharacterController _cc;
 
         [SerializeField] protected IHealthUI _healthUI;
+
+        [SerializeField] protected int _dicePoint;
+        [SerializeField] private float _movementDuration = 0.5f;
 
         [SerializeField] protected GameObject equipCam;
         [SerializeField] protected Animator anim;
@@ -32,6 +35,89 @@ namespace CharacterSystem {
 
         }
 
+        public void Move(Queue<Vector3> path)
+        {
+            StartCoroutine(_RotationCoroutine(path, 0.1f));
+        }
+
+        private IEnumerator _RotationCoroutine(Queue<Vector3> path, float rotationDuration)
+        {
+            Quaternion startRotation = transform.rotation;
+            HexGrid.Instance.GetTileAt(HexCoordinate.ConvertFromVector3(transform.position)).Entity = null;
+
+            if (anim)
+                anim.SetBool("IsWalk", true);
+
+            foreach (Vector3 targetPos in path)
+            {
+
+                UsePoint(2);
+
+
+                Vector3 startPosition = transform.position;
+                Vector3 direction = targetPos - startPosition;
+                Quaternion endRotation = Quaternion.LookRotation(direction, Vector3.up);
+
+                float timeElapsed = 0;
+
+                // È¸Àü
+
+                if (Mathf.Approximately(Mathf.Abs(Quaternion.Dot(startRotation, endRotation)), 1.0f) == false)
+                {
+                    timeElapsed = 0;
+
+                    while (timeElapsed < rotationDuration)
+                    {
+                        timeElapsed += Time.deltaTime;
+                        transform.rotation = Quaternion.Lerp(startRotation, endRotation, timeElapsed / rotationDuration);
+
+                        yield return null;
+                    }
+
+                    transform.rotation = endRotation;
+
+                }
+
+                timeElapsed = 0;
+
+                while (timeElapsed < _movementDuration)
+                {
+                    timeElapsed += Time.deltaTime;
+                    transform.position = Vector3.Lerp(startPosition, targetPos, timeElapsed / _movementDuration);
+
+                    yield return null;
+                }
+                transform.position = targetPos;
+
+                _cc.MoveTo(HexCoordinate.ConvertFromVector3(startPosition), HexCoordinate.ConvertFromVector3(targetPos));
+            }
+
+            anim.SetBool("IsWalk", false);
+
+            _cc.ActionEnd();
+
+        }
+
+        public void UsePoint(int usingAmount)
+        {
+            if (_dicePoint < usingAmount)
+            {
+                return;
+            }
+            _dicePoint -= usingAmount;
+        }
+
+        public int GetPoint()
+        {
+            return _dicePoint;
+        }
+
+        public virtual void SetPoint(int setValue)
+        {
+            _dicePoint = setValue;
+            _cc.ActionEnd();
+        }
+
         public virtual string GetName() {
             return string.Empty;
         }
@@ -45,59 +131,46 @@ namespace CharacterSystem {
             return 1;
         }
 
+        public virtual void DoAction() { 
+            
+        }
+
         public virtual void DoAttact(int idx) {
-            IAttack attack = new BasicAttack(_cc, transform.position, 3);
+            IAttack attack = new BasicAttack(_cc, transform.position, 10);
             attack.Attack();
         }
 
         public virtual void Initial(ICharacterController cc) {
 
-            anim = GetComponent<Animator>();
+            if (anim == null) anim = GetComponent<Animator>();
             _cc = cc;
         }
 
         public virtual void AttackAct(bool isSkill)
         {
-            RunAnimation(0);
+            anim.SetTrigger("Attack");
+            _cc.ActionEnd();
 
         }
 
         public virtual void DamageAct()
         {
-            RunAnimation(1);
+            anim.SetTrigger("Hit");
 
         }
 
         public virtual void DieAct()
         {
-            RunAnimation(2);
+            anim.SetTrigger("Die");
 
         }
 
-        public virtual void SetPlay() { 
-            
+        public virtual void SetPlay() {
+            SetPoint(10);
         }
 
         public virtual IList<Action> GetCanDoAction() {
-            return null;
-        }
-
-        public void RunAnimation(int type)
-        {
-            switch (type)
-            {
-                case 0: // attack
-                    anim.SetTrigger("Attack");
-                    break;
-                case 1: // hit
-                    anim.SetTrigger("Hit");
-                    break;
-                case 2: // die
-                    anim.SetTrigger("Die");
-                    break;
-                default:
-                    break;
-            }
+            return new List<Action>();
         }
 
     }

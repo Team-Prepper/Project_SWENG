@@ -5,18 +5,12 @@ using UnityEngine;
 
 public class CamMovement : MonoSingleton<CamMovement>
 {
-    [SerializeField] float moveSpeed = 5f;
-
-    [Header("FOV")] 
-    private float _defFov = 60.0f;
-    private float _minFOV = 10.0f;
-    private float _maxFOV = 100.0f;
 
     [SerializeField] private CinemachineVirtualCameraBase characterCam;
     [SerializeField] private CinemachineVirtualCameraBase wideCam;
     [SerializeField] private CinemachineFreeLook battleCamera;
+
     [SerializeField] private GameObject player;
-    [SerializeField] private bool isCamMove = false;
 
     private bool _isAttackPhase;
 
@@ -32,7 +26,6 @@ public class CamMovement : MonoSingleton<CamMovement>
             else
             {
                 isPlayerMove = false;
-                isCamMove = true;
             }
         }
     }
@@ -46,7 +39,6 @@ public class CamMovement : MonoSingleton<CamMovement>
 
     public void SetCamTarget(GameObject player)
     {
-        isCamMove = false;
         this.player = player;
         characterCam.Follow = player.transform;
         characterCam.LookAt = player.transform;
@@ -58,7 +50,6 @@ public class CamMovement : MonoSingleton<CamMovement>
     IEnumerator ResetMode()
     {
         yield return new WaitForSeconds(1f);
-        isCamMove = true;
     }
     void CamReset()
     {
@@ -134,7 +125,6 @@ public class CamMovement : MonoSingleton<CamMovement>
     {
         //characterCam.gameObject.SetActive(false);
         battleCamera.gameObject.SetActive(true);
-        isCamMove = false;  
         
         if (player != null)
         {
@@ -145,14 +135,12 @@ public class CamMovement : MonoSingleton<CamMovement>
     }
 
     public void ConvertCharacterCam() {
-        isCamMove = true;
         characterCam.Priority = 10;
         wideCam.Priority = 0;
     }
 
     public void ConvertWideCamera()
     {
-        isCamMove = true;
         characterCam.Priority = 0;
         wideCam.Priority = 10;
     }

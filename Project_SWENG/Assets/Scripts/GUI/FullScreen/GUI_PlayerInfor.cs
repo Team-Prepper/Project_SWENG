@@ -36,7 +36,6 @@ public class GUI_PlayerInfor : GUIFullScreen, IActionSelector {
 
         _target = target;
         CamMovement.Instance.SetCamTarget(target);
-        _targetCC = target.GetComponent<ICharacterController>();
         _targetPlayer = target.GetComponent<PlayerCharacter>();
 
         _targetPlayer.SetHealthUI(_playerHealth);
@@ -52,6 +51,7 @@ public class GUI_PlayerInfor : GUIFullScreen, IActionSelector {
     public void Ready(IList<Character.Action> actionList)
     {
         panelBtn.SetActive(true);
+
         CamMovement.Instance.ConvertCharacterCam();
         btnDice.interactable = actionList.Contains(Character.Action.Dice);
         btnAttack.interactable = actionList.Contains(Character.Action.Attack);
@@ -80,8 +80,8 @@ public class GUI_PlayerInfor : GUIFullScreen, IActionSelector {
     public void TurnEndButton()
     {
         if (_nowPopUp) return;
-        _targetCC.TurnEnd();
         _AfterAction();
+        _targetCC.TurnEnd();
     }
 
     void _AfterAction() {
@@ -94,30 +94,6 @@ public class GUI_PlayerInfor : GUIFullScreen, IActionSelector {
         base.Update();
         _dicePoint.text = _targetPlayer.GetPoint().ToString();
         _turnEndGlowLight.SetActive(_turnEndButton.interactable);
-    }
-
-    public override void HexSelect(HexCoordinate selectGridPos)
-    {
-        /*
-        if (GameManager.Instance.GameMaster.gamePhase == IGameMaster.Phase.EnemyPhase) {
-            return;
-        }*/
-
-        return;
-
-        Hex selected = HexGrid.Instance.GetTileAt(selectGridPos);
-
-        if (!selected || !selected.Entity) return;
-
-        if (selected.Entity == _target)
-        {
-            //UIManager.OpenGUI<GUI_ActionSelect>("ActionSelect").Set(_target);
-            return;
-        }
-
-        if (!selected.Entity.TryGetComponent<Character>(out Character target)) return;
-
-        UIManager.OpenGUI<GUI_ShowCharacterInfor>("CharacterInfor").SetInfor(target.GetName(), target);
     }
 
 

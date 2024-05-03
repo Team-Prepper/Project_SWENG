@@ -13,13 +13,11 @@ namespace UISystem {
 
         protected override void Open(Vector2 openPos)
         {
-            base.Open(new Vector2(-800, 0));
-            CamMovement.Instance.IsPlayerMove = true;
+            base.Open(new Vector2(0, 0));
         }
 
         public void ReOpen() {
             gameObject.SetActive(true);
-            CamMovement.Instance.IsPlayerMove = true;
             PopUpAction();
         }
 

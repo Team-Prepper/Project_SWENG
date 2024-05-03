@@ -15,12 +15,6 @@ public class EnemyCharacter : Character {
 
     public Hex curHex;
 
-    enum State {
-        ready, move, attack
-    }
-
-    State _state;
-
     public override string GetName()
     {
         return enemyStat.monsterName;
@@ -45,13 +39,16 @@ public class EnemyCharacter : Character {
 
     public override void SetPlay()
     {
+        doAction = false;
         base.SetPlay();
-        EnemyAttackHandler();
     }
 
+    bool doAction = false;
 
     public override IList<Action> GetCanDoAction()
     {
+        if (doAction) return new List<Action>();
+        doAction = true;
         IList<Action> list = new List<Action>();
         bool containsPlayer = false;
 
@@ -72,39 +69,6 @@ public class EnemyCharacter : Character {
         }
 
         return list;
-    }
-
-    public void EnemyAttackHandler()
-    {
-        List<HexCoordinate> list = new List<HexCoordinate>();
-
-        foreach (var neighbours in HexGrid.Instance.GetNeighboursFor(curHex.HexCoords, 2))
-        {
-            Hex curHex = HexGrid.Instance.GetTileAt(neighbours);
-            GameObject entity = curHex.Entity;
-
-            if (entity != null && entity.CompareTag("Player"))
-            {
-                list.Add(neighbours);
-            }
-        }
-
-        if (list.Count == 0)
-        {
-            TurnEnd();
-            return;
-        }
-
-        _cc.Attack(list, 3);
-
-        Invoke("TurnEnd", 3f);
-    }
-
-    private void TurnEnd()
-    {
-
-        _cc.TurnEnd();
-
     }
 
     public override int GetAttackValue()

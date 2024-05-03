@@ -11,7 +11,7 @@ using UnityEngine;
 public class LocalGameMaster : MonoBehaviour, IGameMaster {
 
     Team[] _teams;
-    int _turn;
+    [SerializeField] int _turn;
 
     [SerializeField] private PlayerSpawner _playerSpawner;
     [SerializeField] private EnemySpawner _enemySpawner;

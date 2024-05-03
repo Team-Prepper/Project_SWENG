@@ -36,7 +36,8 @@ public class EnemySpawner : MonoBehaviour
     {
         Transform spawnPos = spawnHex.transform;
         GameObject enemy = GameManager.Instance.GameMaster.InstantiateCharacter(spawnEnemyList[Random.Range(0,spawnEnemyList.Count)], spawnPos.position, spawnPos.rotation);
-
+        
+        enemy.GetComponent<ICharacterController>().SetActionSelector(enemy.AddComponent<BasicEnemyActionSelector>());
         /*
         EnemyController enemyController = enemy.GetComponent<EnemyController>();
 
@@ -64,7 +65,8 @@ public class EnemySpawner : MonoBehaviour
     public GameObject SpawnBoss()
     {
         GameObject enemy = GameManager.Instance.GameMaster.InstantiateCharacter(bossEnemyPrefab, stageBossPos.transform.position, stageBossPos.transform.rotation);
-        
+        enemy.GetComponent<ICharacterController>().SetActionSelector(enemy.AddComponent<BasicEnemyActionSelector>());
+
         return enemy;
     }
 

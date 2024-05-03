@@ -24,7 +24,7 @@ public class DashboardManager : MonoBehaviour
 
     private void Start()
     {
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < totalDamageDashboard.Count; i++)
         {
             totalDamageDashboard[i].SetActive(false);
         }

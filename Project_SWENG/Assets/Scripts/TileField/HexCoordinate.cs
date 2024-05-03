@@ -7,8 +7,8 @@ public struct HexCoordinate : IEquatable<HexCoordinate> {
     public static readonly float xOffset = 4.325f;
     public static readonly float zOffset = 5f;
 
-    private int x;
-    private int z;
+    public int x { get; private set; }
+    public int z { get; private set; }
 
     public HexCoordinate(int x, int z)
     {
@@ -23,7 +23,7 @@ public struct HexCoordinate : IEquatable<HexCoordinate> {
         return new Vector3(x * xOffset, 0, (z - 0.5f) * zOffset);
     }
 
-    public static List<HexCoordinate> GetDirectionList(HexCoordinate target)
+    public static IList<HexCoordinate> GetDirectionList(HexCoordinate target)
     {
 
         if (target.x % 2 == 0)

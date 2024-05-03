@@ -8,14 +8,14 @@ using CharacterSystem;
 
 public class GUI_Moving : GUIFullScreen {
 
-    [SerializeField] private PlayerCharacter _target;
-    private HexCoordinate _selectedPos;
-
     [SerializeField] private Transform[] _moveNumPrefabs;
     [SerializeField] private Transform _moveNumParent;
 
-    private BFSResult movementRange = new BFSResult();
-    private List<HexCoordinate> currentPath = new List<HexCoordinate>();
+    [SerializeField] private Character _target;
+    private HexCoordinate _selectedPos;
+
+    private IPathGroup movementRange = new BFSResult();
+    private IList<HexCoordinate> currentPath = new List<HexCoordinate>();
 
     private void _HideRange()
     {
@@ -38,17 +38,14 @@ public class GUI_Moving : GUIFullScreen {
             if (unitPos.Equals(hexPosition))
                 continue;
 
-            //Debug.Log(hexPosition);
             HexGrid.Instance.GetTileAt(hexPosition).EnableHighlight();
         }
     }
 
-    public void _ShowPath(HexCoordinate selectedHexPosition)
+    private void _ShowPath(HexCoordinate selectedHexPosition)
     {
 
         _HideRange();
-
-        //Debug.Log("Target: " + selectedHexPosition);
         
         currentPath = movementRange.GetPathTo(selectedHexPosition);
         _moveNumParent.gameObject.SetActive(true);
@@ -73,7 +70,7 @@ public class GUI_Moving : GUIFullScreen {
 
     private void _CalcualteRange()
     {
-        movementRange = GraphSearch.BFSGetRange(HexCoordinate.ConvertFromVector3(_target.transform.position), _target.GetPoint());
+        movementRange = HexGrid.Instance.GetPathGroup(HexCoordinate.ConvertFromVector3(_target.transform.position), _target.GetPoint());
     }
 
     private void _MoveUnit()
@@ -91,7 +88,7 @@ public class GUI_Moving : GUIFullScreen {
         CamMovement.Instance.ConvertWideCamera();
     }
 
-    public void Set(PlayerCharacter target)
+    public void Set(Character target)
     {
         CamMovement.Instance.IsPlayerMove = true;
         CamMovement.Instance.SetCamTarget(target.gameObject);
@@ -105,7 +102,6 @@ public class GUI_Moving : GUIFullScreen {
 
     public override void HexSelect(HexCoordinate selectGridPos)
     {
-        CamMovement.Instance.IsPlayerMove = false;
 
         if (_selectedPos != null && selectGridPos == _selectedPos)
         {
@@ -115,8 +111,7 @@ public class GUI_Moving : GUIFullScreen {
             return;
         }
 
-        if (!movementRange.IsHexPositionInRange(selectGridPos) ||
-            selectGridPos == HexCoordinate.ConvertFromVector3(_target.transform.position))
+        if (!movementRange.IsHexPositionInRange(selectGridPos))
         {
             _HideRange();
 
