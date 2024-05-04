@@ -91,7 +91,7 @@ public class PlayerCharacter : Character,
 
     public override void DieAct()
     {
-        HexGrid.Instance.GetTileAt(transform.position).Entity = null;
+        //HexGrid.Instance.GetTileAt(transform.position).Entity = null;
     }
 
     public void EquipItemHandler(Item item)

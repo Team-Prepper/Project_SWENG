@@ -8,7 +8,7 @@ using UISystem;
 using UnityEngine;
 
 public class Team {
-    Dictionary<ICharacterController, bool> _members;
+    IDictionary<ICharacterController, bool> _members;
 
     public Team() {
         _members = new Dictionary<ICharacterController, bool>();
@@ -30,8 +30,8 @@ public class Team {
 
     public void StartTurn() {
 
-        Dictionary<ICharacterController, bool> members = new Dictionary<ICharacterController, bool>();
-        List<ICharacterController> list = new List<ICharacterController>();
+        IDictionary<ICharacterController, bool> members = new Dictionary<ICharacterController, bool>();
+        IList<ICharacterController> list = new List<ICharacterController>();
 
         foreach (ICharacterController m in _members.Keys)
         {
@@ -66,7 +66,7 @@ public interface IGameMaster
         End
     }
 
-    public GameObject InstantiateCharacter(GameObject prefab, Vector3 position, Quaternion rotation);
+    public GameObject InstantiateCharacter(Vector3 position, Quaternion rotation);
 
     public void AddTeamMember(ICharacterController c, int teamIdx);
     public void RemoveTeamMember(ICharacterController c, int teamIdx);

@@ -12,7 +12,7 @@ public class GUI_Moving : GUIFullScreen {
     [SerializeField] private Transform _moveNumParent;
 
     [SerializeField] private Character _target;
-    private HexCoordinate _selectedPos;
+    private HexCoordinate? _selectedPos;
 
     private IPathGroup movementRange = new BFSResult();
     private IList<HexCoordinate> currentPath = new List<HexCoordinate>();
@@ -93,6 +93,8 @@ public class GUI_Moving : GUIFullScreen {
         CamMovement.Instance.IsPlayerMove = true;
         CamMovement.Instance.SetCamTarget(target.gameObject);
 
+        _selectedPos = null;
+
         _target = target;
 
         _CalcualteRange();
@@ -111,11 +113,11 @@ public class GUI_Moving : GUIFullScreen {
             return;
         }
 
-        if (!movementRange.IsHexPositionInRange(selectGridPos))
+        if (!movementRange.IsHexCroodInRange(selectGridPos))
         {
-            _HideRange();
-
             CamMovement.Instance.ConvertCharacterCam();
+
+            _HideRange();
             Close();
             return;
         }

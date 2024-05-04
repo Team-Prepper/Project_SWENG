@@ -7,8 +7,6 @@ public class GUI_Attack : GUIFullScreen {
 
     ICharacterController _cc;
 
-    public CharacterSystem.Character _target;
-
     [SerializeField] private Transform _markerParent;
     [SerializeField] private Transform[] _attackMarkers;
     private int _useMarkCount;
@@ -21,11 +19,10 @@ public class GUI_Attack : GUIFullScreen {
     [SerializeField] private GameObject btnAttack;
     [SerializeField] private GameObject btnSkill;
 
-    public void Set(PlayerCharacter target, int skillDmg = 0) {
+    public void Set(ICharacterController cc, PlayerCharacter target, int skillDmg = 0)
+    {
 
-
-        _target = target.GetComponent<Character>();
-        _cc = target.GetComponent<ICharacterController>();
+        _cc = cc;
 
         _skillDmg = skillDmg;
         _markerParent.localScale = Vector3.one / GameObject.Find("Canvas").GetComponent<RectTransform>().localScale.y;
@@ -43,7 +40,7 @@ public class GUI_Attack : GUIFullScreen {
         }
 
         CamMovement.Instance.ConvertWideCamera();
-        CamMovement.Instance.SetCamTarget(_target.gameObject);
+        CamMovement.Instance.SetCamTarget(target.gameObject);
         
         btnAttack.SetActive(skillDmg == 0);
         btnSkill.SetActive(skillDmg != 0); // (skillDmg > 0)

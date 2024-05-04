@@ -11,6 +11,22 @@ public class LocalCharacterController : MonoBehaviour, ICharacterController {
     Character _character;
     IActionSelector _actionSelector;
 
+
+    // Start is called before the first frame update
+    public void Initial(string characterName)
+    {
+        GameObject go = AssetOpener.ImportGameObject(characterName);
+        go.transform.SetParent(transform);
+        go.transform.localPosition = Vector3.zero;
+
+        _character = go.GetComponent<Character>();
+        _character.Initial(this);
+
+        HexGrid.Instance.GetTileAt(transform.position).Entity = gameObject;
+
+        GameManager.Instance.GameMaster.AddTeamMember(this, _character.GetTeamIdx());
+    }
+
     public void Attack(IList<HexCoordinate> targetPos, int dmg)
     {
         transform.LookAt(targetPos.ElementAt(0).ConvertToVector3());
@@ -39,6 +55,7 @@ public class LocalCharacterController : MonoBehaviour, ICharacterController {
             return;
         }
         _character.DieAct();
+
         // 죽었을 때 GameMaster에서 처리할 것
         GameManager.Instance.GameMaster.RemoveTeamMember(this, _character.GetTeamIdx());
 
@@ -65,15 +82,6 @@ public class LocalCharacterController : MonoBehaviour, ICharacterController {
     public void TurnEnd() {
         GameManager.Instance.GameMaster.TurnEnd(this);
     }
-
-    // Start is called before the first frame update
-    public void Initial()
-    {
-        _character = GetComponent<Character>();
-        _character.Initial(this);
-        GameManager.Instance.GameMaster.AddTeamMember(this, _character.GetTeamIdx());
-    }
-
     public void MoveTo(HexCoordinate before, HexCoordinate after)
     {
         HexGrid.Instance.GetTileAt(before).Entity = null;

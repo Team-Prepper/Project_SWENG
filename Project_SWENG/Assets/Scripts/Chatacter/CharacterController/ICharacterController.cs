@@ -5,7 +5,7 @@ using UnityEngine;
 
 public interface ICharacterController : IDamagable {
 
-    public void Initial();
+    public void Initial(string characterName);
     public void SetActionSelector(IActionSelector actionSelector);
 
     public void SetPlay();

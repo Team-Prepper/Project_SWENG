@@ -6,6 +6,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UISystem;
+using UnityEditor;
 using UnityEngine;
 
 public class LocalGameMaster : MonoBehaviour, IGameMaster {
@@ -18,9 +19,11 @@ public class LocalGameMaster : MonoBehaviour, IGameMaster {
 
     public IGameMaster.Phase gamePhase;
 
-    public GameObject InstantiateCharacter(GameObject prefab, Vector3 position, Quaternion rotation) {
-        GameObject retval = Instantiate(prefab, position, rotation);
-        retval.AddComponent<LocalCharacterController>().Initial();
+    public GameObject InstantiateCharacter(Vector3 position, Quaternion rotation) {
+        GameObject retval = AssetOpener.ImportGameObject("LocalCC");
+
+        retval.transform.position = position;
+        retval.transform.rotation = rotation;
 
         return retval;
 

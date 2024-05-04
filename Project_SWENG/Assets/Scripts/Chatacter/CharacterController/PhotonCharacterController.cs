@@ -9,22 +9,62 @@ using System.Linq;
 public class PhotonCharacterController : MonoBehaviourPun, ICharacterController {
 
     IActionSelector _actionSelector;
-    PhotonView _view;
+    [SerializeField] PhotonView _view;
     Character _character;
 
-    public void Initial()
+    public void Initial(string characterName)
     {
-        _character = GetComponent<Character>();
-        _view = GetComponent<PhotonView>();
-
-        _character.Initial(this);
+        _view.RPC("_Initial", RpcTarget.All, characterName);
         _view.RPC("_AddMember", RpcTarget.MasterClient);
     }
 
-    public void ActionEnd()
+    [PunRPC]
+    private void _Initial(string characterName)
     {
-        //_actionSelector.SetSelector(_character.GetCanDoAction());
+        GameObject go = AssetOpener.ImportGameObject(characterName);
+        go.transform.SetParent(transform);
+        go.transform.localPosition = Vector3.zero;
+
+        _character = go.GetComponent<Character>();
+        _character.Initial(this);
+
+        HexGrid.Instance.GetTileAt(transform.position).Entity = gameObject;
     }
+
+    [PunRPC]
+    private void _AddMember()
+    {
+        GameManager.Instance.GameMaster.AddTeamMember(this, _character.GetTeamIdx());
+
+    }
+
+    public void Attack(IList<HexCoordinate> targetPos, int dmg)
+    {
+
+        foreach (HexCoordinate hexPos in targetPos)
+        {
+            Hex targetHex = HexGrid.Instance.GetTileAt(hexPos);
+            if (targetHex.Entity == null || !targetHex.Entity.TryGetComponent(out IDamagable target)) continue;
+
+            target.TakeDamage(dmg);
+
+        }
+        transform.LookAt(targetPos.ElementAt(0).ConvertToVector3());
+        _view.RPC("_AttackAct", RpcTarget.All, false);
+    }
+
+    [PunRPC]
+    private void _AttackAct(bool isSkill)
+    {
+        _character.AttackAct(isSkill);
+
+    }
+
+    public void UseAttack(int idx)
+    {
+        _character.DoAttact(idx);
+    }
+
 
     public void TakeDamage(int amount)
     {
@@ -46,18 +86,30 @@ public class PhotonCharacterController : MonoBehaviourPun, ICharacterController 
 
         if (!PhotonNetwork.IsMasterClient) return;
 
-        // 죽었을 때 GameMaster에서 처리할 것
+        GameManager.Instance.GameMaster.RemoveTeamMember(this, _character.GetTeamIdx());
 
-    }
-
-    public void SetActionSelector(IActionSelector actionSelector)
-    {
-        _actionSelector = actionSelector;
     }
 
     public void SetPlay()
     {
         _character.SetPlay();
+        ActionEnd();
+    }
+
+    public void SetActionSelector(IActionSelector actionSelector)
+    {
+        _actionSelector = actionSelector;
+        _actionSelector.SetCharacterController(this);
+    }
+
+
+    public void ActionEnd()
+    {
+        if (_actionSelector == null)
+        {
+            return;
+        }
+        _actionSelector.Ready(_character.GetCanDoAction());
     }
 
     public void TurnEnd()
@@ -71,37 +123,6 @@ public class PhotonCharacterController : MonoBehaviourPun, ICharacterController 
         GameManager.Instance.GameMaster.TurnEnd(this);
 
     }
-
-    [PunRPC]
-    private void _AddMember()
-    {
-        GameManager.Instance.GameMaster.AddTeamMember(this, _character.GetTeamIdx());
-
-    }
-
-    public void Attack(IList<HexCoordinate> targetPos, int dmg)
-    {
-
-        foreach (HexCoordinate hexPos in targetPos)
-        {
-            Hex targetHex = HexGrid.Instance.GetTileAt(hexPos);
-            if (targetHex.Entity == null || !targetHex.Entity.TryGetComponent(out IDamagable target)) return;
-
-            target.TakeDamage(dmg);
-
-        }
-        transform.LookAt(targetPos.ElementAt(0).ConvertToVector3());
-        _view.RPC("_AttackAct", RpcTarget.All, false);
-    }
-
-    [PunRPC]
-    private void _AttackAct(bool isSkill)
-    {
-        _character.AttackAct(isSkill);
-
-    }
-
-    public void UseAttack(int idx) { }
 
     public void MoveTo(HexCoordinate before, HexCoordinate after)
     {

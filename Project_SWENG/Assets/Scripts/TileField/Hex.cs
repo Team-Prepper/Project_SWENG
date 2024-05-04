@@ -127,8 +127,8 @@ public class Hex : MonoBehaviour
         highlight = GetComponent<GlowHighlight>();
 
         HexGrid.Instance.AddTile(this);
-        //cloud.SetActive(true);
-        //isCloud = true;
+        cloud.SetActive(true);
+        isCloud = true;
 
         //CloudActiveFalse();
         

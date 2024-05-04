@@ -42,8 +42,7 @@ namespace CharacterSystem {
 
         private IEnumerator _RotationCoroutine(Queue<Vector3> path, float rotationDuration)
         {
-            Quaternion startRotation = transform.rotation;
-            HexGrid.Instance.GetTileAt(HexCoordinate.ConvertFromVector3(transform.position)).Entity = null;
+            Transform trParent = transform.parent;
 
             if (anim)
                 anim.SetBool("IsWalk", true);
@@ -53,12 +52,13 @@ namespace CharacterSystem {
 
                 UsePoint(2);
 
-
-                Vector3 startPosition = transform.position;
+                Vector3 startPosition = trParent.position;
                 Vector3 direction = targetPos - startPosition;
+
+                Quaternion startRotation = trParent.rotation;
                 Quaternion endRotation = Quaternion.LookRotation(direction, Vector3.up);
 
-                float timeElapsed = 0;
+                float timeElapsed;
 
                 // È¸Àü
 
@@ -69,12 +69,12 @@ namespace CharacterSystem {
                     while (timeElapsed < rotationDuration)
                     {
                         timeElapsed += Time.deltaTime;
-                        transform.rotation = Quaternion.Lerp(startRotation, endRotation, timeElapsed / rotationDuration);
+                        trParent.rotation = Quaternion.Lerp(startRotation, endRotation, timeElapsed / rotationDuration);
 
                         yield return null;
                     }
 
-                    transform.rotation = endRotation;
+                    trParent.rotation = endRotation;
 
                 }
 
@@ -83,18 +83,18 @@ namespace CharacterSystem {
                 while (timeElapsed < _movementDuration)
                 {
                     timeElapsed += Time.deltaTime;
-                    transform.position = Vector3.Lerp(startPosition, targetPos, timeElapsed / _movementDuration);
+                    trParent.position = Vector3.Lerp(startPosition, targetPos, timeElapsed / _movementDuration);
 
                     yield return null;
                 }
-                transform.position = targetPos;
+                trParent.position = targetPos;
 
                 _cc.MoveTo(HexCoordinate.ConvertFromVector3(startPosition), HexCoordinate.ConvertFromVector3(targetPos));
             }
 
             anim.SetBool("IsWalk", false);
 
-            _cc.ActionEnd();
+            StartCoroutine(_ActionEnd(.4f));
 
         }
 
@@ -149,8 +149,12 @@ namespace CharacterSystem {
         public virtual void AttackAct(bool isSkill)
         {
             anim.SetTrigger("Attack");
-            _cc.ActionEnd();
+            StartCoroutine(_ActionEnd(1.2f));
+        }
 
+        IEnumerator _ActionEnd(float spendTime) {
+            yield return new WaitForSeconds(spendTime);
+            _cc.ActionEnd();
         }
 
         public virtual void DamageAct()

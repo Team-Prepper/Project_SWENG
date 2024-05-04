@@ -1,18 +1,10 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
-
-public class GraphSearch
-{
-
-}
 
 public interface IPathGroup {
 
     public IList<HexCoordinate> GetPathTo(HexCoordinate destination);
-    public bool IsHexPositionInRange(HexCoordinate position);
+    public bool IsHexCroodInRange(HexCoordinate position);
     public IEnumerable<HexCoordinate> GetRangePositions();
 }
 
@@ -42,7 +34,7 @@ public struct BFSResult : IPathGroup
         return path.Skip(1).ToList();
     }
 
-    public bool IsHexPositionInRange(HexCoordinate position)
+    public bool IsHexCroodInRange(HexCoordinate position)
     {
         return _visitedNodesDict.ContainsKey(position);
     }

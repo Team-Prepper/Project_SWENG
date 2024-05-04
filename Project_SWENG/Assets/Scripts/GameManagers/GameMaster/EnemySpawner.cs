@@ -35,9 +35,12 @@ public class EnemySpawner : MonoBehaviour
     private void SpawnEnemy(Hex spawnHex, List<GameObject> spawnEnemyList)
     {
         Transform spawnPos = spawnHex.transform;
-        GameObject enemy = GameManager.Instance.GameMaster.InstantiateCharacter(spawnEnemyList[Random.Range(0,spawnEnemyList.Count)], spawnPos.position, spawnPos.rotation);
+        GameObject enemy = GameManager.Instance.GameMaster.InstantiateCharacter(spawnPos.position, spawnPos.rotation);
+
+        ICharacterController cc = enemy.GetComponent<ICharacterController>();
         
-        enemy.GetComponent<ICharacterController>().SetActionSelector(enemy.AddComponent<BasicEnemyActionSelector>());
+        cc.Initial(spawnEnemyList[Random.Range(0, spawnEnemyList.Count)].name);
+        cc.SetActionSelector(enemy.AddComponent<BasicEnemyActionSelector>());
         /*
         EnemyController enemyController = enemy.GetComponent<EnemyController>();
 
@@ -64,7 +67,12 @@ public class EnemySpawner : MonoBehaviour
 
     public GameObject SpawnBoss()
     {
-        GameObject enemy = GameManager.Instance.GameMaster.InstantiateCharacter(bossEnemyPrefab, stageBossPos.transform.position, stageBossPos.transform.rotation);
+        GameObject enemy = GameManager.Instance.GameMaster.InstantiateCharacter(stageBossPos.transform.position, stageBossPos.transform.rotation);
+
+        ICharacterController cc = enemy.GetComponent<ICharacterController>();
+
+        cc.Initial(bossEnemyPrefab.name);
+        cc.SetActionSelector(enemy.AddComponent<BasicEnemyActionSelector>());
         enemy.GetComponent<ICharacterController>().SetActionSelector(enemy.AddComponent<BasicEnemyActionSelector>());
 
         return enemy;

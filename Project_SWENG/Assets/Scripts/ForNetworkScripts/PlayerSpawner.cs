@@ -24,14 +24,17 @@ public class PlayerSpawner : MonoBehaviour
         Hex spawnHex = spawnPosList[posIdx];
 
         Transform spawnPos = spawnHex.transform;
-        IGameMaster GM = GameManager.Instance.GameMaster;
 
-        GameObject player = GM.InstantiateCharacter(playerPrefab, spawnPos.position, spawnPos.rotation);
-        GUI_PlayerInfor playerInfo = UIManager.OpenGUI<GUI_PlayerInfor>("PlayerInfor");
+        GameObject player = GameManager.Instance.GameMaster.InstantiateCharacter(spawnPos.position, spawnPos.rotation);
+        GUI_PlayerActionSelect playerInfo = UIManager.OpenGUI<GUI_PlayerActionSelect>("PlayerInfor");
+
+        ICharacterController cc = player.GetComponent<ICharacterController>();
+        cc.Initial(playerPrefab.name);
+        cc.SetActionSelector(playerInfo);
+
+        Debug.Log(player.name);
+
         playerInfo.SetPlayer(player);
-
-        player.GetComponent<ICharacterController>().SetActionSelector(playerInfo);
-        spawnHex.Entity = player;
 
         EventPlayerSpawn?.Invoke(player);
 

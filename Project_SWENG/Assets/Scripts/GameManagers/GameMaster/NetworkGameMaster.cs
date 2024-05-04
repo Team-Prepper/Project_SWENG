@@ -18,10 +18,9 @@ public class NetworkGameMaster : MonoBehaviourPun, IGameMaster {
 
     public IGameMaster.Phase gamePhase;
 
-    public GameObject InstantiateCharacter(GameObject prefab, Vector3 position, Quaternion rotation)
+    public GameObject InstantiateCharacter(Vector3 position, Quaternion rotation)
     {
-        GameObject retval = Instantiate(prefab, position, rotation);
-        retval.AddComponent<LocalCharacterController>().Initial();
+        GameObject retval = PhotonNetwork.Instantiate("PhotonCC", position, rotation);
 
         return retval;
 
@@ -29,16 +28,17 @@ public class NetworkGameMaster : MonoBehaviourPun, IGameMaster {
 
     private void Start()
     {
+        GameManager.Instance.SetGameMaster(this);
+
         if (PhotonNetwork.IsMasterClient)
         {
-            GameManager.Instance.SetGameMaster(this);
             _teams = new Team[2];
             _teams[0] = new Team();
             _teams[1] = new Team();
             _enemySpawner.SpawnEnemy();
         }
 
-        _playerSpawner.SpawnPlayer(0);
+        _playerSpawner.SpawnPlayer(NetworkManager.PlayerID);
         
         if (PhotonNetwork.IsMasterClient)
         {

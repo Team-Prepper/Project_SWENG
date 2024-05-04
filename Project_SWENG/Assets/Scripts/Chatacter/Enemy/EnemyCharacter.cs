@@ -31,9 +31,9 @@ public class EnemyCharacter : Character {
 
         //stat.HP = new GaugeValue<int>(enemyStat.maxHp, enemyStat.maxHp, 0);
         stat.SetHP(enemyStat.maxHp, enemyStat.maxHp, 0);
-        curHex = HexGrid.Instance.GetTileAt(this.gameObject.transform.position);
+        //curHex = HexGrid.Instance.GetTileAt(this.gameObject.transform.position);
 
-        curHex.Entity = gameObject;
+        //curHex.Entity = gameObject;
 
     }
 
@@ -52,7 +52,7 @@ public class EnemyCharacter : Character {
         IList<Action> list = new List<Action>();
         bool containsPlayer = false;
 
-        foreach (var neighbours in HexGrid.Instance.GetNeighboursFor(curHex.HexCoords, 2))
+        foreach (var neighbours in HexGrid.Instance.GetNeighboursFor(HexCoordinate.ConvertFromVector3(transform.position), 2))
         {
             Hex curHex = HexGrid.Instance.GetTileAt(neighbours);
             GameObject entity = curHex.Entity;
@@ -88,7 +88,7 @@ public class EnemyCharacter : Character {
     {
         base.DieAct();
         curHex = HexGrid.Instance.GetTileAt(this.gameObject.transform.position);
-        curHex.Entity = null;
+        //curHex.Entity = null;
         /*
         if (PhotonNetwork.IsMasterClient)
         {
@@ -105,12 +105,13 @@ public class EnemyCharacter : Character {
     {
         if (enemyStat.dropItem.Count == 0) return;
         Item dropitem = enemyStat.dropItem[Random.Range(0, enemyStat.dropItem.Count)];
-        curHex.Item = dropitem;
-        dropitem.itemHex = this.curHex;
+        //curHex.Item = dropitem;
+        //dropitem.itemHex = this.curHex;
     }
 
     private void DropExp()
     {
+        return;
         foreach (var neighbours in HexGrid.Instance.GetNeighboursFor(curHex.HexCoords))
         {
             Hex curHex = HexGrid.Instance.GetTileAt(neighbours);

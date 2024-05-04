@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UISystem;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GUI_Title : GUIFullScreen
@@ -19,6 +20,17 @@ public class GUI_Title : GUIFullScreen
         _network = GameObject.Find("NetworkManager").GetComponent<NetworkManager>();
 
     }
+
+    public void OpenScene(string sceneName) {
+        UIManager.OpenGUI<GUI_Loading>("Loading");
+        SceneManager.LoadSceneAsync(sceneName);
+    }
+
+    public void DisplayMessage(string msg) {
+
+        UIManager.Instance.DisplayMessage(msg);
+    }
+
     public void Connect()
     {
         if (_nickNameInput.text.Equals(string.Empty)) {
@@ -29,4 +41,5 @@ public class GUI_Title : GUIFullScreen
         PhotonNetwork.ConnectUsingSettings();
         PhotonNetwork.LocalPlayer.NickName = _nickNameInput.text;
     }
+
 }
