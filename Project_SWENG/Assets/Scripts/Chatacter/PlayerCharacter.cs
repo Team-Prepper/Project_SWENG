@@ -44,7 +44,6 @@ public class PlayerCharacter : Character,
         return 0;
     }
 
-
     public override void SetPlay()
     {
         _rollDice = false;
@@ -77,6 +76,11 @@ public class PlayerCharacter : Character,
     {
         return stat.GetAttackValue() +
             (InventoryManager.Instance.Weapon ? InventoryManager.Instance.Weapon.value : 0);
+    }
+
+    public override void DoAttact()
+    {
+        IAttack attack = new BasicTargetingAttack(_cc, transform.position, 10);
     }
 
     public void AttackVfx()

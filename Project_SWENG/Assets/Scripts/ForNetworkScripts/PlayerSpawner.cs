@@ -32,8 +32,6 @@ public class PlayerSpawner : MonoBehaviour
         cc.Initial(playerPrefab.name);
         cc.SetActionSelector(playerInfo);
 
-        Debug.Log(player.name);
-
         playerInfo.SetPlayer(player);
 
         EventPlayerSpawn?.Invoke(player);

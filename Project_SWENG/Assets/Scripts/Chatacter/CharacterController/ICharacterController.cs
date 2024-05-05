@@ -13,7 +13,7 @@ public interface ICharacterController : IDamagable {
     public void TurnEnd();
 
     public void Attack(IList<HexCoordinate> targetPos, int dmg);
-    public void UseAttack(int idx);
+    public void UseAttack();
 
     public void MoveTo(HexCoordinate before, HexCoordinate after);
 

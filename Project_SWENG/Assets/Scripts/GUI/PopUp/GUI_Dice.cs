@@ -34,7 +34,6 @@ namespace UISystem {
 
         public override void Close()
         {
-            CamMovement.Instance.IsPlayerMove = false;
             gameObject.SetActive(false);
             transform.SetParent(UIManager.Instance.NowDisplay.transform.parent);
             UIManager.Instance.NowDisplay.PopPopUp();

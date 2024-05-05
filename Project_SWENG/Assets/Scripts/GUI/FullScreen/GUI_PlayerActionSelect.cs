@@ -31,9 +31,8 @@ public class GUI_PlayerActionSelect : GUIFullScreen, IActionSelector {
 
     public void SetPlayer(GameObject target)
     {
-
-        Debug.Log(target.name);
-        CamMovement.Instance.SetCamTarget(target);
+        
+        CamMovement.Instance.SetCamTarget(target.transform);
         _targetPlayer = target.GetComponentInChildren<PlayerCharacter>();
 
         _targetPlayer.SetHealthUI(_playerHealth);
@@ -49,7 +48,7 @@ public class GUI_PlayerActionSelect : GUIFullScreen, IActionSelector {
     public void Ready(IList<Character.Action> actionList)
     {
 
-        CamMovement.Instance.ConvertCharacterCam();
+        CamMovement.Instance.ConvertToCharacterCam();
 
         btnDice.interactable = actionList.Contains(Character.Action.Dice);
         btnAttack.interactable = actionList.Contains(Character.Action.Attack);
@@ -80,7 +79,7 @@ public class GUI_PlayerActionSelect : GUIFullScreen, IActionSelector {
 
     public void OpenAttack()
     {
-        UIManager.OpenGUI<GUI_Attack>("Attack").Set(_targetCC, _targetPlayer);
+        _targetCC.UseAttack();
         _AfterAction();
     }
 

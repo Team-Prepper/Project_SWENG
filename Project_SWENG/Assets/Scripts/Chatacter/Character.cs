@@ -135,9 +135,8 @@ namespace CharacterSystem {
             
         }
 
-        public virtual void DoAttact(int idx) {
+        public virtual void DoAttact() {
             IAttack attack = new BasicAttack(_cc, transform.position, 10);
-            attack.Attack();
         }
 
         public virtual void Initial(ICharacterController cc) {

@@ -90,8 +90,7 @@ public class GUI_Moving : GUIFullScreen {
 
     public void Set(Character target)
     {
-        CamMovement.Instance.IsPlayerMove = true;
-        CamMovement.Instance.SetCamTarget(target.gameObject);
+        CamMovement.Instance.SetCamTarget(target.transform);
 
         _selectedPos = null;
 
@@ -109,13 +108,13 @@ public class GUI_Moving : GUIFullScreen {
         {
             _MoveUnit();
 
-            CamMovement.Instance.ConvertCharacterCam();
+            CamMovement.Instance.ConvertToCharacterCam();
             return;
         }
 
         if (!movementRange.IsHexCroodInRange(selectGridPos))
         {
-            CamMovement.Instance.ConvertCharacterCam();
+            CamMovement.Instance.ConvertToCharacterCam();
 
             _HideRange();
             Close();

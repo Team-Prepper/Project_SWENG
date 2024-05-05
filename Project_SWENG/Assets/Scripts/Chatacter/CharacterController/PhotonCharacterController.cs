@@ -60,9 +60,9 @@ public class PhotonCharacterController : MonoBehaviourPun, ICharacterController 
 
     }
 
-    public void UseAttack(int idx)
+    public void UseAttack()
     {
-        _character.DoAttact(idx);
+        _character.DoAttact();
     }
 
 
@@ -92,6 +92,16 @@ public class PhotonCharacterController : MonoBehaviourPun, ICharacterController 
 
     public void SetPlay()
     {
+        _view.RPC("_TurnEnd", RpcTarget.MasterClient);
+    }
+
+    [PunRPC]
+    private void _SetPlay() {
+
+        if (_actionSelector == null)
+        {
+            return;
+        }
         _character.SetPlay();
         ActionEnd();
     }
@@ -105,10 +115,6 @@ public class PhotonCharacterController : MonoBehaviourPun, ICharacterController 
 
     public void ActionEnd()
     {
-        if (_actionSelector == null)
-        {
-            return;
-        }
         _actionSelector.Ready(_character.GetCanDoAction());
     }
 

@@ -8,7 +8,7 @@ using UISystem;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class NetworkGameMaster : MonoBehaviourPun, IGameMaster {
+public class PhotonGameMaster : MonoBehaviourPun, IGameMaster {
 
     Team[] _teams;
     int _turn;

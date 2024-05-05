@@ -29,7 +29,6 @@ public class LocalCharacterController : MonoBehaviour, ICharacterController {
 
     public void Attack(IList<HexCoordinate> targetPos, int dmg)
     {
-        transform.LookAt(targetPos.ElementAt(0).ConvertToVector3());
         _character.AttackAct(false);
 
         foreach (HexCoordinate hexPos in targetPos)
@@ -40,12 +39,18 @@ public class LocalCharacterController : MonoBehaviour, ICharacterController {
             target.TakeDamage(dmg);
 
         }
+
+        if (targetPos.Count == 1)
+        {
+            transform.LookAt(targetPos.ElementAt(0).ConvertToVector3());
+            CamMovement.Instance.ConvertToBattleCam();
+        }
     }
 
-    public void UseAttack(int idx) {
-        _character.DoAttact(idx);
+    public void UseAttack() {
+        _character.DoAttact();
     }
-
+    
     public void TakeDamage(int amount)
     {
         _character.TakeDamage(amount);

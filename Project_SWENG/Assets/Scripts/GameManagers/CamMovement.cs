@@ -7,12 +7,12 @@ public class CamMovement : MonoSingleton<CamMovement>
 {
 
     [SerializeField] private CinemachineVirtualCameraBase characterCam;
+    [SerializeField] private CinemachineVirtualCameraBase battleCamLeft;
+    [SerializeField] private CinemachineVirtualCameraBase battleCamRight;
     [SerializeField] private CinemachineVirtualCameraBase wideCam;
     [SerializeField] private CinemachineFreeLook battleCamera;
 
-    [SerializeField] private GameObject player;
-
-    private bool _isAttackPhase;
+    [SerializeField] private Transform _target;
 
     public bool IsPlayerMove
     {
@@ -30,20 +30,22 @@ public class CamMovement : MonoSingleton<CamMovement>
         }
     }
     private bool isPlayerMove = false;
-    
-    private void Awake()
-    {
-        if (characterCam == null)
-            characterCam = GetComponent<CinemachineVirtualCamera>();
-    }
 
-    public void SetCamTarget(GameObject player)
+    public void SetCamTarget(Transform target)
     {
-        this.player = player;
-        characterCam.Follow = player.transform;
-        characterCam.LookAt = player.transform;
-        wideCam.Follow = player.transform;
-        wideCam.LookAt = player.transform;
+        _target = target;
+
+        characterCam.Follow = target;
+        battleCamLeft.LookAt = target;
+
+        battleCamLeft.Follow = target;
+        battleCamRight.LookAt = target;
+
+        battleCamRight.Follow = target;
+        characterCam.LookAt = target;
+
+        wideCam.Follow = target;
+        wideCam.LookAt = target;
         StartCoroutine(ResetMode());
     }
 
@@ -100,8 +102,8 @@ public class CamMovement : MonoSingleton<CamMovement>
     private int PlayerOutOfRange()
     {
         int outValue = 1;
-        float px = player.transform.position.x;
-        float pz = player.transform.position.z;
+        float px = _target.transform.position.x;
+        float pz = _target.transform.position.z;
         //float tx = characterCam.gameObject.transform.position.x;
         //float tz = characterCam.gameObject.transform.position.z;
 
@@ -121,27 +123,29 @@ public class CamMovement : MonoSingleton<CamMovement>
         return outValue;
     }
 
-    public void ConvertBattleCamera()
-    {
-        //characterCam.gameObject.SetActive(false);
-        battleCamera.gameObject.SetActive(true);
-        
-        if (player != null)
-        {
-            Transform camRoot = player.transform.Find("CamRoot");
-            battleCamera.LookAt = player.transform;
-            battleCamera.Follow = camRoot;
-        }
-    }
-
-    public void ConvertCharacterCam() {
+    public void ConvertToCharacterCam() {
         characterCam.Priority = 10;
         wideCam.Priority = 0;
+        battleCamLeft.Priority = 0;
+        battleCamRight.Priority = 0;
+    }
+
+    public void ConvertToBattleCam()
+    {
+        characterCam.Priority = 0;
+        wideCam.Priority = 0;
+
+        if (Vector3.Dot(_target.forward, new Vector3(2, 0, 1)) < 0)
+            battleCamLeft.Priority = 10;
+        else
+            battleCamRight.Priority = 10;
     }
 
     public void ConvertWideCamera()
     {
         characterCam.Priority = 0;
         wideCam.Priority = 10;
+        battleCamLeft.Priority = 0;
+        battleCamRight.Priority = 0;
     }
 }

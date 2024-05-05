@@ -16,7 +16,7 @@ public class BasicEnemyActionSelector : MonoBehaviour, IActionSelector {
     public void Ready(IList<Character.Action> actionList)
     {
         if (actionList.Contains(Character.Action.Attack)) {
-           _targetCC.UseAttack(0);
+           _targetCC.UseAttack();
             return;
         }
         _targetCC.TurnEnd();

@@ -3,33 +3,30 @@ using UnityEngine;
 using CharacterSystem;
 using UISystem;
 
-public class GUI_Attack : GUIFullScreen {
-
-    ICharacterController _cc;
+public class GUI_AttackSelect : GUIFullScreen, IAttackTargetSelector {
 
     [SerializeField] private Transform _markerParent;
     [SerializeField] private Transform[] _attackMarkers;
-    private int _useMarkCount;
-    
-    [SerializeField] private List<HexCoordinate> _attackRange;
 
-    Hex _attackTarget;
-
-    private int _skillDmg = 0;
     [SerializeField] private GameObject btnAttack;
     [SerializeField] private GameObject btnSkill;
 
-    public void Set(ICharacterController cc, PlayerCharacter target, int skillDmg = 0)
+    private IList<HexCoordinate> _attackRange;
+    private int _useMarkCount;
+
+    Hex _attackTarget;
+    IAttack _targetAttack;
+
+    public void Set(IAttack attack, Vector3 pos)
     {
+        _targetAttack = attack;
 
-        _cc = cc;
-
-        _skillDmg = skillDmg;
         _markerParent.localScale = Vector3.one / GameObject.Find("Canvas").GetComponent<RectTransform>().localScale.y;
-
         _attackRange = new List<HexCoordinate>();
 
-        foreach (var neighbour in HexGrid.Instance.GetNeighboursFor(HexCoordinate.ConvertFromVector3(target.transform.position)))
+        _attackTarget = null;
+
+        foreach (var neighbour in HexGrid.Instance.GetNeighboursFor(HexCoordinate.ConvertFromVector3(pos)))
         {
             Hex atkHex = HexGrid.Instance.GetTileAt(neighbour);
 
@@ -40,15 +37,12 @@ public class GUI_Attack : GUIFullScreen {
         }
 
         CamMovement.Instance.ConvertWideCamera();
-        CamMovement.Instance.SetCamTarget(target.gameObject);
-        
-        btnAttack.SetActive(skillDmg == 0);
-        btnSkill.SetActive(skillDmg != 0); // (skillDmg > 0)
     }
 
     private void _SetMarker(Vector3 pos)
     {
         if (_useMarkCount >= _attackMarkers.Length) return;
+
         _attackMarkers[_useMarkCount].gameObject.SetActive(true);
         _attackMarkers[_useMarkCount++].position = pos;
 
@@ -67,44 +61,19 @@ public class GUI_Attack : GUIFullScreen {
 
     public void DoAttack()
     {
+        IList<HexCoordinate> target = new List<HexCoordinate>() { _attackTarget.HexCoords };
+        _targetAttack.Attack(target);
 
-        if (_attackTarget == null) {
-            return;
-        }
-
-        _cc.UseAttack(0);
-
-        CamMovement.Instance.ConvertCharacterCam();
         Close();
 
-    }
-    
-    public void UseSkill()
-    {
-        if (_attackTarget == null) {
-            return;
-        }
-
-        _cc.UseAttack(1);
-
-        CamMovement.Instance.ConvertCharacterCam();
-        Close();
     }
 
     public override void HexSelect(HexCoordinate selectGridPos)
     {
 
-        if (_attackTarget && _attackTarget == HexGrid.Instance.GetTileAt(selectGridPos)) {
-            if(_skillDmg != 0)
-            {
-                UseSkill();
-            }
-            else
-            {
-                DoAttack();
-            }
-            
-            return;
+        if (_attackTarget && _attackTarget == HexGrid.Instance.GetTileAt(selectGridPos))
+        {
+            DoAttack();
         }
 
         _ResetMarker();
@@ -112,7 +81,8 @@ public class GUI_Attack : GUIFullScreen {
         if (!_attackRange.Contains(selectGridPos))
         {
             _attackTarget = null;
-            foreach (HexCoordinate pos in _attackRange) {
+            foreach (HexCoordinate pos in _attackRange)
+            {
                 _SetMarker(pos.ConvertToVector3());
             }
             return;
@@ -121,11 +91,5 @@ public class GUI_Attack : GUIFullScreen {
 
         _attackTarget = HexGrid.Instance.GetTileAt(selectGridPos);
         _SetMarker(_attackTarget.transform.position);
-    }
-
-    public override void OpenWindow(string key)
-    {
-        if (_nowPopUp) return;
-        base.OpenWindow(key);
     }
 }
