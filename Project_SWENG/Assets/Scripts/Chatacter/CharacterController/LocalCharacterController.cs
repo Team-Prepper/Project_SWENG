@@ -13,7 +13,7 @@ public class LocalCharacterController : MonoBehaviour, ICharacterController {
 
 
     // Start is called before the first frame update
-    public void Initial(string characterName)
+    public void Initial(string characterName, bool camSync)
     {
         GameObject go = AssetOpener.ImportGameObject(characterName);
         go.transform.SetParent(transform);
@@ -40,8 +40,6 @@ public class LocalCharacterController : MonoBehaviour, ICharacterController {
 
         _character.AttackAct(time);
 
-        CamMovement.Instance.SetCamTarget(transform);
-
         if (targetPos.Count == 1)
         {
             transform.LookAt(targetPos.ElementAt(0).ConvertToVector3());
@@ -54,11 +52,21 @@ public class LocalCharacterController : MonoBehaviour, ICharacterController {
 
         }
     }
+    public void CamSetting() {
+        CamMovement.Instance.SetCamTarget(transform);
+        CamMovement.Instance.ConvertToCharacterCam();
+    }
 
-    public void UseAttack() {
+    public void DoAttack() {
         _character.DoAttact();
     }
-    
+
+    public void DoMove()
+    {
+        _character.DoMove();
+
+    }
+
     public void TakeDamage(int amount)
     {
         _character.TakeDamage(amount);
@@ -67,7 +75,10 @@ public class LocalCharacterController : MonoBehaviour, ICharacterController {
             _character.DamageAct();
             return;
         }
+
         _character.DieAct();
+        _actionSelector.Die();
+        HexGrid.Instance.GetTileAt(gameObject.transform.position).Entity = null;
 
         // 죽었을 때 GameMaster에서 처리할 것
         GameManager.Instance.GameMaster.RemoveTeamMember(this, _character.GetTeamIdx());
@@ -94,6 +105,7 @@ public class LocalCharacterController : MonoBehaviour, ICharacterController {
     public void TurnEnd() {
         GameManager.Instance.GameMaster.TurnEnd(this);
     }
+
     public void MoveTo(HexCoordinate before, HexCoordinate after)
     {
         HexGrid.Instance.GetTileAt(before).Entity = null;

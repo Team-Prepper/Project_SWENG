@@ -76,7 +76,12 @@ public class PlayerCharacter : Character,
 
     public override void DoAttact()
     {
-        IAttack attack = new BasicTargetingAttack(_cc, this, transform.position, 10, GetPoint());
+        new BasicTargetingAttack(_cc, this, transform.position, 10, GetPoint());
+    }
+
+    public override void DoMove()
+    {
+        UIManager.OpenGUI<GUI_Moving>("Move").Set(this);
     }
 
     public void AttackVfx()
@@ -87,11 +92,6 @@ public class PlayerCharacter : Character,
             int weaponID = InventoryManager.Instance.Weapon.id;
             EffectManager.Instance.ShowImpactVfxHandler(weaponID);
         }
-    }
-
-    public override void DieAct()
-    {
-        //HexGrid.Instance.GetTileAt(transform.position).Entity = null;
     }
 
     public void EquipItemHandler(Item item)

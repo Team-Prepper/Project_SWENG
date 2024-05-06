@@ -139,6 +139,10 @@ namespace CharacterSystem {
             new BasicAttack(_cc, transform.position, 10);
         }
 
+        public virtual void DoMove() { 
+            
+        }
+
         public virtual void Initial(ICharacterController cc) {
 
             if (anim == null) anim = GetComponent<Animator>();
@@ -153,7 +157,6 @@ namespace CharacterSystem {
 
         IEnumerator _ActionEnd(float spendTime) {
             yield return new WaitForSeconds(spendTime);
-            Debug.Log(spendTime);
             _cc.ActionEnd();
         }
 

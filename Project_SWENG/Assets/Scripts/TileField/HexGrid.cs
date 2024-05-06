@@ -88,6 +88,54 @@ public class HexGrid : Singleton<HexGrid>
         return new BFSResult(visitedNodes);
     }
 
+    public IPathGroup GetPathGroupTo(HexCoordinate startPos, HexCoordinate endPos, int point)
+    {
+        Dictionary<HexCoordinate, HexCoordinate?> visitedNodes = new Dictionary<HexCoordinate, HexCoordinate?>();
+        IDictionary<HexCoordinate, int> costSoFar = new Dictionary<HexCoordinate, int>();
+
+        Queue<HexCoordinate> nodesToVisitQueue = new Queue<HexCoordinate>();
+
+        nodesToVisitQueue.Enqueue(startPos);
+        costSoFar.Add(startPos, 0);
+        visitedNodes.Add(startPos, null);
+
+        while (nodesToVisitQueue.Count > 0)
+        {
+            HexCoordinate currentNode = nodesToVisitQueue.Dequeue();
+            foreach (HexCoordinate neighbourPosition in GetNeighboursFor(currentNode))
+            {
+                if (neighbourPosition.Equals(endPos)) {
+                    visitedNodes[neighbourPosition] = currentNode;
+                    return new BFSResult(visitedNodes);
+                }
+
+                if (GetTileAt(neighbourPosition).IsObstacle())
+                    continue;
+
+                int nodeCost = GetTileAt(neighbourPosition).Cost;
+                int currentCost = costSoFar[currentNode];
+                int newCost = currentCost + nodeCost;
+
+                if (newCost > point) continue;
+
+                if (!visitedNodes.ContainsKey(neighbourPosition))
+                {
+                    visitedNodes[neighbourPosition] = currentNode;
+                    costSoFar[neighbourPosition] = newCost;
+                    nodesToVisitQueue.Enqueue(neighbourPosition);
+
+                }
+                else if (costSoFar[neighbourPosition] > newCost)
+                {
+                    costSoFar[neighbourPosition] = newCost;
+                    visitedNodes[neighbourPosition] = currentNode;
+
+                }
+            }
+        }
+        return new BFSResult(visitedNodes);
+    }
+
     public void AddTile(Hex hex) {
         hexTileDict[hex.HexCoords] = hex;
 

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using CharacterSystem;
 using Random = UnityEngine.Random;
+using UnityEditor.SceneManagement;
 
 public class EnemySpawner : MonoBehaviour
 {
@@ -17,8 +18,12 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private int enemyCnt = 9;
     [SerializeField] private int bossEnemyCnt = 3;
 
+    EnemyPlayer _enemyPlayer;
+
     public void SpawnEnemy()
     {
+        _enemyPlayer = gameObject.AddComponent<EnemyPlayer>();
+
         for (int i = 0; i < bossEnemyCnt; i++)
         {
             //Debug.Log("BossEnemySpawnHex : " + spawnHex.name);
@@ -38,8 +43,8 @@ public class EnemySpawner : MonoBehaviour
 
         ICharacterController cc = enemy.GetComponent<ICharacterController>();
         
-        cc.Initial(spawnEnemyList[Random.Range(0, spawnEnemyList.Count)].name);
-        cc.SetActionSelector(enemy.AddComponent<BasicEnemyActionSelector>());
+        cc.Initial(spawnEnemyList[Random.Range(0, spawnEnemyList.Count)].name, true);
+        cc.SetActionSelector(new BasicEnemyActionSelector(_enemyPlayer));
         /*
         EnemyController enemyController = enemy.GetComponent<EnemyController>();
 
@@ -70,9 +75,8 @@ public class EnemySpawner : MonoBehaviour
 
         ICharacterController cc = enemy.GetComponent<ICharacterController>();
 
-        cc.Initial(bossEnemyPrefab.name);
-        cc.SetActionSelector(enemy.AddComponent<BasicEnemyActionSelector>());
-        enemy.GetComponent<ICharacterController>().SetActionSelector(enemy.AddComponent<BasicEnemyActionSelector>());
+        cc.Initial(bossEnemyPrefab.name, true);
+        cc.SetActionSelector(new BasicEnemyActionSelector(_enemyPlayer));
 
         return enemy;
     }

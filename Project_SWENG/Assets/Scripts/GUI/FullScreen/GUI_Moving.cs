@@ -85,13 +85,10 @@ public class GUI_Moving : GUIFullScreen {
     protected override void Open(Vector2 openPos)
     {
         base.Open(openPos);
-        CamMovement.Instance.ConvertToWideCam();
     }
 
     public void Set(Character target)
     {
-        CamMovement.Instance.SetCamTarget(target.transform);
-
         _selectedPos = null;
 
         _target = target;
@@ -99,25 +96,17 @@ public class GUI_Moving : GUIFullScreen {
         _CalcualteRange();
         _ShowRange();
         _moveNumParent.localScale = Vector3.one / GameObject.Find("Canvas").GetComponent<RectTransform>().localScale.y;
+
+        CamMovement.Instance.ConvertToWideCam();
     }
 
     public override void HexSelect(HexCoordinate selectGridPos)
     {
 
-        if (_selectedPos != null && selectGridPos == _selectedPos)
+        if (_selectedPos != null && selectGridPos == _selectedPos || !movementRange.IsHexCroodInRange(selectGridPos))
         {
             _MoveUnit();
 
-            CamMovement.Instance.ConvertToCharacterCam();
-            return;
-        }
-
-        if (!movementRange.IsHexCroodInRange(selectGridPos))
-        {
-            CamMovement.Instance.ConvertToCharacterCam();
-
-            _HideRange();
-            Close();
             return;
         }
 

@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.Scripting;
 using CharacterSystem;
+using System.Linq;
 
 public class EnemyCharacter : Character {
 
@@ -45,19 +46,19 @@ public class EnemyCharacter : Character {
         base.SetPlay();
     }
 
-    private bool PlayerInRange(uint range) {
+    private HexCoordinate? GetPlayerInRange(uint range) {
 
-        foreach (var neighbours in HexGrid.Instance.GetNeighboursFor(HexCoordinate.ConvertFromVector3(transform.position), range))
+        foreach (HexCoordinate pos in HexGrid.Instance.GetNeighboursFor(HexCoordinate.ConvertFromVector3(transform.position), range))
         {
-            GameObject entity = HexGrid.Instance.GetTileAt(neighbours).Entity;
+            GameObject entity = HexGrid.Instance.GetTileAt(pos).Entity;
 
             if (entity != null && entity.CompareTag("Player"))
             {
-                return true;
+                return pos;
             }
         }
 
-        return false;
+        return null;
     }
 
     public override IList<Action> GetCanDoAction()
@@ -68,11 +69,11 @@ public class EnemyCharacter : Character {
 
         IList<Action> list = new List<Action>();
 
-        if (PlayerInRange(1))
+        if (GetPlayerInRange(1) != null)
         {
             list.Add(Action.Attack);
         }
-        if (PlayerInRange(3))
+        if (GetPlayerInRange(3) != null)
         {
             list.Add(Action.Move);
         }
@@ -80,9 +81,31 @@ public class EnemyCharacter : Character {
         return list;
     }
 
+    public override void DoMove()
+    {
+        HexCoordinate? pos = GetPlayerInRange(3);
+
+        if (pos == null) return;
+
+        IPathGroup movementRange = HexGrid.Instance.GetPathGroupTo(HexCoordinate.ConvertFromVector3(transform.position), pos.Value, GetPoint());
+        IList<Vector3> path = movementRange.GetPathTo(pos.Value).Select(pos => HexGrid.Instance.GetTileAt(pos).transform.position).ToList();
+
+        path.RemoveAt(path.Count - 1);
+
+        Debug.Log(pos.Value);
+        Debug.Log(path.Count);
+
+        Move(new Queue<Vector3>(path));
+    }
+
     public override int GetAttackValue()
     {
         return enemyStat.atk;
+    }
+
+    public override void AttackAct(float time)
+    {
+        base.AttackAct(time);
     }
 
     public override void DamageAct()
@@ -96,18 +119,10 @@ public class EnemyCharacter : Character {
     public override void DieAct()
     {
         base.DieAct();
-        curHex = HexGrid.Instance.GetTileAt(this.gameObject.transform.position);
-        //curHex.Entity = null;
-        /*
-        if (PhotonNetwork.IsMasterClient)
-        {
-            GameManager.Instance.enemies.Remove(this.gameObject);
-            if (enemyStat.isBoss)
-                GameManager.Instance.bossEnemies.Remove(gameObject);
-        }*/
+
         DropItem();
         DropExp();
-        Destroy(this.gameObject, 1f);
+        Destroy(gameObject, 1f);
     }
 
     private void DropItem()

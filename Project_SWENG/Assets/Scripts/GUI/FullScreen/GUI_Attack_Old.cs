@@ -72,7 +72,7 @@ public class GUI_Attack_Old : GUIFullScreen {
             return;
         }
 
-        _cc.UseAttack();
+        _cc.DoAttack();
 
         Close();
 
@@ -84,7 +84,7 @@ public class GUI_Attack_Old : GUIFullScreen {
             return;
         }
 
-        _cc.UseAttack();
+        _cc.DoAttack();
 
         Close();
     }

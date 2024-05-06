@@ -8,18 +8,21 @@ using System.Linq;
 
 public class PhotonCharacterController : MonoBehaviourPun, ICharacterController {
 
-    IActionSelector _actionSelector;
     [SerializeField] PhotonView _view;
+
+    IActionSelector _actionSelector;
     Character _character;
 
-    public void Initial(string characterName)
+    bool _camSync;
+
+    public void Initial(string characterName, bool camSync)
     {
-        _view.RPC("_Initial", RpcTarget.All, characterName);
+        _view.RPC("_Initial", RpcTarget.All, characterName, camSync);
         _view.RPC("_AddMember", RpcTarget.MasterClient);
     }
 
     [PunRPC]
-    private void _Initial(string characterName)
+    private void _Initial(string characterName, bool camSync)
     {
         GameObject go = AssetOpener.ImportGameObject(characterName);
         go.transform.SetParent(transform);
@@ -29,6 +32,8 @@ public class PhotonCharacterController : MonoBehaviourPun, ICharacterController 
         _character.Initial(this);
 
         HexGrid.Instance.GetTileAt(transform.position).Entity = gameObject;
+
+        _camSync = camSync;
     }
 
     [PunRPC]
@@ -36,6 +41,10 @@ public class PhotonCharacterController : MonoBehaviourPun, ICharacterController 
     {
         GameManager.Instance.GameMaster.AddTeamMember(this, _character.GetTeamIdx());
 
+    }
+
+    public void CamSetting() { 
+        
     }
 
     public void Attack(IList<HexCoordinate> targetPos, int dmg, float time)
@@ -60,9 +69,15 @@ public class PhotonCharacterController : MonoBehaviourPun, ICharacterController 
 
     }
 
-    public void UseAttack()
+    public void DoAttack()
     {
         _character.DoAttact();
+    }
+
+    public void DoMove()
+    {
+        _character.DoMove();
+
     }
 
 
@@ -82,7 +97,9 @@ public class PhotonCharacterController : MonoBehaviourPun, ICharacterController 
             _character.DamageAct();
             return;
         }
+
         _character.DieAct();
+        HexGrid.Instance.GetTileAt(gameObject.transform.position).Entity = null;
 
         if (!PhotonNetwork.IsMasterClient) return;
 

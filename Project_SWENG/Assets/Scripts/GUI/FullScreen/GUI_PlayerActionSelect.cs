@@ -57,6 +57,10 @@ public class GUI_PlayerActionSelect : GUIFullScreen, IActionSelector {
         StartCoroutine(_PanelOpen());
     }
 
+    public void Die() { 
+        
+    }
+
     private IEnumerator _PanelOpen() {
 
         panelBtnTr.localScale = Vector2.zero;
@@ -79,19 +83,19 @@ public class GUI_PlayerActionSelect : GUIFullScreen, IActionSelector {
 
     public void OpenAttack()
     {
-        _targetCC.UseAttack();
+        _targetCC.DoAttack();
+        _AfterAction();
+    }
+
+    public void OpenMove()
+    {
+        _targetCC.DoMove();
         _AfterAction();
     }
 
     public void OpenDice()
     {
         UIManager.Instance.UseDice(_targetPlayer);
-        _AfterAction();
-    }
-
-    public void OpenMove()
-    {
-        UIManager.OpenGUI<GUI_Moving>("Move").Set(_targetPlayer);
         _AfterAction();
     }
 

@@ -6,4 +6,7 @@ public interface IActionSelector
 {
     public void SetCharacterController(ICharacterController cc);
     public void Ready(IList<Character.Action> actionList);
+
+    public void Die();
+
 }

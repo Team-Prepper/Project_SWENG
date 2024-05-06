@@ -29,10 +29,12 @@ public class PlayerSpawner : MonoBehaviour
         GUI_PlayerActionSelect playerInfo = UIManager.OpenGUI<GUI_PlayerActionSelect>("PlayerInfor");
 
         ICharacterController cc = player.GetComponent<ICharacterController>();
-        cc.Initial(playerPrefab.name);
+        cc.Initial(playerPrefab.name, false);
         cc.SetActionSelector(playerInfo);
 
         playerInfo.SetPlayer(player);
+
+        player.tag = "Player";
 
         EventPlayerSpawn?.Invoke(player);
 
