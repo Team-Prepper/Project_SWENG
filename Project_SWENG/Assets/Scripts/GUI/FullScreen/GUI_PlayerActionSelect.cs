@@ -47,7 +47,7 @@ public class GUI_PlayerActionSelect : GUIFullScreen, IActionSelector {
 
     public void Ready(IList<Character.Action> actionList)
     {
-
+        CamMovement.Instance.SetCamTarget(_targetPlayer.transform);
         CamMovement.Instance.ConvertToCharacterCam();
 
         btnDice.interactable = actionList.Contains(Character.Action.Dice);

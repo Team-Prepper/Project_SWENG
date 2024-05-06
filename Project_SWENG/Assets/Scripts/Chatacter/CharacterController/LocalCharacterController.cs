@@ -27,10 +27,8 @@ public class LocalCharacterController : MonoBehaviour, ICharacterController {
         GameManager.Instance.GameMaster.AddTeamMember(this, _character.GetTeamIdx());
     }
 
-    public void Attack(IList<HexCoordinate> targetPos, int dmg)
+    public void Attack(IList<HexCoordinate> targetPos, int dmg, float time)
     {
-        _character.AttackAct(false);
-
         foreach (HexCoordinate hexPos in targetPos)
         {
             Hex targetHex = HexGrid.Instance.GetTileAt(hexPos);
@@ -40,10 +38,20 @@ public class LocalCharacterController : MonoBehaviour, ICharacterController {
 
         }
 
+        _character.AttackAct(time);
+
+        CamMovement.Instance.SetCamTarget(transform);
+
         if (targetPos.Count == 1)
         {
             transform.LookAt(targetPos.ElementAt(0).ConvertToVector3());
             CamMovement.Instance.ConvertToBattleCam();
+        }
+        else
+        {
+            transform.LookAt(targetPos.ElementAt(0).ConvertToVector3());
+            CamMovement.Instance.ConvertToWideCam();
+
         }
     }
 
@@ -68,7 +76,6 @@ public class LocalCharacterController : MonoBehaviour, ICharacterController {
 
     public void SetPlay() {
         _character.SetPlay();
-        ActionEnd();
     }
 
     public void SetActionSelector(IActionSelector actionSelector) {

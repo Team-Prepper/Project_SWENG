@@ -39,7 +39,7 @@ public class GUI_Attack_Old : GUIFullScreen {
             _SetMarker(atkHex.transform.position);
         }
 
-        CamMovement.Instance.ConvertWideCamera();
+        CamMovement.Instance.ConvertToWideCam();
         CamMovement.Instance.SetCamTarget(target.transform);
         
         btnAttack.SetActive(skillDmg == 0);

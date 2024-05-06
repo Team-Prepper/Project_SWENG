@@ -2,6 +2,7 @@ using CharacterSystem;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro.EditorUtilities;
 using UISystem;
 using UnityEngine;
 
@@ -47,6 +48,7 @@ public class PlayerCharacter : Character,
     public override void SetPlay()
     {
         _rollDice = false;
+        _cc.ActionEnd();
     }
 
     public override void Initial(ICharacterController cc)
@@ -66,12 +68,6 @@ public class PlayerCharacter : Character,
         return stat.HP.Value;
     }
 
-    public override void AttackAct(bool isSkill)
-    {
-        UsePoint(_usePointAtAttack);
-        base.AttackAct(isSkill);
-    }
-
     public override int GetAttackValue()
     {
         return stat.GetAttackValue() +
@@ -80,7 +76,7 @@ public class PlayerCharacter : Character,
 
     public override void DoAttact()
     {
-        IAttack attack = new BasicTargetingAttack(_cc, transform.position, 10);
+        IAttack attack = new BasicTargetingAttack(_cc, this, transform.position, 10, GetPoint());
     }
 
     public void AttackVfx()

@@ -12,7 +12,7 @@ public interface ICharacterController : IDamagable {
     public void ActionEnd();
     public void TurnEnd();
 
-    public void Attack(IList<HexCoordinate> targetPos, int dmg);
+    public void Attack(IList<HexCoordinate> targetPos, int dmg, float time);
     public void UseAttack();
 
     public void MoveTo(HexCoordinate before, HexCoordinate after);

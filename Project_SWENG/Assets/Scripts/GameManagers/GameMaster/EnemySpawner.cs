@@ -19,7 +19,6 @@ public class EnemySpawner : MonoBehaviour
 
     public void SpawnEnemy()
     {
-        Debug.Log("EnemySpawn");
         for (int i = 0; i < bossEnemyCnt; i++)
         {
             //Debug.Log("BossEnemySpawnHex : " + spawnHex.name);

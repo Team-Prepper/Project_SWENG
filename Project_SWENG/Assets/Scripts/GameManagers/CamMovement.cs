@@ -141,7 +141,7 @@ public class CamMovement : MonoSingleton<CamMovement>
             battleCamRight.Priority = 10;
     }
 
-    public void ConvertWideCamera()
+    public void ConvertToWideCam()
     {
         characterCam.Priority = 0;
         wideCam.Priority = 10;

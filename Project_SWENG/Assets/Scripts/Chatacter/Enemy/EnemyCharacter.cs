@@ -15,6 +15,8 @@ public class EnemyCharacter : Character {
 
     public Hex curHex;
 
+    bool _doAction = false;
+
     public override string GetName()
     {
         return enemyStat.monsterName;
@@ -39,33 +41,40 @@ public class EnemyCharacter : Character {
 
     public override void SetPlay()
     {
-        doAction = false;
+        _doAction = false;
         base.SetPlay();
     }
 
-    bool doAction = false;
+    private bool PlayerInRange(uint range) {
 
-    public override IList<Action> GetCanDoAction()
-    {
-        if (doAction) return new List<Action>();
-        doAction = true;
-        IList<Action> list = new List<Action>();
-        bool containsPlayer = false;
-
-        foreach (var neighbours in HexGrid.Instance.GetNeighboursFor(HexCoordinate.ConvertFromVector3(transform.position), 2))
+        foreach (var neighbours in HexGrid.Instance.GetNeighboursFor(HexCoordinate.ConvertFromVector3(transform.position), range))
         {
-            Hex curHex = HexGrid.Instance.GetTileAt(neighbours);
-            GameObject entity = curHex.Entity;
+            GameObject entity = HexGrid.Instance.GetTileAt(neighbours).Entity;
 
             if (entity != null && entity.CompareTag("Player"))
             {
-                containsPlayer = true;
+                return true;
             }
         }
 
-        if (containsPlayer)
+        return false;
+    }
+
+    public override IList<Action> GetCanDoAction()
+    {
+        if (_doAction) return new List<Action>();
+
+        _doAction = true;
+
+        IList<Action> list = new List<Action>();
+
+        if (PlayerInRange(1))
         {
             list.Add(Action.Attack);
+        }
+        if (PlayerInRange(3))
+        {
+            list.Add(Action.Move);
         }
 
         return list;

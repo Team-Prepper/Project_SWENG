@@ -85,7 +85,7 @@ public class GUI_Moving : GUIFullScreen {
     protected override void Open(Vector2 openPos)
     {
         base.Open(openPos);
-        CamMovement.Instance.ConvertWideCamera();
+        CamMovement.Instance.ConvertToWideCam();
     }
 
     public void Set(Character target)

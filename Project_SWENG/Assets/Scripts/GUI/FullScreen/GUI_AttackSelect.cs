@@ -36,7 +36,7 @@ public class GUI_AttackSelect : GUIFullScreen, IAttackTargetSelector {
             _SetMarker(atkHex.transform.position);
         }
 
-        CamMovement.Instance.ConvertWideCamera();
+        CamMovement.Instance.ConvertToWideCam();
     }
 
     private void _SetMarker(Vector3 pos)

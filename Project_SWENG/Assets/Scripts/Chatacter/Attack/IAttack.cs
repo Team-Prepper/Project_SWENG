@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UISystem;
 using UnityEngine;
-using static UnityEngine.Rendering.DebugUI;
+using CharacterSystem;
 
 public interface IAttack
 {
@@ -26,14 +26,17 @@ public class RangeTargetSelector : IAttackTargetSelector {
 public class BasicTargetingAttack : IAttack {
 
     ICharacterController _cc;
-    Vector3 _pos;
+    Character _c;
+    int _usingPoint;
 
     int _value;
 
-    public BasicTargetingAttack(ICharacterController cc, Vector3 pos, int value)
+    public BasicTargetingAttack(ICharacterController cc, Character c, Vector3 pos, int value, int point)
     {
         _cc = cc;
-        _pos = pos;
+        _c = c;
+
+        _usingPoint = point;
         _value = value;
 
         UIManager.OpenGUI<GUI_AttackSelect>("AttackSelect").Set(this, pos);
@@ -42,7 +45,8 @@ public class BasicTargetingAttack : IAttack {
 
     public void Attack(IList<HexCoordinate> attackPos)
     {
-        _cc.Attack(attackPos, _value);
+        _cc.Attack(attackPos, _value * _usingPoint, 1.2f);
+        _c.UsePoint(_usingPoint);
 
     }
 }
@@ -62,7 +66,7 @@ public class BasicAttack : IAttack {
 
 
     public void Attack(IList<HexCoordinate> attackPos) {
-        _cc.Attack(attackPos, _value);
+        _cc.Attack(attackPos, _value, 3f);
     }
 
 }

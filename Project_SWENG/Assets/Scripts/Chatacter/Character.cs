@@ -136,7 +136,7 @@ namespace CharacterSystem {
         }
 
         public virtual void DoAttact() {
-            IAttack attack = new BasicAttack(_cc, transform.position, 10);
+            new BasicAttack(_cc, transform.position, 10);
         }
 
         public virtual void Initial(ICharacterController cc) {
@@ -145,14 +145,15 @@ namespace CharacterSystem {
             _cc = cc;
         }
 
-        public virtual void AttackAct(bool isSkill)
+        public virtual void AttackAct(float time)
         {
             anim.SetTrigger("Attack");
-            StartCoroutine(_ActionEnd(1.2f));
+            StartCoroutine(_ActionEnd(time));
         }
 
         IEnumerator _ActionEnd(float spendTime) {
             yield return new WaitForSeconds(spendTime);
+            Debug.Log(spendTime);
             _cc.ActionEnd();
         }
 

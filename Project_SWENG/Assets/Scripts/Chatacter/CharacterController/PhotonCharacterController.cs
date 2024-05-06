@@ -38,7 +38,7 @@ public class PhotonCharacterController : MonoBehaviourPun, ICharacterController 
 
     }
 
-    public void Attack(IList<HexCoordinate> targetPos, int dmg)
+    public void Attack(IList<HexCoordinate> targetPos, int dmg, float time)
     {
 
         foreach (HexCoordinate hexPos in targetPos)
@@ -50,13 +50,13 @@ public class PhotonCharacterController : MonoBehaviourPun, ICharacterController 
 
         }
         transform.LookAt(targetPos.ElementAt(0).ConvertToVector3());
-        _view.RPC("_AttackAct", RpcTarget.All, false);
+        _view.RPC("_AttackAct", RpcTarget.All, time);
     }
 
     [PunRPC]
-    private void _AttackAct(bool isSkill)
+    private void _AttackAct(float time)
     {
-        _character.AttackAct(isSkill);
+        _character.AttackAct(time);
 
     }
 
