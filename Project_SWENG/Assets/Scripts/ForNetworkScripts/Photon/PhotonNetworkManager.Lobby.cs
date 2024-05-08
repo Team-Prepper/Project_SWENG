@@ -41,7 +41,7 @@ public partial class PhotonNetworkManager
 
     public override void OnJoinedLobby()
     {
-        UIManager.OpenGUI<GUI_Network_Lobby>("Network_Lobby");
+        UIManager.OpenGUI<GUI_PhotonLobby>("Network_Lobby");
         //PhotonNetwork.NickName = _nickName;
         myList.Clear();
     }
