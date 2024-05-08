@@ -16,7 +16,7 @@ public class AssetOpener : MonoBehaviour {
     public static XmlDocument ReadXML(string path)
     {
         TextAsset xmlData = new TextAsset();
-        xmlData = (TextAsset)Resources.Load(path, typeof(TextAsset));
+        xmlData = (TextAsset)Resources.Load(string.Format("XmlData/{0}", path), typeof(TextAsset));
 
         XmlDocument xmlDoc = new XmlDocument();
         xmlDoc.LoadXml(xmlData.text);

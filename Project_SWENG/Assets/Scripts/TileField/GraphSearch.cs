@@ -18,7 +18,7 @@ public struct BFSResult : IPathGroup
 
     public IList<HexCoordinate> GetPathTo(HexCoordinate destination)
     {
-        if (_visitedNodesDict.ContainsKey(destination) == false)
+        if (!_visitedNodesDict.ContainsKey(destination))
             return new List<HexCoordinate>();
 
         List<HexCoordinate> path = new List<HexCoordinate>();

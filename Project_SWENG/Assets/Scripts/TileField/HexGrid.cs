@@ -47,7 +47,7 @@ public class HexGrid : Singleton<HexGrid>
     }
     public IPathGroup GetPathGroup(HexCoordinate startPos, int point)
     {
-        Dictionary<HexCoordinate, HexCoordinate?> visitedNodes = new Dictionary<HexCoordinate, HexCoordinate?>();
+        IDictionary<HexCoordinate, HexCoordinate?> visitedNodes = new Dictionary<HexCoordinate, HexCoordinate?>();
         IDictionary<HexCoordinate, int> costSoFar = new Dictionary<HexCoordinate, int>();
 
         Queue<HexCoordinate> nodesToVisitQueue = new Queue<HexCoordinate>();
@@ -90,7 +90,7 @@ public class HexGrid : Singleton<HexGrid>
 
     public IPathGroup GetPathGroupTo(HexCoordinate startPos, HexCoordinate endPos, int point)
     {
-        Dictionary<HexCoordinate, HexCoordinate?> visitedNodes = new Dictionary<HexCoordinate, HexCoordinate?>();
+        IDictionary<HexCoordinate, HexCoordinate?> visitedNodes = new Dictionary<HexCoordinate, HexCoordinate?>();
         IDictionary<HexCoordinate, int> costSoFar = new Dictionary<HexCoordinate, int>();
 
         Queue<HexCoordinate> nodesToVisitQueue = new Queue<HexCoordinate>();
@@ -112,9 +112,7 @@ public class HexGrid : Singleton<HexGrid>
                 if (GetTileAt(neighbourPosition).IsObstacle())
                     continue;
 
-                int nodeCost = GetTileAt(neighbourPosition).Cost;
-                int currentCost = costSoFar[currentNode];
-                int newCost = currentCost + nodeCost;
+                int newCost = costSoFar[currentNode] + GetTileAt(neighbourPosition).Cost;
 
                 if (newCost > point) continue;
 
@@ -133,7 +131,7 @@ public class HexGrid : Singleton<HexGrid>
                 }
             }
         }
-        return new BFSResult(visitedNodes);
+        return new BFSResult(new Dictionary<HexCoordinate, HexCoordinate?>());
     }
 
     public void AddTile(Hex hex) {
