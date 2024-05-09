@@ -167,6 +167,7 @@ public class PhotonCharacterController : MonoBehaviourPun, ICharacterController 
 
     public void ActionEnd()
     {
+        if (_actionSelector == null) return;
         _actionSelector.Ready(_character.GetCanDoAction());
     }
 
@@ -196,5 +197,22 @@ public class PhotonCharacterController : MonoBehaviourPun, ICharacterController 
         HexGrid.Instance.GetTileAt(before).Entity = null;
         HexGrid.Instance.GetTileAt(after).Entity = gameObject;
         HexGrid.Instance.GetTileAt(after).CloudActiveFalse();
+    }
+
+    public void MoveStart() {
+
+        _view.RPC("_StartMoving", RpcTarget.All, true);
+    }
+
+    public void MoveEnd() {
+
+        _view.RPC("_StartMoving", RpcTarget.All, false);
+    }
+
+    [PunRPC]
+    private void _SetMoving(bool startMove)
+    {
+        if (startMove) _character.MoveStart();
+        if (!startMove) _character.MoveEnd();
     }
 }

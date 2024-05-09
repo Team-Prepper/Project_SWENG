@@ -5,6 +5,7 @@ using CharacterSystem;
 using UnityEditor.Experimental.GraphView;
 using TMPro.Examples;
 using System.Linq;
+using Photon.Pun;
 
 public class LocalCharacterController : MonoBehaviour, ICharacterController {
 
@@ -111,5 +112,14 @@ public class LocalCharacterController : MonoBehaviour, ICharacterController {
         HexGrid.Instance.GetTileAt(before).Entity = null;
         HexGrid.Instance.GetTileAt(after).Entity = gameObject;
         HexGrid.Instance.GetTileAt(after).CloudActiveFalse();
+    }
+    public void MoveStart()
+    {
+        _character.MoveStart();
+    }
+
+    public void MoveEnd()
+    {
+        _character.MoveEnd();
     }
 }

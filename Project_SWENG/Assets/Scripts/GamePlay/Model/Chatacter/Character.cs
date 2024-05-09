@@ -31,7 +31,11 @@ namespace CharacterSystem {
             if (!stat.IsAlive()) return;
 
             stat.Damaged(amount);
-            _healthUI.UpdateGUI(stat.HP);
+
+            if (_healthUI != null)
+            {
+                _healthUI.UpdateGUI(stat.HP);
+            }
 
         }
 
@@ -40,12 +44,25 @@ namespace CharacterSystem {
             StartCoroutine(_RotationCoroutine(path, 0.1f));
         }
 
+        public void MoveStart() {
+
+
+            if (anim)
+                anim.SetBool("IsWalk", true);
+        }
+
+        public void MoveEnd() {
+
+
+            if (anim)
+                anim.SetBool("IsWalk", false);
+        }
+
         private IEnumerator _RotationCoroutine(Queue<Vector3> path, float rotationDuration)
         {
             Transform trParent = transform.parent;
 
-            if (anim)
-                anim.SetBool("IsWalk", true);
+            _cc.MoveStart();
 
             foreach (Vector3 targetPos in path)
             {
@@ -92,7 +109,7 @@ namespace CharacterSystem {
                 _cc.MoveTo(HexCoordinate.ConvertFromVector3(startPosition), HexCoordinate.ConvertFromVector3(targetPos));
             }
 
-            anim.SetBool("IsWalk", false);
+            _cc.MoveEnd();
 
             StartCoroutine(_ActionEnd(.4f));
 

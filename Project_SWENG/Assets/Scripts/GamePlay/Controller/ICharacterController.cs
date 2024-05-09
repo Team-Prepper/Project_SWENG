@@ -15,6 +15,9 @@ public interface ICharacterController : IDamagable {
     public void DoAttack();
     public void DoMove();
 
+    public void MoveStart();
+    public void MoveEnd();
+
     public void MoveTo(HexCoordinate before, HexCoordinate after);
 
 }
