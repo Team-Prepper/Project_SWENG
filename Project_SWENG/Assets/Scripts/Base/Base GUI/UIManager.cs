@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Xml;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace UISystem {
 
@@ -75,6 +76,14 @@ namespace UISystem {
                 _dic.Add(guiData.name, guiData);
             }
 
+            SceneManager.sceneLoaded += OnSceneLoaded;
+        }
+
+        void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+        {
+            NowDisplay = null;
+            uiStack = new List<IGUIFullScreen>();
+
         }
 
         public static T OpenGUI<T>(string guiName)
@@ -93,7 +102,7 @@ namespace UISystem {
         public void DisplayMessage(string messageContent)
         {
             if (msgBox == null) msgBox = OpenGUI<GUIMessageBox>("MessageBox");
-            else msgBox.gameObject.SetActive(true);
+            else msgBox.SetOn();
 
             msgBox.SetMessage(messageContent);
         }

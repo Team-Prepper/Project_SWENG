@@ -12,8 +12,10 @@ namespace UISystem {
         {
             gameObject.SetActive(true);
         }
+
         public void SetOff()
         {
+            if (gameObject == null) return;
             gameObject.SetActive(false);
 
         }

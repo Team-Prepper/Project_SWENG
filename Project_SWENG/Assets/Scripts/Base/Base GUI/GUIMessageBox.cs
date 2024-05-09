@@ -1,9 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using System;
 using LangSystem;
-using UnityEngine.UI;
 
 namespace UISystem {
     public class GUIMessageBox : GUIPopUp {
@@ -19,8 +16,8 @@ namespace UISystem {
 
         public void SetMessage(string key, Action buttonMethod)
         {
+            SetOn();
             _textField.SetText(key);
-            gameObject.SetActive(true);
 
             _buttonMethod = buttonMethod;
         }
@@ -36,7 +33,7 @@ namespace UISystem {
 
         public void CloseMessageBox()
         {
-            Destroy(gameObject);
+            Close();
         }
 
     }
