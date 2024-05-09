@@ -76,7 +76,7 @@ public class PlayerCharacter : Character,
 
     public override void DoAttact()
     {
-        new BasicTargetingAttack(_cc, this, transform.position, 10, GetPoint());
+        new BasicTargetingAttack(_cc, this, transform.position, 5, GetPoint());
     }
 
     public override void DoMove()

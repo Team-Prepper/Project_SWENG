@@ -2329,8 +2329,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3105029065577227296}
-  - component: {fileID: 7106465244778379177}
   - component: {fileID: 7372535355473885997}
+  - component: {fileID: 7106465244778379177}
   - component: {fileID: 2206973531236003403}
   m_Layer: 0
   m_Name: Net_Enemy_SkulWarrior
@@ -2359,6 +2359,28 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7372535355473885997
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9136432872720792948}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be46a47d6ee0b4842a7b064a835ae481, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyStatus: {fileID: 11400000, guid: 7d78d9b284d4d3f44a3b2cdc9b763b7b, type: 2}
+  monsterName: 
+  maxHp: 0
+  atk: 0
+  def: 0
+  Lv: 0
+  Exp: 0
+  isDie: 0
+  isBoss: 0
+  dropItem: []
 --- !u!114 &7106465244778379177
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2387,30 +2409,9 @@ MonoBehaviour:
   playerLayerMask:
     serializedVersion: 2
     m_Bits: 0
+  _healthObject: {fileID: 8374626009202621371}
   enemyStat: {fileID: 0}
   curHex: {fileID: 0}
---- !u!114 &7372535355473885997
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9136432872720792948}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: be46a47d6ee0b4842a7b064a835ae481, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemyStatus: {fileID: 11400000, guid: 7d78d9b284d4d3f44a3b2cdc9b763b7b, type: 2}
-  monsterName: 
-  maxHp: 0
-  atk: 0
-  def: 0
-  Lv: 0
-  Exp: 0
-  isDie: 0
-  isBoss: 0
-  dropItem: []
 --- !u!95 &2206973531236003403
 Animator:
   serializedVersion: 5

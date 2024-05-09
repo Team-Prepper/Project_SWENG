@@ -301,8 +301,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 162671732247066760}
-  - component: {fileID: 1075136307968173353}
   - component: {fileID: 223535735433765653}
+  - component: {fileID: 1075136307968173353}
   - component: {fileID: 223535735433765658}
   m_Layer: 0
   m_Name: Net_Enemy_Nomad_F
@@ -329,6 +329,28 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &223535735433765653
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 164775939517093298}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be46a47d6ee0b4842a7b064a835ae481, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyStatus: {fileID: 11400000, guid: 475c0950da5a4468594229c4d7495211, type: 2}
+  monsterName: 
+  maxHp: 0
+  atk: 0
+  def: 0
+  Lv: 0
+  Exp: 0
+  isDie: 0
+  isBoss: 0
+  dropItem: []
 --- !u!114 &1075136307968173353
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -357,30 +379,9 @@ MonoBehaviour:
   playerLayerMask:
     serializedVersion: 2
     m_Bits: 0
+  _healthObject: {fileID: 5210886823437906584}
   enemyStat: {fileID: 0}
   curHex: {fileID: 0}
---- !u!114 &223535735433765653
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 164775939517093298}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: be46a47d6ee0b4842a7b064a835ae481, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemyStatus: {fileID: 11400000, guid: 475c0950da5a4468594229c4d7495211, type: 2}
-  monsterName: 
-  maxHp: 0
-  atk: 0
-  def: 0
-  Lv: 0
-  Exp: 0
-  isDie: 0
-  isBoss: 0
-  dropItem: []
 --- !u!95 &223535735433765658
 Animator:
   serializedVersion: 5
@@ -2334,6 +2335,12 @@ PrefabInstance:
 --- !u!224 &5070338109245888920 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 404512375063164342, guid: 6b35e559e2048424d8b237e3718e2058,
+    type: 3}
+  m_PrefabInstance: {fileID: 4882016865546251310}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &5210886823437906584 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 833343554697698998, guid: 6b35e559e2048424d8b237e3718e2058,
     type: 3}
   m_PrefabInstance: {fileID: 4882016865546251310}
   m_PrefabAsset: {fileID: 0}

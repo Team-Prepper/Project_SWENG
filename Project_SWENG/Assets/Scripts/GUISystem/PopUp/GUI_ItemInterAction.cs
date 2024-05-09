@@ -16,10 +16,6 @@ public class GUI_ItemInterAction : GUIPopUp
     [SerializeField] private Text _itemInforLabel;
     [SerializeField] private Text _itemValueLabel;
     [SerializeField] private TextMeshProUGUI _itemSkillInfoLabel;
-    protected override void Open(Vector2 openPos)
-    {
-        base.Open(new Vector2(800,0));
-    }
 
     public void SetItem(Item item) {
 

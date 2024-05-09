@@ -10,9 +10,10 @@ public class GUI_ShopInterAction : GUIPopUp
     [SerializeField] Transform itemSlot;
     [SerializeField] GameObject itemInfo;
     [SerializeField] TextMeshProUGUI shopComment;
-    protected override void Open(Vector2 openPos)
+
+    public override void Open()
     {
-        base.Open(new Vector2(-1000,0));
+        base.Open();
         CamMovement.Instance.IsPlayerMove = true;
         DisplayItem();
     }

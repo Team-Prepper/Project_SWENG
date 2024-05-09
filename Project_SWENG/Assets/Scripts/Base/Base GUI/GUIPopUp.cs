@@ -4,17 +4,11 @@ using UnityEngine;
 
 namespace UISystem {
 
-    public class GUIPopUp : GUIWindow {
-        protected override void Open(Vector2 openPos)
+    public class GUIPopUp : GUIWindow, IGUIPopUp {
+
+        public override void Open()
         {
-            /*
-
-            RectTransform rect = gameObject.GetComponent<RectTransform>();
-
-            rect.SetParent(UIManager.Instance.NowPopUp.transform);
-            */
-
-            base.Open(openPos);
+            base.Open();
 
             PopUpAction();
         }

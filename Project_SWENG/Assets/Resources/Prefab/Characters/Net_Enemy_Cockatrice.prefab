@@ -1785,8 +1785,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6200245910548301146}
-  - component: {fileID: 1725268840709878225}
   - component: {fileID: 3719267907849167959}
+  - component: {fileID: 1725268840709878225}
   - component: {fileID: 8708793842863733948}
   m_Layer: 0
   m_Name: Net_Enemy_Cockatrice
@@ -1813,6 +1813,28 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3719267907849167959
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6719478820052443104}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be46a47d6ee0b4842a7b064a835ae481, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyStatus: {fileID: 11400000, guid: 3a53c8af4ac707946935aad960a6d556, type: 2}
+  monsterName: 
+  maxHp: 0
+  atk: 0
+  def: 0
+  Lv: 0
+  Exp: 0
+  isDie: 0
+  isBoss: 0
+  dropItem: []
 --- !u!114 &1725268840709878225
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1841,30 +1863,9 @@ MonoBehaviour:
   playerLayerMask:
     serializedVersion: 2
     m_Bits: 0
+  _healthObject: {fileID: 8653516265396178629}
   enemyStat: {fileID: 0}
   curHex: {fileID: 0}
---- !u!114 &3719267907849167959
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6719478820052443104}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: be46a47d6ee0b4842a7b064a835ae481, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemyStatus: {fileID: 11400000, guid: 3a53c8af4ac707946935aad960a6d556, type: 2}
-  monsterName: 
-  maxHp: 0
-  atk: 0
-  def: 0
-  Lv: 0
-  Exp: 0
-  isDie: 0
-  isBoss: 0
-  dropItem: []
 --- !u!95 &8708793842863733948
 Animator:
   serializedVersion: 5
@@ -2742,6 +2743,12 @@ PrefabInstance:
 --- !u!224 &8510338065195902405 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 404512375063164342, guid: 6b35e559e2048424d8b237e3718e2058,
+    type: 3}
+  m_PrefabInstance: {fileID: 8324858546820681843}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &8653516265396178629 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 833343554697698998, guid: 6b35e559e2048424d8b237e3718e2058,
     type: 3}
   m_PrefabInstance: {fileID: 8324858546820681843}
   m_PrefabAsset: {fileID: 0}

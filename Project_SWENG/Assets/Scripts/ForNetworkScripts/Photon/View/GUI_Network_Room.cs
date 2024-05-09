@@ -8,7 +8,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Windows;
 
-public class GUI_Network_Room : GUIFullScreen {
+public class GUI_Network_Room : GUICustomFullScreen {
 
     PhotonNetworkManager _network;
     [SerializeField] GUI_Network_Room_PlayerState[] _playerStates;
@@ -21,10 +21,10 @@ public class GUI_Network_Room : GUIFullScreen {
     [SerializeField] private GameObject _dicePointSetter;
 
     bool _isReady;
- 
-    protected override void Open(Vector2 openPos)
+
+    public override void Open()
     {
-        base.Open(openPos);
+        base.Open();
 
         _network = GameObject.Find("NetworkManager").GetComponent<PhotonNetworkManager>();
         _startBtn.SetActive(PhotonNetwork.IsMasterClient);

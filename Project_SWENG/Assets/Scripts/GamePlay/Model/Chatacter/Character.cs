@@ -16,7 +16,7 @@ namespace CharacterSystem {
 
         protected ICharacterController _cc;
 
-        [SerializeField] protected IHealthUI _healthUI;
+        protected IHealthUI _healthUI;
 
         [SerializeField] protected int _dicePoint;
         [SerializeField] private float _movementDuration = 0.5f;

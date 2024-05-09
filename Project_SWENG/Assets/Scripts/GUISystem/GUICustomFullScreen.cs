@@ -3,28 +3,33 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace UISystem {
-    public class GUIFullScreen : GUIWindow {
+    public class GUICustomFullScreen : GUIWindow, IGUIFullScreen {
+
         public LayerMask selectionMask;
 
-        private List<GUIPopUp> _popupUI;
-        protected GUIPopUp _nowPopUp;
+        private IList<IGUIPopUp> _popupUI;
+        protected IGUIPopUp _nowPopUp;
 
-        protected override void Open(Vector2 openPos)
+        public void AddPopUp(IGUIPopUp popUp)
         {
-            base.Open(openPos);
-            UIManager.Instance.EnrollmentGUI(this);
-            gameObject.GetComponent<RectTransform>().sizeDelta = Vector3.zero;
-            _popupUI = new List<GUIPopUp>();
-        }
-
-        public void AddPopUp(GUIPopUp popup) {
             if (_nowPopUp != null)
             {
                 _popupUI.Add(_nowPopUp);
-                _nowPopUp.gameObject.SetActive(false);
+                _nowPopUp.SetOff();
             }
-            popup.gameObject.transform.SetParent(transform);
-            _nowPopUp = popup;
+            _nowPopUp = popUp;
+
+        }
+
+        public override void Open()
+        {
+            base.Open();
+            UIManager.Instance.EnrollmentGUI(this);
+            gameObject.GetComponent<RectTransform>().sizeDelta = Vector3.zero;
+            _popupUI = new List<IGUIPopUp>();
+        }
+
+        public void AddPopUp(GUIPopUp popup) {
         }
 
         public void PopPopUp() {
@@ -32,26 +37,32 @@ namespace UISystem {
                 _nowPopUp = null;
                 return;
             }
+
             _nowPopUp = _popupUI[_popupUI.Count - 1];
-            _nowPopUp.gameObject.SetActive(true);
+            _nowPopUp.SetOn();
             _popupUI.RemoveAt(_popupUI.Count - 1);
         }
 
         public override void Close()
         {
             UIManager.Instance.Pop();
+
+            while (_popupUI.Count > 0)
+            {
+                _nowPopUp.Close();
+            }
+
             base.Close();
         }
 
         protected virtual void Update()
         {
-            if (_nowPopUp) return;
+            if (_nowPopUp != null) return;
 
             if (Input.GetMouseButtonUp(0))
             {
                 HexCoordinate coord = MousePointHex();
 
-                //Debug.Log(coord);
                 HexSelect(coord);
             }
         }

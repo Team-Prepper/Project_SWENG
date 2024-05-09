@@ -6,7 +6,7 @@ using CharacterSystem;
 using UISystem;
 using Photon.Realtime;
 
-public class GUI_PlayerActionSelect : GUIFullScreen, IActionSelector {
+public class GUI_PlayerActionSelect : GUICustomFullScreen, IActionSelector {
 
     [SerializeField] private GameObject _turnEndGlowLight;
     [SerializeField] private GUI_PlayerHealth _playerHealth;
@@ -23,11 +23,6 @@ public class GUI_PlayerActionSelect : GUIFullScreen, IActionSelector {
 
     ICharacterController _targetCC;
     PlayerCharacter _targetPlayer;
-
-    protected override void Open(Vector2 openPos)
-    {
-        base.Open(openPos);
-    }
 
     public void SetPlayer(GameObject target)
     {
@@ -100,7 +95,7 @@ public class GUI_PlayerActionSelect : GUIFullScreen, IActionSelector {
 
     public void TurnEndButton()
     {
-        if (_nowPopUp) return;
+        if (_nowPopUp != null) return;
         _AfterAction();
         _targetCC.TurnEnd();
     }

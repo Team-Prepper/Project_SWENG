@@ -524,8 +524,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2092151339880504904}
-  - component: {fileID: 3496394844421198407}
   - component: {fileID: 8466090001862238895}
+  - component: {fileID: 3496394844421198407}
   - component: {fileID: 7136230686557828509}
   m_Layer: 0
   m_Name: Net_Enemy_Bat
@@ -542,7 +542,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1604126045003252978}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.1063, y: 0.0353, z: 0.007}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -552,6 +552,28 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8466090001862238895
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1604126045003252978}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be46a47d6ee0b4842a7b064a835ae481, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyStatus: {fileID: 11400000, guid: 53b8a73a98538824ba23a2d5895ad97c, type: 2}
+  monsterName: 
+  maxHp: 0
+  atk: 0
+  def: 0
+  Lv: 0
+  Exp: 0
+  isDie: 0
+  isBoss: 0
+  dropItem: []
 --- !u!114 &3496394844421198407
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -580,30 +602,9 @@ MonoBehaviour:
   playerLayerMask:
     serializedVersion: 2
     m_Bits: 0
+  _healthObject: {fileID: 6327703887260200341}
   enemyStat: {fileID: 0}
   curHex: {fileID: 0}
---- !u!114 &8466090001862238895
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1604126045003252978}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: be46a47d6ee0b4842a7b064a835ae481, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemyStatus: {fileID: 11400000, guid: 53b8a73a98538824ba23a2d5895ad97c, type: 2}
-  monsterName: 
-  maxHp: 0
-  atk: 0
-  def: 0
-  Lv: 0
-  Exp: 0
-  isDie: 0
-  isBoss: 0
-  dropItem: []
 --- !u!95 &7136230686557828509
 Animator:
   serializedVersion: 5
@@ -1768,7 +1769,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6331254829451420803}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.106345974, y: -0.035377547, z: -0.007446384}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 65, y: 65, z: 65}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2575,6 +2576,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6b35e559e2048424d8b237e3718e2058, type: 3}
+--- !u!1 &6327703887260200341 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 833343554697698998, guid: 6b35e559e2048424d8b237e3718e2058,
+    type: 3}
+  m_PrefabInstance: {fileID: 6647353340376036131}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &6475395028725073557 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 404512375063164342, guid: 6b35e559e2048424d8b237e3718e2058,

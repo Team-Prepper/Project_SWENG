@@ -8,7 +8,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using Unity.VisualScripting;
 
-public class GUI_Network_Lobby : GUIFullScreen
+public class GUI_Network_Lobby : GUICustomFullScreen
 {
 
     private PhotonNetworkManager _network;
@@ -23,9 +23,9 @@ public class GUI_Network_Lobby : GUIFullScreen
     List<RoomInfo> _rooms;
     int _currentPage = 1;
 
-    protected override void Open(Vector2 openPos)
+    public override void Open()
     {
-        base.Open(openPos);
+        base.Open();
 
         _nickName.text = PhotonNetwork.LocalPlayer.NickName;
         _network = GameObject.Find("NetworkManager").GetComponent<PhotonNetworkManager>();

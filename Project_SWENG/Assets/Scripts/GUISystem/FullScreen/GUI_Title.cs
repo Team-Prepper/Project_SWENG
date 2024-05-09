@@ -7,15 +7,15 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class GUI_Title : GUIFullScreen
+public class GUI_Title : GUICustomFullScreen
 {
     [SerializeField] private InputField _nickNameInput;
 
     PhotonNetworkManager _network;
 
-    protected override void Open(Vector2 openPos)
+    public override void Open()
     {
-        base.Open(openPos);
+        base.Open();
 
         _network = GameObject.Find("NetworkManager").GetComponent<PhotonNetworkManager>();
 

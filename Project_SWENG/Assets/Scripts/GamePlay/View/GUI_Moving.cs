@@ -6,7 +6,7 @@ using UnityEngine;
 using UISystem;
 using CharacterSystem;
 
-public class GUI_Moving : GUIFullScreen {
+public class GUI_Moving : GUICustomFullScreen {
 
     [SerializeField] private Transform[] _moveNumPrefabs;
     [SerializeField] private Transform _moveNumParent;
@@ -79,12 +79,6 @@ public class GUI_Moving : GUIFullScreen {
         _target.Move(path);
         _HideRange();
         Close();
-    }
-
-    // Start is called before the first frame update
-    protected override void Open(Vector2 openPos)
-    {
-        base.Open(openPos);
     }
 
     public void Set(Character target)

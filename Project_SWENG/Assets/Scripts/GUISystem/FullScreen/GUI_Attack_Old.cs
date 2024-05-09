@@ -3,7 +3,7 @@ using UnityEngine;
 using CharacterSystem;
 using UISystem;
 
-public class GUI_Attack_Old : GUIFullScreen {
+public class GUI_Attack_Old : GUICustomFullScreen {
 
     ICharacterController _cc;
 
@@ -123,7 +123,7 @@ public class GUI_Attack_Old : GUIFullScreen {
 
     public override void OpenWindow(string key)
     {
-        if (_nowPopUp) return;
+        if (_nowPopUp != null) return;
         base.OpenWindow(key);
     }
 }

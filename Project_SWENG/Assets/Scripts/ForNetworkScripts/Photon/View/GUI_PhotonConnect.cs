@@ -12,9 +12,9 @@ public class GUI_PhotonConnect : GUIPopUp {
     PhotonNetworkManager _network;
     // Start is called before the first frame update
 
-    protected override void Open(Vector2 openPos)
+    public override void Open()
     {
-        base.Open(openPos);
+        base.Open();
 
         _network = GameObject.Find("NetworkManager").GetComponent<PhotonNetworkManager>();
     }

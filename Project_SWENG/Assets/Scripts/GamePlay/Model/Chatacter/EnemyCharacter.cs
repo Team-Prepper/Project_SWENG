@@ -11,6 +11,7 @@ using System.Linq;
 public class EnemyCharacter : Character {
 
     [SerializeField] LayerMask playerLayerMask;
+    [SerializeField] GameObject _healthObject;
 
     public EnemyStat enemyStat;
 
@@ -25,18 +26,14 @@ public class EnemyCharacter : Character {
 
     private void OnEnable()
     {
-        //Debug.Log("Enemy OnEnable");
         if (enemyStat == null)
             enemyStat = GetComponent<EnemyStat>();
 
         if (_healthUI == null)
             _healthUI = GetComponentInChildren<GUI_EnemyHealth>();
 
-        //stat.HP = new GaugeValue<int>(enemyStat.maxHp, enemyStat.maxHp, 0);
         stat.SetHP(enemyStat.maxHp, enemyStat.maxHp, 0);
-        //curHex = HexGrid.Instance.GetTileAt(this.gameObject.transform.position);
-
-        //curHex.Entity = gameObject;
+        _healthUI = _healthObject.GetComponent<IHealthUI>();
 
     }
 
@@ -93,8 +90,6 @@ public class EnemyCharacter : Character {
         IList<Vector3> path = pathHex.Select(pos => HexGrid.Instance.GetTileAt(pos).transform.position).ToList();
 
         path.RemoveAt(path.Count - 1);
-
-        Debug.Log(path.Count);
 
         Move(new Queue<Vector3>(path));
     }

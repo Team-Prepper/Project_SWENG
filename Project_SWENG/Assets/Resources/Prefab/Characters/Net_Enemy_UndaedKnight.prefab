@@ -1123,8 +1123,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7415001151744747806}
-  - component: {fileID: 2791611170170242147}
   - component: {fileID: 7468441365205007459}
+  - component: {fileID: 2791611170170242147}
   - component: {fileID: 7468441365205007462}
   m_Layer: 0
   m_Name: Net_Enemy_UndaedKnight
@@ -1151,6 +1151,28 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7468441365205007459
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7418122654190826676}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be46a47d6ee0b4842a7b064a835ae481, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyStatus: {fileID: 11400000, guid: 5794e89e9b4e7a64fa148cd37d9acef0, type: 2}
+  monsterName: 
+  maxHp: 0
+  atk: 0
+  def: 0
+  Lv: 0
+  Exp: 0
+  isDie: 0
+  isBoss: 0
+  dropItem: []
 --- !u!114 &2791611170170242147
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1179,30 +1201,9 @@ MonoBehaviour:
   playerLayerMask:
     serializedVersion: 2
     m_Bits: 0
+  _healthObject: {fileID: 7883191361919216701}
   enemyStat: {fileID: 0}
   curHex: {fileID: 0}
---- !u!114 &7468441365205007459
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7418122654190826676}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: be46a47d6ee0b4842a7b064a835ae481, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemyStatus: {fileID: 11400000, guid: 5794e89e9b4e7a64fa148cd37d9acef0, type: 2}
-  monsterName: 
-  maxHp: 0
-  atk: 0
-  def: 0
-  Lv: 0
-  Exp: 0
-  isDie: 0
-  isBoss: 0
-  dropItem: []
 --- !u!95 &7468441365205007462
 Animator:
   serializedVersion: 5
@@ -2204,6 +2205,12 @@ PrefabInstance:
 --- !u!224 &7163824675777333053 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 404512375063164342, guid: 6b35e559e2048424d8b237e3718e2058,
+    type: 3}
+  m_PrefabInstance: {fileID: 7419145245750817419}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &7883191361919216701 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 833343554697698998, guid: 6b35e559e2048424d8b237e3718e2058,
     type: 3}
   m_PrefabInstance: {fileID: 7419145245750817419}
   m_PrefabAsset: {fileID: 0}

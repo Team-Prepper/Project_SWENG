@@ -12,9 +12,9 @@ public class GUI_Loading : GUIWindow
     [SerializeField]
     string[] ment = { "Loading", "Loading.", "Loading..", "Loading..." };
 
-    protected override void Open(Vector2 opnePos)
+    public override void Open()
     {
-        base.Open(opnePos);
+        base.Open();
         StartCoroutine(Loading());
     }
 

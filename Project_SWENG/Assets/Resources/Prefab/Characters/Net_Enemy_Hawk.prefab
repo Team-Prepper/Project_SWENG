@@ -878,8 +878,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4838600312269443217}
-  - component: {fileID: 1469656706103354653}
   - component: {fileID: 3178583200067158074}
+  - component: {fileID: 1469656706103354653}
   - component: {fileID: 8336827732588100582}
   m_Layer: 0
   m_Name: Net_Enemy_Hawk
@@ -906,6 +906,28 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3178583200067158074
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5219102376209304107}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be46a47d6ee0b4842a7b064a835ae481, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyStatus: {fileID: 11400000, guid: 6c3c20a983c62bb43ae2711d67d40429, type: 2}
+  monsterName: 
+  maxHp: 0
+  atk: 0
+  def: 0
+  Lv: 0
+  Exp: 0
+  isDie: 0
+  isBoss: 0
+  dropItem: []
 --- !u!114 &1469656706103354653
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -934,30 +956,9 @@ MonoBehaviour:
   playerLayerMask:
     serializedVersion: 2
     m_Bits: 0
+  _healthObject: {fileID: 7205640750276645121}
   enemyStat: {fileID: 0}
   curHex: {fileID: 0}
---- !u!114 &3178583200067158074
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5219102376209304107}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: be46a47d6ee0b4842a7b064a835ae481, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemyStatus: {fileID: 11400000, guid: 6c3c20a983c62bb43ae2711d67d40429, type: 2}
-  monsterName: 
-  maxHp: 0
-  atk: 0
-  def: 0
-  Lv: 0
-  Exp: 0
-  isDie: 0
-  isBoss: 0
-  dropItem: []
 --- !u!95 &8336827732588100582
 Animator:
   serializedVersion: 5
@@ -2389,6 +2390,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6b35e559e2048424d8b237e3718e2058, type: 3}
+--- !u!1 &7205640750276645121 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 833343554697698998, guid: 6b35e559e2048424d8b237e3718e2058,
+    type: 3}
+  m_PrefabInstance: {fileID: 7525292437545127863}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &7922438972593945089 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 404512375063164342, guid: 6b35e559e2048424d8b237e3718e2058,

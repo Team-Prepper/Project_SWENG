@@ -11,11 +11,6 @@ namespace UISystem {
         [SerializeField] private IDicePoint _targetPlayer;
         [SerializeField] private Dice _dice;
 
-        protected override void Open(Vector2 openPos)
-        {
-            base.Open(new Vector2(0, 0));
-        }
-
         public void ReOpen() {
             gameObject.SetActive(true);
             PopUpAction();
@@ -35,7 +30,6 @@ namespace UISystem {
         public override void Close()
         {
             gameObject.SetActive(false);
-            transform.SetParent(UIManager.Instance.NowDisplay.transform.parent);
             UIManager.Instance.NowDisplay.PopPopUp();
         }
 

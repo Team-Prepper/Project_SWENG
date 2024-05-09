@@ -6,7 +6,7 @@ using UISystem;
 using Photon.Pun;
 using Photon.Realtime;
 
-public class GUI_PhotonLobby : GUIFullScreen
+public class GUI_PhotonLobby : GUICustomFullScreen
 {
 
     private PhotonNetworkManager _network;
@@ -20,9 +20,9 @@ public class GUI_PhotonLobby : GUIFullScreen
     List<RoomInfo> _rooms;
     int _currentPage = 1;
 
-    protected override void Open(Vector2 openPos)
+    public override void Open()
     {
-        base.Open(openPos);
+        base.Open();
 
         _network = GameObject.Find("NetworkManager").GetComponent<PhotonNetworkManager>();
 

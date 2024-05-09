@@ -3,25 +3,30 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace UISystem {
-    public class GUIWindow : MonoBehaviour {
+    public class GUIWindow : MonoBehaviour , IGUI {
         // Start is called before the first frame update
 
         public int priority = 0;
 
-        private void Awake()
+        public void SetOn()
         {
-            Open(Vector2.zero);
+            gameObject.SetActive(true);
+        }
+        public void SetOff()
+        {
+            gameObject.SetActive(false);
+
         }
 
-        protected virtual void Open(Vector2 opnePos)
+        public virtual void Open()
         {
             gameObject.SetActive(true);
 
             RectTransform rect = gameObject.GetComponent<RectTransform>();
 
             rect.SetParent(GameObject.Find("Canvas").transform);
-            rect.anchoredPosition = opnePos;
             rect.localScale = Vector3.one;
+            rect.anchoredPosition = Vector3.zero;
 
         }
 

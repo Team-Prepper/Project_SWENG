@@ -24,7 +24,7 @@ public class GUI_PlayerHealth : MonoBehaviour, IHealthUI
         _healthBack.fillAmount = value.ConvertToRate();
         _hpText.text = value.Value.ToString() + " / " + value.MaxValue;
 
-        StartCoroutine(LerpValue(value.Value));
+        StartCoroutine(LerpValue(value.ConvertToRate()));
 
     }
     

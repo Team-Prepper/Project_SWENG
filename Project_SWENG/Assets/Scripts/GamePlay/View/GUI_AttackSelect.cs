@@ -3,7 +3,7 @@ using UnityEngine;
 using CharacterSystem;
 using UISystem;
 
-public class GUI_AttackSelect : GUIFullScreen, IAttackTargetSelector {
+public class GUI_AttackSelect : GUICustomFullScreen, IAttackTargetSelector {
 
     [SerializeField] private Transform _markerParent;
     [SerializeField] private Transform[] _attackMarkers;
