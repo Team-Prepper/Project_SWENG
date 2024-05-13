@@ -1,4 +1,5 @@
 using Cinemachine;
+using Photon.Realtime;
 using System.Collections;
 using Unity.Collections;
 using UnityEngine;
@@ -79,22 +80,7 @@ public class CamMovement : MonoSingleton<CamMovement>
 
     [SerializeField] private Transform _target;
 
-    public bool IsPlayerMove
-    {
-        get { return isPlayerMove; }
-        set
-        {
-            if(value == true)
-            {
-                isPlayerMove = true;
-            }
-            else
-            {
-                isPlayerMove = false;
-            }
-        }
-    }
-    private bool isPlayerMove = false;
+    public bool IsPlayerMove { get; set; }
 
     public void SetCamTarget(Transform target)
     {
@@ -109,19 +95,6 @@ public class CamMovement : MonoSingleton<CamMovement>
     {
         yield return new WaitForSeconds(1f);
     }
-    void CamReset()
-    {
-        characterCam.Follow = null;
-        characterCam.LookAt = null;
-    }
-
-    /*
-    // ReSharper disable Unity.PerformanceAnalysis
-    private void moveCam()
-    {
-        wideCam.gameObject.transform.Translate(PlayerInputManager.Instance.moveDirection * moveSpeed * Time.deltaTime, Space.World);
-        wideCam.gameObject.transform.Translate(MoveCamWithMouse() * (moveSpeed * Time.deltaTime), Space.World);
-    }*/
 
     private Vector3 MoveCamWithMouse()
     {
@@ -150,11 +123,6 @@ public class CamMovement : MonoSingleton<CamMovement>
         return mouseCamMove;
     }
 
-    private void AdjustFOV(float scrollValue)
-    {
-    }
-
-    // 1 : inside 2 : left, 3 : right, 5 : top, 7 : bottom
     private int PlayerOutOfRange()
     {
         int outValue = 1;
@@ -177,6 +145,27 @@ public class CamMovement : MonoSingleton<CamMovement>
             outValue *= 5;
 
         return outValue;
+    }// Camera script
+
+    void LateUpdate()
+    {
+        if (_target == null) return;
+
+        // Player는 싱글톤이기에 전역적으로 접근할 수 있습니다.
+        Vector3 direction = (_target.position - transform.position).normalized;
+
+        RaycastHit[] hits = Physics.RaycastAll(transform.position, direction, Mathf.Infinity,
+                            1 << LayerMask.NameToLayer("EnvironmentObject"));
+
+        for (int i = 0; i < hits.Length; i++)
+        {
+            TransparentObject[] obj = hits[i].transform.GetComponentsInChildren<TransparentObject>();
+
+            for (int j = 0; j < obj.Length; j++)
+            {
+                obj[j]?.BecomeTransparent();
+            }
+        }
     }
 
     public void ConvertToCharacterCam() {

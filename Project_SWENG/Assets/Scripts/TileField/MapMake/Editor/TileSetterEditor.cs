@@ -10,13 +10,21 @@ public class TileSetterEditor : Editor {
     {
         base.OnInspectorGUI();
 
-
-        if (GUILayout.Button("Apply"))
+        if (GUILayout.Button("TypeApply"))
         {
             foreach (Object targetObject in targets)
             {
                 HexTileSetter generator = (HexTileSetter)targetObject;
                 generator.SetTile();
+            }
+        }
+
+        if (GUILayout.Button("EntityApply"))
+        {
+            foreach (Object targetObject in targets)
+            {
+                HexTileSetter generator = (HexTileSetter)targetObject;
+                generator.SetEntity();
             }
         }
     }
