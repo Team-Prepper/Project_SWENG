@@ -1,5 +1,5 @@
 using UnityEngine;
-using UISystem;
+using EHTool.UIKit;
 
 [CreateAssetMenu(fileName = "New Item", menuName = "Item/Creat New Item")]
 public class Item : ScriptableObject
@@ -47,6 +47,6 @@ public class Item : ScriptableObject
     public ItemType type;
     
     public void Pick() {
-        UIManager.OpenGUI<GUI_ItemInterAction>("ItemInterAction").SetItem(this);    
+        UIManager.Instance.OpenGUI<GUI_ItemInterAction>("ItemInterAction").SetItem(this);    
     }
 }

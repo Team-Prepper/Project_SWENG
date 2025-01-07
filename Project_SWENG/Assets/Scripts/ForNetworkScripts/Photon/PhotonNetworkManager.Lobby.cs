@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using ExitGames.Client.Photon;
 using Photon.Pun;
 using Photon.Realtime;
-using UISystem;
+using EHTool.UIKit;
 
 
 public partial class PhotonNetworkManager
@@ -41,7 +41,7 @@ public partial class PhotonNetworkManager
 
     public override void OnJoinedLobby()
     {
-        UIManager.OpenGUI<GUI_PhotonLobby>("Network_Lobby");
+        UIManager.Instance.OpenGUI<GUI_PhotonLobby>("Network_Lobby");
         //PhotonNetwork.NickName = _nickName;
         myList.Clear();
     }

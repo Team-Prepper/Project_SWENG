@@ -1,4 +1,4 @@
-using LangSystem;
+using EHTool.LangKit;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;

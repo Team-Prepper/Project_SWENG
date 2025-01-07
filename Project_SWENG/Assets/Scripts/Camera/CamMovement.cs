@@ -3,6 +3,7 @@ using Photon.Realtime;
 using System.Collections;
 using Unity.Collections;
 using UnityEngine;
+using EHTool;
 
 [System.Serializable]
 class CamGroup {

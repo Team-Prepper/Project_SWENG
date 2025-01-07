@@ -1,12 +1,8 @@
 using Photon.Pun;
 using Photon.Realtime;
-using System.Collections;
-using System.Collections.Generic;
-using TMPro;
-using UISystem;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.Windows;
+using EHTool.UIKit;
 
 public class GUI_Network_Room : GUICustomFullScreen {
 

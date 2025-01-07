@@ -1,7 +1,5 @@
 using Photon.Pun;
-using System.Collections;
-using System.Collections.Generic;
-using UISystem;
+using EHTool.UIKit;
 using UnityEngine;
 using UnityEngine.UI;
 

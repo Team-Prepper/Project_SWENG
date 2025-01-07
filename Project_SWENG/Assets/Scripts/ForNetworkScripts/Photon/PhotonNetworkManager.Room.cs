@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
-using UISystem;
+using EHTool.UIKit;
 
 
 public partial class PhotonNetworkManager
@@ -35,7 +35,7 @@ public partial class PhotonNetworkManager
             }
         }
 
-        _room = UIManager.OpenGUI<GUI_Network_Room>("Network_Room");
+        _room = UIManager.Instance.OpenGUI<GUI_Network_Room>("Network_Room");
 
     }
 

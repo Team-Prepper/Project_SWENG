@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UISystem;
+using EHTool.UIKit;
 using Photon.Pun;
 using Photon.Realtime;
 
@@ -51,7 +51,7 @@ public class GUI_PhotonLobby : GUICustomFullScreen
 
     public void CreateRoom()
     {
-        UIManager.OpenGUI<GUI_PhotonRoomCreate>("RoomCreate").SetNetwork(_network);
+        UIManager.Instance.OpenGUI<GUI_PhotonRoomCreate>("RoomCreate").SetNetwork(_network);
     }
 
     public void JoinRandomRoom() {

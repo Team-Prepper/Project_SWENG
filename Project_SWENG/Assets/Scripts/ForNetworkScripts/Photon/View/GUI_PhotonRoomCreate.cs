@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UISystem;
+using EHTool.UIKit;
 using UnityEngine.UI;
 
 public class GUI_PhotonRoomCreate : GUIPopUp {
