@@ -36,7 +36,8 @@ public class PhotonGameMaster : MonoBehaviourPun, IGameMaster {
             _enemySpawner.SpawnEnemy();
         }
 
-        _playerSpawner.SpawnPlayer(PhotonNetworkManager.PlayerID);
+        _playerSpawner.SpawnPlayer(
+            GameManager.Instance.Network.PlayerId);
         
         if (PhotonNetwork.IsMasterClient)
         {

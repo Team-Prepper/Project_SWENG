@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GUI_Network_Room_PlayerState : MonoBehaviour
+public class GUINetworkRoomPlayerState : MonoBehaviour
 {
 
     [SerializeField] Text _name;

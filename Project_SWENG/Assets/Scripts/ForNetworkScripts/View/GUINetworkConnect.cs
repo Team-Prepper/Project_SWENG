@@ -3,18 +3,13 @@ using EHTool.UIKit;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GUI_PhotonConnect : GUIPopUp {
+public class GUINetworkConnect : GUIPopUp {
 
     [SerializeField] private InputField _nickNameInput;
-
-    PhotonNetworkManager _network;
-    // Start is called before the first frame update
 
     public override void Open()
     {
         base.Open();
-
-        _network = GameObject.Find("NetworkManager").GetComponent<PhotonNetworkManager>();
     }
 
     public void Connect()
@@ -24,10 +19,13 @@ public class GUI_PhotonConnect : GUIPopUp {
             UIManager.Instance.DisplayMessage("title_NoNicknameError");
             return;
         }
-        _network.Connect(_nickNameInput.text);
 
-        PhotonNetwork.ConnectUsingSettings();
-        PhotonNetwork.LocalPlayer.NickName = _nickNameInput.text;
+        IGUI ui = UIManager.Instance.OpenGUI<GUI_Loading>("Loading");
+
+        GameManager.Instance.Network.Connect(_nickNameInput.text, () => {
+            UIManager.Instance.OpenGUI<GUINetworkLobby>("Network_Lobby");
+            ui.Close();
+        });
 
     }
 }

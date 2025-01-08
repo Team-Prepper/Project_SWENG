@@ -1,9 +1,8 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GUI_PhotonChat : MonoBehaviour, INetworkChat {
-
-    PhotonNetworkManager _network;
+public class GUIChattingBox : MonoBehaviour, IObserver<ChatData> {
 
     public Text[] ChatText;
     public InputField ChatInput;
@@ -12,11 +11,43 @@ public class GUI_PhotonChat : MonoBehaviour, INetworkChat {
 
     int _useCount = 0;
 
-    private void Start()
-    {
-        _network = GameObject.Find("NetworkManager").GetComponent<PhotonNetworkManager>();
+#nullable enable
+    private IDisposable? _cancellation;
 
-        _network._chatting = this;
+    public void OnCompleted()
+    {
+
+    }
+
+    public void OnError(Exception error)
+    {
+
+    }
+
+    public void OnNext(ChatData value)
+    {
+        if (value.sender.Equals("System"))
+        {
+            _Chat(string.Format("<color=yellow>{0}</color>", value.msg));
+            return;
+        }
+
+        _Chat(value.sender + " : " + value.msg);
+    }
+
+    private void OnEnable()
+    {
+        _cancellation =
+            GameManager.Instance.Network.Chat.Subscribe(this);
+    }
+
+    private void OnDisable()
+    {
+        _cancellation?.Dispose();
+    }
+    private void OnDestroy()
+    {
+        _cancellation?.Dispose();
     }
 
     public void ChatSend()
@@ -26,11 +57,12 @@ public class GUI_PhotonChat : MonoBehaviour, INetworkChat {
         ChatInput.text = "";
 
         if (input[0] != '/') {
-            _network.SendChat(input);
+            GameManager.Instance.Network.Chat.SendChat(input);
             return;
         }
 
-        _CommandExecute(input.Substring(1, input.IndexOf(' ') - 1), input.Substring(input.IndexOf(' ') + 1));
+        _CommandExecute(input.Substring(1, input.IndexOf(' ') - 1),
+            input.Substring(input.IndexOf(' ') + 1));
         
     }
 
@@ -39,34 +71,27 @@ public class GUI_PhotonChat : MonoBehaviour, INetworkChat {
         switch (command)
         {
             case "block":
-                _network.Block(input);
+                GameManager.Instance.Network.Chat.Block(input);
                 return;
             default:
                 return;
         }
     }
 
-    public void Chat(string sender, string msg) {
-
-        if (sender.Equals("System"))
-        {
-            _Chat(string.Format("<color=yellow>{0}</color>", msg));
-            return;
-        }
-
-        _Chat(sender + " : " + msg);
-    }
-
     private void _Chat(string msg)
     {
         if (_useCount < ChatText.Length)
         {
+            ChatText[_useCount].gameObject.SetActive(true);
             ChatText[_useCount++].text = msg;
+
             _scrollBar.value = 0;
+
             if (_useCount < ChatText.Length)
             {
                 ChatText[_useCount].text = " ";
             }
+
             return;
         }
 

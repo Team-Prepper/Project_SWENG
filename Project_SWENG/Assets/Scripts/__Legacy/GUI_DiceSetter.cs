@@ -5,17 +5,15 @@ using UnityEngine.UI;
 
 public class GUI_DiceSetter : MonoBehaviour
 {
-    PhotonNetworkManager _network;
     [SerializeField] Image baseDicePoint;
     [SerializeField] List<Sprite> sprites = new List<Sprite>();
     void Start()
     {
-        _network = GameObject.Find("NetworkManager").GetComponent<PhotonNetworkManager>();
     }
 
     public void SetBaseDicePoint(int value)
     {
-        _network.SetBaseDicePointHandler(value);
+        //_network.SetBaseDicePointHandler(value);
         SetPointImg(value);
     }
 

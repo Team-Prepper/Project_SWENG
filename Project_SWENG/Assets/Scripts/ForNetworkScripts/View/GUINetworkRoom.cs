@@ -1,13 +1,11 @@
-using Photon.Pun;
-using Photon.Realtime;
 using UnityEngine;
 using UnityEngine.UI;
 using EHTool.UIKit;
+using System;
 
-public class GUI_Network_Room : GUICustomFullScreen {
+public class GUINetworkRoom : GUICustomFullScreen, RoomObserver {
 
-    PhotonNetworkManager _network;
-    [SerializeField] GUI_Network_Room_PlayerState[] _playerStates;
+    [SerializeField] GUINetworkRoomPlayerState[] _playerStates;
 
     [SerializeField] Text ListText;                 // TMP_Text -> Text
     [SerializeField] Text _roomInforText;           // TMP_Text -> Text
@@ -18,30 +16,43 @@ public class GUI_Network_Room : GUICustomFullScreen {
 
     bool _isReady;
 
+#nullable enable
+    private IDisposable? _cancellation;
+
+    void OnEnable()
+    {
+        _cancellation = GameManager.Instance.Network.Room.Subscribe(this);
+
+    }
+
+    void OnDisable()
+    {
+        _cancellation?.Dispose();
+    }
+    void OnDestroy()
+    {
+        _cancellation?.Dispose();
+    }
+
     public override void Open()
     {
         base.Open();
-
-        _network = GameObject.Find("NetworkManager").GetComponent<PhotonNetworkManager>();
-        _startBtn.SetActive(PhotonNetwork.IsMasterClient);
-        _dicePointSetter.SetActive(PhotonNetwork.IsMasterClient);
-        
-        _readyBtn.SetActive(!PhotonNetwork.IsMasterClient);
         
         _isReady = false;
-        RoomRenewal();
+        Renewal();
     }
 
-    public void RoomRenewal()
+    public void Renewal()
     {
         
         ListText.text = "";
 
-        Player[] roomMember = _network.RoomMemberList();
+        INetworkRoom curRoom = GameManager.Instance.Network.Room;
+
+        RoomMember[] roomMember = curRoom.RoomMemberList();
 
         for (int i = 0; i < roomMember.Length; i++)
             ListText.text += roomMember[i].NickName + ((i + 1 == roomMember.Length) ? "" : ", ");
-        
 
         for (int i = 0; i < _playerStates.Length; i++) {
             if (roomMember.Length <= i)
@@ -50,15 +61,21 @@ public class GUI_Network_Room : GUICustomFullScreen {
                 continue;
             }
             _playerStates[i].gameObject.SetActive(true);
-            _playerStates[i].SetInfor(roomMember[i].NickName, _network.IsIdxPlayerReady(i));
+            _playerStates[i].SetInfor(roomMember[i].NickName,
+                curRoom.IsIdxPlayerReady(i));
         }
 
         _roomInforText.text = string.Format("{0} / {1} / {2}Max",
-            PhotonNetwork.CurrentRoom.Name, PhotonNetwork.CurrentRoom.PlayerCount, PhotonNetwork.CurrentRoom.MaxPlayers);
+            curRoom.Name, curRoom.PlayerCount, curRoom.MaxPlayers);
+
+        _startBtn.SetActive(GameManager.Instance.Network.IsMaster);
+        _dicePointSetter.SetActive(GameManager.Instance.Network.IsMaster);
+
+        _readyBtn.SetActive(!GameManager.Instance.Network.IsMaster);
     }
 
     public void StartGame() {
-        if (!_network.StartGame()) {
+        if (!GameManager.Instance.Network.Room.StartGame()) {
             UIManager.Instance.DisplayMessage("notice_PlayerNotReady");
         }
     }
@@ -68,15 +85,15 @@ public class GUI_Network_Room : GUICustomFullScreen {
         _readyCancleBtn.SetActive(!_isReady);
         if (_isReady) {
             _isReady = false;
-            _network.ReadyCancle();
+            GameManager.Instance.Network.Room.ReadyCancel();
             return;
         }
         _isReady = true;
-        _network.Ready();
+        GameManager.Instance.Network.Room.Ready();
     }
 
     public void LeaveRoom() {
-        PhotonNetwork.LeaveRoom();
+        GameManager.Instance.Network.LeaveRoom();
         Close();
     }
 }

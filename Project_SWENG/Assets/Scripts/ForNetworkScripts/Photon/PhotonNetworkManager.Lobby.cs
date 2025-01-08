@@ -11,7 +11,7 @@ public partial class PhotonNetworkManager
     List<RoomInfo> myList = new List<RoomInfo>();
     int currentPage = 1, maxPage, multiple;
 
-    public GUI_Network_Room _room;
+    public GUINetworkRoom _room;
 
     public void MyListClick(int num)
     {
@@ -41,7 +41,7 @@ public partial class PhotonNetworkManager
 
     public override void OnJoinedLobby()
     {
-        UIManager.Instance.OpenGUI<GUI_PhotonLobby>("Network_Lobby");
+        UIManager.Instance.OpenGUI<GUINetworkLobby>("Network_Lobby");
         //PhotonNetwork.NickName = _nickName;
         myList.Clear();
     }

@@ -19,10 +19,10 @@ public partial class PhotonNetworkManager : MonoBehaviourPunCallbacks
     void Awake()
     {
         PhotonNetwork.AutomaticallySyncScene = true;
-        PhotonNetwork.GameVersion = gameVersion;       
+        PhotonNetwork.GameVersion = gameVersion;
         //Debug.Log(PhotonNetwork.SendRate);
+        
     }
-
 
     private void Start()
     {
