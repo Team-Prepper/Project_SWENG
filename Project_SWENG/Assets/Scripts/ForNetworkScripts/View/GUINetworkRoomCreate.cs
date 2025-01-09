@@ -10,6 +10,7 @@ public class GUINetworkRoomCreate : GUIPopUp {
     {
         string roomName = (_roomNameInput.text == "" ? "Room" + Random.Range(0, 100) : _roomNameInput.text);
         GameManager.Instance.Network.CreateRoom(roomName);
+        Close();
     }
 
 }

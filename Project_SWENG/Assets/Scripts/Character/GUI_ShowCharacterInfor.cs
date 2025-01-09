@@ -1,14 +1,14 @@
 using UnityEngine;
 using EHTool.LangKit;
 using EHTool.UIKit;
-using TMPro;
+using UnityEngine.UI;
 
 public class GUI_ShowCharacterInfor : GUIPopUp
 {
     [SerializeField] protected EHText _name;
-    [SerializeField] protected TextMeshProUGUI _lv;
-    [SerializeField] protected TextMeshProUGUI _hp;
-    [SerializeField] protected TextMeshProUGUI _attackValue;
+    [SerializeField] protected Text _lv;
+    [SerializeField] protected Text _hp;
+    [SerializeField] protected Text _attackValue;
 
 
     public void SetInfor(string name, CharacterSystem.Character target) {

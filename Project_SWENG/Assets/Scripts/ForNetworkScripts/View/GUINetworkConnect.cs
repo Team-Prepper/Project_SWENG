@@ -20,11 +20,12 @@ public class GUINetworkConnect : GUIPopUp {
             return;
         }
 
-        IGUI ui = UIManager.Instance.OpenGUI<GUI_Loading>("Loading");
+        IGUI loadingUI = UIManager.Instance.OpenGUI<GUI_Loading>("Loading");
 
         GameManager.Instance.Network.Connect(_nickNameInput.text, () => {
             UIManager.Instance.OpenGUI<GUINetworkLobby>("Network_Lobby");
-            ui.Close();
+            loadingUI.Close();
+            Close();
         });
 
     }
