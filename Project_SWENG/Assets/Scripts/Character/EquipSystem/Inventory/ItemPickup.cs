@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class ItemPickup : MonoBehaviour
 {
-    public Item item;
+    public ItemData item;
     private GameObject showUI = null;
 
     private void ShowItem()
     {
         if(showUI == null)
-            showUI = ItemUI.Instance.SetPickupItemUI(this);
+            showUI = GUIItemUI.Instance.SetPickupItemUI(this);
         showUI.SetActive(true);
     }
 

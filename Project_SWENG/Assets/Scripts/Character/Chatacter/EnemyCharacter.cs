@@ -1,12 +1,6 @@
-using JetBrains.Annotations;
-using System.Collections;
-using System.Collections.Generic;
-using Photon.Pun;
+/*
 using UnityEngine;
-using UnityEngine.Serialization;
-using UnityEngine.Scripting;
 using CharacterSystem;
-using System.Linq;
 
 public class EnemyCharacter : Character {
 
@@ -16,8 +10,6 @@ public class EnemyCharacter : Character {
     public EnemyStat enemyStat;
 
     public Hex curHex;
-
-    bool _doAction = false;
 
     public override string GetName()
     {
@@ -29,96 +21,13 @@ public class EnemyCharacter : Character {
         if (enemyStat == null)
             enemyStat = GetComponent<EnemyStat>();
 
-        if (_healthUI == null)
-            _healthUI = GetComponentInChildren<GUI_EnemyHealth>();
-
         stat.SetHP(enemyStat.maxHp, enemyStat.maxHp, 0);
-        _healthUI = _healthObject.GetComponent<IHealthUI>();
 
-    }
-
-    public override void SetPlay()
-    {
-        _doAction = false;
-        base.SetPlay();
-    }
-
-    private HexCoordinate? GetPlayerInRange(uint range) {
-
-        foreach (HexCoordinate pos in HexGrid.Instance.GetNeighboursFor(HexCoordinate.ConvertFromVector3(transform.position), range))
-        {
-            GameObject entity = HexGrid.Instance.GetTileAt(pos).Entity;
-
-            if (entity != null && entity.CompareTag("Player"))
-            {
-                return pos;
-            }
-        }
-
-        return null;
-    }
-
-    public override IList<Action> GetCanDoAction()
-    {
-        if (_doAction) return new List<Action>();
-
-        _doAction = true;
-
-        IList<Action> list = new List<Action>();
-
-        if (GetPlayerInRange(1) != null)
-        {
-            list.Add(Action.Attack);
-        }
-        if (GetPlayerInRange(3) != null)
-        {
-            list.Add(Action.Move);
-        }
-
-        return list;
-    }
-
-    public override void DoMove()
-    {
-        HexCoordinate? pos = GetPlayerInRange(3);
-
-        if (pos == null) return;
-
-        IPathGroup movementRange = HexGrid.Instance.GetPathGroupTo(HexCoordinate.ConvertFromVector3(transform.position), pos.Value, GetPoint());
-
-        IList<HexCoordinate> pathHex = movementRange.GetPathTo(pos.Value);
-        IList<Vector3> path = pathHex.Select(pos => HexGrid.Instance.GetTileAt(pos).transform.position).ToList();
-
-        path.RemoveAt(path.Count - 1);
-
-        Move(new Queue<Vector3>(path));
     }
 
     public override int GetAttackValue()
     {
         return enemyStat.atk;
-    }
-
-    public override void AttackAct(float time)
-    {
-        base.AttackAct(time);
-    }
-
-    public override void DamageAct()
-    {
-        base.DamageAct();
-        Collider[] colliders = Physics.OverlapSphere(transform.position, 10f, playerLayerMask);
-        if (colliders.Length > 0)
-            gameObject.transform.LookAt(colliders[0].transform);
-    }
-
-    public override void DieAct()
-    {
-        base.DieAct();
-
-        DropItem();
-        DropExp();
-        Destroy(gameObject, 1f);
     }
 
     private void DropItem()
@@ -141,6 +50,7 @@ public class EnemyCharacter : Character {
             {
                 entity.GetComponent<PlayerCharacter>()?.GetExp(enemyStat.Exp);
             }
-        }*/
+        }
     }
 }
+*/

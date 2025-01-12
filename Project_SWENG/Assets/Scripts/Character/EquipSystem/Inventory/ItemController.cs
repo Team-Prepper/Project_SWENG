@@ -6,7 +6,7 @@ using EHTool.UIKit;
 
 public class ItemController : MonoBehaviour
 {
-    [SerializeField] Item _infor;
+    [SerializeField] ItemData _infor;
     private float _rotateSpeed = 20;
 
     public void Pick() {

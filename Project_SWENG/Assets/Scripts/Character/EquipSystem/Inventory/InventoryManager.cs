@@ -7,10 +7,10 @@ public class InventoryManager : MonoSingleton<InventoryManager>, IObservable<Inv
 {
     private EquipManager _equipManager;
 
-    private Item _helmet = null;
-    private Item _armor  = null;
-    public Item Weapon = null;
-    private Item _shield = null;
+    private ItemData _helmet = null;
+    private ItemData _armor  = null;
+    public ItemData Weapon = null;
+    private ItemData _shield = null;
 
     ISet<IObserver<InventoryManager>> _observers = new HashSet<IObserver<InventoryManager>>();
 
@@ -33,8 +33,8 @@ public class InventoryManager : MonoSingleton<InventoryManager>, IObservable<Inv
         _equipManager = player.GetComponent<EquipManager>();
     }
 
-    public List<Item> GetItems() { 
-        List<Item> retval = new List<Item>();
+    public List<ItemData> GetItems() { 
+        List<ItemData> retval = new List<ItemData>();
         if (_helmet) retval.Add(_helmet);
         if (_armor) retval.Add(_armor);
         if (Weapon) retval.Add(Weapon);
@@ -43,26 +43,26 @@ public class InventoryManager : MonoSingleton<InventoryManager>, IObservable<Inv
         return retval;
     }
 
-    public void GetItem(Item item)
+    public void GetItem(ItemData item)
     {
-        if(item.itemHex != null)
-            item.itemHex.Item = null;
+        if (item.itemHex != null)
+            item.itemHex.SetItem(null);
 
         switch (item.type)
         {
-            case Item.ItemType.Helmet:
+            case ItemData.ItemType.Helmet:
                 _helmet = item;
                 _equipManager.EquipHelmet(item);
                 break;
-            case Item.ItemType.Armor:
+            case ItemData.ItemType.Armor:
                 _armor = item;
                 _equipManager.EquipArmor(item);
                 break;
-            case Item.ItemType.Weapon:
+            case ItemData.ItemType.Weapon:
                 Weapon = item;
                 _equipManager.EquipWeapon(item);
                 break;
-            case Item.ItemType.Shield:
+            case ItemData.ItemType.Shield:
                 _shield = item;
                 _equipManager.EquipShield(item);
                 break;

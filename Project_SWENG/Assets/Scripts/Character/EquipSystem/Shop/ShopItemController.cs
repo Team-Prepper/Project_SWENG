@@ -17,7 +17,7 @@ public class ShopItemController : MonoBehaviour
     [SerializeField] TextMeshProUGUI itemCost;
                                     
     private List<Color> colors = new List<Color>();
-    [SerializeField] private Item thisItem;
+    [SerializeField] private ItemData thisItem;
 
     private void OnEnable()
     {
@@ -34,7 +34,7 @@ public class ShopItemController : MonoBehaviour
         colors.Add(new Color(0.9912354f, 0.3451256f, 0.61234353f, 1f)); // mythic
     }
 
-    public void SetItem(Item item)
+    public void SetItem(ItemData item)
     {
         thisItem = item;
         itemIcon.sprite = item.icon;
@@ -47,16 +47,16 @@ public class ShopItemController : MonoBehaviour
 
         switch (item.type)
         {
-            case Item.ItemType.Helmet:
+            case ItemData.ItemType.Helmet:
                 format = LangManager.Instance.GetStringByKey("shopItem_All");
                 break;
-            case Item.ItemType.Armor:
+            case ItemData.ItemType.Armor:
                 format = LangManager.Instance.GetStringByKey("shopItem_HP");
                 break;
-            case Item.ItemType.Weapon:
+            case ItemData.ItemType.Weapon:
                 format = LangManager.Instance.GetStringByKey("shopItem_Attack");
                 break;
-            case Item.ItemType.Shield:
+            case ItemData.ItemType.Shield:
                 format = LangManager.Instance.GetStringByKey("shopItem_Defense");
                 break;
             default:

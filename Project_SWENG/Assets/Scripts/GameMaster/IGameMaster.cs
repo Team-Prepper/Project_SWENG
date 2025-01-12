@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Team {
+
     IDictionary<ICharacterController, bool> _members;
 
     public Team() {

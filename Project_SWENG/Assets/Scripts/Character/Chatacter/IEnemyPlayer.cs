@@ -1,57 +1,52 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using CharacterSystem;
 
 public interface IEnemyPlayer {
     public void AddSelector(BasicEnemyActionSelector selector);
     public void RemoveSelector(BasicEnemyActionSelector selector);
-    public void ActionAdd(BasicEnemyActionSelector selector, IList<Character.Action> actions);
+    public void ActionAdd(BasicEnemyActionSelector selector, IList<CharacterStatus.Action> actions);
 }
 
 public class EnemyPlayer : MonoBehaviour, IEnemyPlayer {
 
-    IDictionary<BasicEnemyActionSelector, IList<Character.Action>> _data;
+    IDictionary<BasicEnemyActionSelector, IList<CharacterStatus.Action>> _data;
     BasicEnemyActionSelector _nowSelector;
 
     public EnemyPlayer() {
-        _data = new Dictionary<BasicEnemyActionSelector, IList<Character.Action>>();
+        _data = new Dictionary<BasicEnemyActionSelector, IList<CharacterStatus.Action>>();
     }
 
     public void AddSelector(BasicEnemyActionSelector selector) {
         _data.Add(selector, null);
     }
+
     public void RemoveSelector(BasicEnemyActionSelector selector)
     {
         _data.Remove(selector);
 
     }
 
-    public void ActionAdd(BasicEnemyActionSelector selector, IList<Character.Action> actions) {
+    public void ActionAdd(BasicEnemyActionSelector selector, IList<CharacterStatus.Action> actions) {
 
         _data[selector] = actions;
 
         if (_nowSelector == null || _nowSelector.Equals(selector))
         {
             _nowSelector = selector;
-            StartCoroutine(_aa());
+            _ActionSelect();
         }
 
     }
 
-    IEnumerator _aa() {
-        yield return new WaitForEndOfFrame();
-        _ActionSelect();
-    }
-
     void _ActionSelect() {
 
-        if (!_data.TryGetValue(_nowSelector, out IList<Character.Action> actions)) return;
+        if (!_data.TryGetValue(_nowSelector, out IList<CharacterStatus.Action> actions)) return;
 
-        while (actions.Count == 0) {
-            _nowSelector.DoAction(Character.Action.Dice);
+        while (actions == null || actions.Count == 0) {
+            _nowSelector.DoAction(CharacterStatus.Action.TurnEnd);
+
             _data[_nowSelector] = null;
-
             _nowSelector = _SelectNewSelector();
 
             if (_nowSelector == null)
@@ -59,43 +54,41 @@ public class EnemyPlayer : MonoBehaviour, IEnemyPlayer {
 
             actions = _data[_nowSelector];
 
-
         }
 
         _nowSelector.CamSetting();
-        StartCoroutine(_ActionSelect3(actions));
+
+        StartCoroutine(_ActionSelect3(() => {
+
+            if (actions.Contains(CharacterStatus.Action.Attack))
+            {
+                _nowSelector.DoAction(CharacterStatus.Action.Attack);
+            }
+            else if (actions.Contains(CharacterStatus.Action.Move))
+            {
+                _nowSelector.DoAction(CharacterStatus.Action.Move);
+            }
+            else
+            {
+                _nowSelector.DoAction(CharacterStatus.Action.Dice);
+            }
+
+            if (_nowSelector != null && _data.ContainsKey(_nowSelector))
+                _data.Remove(_nowSelector);
+
+        }));
     }
 
-    void ActionSelect2(IList<Character.Action> actions)
-    {
-
-        if (actions.Contains(Character.Action.Attack))
-        {
-            _nowSelector.DoAction(Character.Action.Attack);
-        }
-        else if (actions.Contains(Character.Action.Move))
-        {
-            _nowSelector.DoAction(Character.Action.Move);
-        }
-        else
-        {
-            _nowSelector.DoAction(Character.Action.Dice);
-        }
-
-        _data[_nowSelector] = null;
-
-    }
-
-    IEnumerator _ActionSelect3(IList<Character.Action> actions)
+    IEnumerator _ActionSelect3(CallbackMethod callback)
     {
         yield return new WaitForSecondsRealtime(1f);
 
-        ActionSelect2(actions);
+        callback?.Invoke();
     }
 
     BasicEnemyActionSelector _SelectNewSelector()
     {
-        foreach (KeyValuePair<BasicEnemyActionSelector, IList<Character.Action>> item in _data)
+        foreach (KeyValuePair<BasicEnemyActionSelector, IList<CharacterStatus.Action>> item in _data)
         {
             if (item.Value == null) continue;
             return item.Key;

@@ -1,6 +1,5 @@
 using Photon.Pun;
 using System.Collections.Generic;
-using CharacterSystem;
 using UnityEngine;
 
 public class EquipManager : MonoBehaviour
@@ -10,7 +9,7 @@ public class EquipManager : MonoBehaviour
     [HideInInspector]
     public CharacterObjectGroups body;
 
-    private PlayerCharacter _playerController;
+    private CharacterStatus _playerController;
 
     [Header("Network")]
     private PhotonView _photonView;
@@ -25,18 +24,18 @@ public class EquipManager : MonoBehaviour
     [SerializeField] private bool isMale = true;
     
     [Header("Current Equipment")]
-    public Item curEquipHelmet;
+    public ItemData curEquipHelmet;
 
     private int curEquipHelmetCode = 0;
     private int curEquipHelmetType = 0;
     
-    private Item curEquipArmor;
+    private ItemData curEquipArmor;
 
-    private Item curEquipWeapon;
+    private ItemData curEquipWeapon;
     private GameObject weaponModel;
     [SerializeField] private Transform weaponSlot;
 
-    private Item curEquipShield;
+    private ItemData curEquipShield;
     private GameObject shieldModel;
     [SerializeField] private Transform shieldSlot;
     
@@ -54,7 +53,7 @@ public class EquipManager : MonoBehaviour
     private void Start()
     {
         _photonView = GetComponent<PhotonView>();
-        _playerController = GetComponent<PlayerCharacter>();
+        _playerController = GetComponent<CharacterStatus>();
         _BuildLists();
         _SetupPlayer(0);
     }
@@ -167,7 +166,7 @@ public class EquipManager : MonoBehaviour
             body.facialHair[curBeardCode].SetActive(true);
     }
 
-    public Item GetEquipWeaponHasSkill()
+    public ItemData GetEquipWeaponHasSkill()
     {
         if (curEquipWeapon != null && curEquipWeapon.hasSkill)
             return curEquipWeapon;
@@ -175,20 +174,20 @@ public class EquipManager : MonoBehaviour
         return null;
     }
 
-    public Item GetEquipHelmet()
+    public ItemData GetEquipHelmet()
     {
         if (curEquipHelmet)
             return curEquipHelmet;
         return null;
     }
-    public Item GetEquipArmor()
+    public ItemData GetEquipArmor()
     {
         if (curEquipArmor)
             return curEquipArmor;
         return null;
     }
     
-    public Item GetEquipShield()
+    public ItemData GetEquipShield()
     {
         if (curEquipShield)
             return curEquipShield;
@@ -247,14 +246,16 @@ public class EquipManager : MonoBehaviour
         }
     }
 
-    public void EquipHelmet(Item item)
+    public void EquipHelmet(ItemData item)
     {
+        /*
         _ResetHelmet();
         if(curEquipHelmet)
             _playerController.UnEquipItemHandler(curEquipHelmet);
         _SetHelmet(item.id);
         curEquipHelmet = item;
         _playerController.EquipItemHandler(item);
+        */
     }
 
     private void _ResetArmor(int curArmorCode)
@@ -283,8 +284,9 @@ public class EquipManager : MonoBehaviour
         body.leg_Left[setArmorCode].SetActive(tryEquip);
     }
 
-    public void EquipArmor(Item item)
+    public void EquipArmor(ItemData item)
     {
+        /*
         if(curEquipArmor == null)
         {
             _ResetArmor(0);
@@ -297,11 +299,11 @@ public class EquipManager : MonoBehaviour
         
         _SetArmor(item.id);
         curEquipArmor = item;
-        _playerController.EquipItemHandler(item);
+        _playerController.EquipItemHandler(item);*/
     }
     
     // Equip Weapon
-    public void EquipWeapon(Item newWeapon)
+    public void EquipWeapon(ItemData newWeapon)
     {
         if (curEquipWeapon != newWeapon)
             UnequipWeapon();
@@ -317,7 +319,7 @@ public class EquipManager : MonoBehaviour
         curEquipWeapon = null;
     }
 
-    public void EquipShield(Item newShield)
+    public void EquipShield(ItemData newShield)
     {
         if (curEquipShield != newShield)
         {
@@ -327,7 +329,7 @@ public class EquipManager : MonoBehaviour
         
         shieldModel = Instantiate(newShield.itemObject, shieldSlot);
         curEquipShield = newShield;
-        _playerController.EquipItemHandler(newShield);
+        //_playerController.EquipItemHandler(newShield);
     }
 
     private void UnequipShield()
@@ -335,7 +337,7 @@ public class EquipManager : MonoBehaviour
         if (shieldModel != null)
         {
             Destroy(shieldModel);
-            _playerController.UnEquipItemHandler(curEquipShield);
+            //_playerController.UnEquipItemHandler(curEquipShield);
         }
             
         curEquipShield = null;

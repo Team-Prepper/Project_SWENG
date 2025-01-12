@@ -39,13 +39,13 @@ public class GUI_ItemEquiped : MonoBehaviour, IObserver<InventoryManager>
         InventoryManager.Instance.Subscribe(this);
     }
 
-    public void SetItemGUI(Item item)
+    public void SetItemGUI(ItemData item)
     {
         Color tierColor = colors[(int)item.tier];
         
         switch (item.type)
         {
-            case Item.ItemType.Helmet:
+            case ItemData.ItemType.Helmet:
                 slotHelmet.color = tierColor;
                 if(item.icon != null)
                     iconHelmet.sprite = item.icon;
@@ -54,14 +54,14 @@ public class GUI_ItemEquiped : MonoBehaviour, IObserver<InventoryManager>
                 
                     
                 break;
-            case Item.ItemType.Armor:
+            case ItemData.ItemType.Armor:
                 slotArmor.color = tierColor;
                 if (item.icon != null)
                     iconArmor.sprite = item.icon;
                 if (armorValue != null)
                     armorValue.text = string.Format(LangManager.Instance.GetStringByKey("shopItem_HP"), item.value);
                 break;
-            case Item.ItemType.Weapon:
+            case ItemData.ItemType.Weapon:
                 slotHandL.color = tierColor;
                 if (item.icon != null)
                     iconHandL.sprite = item.icon;
@@ -70,7 +70,7 @@ public class GUI_ItemEquiped : MonoBehaviour, IObserver<InventoryManager>
                 if(weaponSkillValue != null && item.hasSkill)
                     weaponSkillValue.text = "Cost : " + item.skillCost.ToString() + "\nDMG : " + item.skillDmg.ToString();
                 break;
-            case Item.ItemType.Shield:
+            case ItemData.ItemType.Shield:
                 slotHandR.color = tierColor;
                 if (item.icon != null)
                     iconHandR.sprite = item.icon;
@@ -83,8 +83,8 @@ public class GUI_ItemEquiped : MonoBehaviour, IObserver<InventoryManager>
     public void Notified()
     {
         if (!slotHelmet) return;
-        List<Item> list = InventoryManager.Instance.GetItems();
-        foreach (Item item in list) {
+        List<ItemData> list = InventoryManager.Instance.GetItems();
+        foreach (ItemData item in list) {
             SetItemGUI(item);
         }
     }

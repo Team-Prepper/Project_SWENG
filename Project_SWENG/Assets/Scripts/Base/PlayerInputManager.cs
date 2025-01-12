@@ -1,4 +1,3 @@
-using Photon.Pun;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
@@ -8,7 +7,7 @@ public class PlayerInputManager : MonoSingleton<PlayerInputManager>
 {
     // LOCAL PLAYER
     public LayerMask selectionMask;
-    private Hex hex = null;
+    private MapUnit hex = null;
     GameObject originObj = null;
 
     PlayerInputSystem playerControls;
@@ -121,7 +120,7 @@ public class PlayerInputManager : MonoSingleton<PlayerInputManager>
     {
         
         Debug.Log("SpaceBar");
-        Debug.Log(PhotonNetwork.NetworkClientState);
+        //Debug.Log(PhotonNetwork.NetworkClientState);
         /*
         if (!GameManager.IsNull())
         {
@@ -144,15 +143,17 @@ public class PlayerInputManager : MonoSingleton<PlayerInputManager>
         if (hex != null)
         {
             // origin off
-            hex.OnMouseToggle();
+            hex.OnMouseToggle(false);
         }
 
-        hex = selectedObject.GetComponent<Hex>();
+        if (!CameraManager.Instance.IsWide) return;
+
+        hex = selectedObject.GetComponent<MapUnit>();
 
         if (hex != null)
         {
             // New Obj on
-            hex.OnMouseToggle();
+            hex.OnMouseToggle(true);
         }
 
     }

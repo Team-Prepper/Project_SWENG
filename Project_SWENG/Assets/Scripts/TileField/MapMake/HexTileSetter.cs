@@ -11,10 +11,10 @@ public class HexTileSetter : MonoBehaviour {
 
     [SerializeField] GameObject _entity;
 
-    GridMaker _inforTarget;
+    MapMaker _inforTarget;
     Transform _container;
 
-    public void SetInfor(GridMaker inforTarget) {
+    public void SetInfor(MapMaker inforTarget) {
         _inforTarget = inforTarget;
         SetContainer();
         SetTile();
@@ -48,7 +48,7 @@ public class HexTileSetter : MonoBehaviour {
     public void SetEntity() {
         GameObject entity = Instantiate(_entity, _container);
         entity.transform.localPosition = Vector3.zero;
-        gameObject.GetComponent<Hex>().Entity = entity;
+        gameObject.GetComponent<MapUnit>().Entity = entity;
     }
 
 }

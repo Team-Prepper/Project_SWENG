@@ -12,21 +12,24 @@ public class GUI_AttackSelect : GUICustomFullScreen, IAttackTargetSelector {
     private IList<HexCoordinate> _attackRange;
     private int _useMarkCount;
 
-    Hex _attackTarget;
+    MapUnit _attackTarget;
     IAttack _targetAttack;
+    ICharacterController _cc;
 
-    public void Set(IAttack attack, Vector3 pos)
+
+    public void Set(IAttack attack, ICharacterController cc)
     {
         _targetAttack = attack;
+        _cc = cc;
 
         _markerParent.localScale = Vector3.one / GameObject.Find("Canvas").GetComponent<RectTransform>().localScale.y;
         _attackRange = new List<HexCoordinate>();
 
         _attackTarget = null;
 
-        foreach (var neighbour in HexGrid.Instance.GetNeighboursFor(HexCoordinate.ConvertFromVector3(pos)))
+        foreach (var neighbour in HexGrid.Instance.GetNeighboursFor(cc.HexPos))
         {
-            Hex atkHex = HexGrid.Instance.GetTileAt(neighbour);
+            MapUnit atkHex = HexGrid.Instance.GetTileAt(neighbour);
 
             if (!(atkHex.tileType == TileDataScript.TileType.normal || atkHex.tileType == TileDataScript.TileType.dungon)) continue;
 
@@ -34,7 +37,7 @@ public class GUI_AttackSelect : GUICustomFullScreen, IAttackTargetSelector {
             _SetMarker(atkHex.transform.position);
         }
 
-        CamMovement.Instance.ConvertToWideCam();
+        CameraManager.Instance.ConverTo(_cc.transform, "Wide");
     }
 
     private void _SetMarker(Vector3 pos)
@@ -76,18 +79,26 @@ public class GUI_AttackSelect : GUICustomFullScreen, IAttackTargetSelector {
 
         _ResetMarker();
 
-        if (!_attackRange.Contains(selectGridPos))
+        if (_attackRange.Contains(selectGridPos))
         {
-            _attackTarget = null;
-            foreach (HexCoordinate pos in _attackRange)
-            {
-                _SetMarker(pos.ConvertToVector3());
-            }
+            _attackTarget = HexGrid.Instance.GetTileAt(selectGridPos);
+            _SetMarker(_attackTarget.transform.position);
+
             return;
 
         }
 
-        _attackTarget = HexGrid.Instance.GetTileAt(selectGridPos);
-        _SetMarker(_attackTarget.transform.position);
+        if (_attackTarget == null) {
+            _cc.ActionEnd();
+            Close();
+            return;
+        }
+
+        _attackTarget = null;
+
+        foreach (HexCoordinate pos in _attackRange)
+        {
+            _SetMarker(pos.ConvertToVector3());
+        }
     }
 }

@@ -6,7 +6,7 @@ using EHTool.UIKit;
 
 public class GUI_ItemInterAction : GUIPopUp
 {
-    private Item _targetItem;
+    private ItemData _targetItem;
 
     [SerializeField] private Image _itemIcon;
     [SerializeField] private Image _itemSkillIcon;
@@ -15,7 +15,7 @@ public class GUI_ItemInterAction : GUIPopUp
     [SerializeField] private Text _itemValueLabel;
     [SerializeField] private TextMeshProUGUI _itemSkillInfoLabel;
 
-    public void SetItem(Item item) {
+    public void SetItem(ItemData item) {
 
         _targetItem = item;
         _itemIcon.sprite = item.icon;
@@ -25,18 +25,18 @@ public class GUI_ItemInterAction : GUIPopUp
 
         switch (item.type)
         {
-            case Item.ItemType.Helmet:
+            case ItemData.ItemType.Helmet:
                 _itemInforLabel.text = LangManager.Instance.GetStringByKey("itemInterAction_All");
                 break;
-            case Item.ItemType.Armor:
+            case ItemData.ItemType.Armor:
                 _itemInforLabel.text = LangManager.Instance.GetStringByKey("itemInterAction_HP"); ;
                 break;
-            case Item.ItemType.Weapon:
+            case ItemData.ItemType.Weapon:
                 _itemInforLabel.text = LangManager.Instance.GetStringByKey("itemInterAction_Attack"); ;
                 _itemSkillInfoLabel.text = "Cost : " + item.skillCost + "\n";
                 _itemSkillInfoLabel.text += "Dmg : " + item.skillDmg;
                 break;
-            case Item.ItemType.Shield:
+            case ItemData.ItemType.Shield:
                 _itemInforLabel.text = LangManager.Instance.GetStringByKey("itemInterAction_Defense"); ;
                 break;
             default:

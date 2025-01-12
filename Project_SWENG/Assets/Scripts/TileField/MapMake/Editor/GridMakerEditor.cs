@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(GridMaker))]
+[CustomEditor(typeof(MapMaker))]
 public class GridMakerEditor : Editor
 {
     public override void OnInspectorGUI()
     {
         base.OnInspectorGUI();
 
-        GridMaker generator = (GridMaker)target;
+        MapMaker generator = (MapMaker)target;
 
         if (GUILayout.Button("Generate World")) {
             generator.CreateHexGrid();

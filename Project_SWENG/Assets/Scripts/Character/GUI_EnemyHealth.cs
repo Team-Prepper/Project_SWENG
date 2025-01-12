@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using EHTool.UtilKit;
 
-public class GUI_EnemyHealth : MonoBehaviour, IHealthUI
+public class GUI_EnemyHealth : IHealthUI
 {
     [SerializeField] Image healthBar;
 
@@ -11,7 +11,7 @@ public class GUI_EnemyHealth : MonoBehaviour, IHealthUI
         healthBar.fillAmount = 1;
     }
 
-    public void UpdateGUI(GaugeValue<int> value)
+    public override void UpdateGUI(GaugeValue<int> value)
     {
         healthBar.fillAmount = value.ConvertToRate();
     }

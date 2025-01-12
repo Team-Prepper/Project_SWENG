@@ -1,7 +1,4 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using EHTool;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -12,40 +9,13 @@ public class HexGrid : Singleton<HexGrid>
 
     //public Dictionary<Vector3Int, bool> hexTileDict = new Dictionary<Vector3Int, bool>();
 
-    public IDictionary<HexCoordinate, Hex> hexTileDict = new Dictionary<HexCoordinate, Hex>();
+    IDictionary<HexCoordinate, MapUnit> hexTileDict = new Dictionary<HexCoordinate, MapUnit>();
     IDictionary<HexCoordinate, ISet<HexCoordinate>> hexTileNeighboursDict = new Dictionary<HexCoordinate, ISet<HexCoordinate>>();
 
-    private List<Hex> _emptyHexTiles = new List<Hex>();
+    private IList<MapUnit> _emptyHexTiles = new List<MapUnit>();
 
-    static class Direction {
-        public static List<HexCoordinate> directionsOffsetOdd = new List<HexCoordinate>
-    {
-        new HexCoordinate( 0, 1), //N
-        new HexCoordinate( 1, 0), //E1
-        new HexCoordinate( 1, -1), //E2
-        new HexCoordinate( 0, -1), //S
-        new HexCoordinate(-1, -1), //W1
-        new HexCoordinate(-1, 0), //W2
-    };
+    public Map Map { get; internal set; }
 
-        public static List<HexCoordinate> directionsOffsetEven = new List<HexCoordinate>
-    {
-        new HexCoordinate( 0, 1), //N
-        new HexCoordinate( 1, 1), //E1
-        new HexCoordinate( 1, 0), //E2
-        new HexCoordinate( 0, -1), //S
-        new HexCoordinate(-1, 0), //W1
-        new HexCoordinate(-1, 1), //W2
-    };
-
-        public static List<HexCoordinate> GetDirectionList(int x)
-            => x % 2 == 0 ? directionsOffsetEven : directionsOffsetOdd;
-    }
-
-    protected override void OnCreate()
-    {
-
-    }
     public IPathGroup GetPathGroup(HexCoordinate startPos, int point)
     {
         IDictionary<HexCoordinate, HexCoordinate?> visitedNodes = new Dictionary<HexCoordinate, HexCoordinate?>();
@@ -60,9 +30,10 @@ public class HexGrid : Singleton<HexGrid>
         while (nodesToVisitQueue.Count > 0)
         {
             HexCoordinate currentNode = nodesToVisitQueue.Dequeue();
+
             foreach (HexCoordinate neighbourPosition in GetNeighboursFor(currentNode))
             {
-                if (GetTileAt(neighbourPosition).IsObstacle())
+                if (GetTileAt(neighbourPosition).IsObstacle)
                     continue;
 
                 int nodeCost = GetTileAt(neighbourPosition).Cost;
@@ -110,7 +81,7 @@ public class HexGrid : Singleton<HexGrid>
                     return new BFSResult(visitedNodes);
                 }
 
-                if (GetTileAt(neighbourPosition).IsObstacle())
+                if (GetTileAt(neighbourPosition).IsObstacle)
                     continue;
 
                 int newCost = costSoFar[currentNode] + GetTileAt(neighbourPosition).Cost;
@@ -135,26 +106,26 @@ public class HexGrid : Singleton<HexGrid>
         return new BFSResult(new Dictionary<HexCoordinate, HexCoordinate?>());
     }
 
-    public void AddTile(Hex hex) {
+    public void AddTile(MapUnit hex) {
         hexTileDict[hex.HexCoords] = hex;
 
         if (hex.tileType == TileDataScript.TileType.normal) _emptyHexTiles.Add(hex);
     }
 
 
-    public Hex GetTileAt(Vector3 hexCoordinates)
+    public MapUnit GetTileAt(Vector3 hexCoordinates)
     {
         return GetTileAt(HexCoordinate.ConvertFromVector3(hexCoordinates));
     }
 
-    public Hex GetTileAt(HexCoordinate hexCoordinate)
+    public MapUnit GetTileAt(HexCoordinate hexCoordinate)
     {
-        hexTileDict.TryGetValue(hexCoordinate, out Hex result);
+        hexTileDict.TryGetValue(hexCoordinate, out MapUnit result);
         return result;
 
     }
 
-    public ISet<HexCoordinate> GetNeighboursFor(HexCoordinate hexCoordinates, uint len) {
+    public ISet<HexCoordinate> GetNeighboursFor(HexCoordinate hexCoordinates, int len) {
         if (len < 1) return new HashSet<HexCoordinate>();
         if (len == 1) return GetNeighboursFor(hexCoordinates);
 
@@ -187,12 +158,12 @@ public class HexGrid : Singleton<HexGrid>
         return hexTileNeighboursDict[hexCoordinates];
     }
 
-    public Hex GetRandHexAtEmpty()
+    public MapUnit GetRandHexAtEmpty()
     {
         if(_emptyHexTiles.Count == 0) return null;
 
         int randHexIndex = Random.Range(0, _emptyHexTiles.Count);
-        Hex randHex = _emptyHexTiles[randHexIndex];
+        MapUnit randHex = _emptyHexTiles[randHexIndex];
         _emptyHexTiles.Remove(randHex);
         foreach(var hex in GetNeighboursFor(randHex.HexCoords))
         {
@@ -202,11 +173,4 @@ public class HexGrid : Singleton<HexGrid>
         return randHex;
     }
 
-    public void RemoveAtEmeptyHexTiles(Hex setHex)
-    {
-        foreach(var hex in GetNeighboursFor(setHex.HexCoords))
-        {
-            _emptyHexTiles.Remove(GetTileAt(hex));
-        }
-    }
 }

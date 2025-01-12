@@ -75,7 +75,7 @@ namespace EHTool.UtilKit {
 
         public float ConvertToRate()
         {
-            return (_curValue - _minValue) / (_maxValue - _minValue);
+            return (_curValue - _minValue) * 1f / (_maxValue - _minValue);
         }
     }
 }

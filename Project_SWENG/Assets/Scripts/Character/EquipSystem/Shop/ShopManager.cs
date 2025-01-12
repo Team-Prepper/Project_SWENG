@@ -1,7 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using CharacterSystem;
-using Photon.Pun;
 using UnityEngine;
 using EHTool;
 
@@ -9,16 +7,16 @@ public class ShopManager : MonoSingleton<ShopManager>
 {
     public GameObject GUI_ShopPrefab;
     private GUI_ShopInterAction GUI_shop;
-    public List<Item> items = new List<Item>();
-    private List<Item> selectedList = new List<Item>();
+    public List<ItemData> items = new List<ItemData>();
+    private List<ItemData> selectedList = new List<ItemData>();
 
-    private PlayerCharacter visitor;
+    private CharacterStatus visitor;
 
     public void WelcomeToShop(GameObject player)
     {
-        if (player.GetPhotonView().IsMine == true)
+        //if (player.GetPhotonView().IsMine == true)
         {
-            visitor = player.GetComponent<PlayerCharacter>();
+            visitor = player.GetComponent<CharacterStatus>();
             if(visitor != null )
             {
                 GUI_shop = Instantiate(GUI_ShopPrefab).GetComponent<GUI_ShopInterAction>();
@@ -26,8 +24,9 @@ public class ShopManager : MonoSingleton<ShopManager>
         }
     }
 
-    public bool BuyItemToShop(Item targetItem)
+    public bool BuyItemToShop(ItemData targetItem)
     {
+        /*
         if(visitor.GetPoint() >= targetItem.cost)
         {
             visitor.UsePoint(targetItem.cost);
@@ -38,9 +37,11 @@ public class ShopManager : MonoSingleton<ShopManager>
 
         GUI_shop.showComment("Not enough DicePoint");
         return false;
+        */
+        return false;
     }
 
-    public List<Item> GetRandomItemList(int itemCounts)
+    public List<ItemData> GetRandomItemList(int itemCounts)
     {
         return GetRandomSelection(items, itemCounts);
     }

@@ -1,23 +1,22 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using EHTool.UtilKit;
 
-public class GUI_PlayerHealth : MonoBehaviour, IHealthUI
+public class GUI_PlayerHealth : IHealthUI
 {
 
     [SerializeField] Image _healthFront;
     [SerializeField] Image _healthBack;
     [SerializeField] Image _afterimage;
-    [SerializeField] TextMeshProUGUI _hpText;
+    [SerializeField] Text _hpText;
     
     public float lerpSpeed = 100f;
 
     float _curValue;
 
-    public void UpdateGUI(GaugeValue<int> value)
+    public override void UpdateGUI(GaugeValue<int> value)
     {
         _healthFront.fillAmount = value.ConvertToRate();
         _healthBack.fillAmount = value.ConvertToRate();

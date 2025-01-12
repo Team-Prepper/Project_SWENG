@@ -1,19 +1,17 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class GlowHighlight : MonoBehaviour
 {
-    Dictionary<Renderer, Material[]> glowMaterialDictionary = new Dictionary<Renderer, Material[]>();
-    Dictionary<Renderer, Material[]> originalMaterialDictionary = new Dictionary<Renderer, Material[]>();
+    IDictionary<Renderer, Material[]> _glowMatDict = new Dictionary<Renderer, Material[]>();
+    IDictionary<Renderer, Material[]> _originMatDict = new Dictionary<Renderer, Material[]>();
 
-    Dictionary<Color, Material> cachedGlowMaterials = new Dictionary<Color, Material>();
+    IDictionary<Color, Material> _cachedMat = new Dictionary<Color, Material>();
 
+    [SerializeField] SpriteRenderer _sprRenderer;
     public Material glowMaterial;
 
     private bool isGlowing = false;
-    private bool onMouse = false;
 
     private Color validSpaceColor = Color.green;
     private Color originalGlowColor;
@@ -33,23 +31,23 @@ public class GlowHighlight : MonoBehaviour
         foreach (Renderer renderer in GetComponentsInChildren<Renderer>())
         {
             Material[] originalMaterials = renderer.materials;
-            originalMaterialDictionary.Add(renderer, originalMaterials);
+            _originMatDict.Add(renderer, originalMaterials);
 
             Material[] newMaterials = new Material[renderer.materials.Length];
 
             for (int i = 0; i < originalMaterials.Length; i++)
             {
                 Material mat = null;
-                if (cachedGlowMaterials.TryGetValue(originalMaterials[i].color, out mat) == false)
+                if (_cachedMat.TryGetValue(originalMaterials[i].color, out mat) == false)
                 {
                     mat = new Material(glowMaterial); 
                     //By default, Unity considers a color with the property name name "_Color" to be the main color
                     mat.color = originalMaterials[i].color;
-                    cachedGlowMaterials[mat.color] = mat;
+                    _cachedMat[mat.color] = mat;
                 }
                 newMaterials[i] = mat;
             }
-            glowMaterialDictionary.Add(renderer, newMaterials);
+            _glowMatDict.Add(renderer, newMaterials);
         }
     }
 
@@ -58,108 +56,99 @@ public class GlowHighlight : MonoBehaviour
     {
         Transform selectObject = transform.Find("Selection");
 
-        if (selectObject != null)
+        if (selectObject == null) return;
+
+        Renderer[] renderers = selectObject.GetComponentsInChildren<Renderer>();
+
+        foreach (Renderer renderer in renderers)
         {
-            Renderer[] renderers = selectObject.GetComponentsInChildren<Renderer>();
+            Material[] originalMaterials = renderer.materials;
+            _originMatDict.Add(renderer, originalMaterials);
 
-            foreach (Renderer renderer in renderers)
+            Material[] newMaterials = new Material[renderer.materials.Length];
+
+            for (int i = 0; i < originalMaterials.Length; i++)
             {
-                Material[] originalMaterials = renderer.materials;
-                originalMaterialDictionary.Add(renderer, originalMaterials);
-
-                Material[] newMaterials = new Material[renderer.materials.Length];
-
-                for (int i = 0; i < originalMaterials.Length; i++)
+                Material mat = null;
+                if (_cachedMat.TryGetValue(originalMaterials[i].color, out mat) == false)
                 {
-                    Material mat = null;
-                    if (cachedGlowMaterials.TryGetValue(originalMaterials[i].color, out mat) == false)
-                    {
-                        mat = new Material(glowMaterial);
-                        //By default, Unity considers a color with the property name name "_Color" to be the main color
-                        mat.color = originalMaterials[i].color;
-                        cachedGlowMaterials[mat.color] = mat;
-                    }
-                    newMaterials[i] = mat;
+                    mat = new Material(glowMaterial);
+                    //By default, Unity considers a color with the property name name "_Color" to be the main color
+                    mat.color = originalMaterials[i].color;
+                    _cachedMat[mat.color] = mat;
                 }
-                glowMaterialDictionary.Add(renderer, newMaterials);
+                newMaterials[i] = mat;
             }
+            _glowMatDict.Add(renderer, newMaterials);
         }
+    }
+
+    public void SetSprite(Sprite spr, bool isActive)
+    {
+        _sprRenderer.gameObject.SetActive(isActive);
+        _sprRenderer.sprite = spr;
+
     }
 
     internal void HighlightValidPath()
     {
         if (isGlowing == false)
             return;
-        foreach (Renderer renderer in glowMaterialDictionary.Keys)
-        {
-            foreach (Material item in glowMaterialDictionary[renderer])
-            {
-                item.SetFloat("_DynamicGlow", 0f);
-                item.SetFloat("_GlowPower", 0f);
-                item.SetColor("_GlowColor", validSpaceColor);
-            }
-        }
+
+        SetHighlight(0f, 0f, validSpaceColor);
     }
 
-    internal void ResetGlowHighlight()
+    private void SetHighlight(float dynamic, float power, Color color)
     {
-        foreach (Renderer renderer in glowMaterialDictionary.Keys)
-        {
-            foreach (Material item in glowMaterialDictionary[renderer])
-            {
-                item.SetFloat("_DynamicGlow", 1f);
-                item.SetFloat("_GlowPower", 1f);
-                item.SetColor("_GlowColor", originalGlowColor);
-            }
-        }
-    }
 
-    public void ToggleGlow()
-    {
-        if (isGlowing == false)
+        foreach (Material[] mats in _glowMatDict.Values)
         {
-            ResetGlowHighlight();
-            foreach (Renderer renderer in originalMaterialDictionary.Keys)
+            foreach (Material item in mats)
             {
-                renderer.materials = glowMaterialDictionary[renderer];
+                item.SetFloat("_DynamicGlow", dynamic);
+                item.SetFloat("_GlowPower", power);
+                item.SetColor("_GlowColor", color);
             }
+        }
 
-        }
-        else
-        {
-            foreach (Renderer renderer in originalMaterialDictionary.Keys)
-            {
-                renderer.materials = originalMaterialDictionary[renderer];
-            }
-        }
-        Transform selectObject = transform.Find("Selection");
-        selectObject.GetComponentInChildren<Renderer>().enabled = !selectObject.GetComponentInChildren<Renderer>().enabled;
-        isGlowing = !isGlowing;
     }
 
     public void ToggleGlow(bool state)
     {
         if (isGlowing == state)
             return;
-        isGlowing = !state;
-        ToggleGlow();
-    }
 
-    public void OnMouseToggleGlow() // just Cursor on the tile
-    {
-        Transform selectObject = transform.Find("OnMouse");
-        MeshRenderer meshRenderer = selectObject.GetComponentInChildren<MeshRenderer>();
-        SpriteRenderer sr = selectObject.GetComponentInChildren<SpriteRenderer>();
-        if(sr == null || meshRenderer == null) return;
-        meshRenderer.enabled = !meshRenderer.enabled; 
-        if (onMouse == false)
+        isGlowing = state;
+
+        IDictionary<Renderer, Material[]> dict;
+
+        if (isGlowing)
         {
-            sr.color = Color.red + Color.yellow;
+            SetHighlight(1, 1f, originalGlowColor);
+            dict = _glowMatDict;
         }
         else
         {
-            sr.color = originalSpriteColor;
+            dict = _originMatDict;
         }
-        onMouse = !onMouse;
+
+        foreach (Renderer renderer in dict.Keys)
+        {
+            renderer.materials = dict[renderer];
+        }
+
+        Transform selectObject = transform.Find("Selection");
+        selectObject.GetComponentInChildren<Renderer>().enabled = state;
+    }
+
+    public void OnMouseToggleGlow(bool isOn) // just Cursor on the tile
+    {
+        GameObject selectObject = transform.Find("OnMouse").gameObject;
+        MeshRenderer meshRenderer = selectObject.GetComponent<MeshRenderer>();
+
+        if(meshRenderer == null) return;
+
+        meshRenderer.enabled = isOn;
+
     }
 }

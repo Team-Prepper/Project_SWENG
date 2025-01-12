@@ -1,22 +1,21 @@
 using System.Collections.Generic;
+using UnityEngine;
 
-public interface ICharacterController : IDamagable {
+public interface ICharacterController : IDamagable, IDicePoint, IEntity {
 
-    public void Initial(string characterName, bool camSync);
+    Transform transform { get; }
+
+    public void Initial(string characterName, int teamIdx, bool camSync);
     public void SetActionSelector(IActionSelector actionSelector);
 
     public void SetPlay();
     public void ActionEnd();
     public void TurnEnd();
+    public void CamSetting(string key);
 
-    public void CamSetting();
+    public void PlayAnim(string triggerType, string triggerValue);
 
-    public void Attack(IList<HexCoordinate> targetPos, int dmg, float time);
-    public void DoAttack();
-    public void DoMove();
-
-    public void MoveStart();
-    public void MoveEnd();
+    public void Move(Queue<Vector3> path);
 
     public void MoveTo(HexCoordinate before, HexCoordinate after);
 

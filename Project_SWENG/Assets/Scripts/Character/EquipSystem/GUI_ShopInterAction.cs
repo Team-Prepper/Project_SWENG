@@ -14,13 +14,13 @@ public class GUI_ShopInterAction : GUIPopUp
     public override void Open()
     {
         base.Open();
-        CamMovement.Instance.IsPlayerMove = true;
+        CameraManager.Instance.IsPlayerMove = true;
         DisplayItem();
     }
 
     private void DisplayItem()
     {
-        foreach (Item item in ShopManager.Instance.GetRandomItemList(itemCounts))
+        foreach (ItemData item in ShopManager.Instance.GetRandomItemList(itemCounts))
         {
             SetItem(item);
         }
@@ -29,11 +29,11 @@ public class GUI_ShopInterAction : GUIPopUp
 
     public void ExitShop()
     {
-        CamMovement.Instance.IsPlayerMove = false;
+        CameraManager.Instance.IsPlayerMove = false;
         Destroy(gameObject);
     }
 
-    private void SetItem(Item item)
+    private void SetItem(ItemData item)
     {
         GameObject itemInstance = Instantiate(itemInfo, itemSlot);
         itemInstance.GetComponent<ShopItemController>().SetItem(item);

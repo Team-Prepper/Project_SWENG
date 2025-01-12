@@ -18,6 +18,7 @@ public class CloudBox : MonoBehaviour
         Instance = this;
     }
 
+    /*
     private void CreatCloud(object sender, EventArgs e)
     {
 
@@ -34,6 +35,7 @@ public class CloudBox : MonoBehaviour
             
         }
     }
+    */
 
     public void CloudActiveFalse(HexCoordinate hexCoordinate)
     {

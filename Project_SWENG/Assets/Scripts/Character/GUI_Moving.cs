@@ -1,16 +1,15 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
-using CharacterSystem;
 
 public class GUI_Moving : GUICustomFullScreen {
+
+    [SerializeField] private Sprite _glowSprite;
 
     [SerializeField] private Transform[] _moveNumPrefabs;
     [SerializeField] private Transform _moveNumParent;
 
-    [SerializeField] private Character _target;
+    [SerializeField] private ICharacterController _cc;
     private HexCoordinate? _selectedPos;
 
     private IPathGroup movementRange = new BFSResult();
@@ -22,22 +21,23 @@ public class GUI_Moving : GUICustomFullScreen {
 
         foreach (HexCoordinate hexPosition in movementRange.GetRangePositions())
         {
-            HexGrid.Instance.GetTileAt(hexPosition).DisableHighlight();
+            HexGrid.Instance.GetTileAt(hexPosition).SetSprite(_glowSprite, false);
         }
+
         _HideMoveNum();
     }
 
     private void _ShowRange()
     {
 
-        HexCoordinate unitPos = HexCoordinate.ConvertFromVector3(_target.transform.position);
+        HexCoordinate unitPos = _cc.HexPos;
 
         foreach (HexCoordinate hexPosition in movementRange.GetRangePositions())
         {
             if (unitPos.Equals(hexPosition))
                 continue;
 
-            HexGrid.Instance.GetTileAt(hexPosition).EnableHighlight();
+            HexGrid.Instance.GetTileAt(hexPosition).SetSprite(_glowSprite, true);
         }
     }
 
@@ -52,8 +52,7 @@ public class GUI_Moving : GUICustomFullScreen {
         int i = 0;
         foreach (HexCoordinate hexPosition in currentPath)
         {
-            Hex pathHex = HexGrid.Instance.GetTileAt(hexPosition);
-            pathHex.HighlightPath();
+            MapUnit pathHex = HexGrid.Instance.GetTileAt(hexPosition);
             _moveNumPrefabs[Mathf.Clamp(i += pathHex.Cost, 0, 9)].position = pathHex.transform.position;
         }
     }
@@ -69,28 +68,28 @@ public class GUI_Moving : GUICustomFullScreen {
 
     private void _CalcualteRange()
     {
-        movementRange = HexGrid.Instance.GetPathGroup(HexCoordinate.ConvertFromVector3(_target.transform.position), _target.GetPoint());
+        movementRange = HexGrid.Instance.GetPathGroup(_cc.HexPos, _cc.GetPoint());
     }
 
     private void _MoveUnit()
     {
         Queue<Vector3> path = new Queue<Vector3>(currentPath.Select(pos => HexGrid.Instance.GetTileAt(pos).transform.position).ToList());
-        _target.Move(path);
+        _cc.Move(path);
         _HideRange();
         Close();
     }
 
-    public void Set(Character target)
+    public void Set(ICharacterController target)
     {
         _selectedPos = null;
 
-        _target = target;
+        _cc = target;
 
         _CalcualteRange();
         _ShowRange();
         _moveNumParent.localScale = Vector3.one / GameObject.Find("Canvas").GetComponent<RectTransform>().localScale.y;
 
-        CamMovement.Instance.ConvertToWideCam();
+        _cc.CamSetting("Wide");
     }
 
     public override void HexSelect(HexCoordinate selectGridPos)
@@ -103,6 +102,10 @@ public class GUI_Moving : GUICustomFullScreen {
             return;
         }
 
+        if (selectGridPos.Equals(_cc.HexPos)) {
+            _cc.ActionEnd();
+            Close();
+        }
 
         _ShowPath(selectGridPos);
         _selectedPos = selectGridPos;

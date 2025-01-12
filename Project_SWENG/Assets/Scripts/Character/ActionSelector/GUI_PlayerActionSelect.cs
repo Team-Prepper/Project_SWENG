@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using CharacterSystem;
 using EHTool.UIKit;
 
 public class GUI_PlayerActionSelect : GUICustomFullScreen, IActionSelector {
@@ -20,32 +19,29 @@ public class GUI_PlayerActionSelect : GUICustomFullScreen, IActionSelector {
 
     public Button _turnEndButton;
 
-    ICharacterController _targetCC;
-    PlayerCharacter _targetPlayer;
+    ICharacterController _cc;
 
     public void SetPlayer(GameObject target)
     {
-        
-        CamMovement.Instance.SetCamTarget(target.transform);
-        _targetPlayer = target.GetComponentInChildren<PlayerCharacter>();
-
-        _targetPlayer.SetHealthUI(_playerHealth);
+        CameraManager.Instance.SetCamTarget(target.transform);
+        target.GetComponentInChildren<CharacterStatus>()?.SetHealthUI(_playerHealth);
 
     }
 
     public void SetCharacterController(ICharacterController cc)
     {
-        _targetCC = cc;
+        _cc = cc;
 
     }
 
-    public void Ready(IList<Character.Action> actionList)
+    public void Ready(IList<CharacterStatus.Action> actionList)
     {
-        _targetCC.CamSetting();
+        gameObject.SetActive(true);
+        _cc.CamSetting("Character");
 
-        btnDice.interactable = actionList.Contains(Character.Action.Dice);
-        btnAttack.interactable = actionList.Contains(Character.Action.Attack);
-        btnMove.interactable = actionList.Contains(Character.Action.Move);
+        btnDice.interactable = actionList.Contains(CharacterStatus.Action.Dice);
+        btnAttack.interactable = actionList.Contains(CharacterStatus.Action.Attack);
+        btnMove.interactable = actionList.Contains(CharacterStatus.Action.Move);
 
         StartCoroutine(_PanelOpen());
     }
@@ -76,19 +72,19 @@ public class GUI_PlayerActionSelect : GUICustomFullScreen, IActionSelector {
 
     public void OpenAttack()
     {
-        _targetCC.DoAttack();
+        new BasicTargetingAttack(_cc,  5, _cc.GetPoint());
         _AfterAction();
     }
 
     public void OpenMove()
     {
-        _targetCC.DoMove();
+        UIManager.Instance.OpenGUI<GUI_Moving>("Move")?.Set(_cc);
         _AfterAction();
     }
 
     public void OpenDice()
     {
-        UIManager.Instance.OpenGUI<GUI_Dice>("Dice").SetPlayer(_targetPlayer);
+        UIManager.Instance.OpenGUI<GUI_Dice>("Dice").SetPlayer(_cc);
         _AfterAction();
     }
 
@@ -96,7 +92,7 @@ public class GUI_PlayerActionSelect : GUICustomFullScreen, IActionSelector {
     {
         if (_nowPopUp != null) return;
         _AfterAction();
-        _targetCC.TurnEnd();
+        _cc.TurnEnd();
     }
 
     void _AfterAction() {
@@ -107,7 +103,7 @@ public class GUI_PlayerActionSelect : GUICustomFullScreen, IActionSelector {
     protected override void Update()
     {
         base.Update();
-        _dicePoint.text = _targetPlayer.GetPoint().ToString();
+        _dicePoint.text = _cc.GetPoint().ToString();
         _turnEndGlowLight.SetActive(_turnEndButton.interactable);
     }
 
