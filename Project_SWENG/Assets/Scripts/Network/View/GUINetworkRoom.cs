@@ -37,7 +37,8 @@ public class GUINetworkRoom : GUICustomFullScreen, RoomObserver {
     public override void Open()
     {
         base.Open();
-        
+
+        GameManager.Instance.Network.GameMasterSet();
         _isReady = false;
         Renewal();
     }

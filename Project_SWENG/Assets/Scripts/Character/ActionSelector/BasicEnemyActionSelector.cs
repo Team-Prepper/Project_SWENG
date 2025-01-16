@@ -17,21 +17,22 @@ public class BasicEnemyActionSelector : IActionSelector {
         _cc = cc;
     }
 
-    public void Ready(IList<CharacterStatus.Action> actionList)
+    public void Ready(IList<IActionSelector.Action> actionList)
     {
-        if (actionList.Contains(CharacterStatus.Action.Dice)) {
+        if (actionList.Contains(IActionSelector.Action.Dice)) {
             _cc.SetPoint(4);
             return;
         }
 
-        IList<CharacterStatus.Action> list = new List<CharacterStatus.Action>();
+        IList<IActionSelector.Action> list = new List<IActionSelector.Action>();
 
-        foreach (CharacterStatus.Action a in actionList)
+        foreach (IActionSelector.Action a in actionList)
         {
-            if (a == CharacterStatus.Action.Attack && null == GetPlayerInRange(1)) continue;
-            if (a == CharacterStatus.Action.Move) {
-                if (null == GetPlayerInRange(Mathf.Max(_cc.GetPoint() / 2, 3))) continue;
-                if (null != GetPlayerInRange(1)) continue;
+            if (a == IActionSelector.Action.Interaction) continue;
+            if (a == IActionSelector.Action.Attack && null == GetEnemyInRange(_cc.HexPos, 1)) continue;
+            if (a == IActionSelector.Action.Move) {
+                if (null == GetEnemyInRange(_cc.HexPos, Mathf.Max(_cc.GetPoint() / 2, 3))) continue;
+                if (null != GetEnemyInRange(_cc.HexPos, 1)) continue;
             }
             list.Add(a);
         }
@@ -49,18 +50,18 @@ public class BasicEnemyActionSelector : IActionSelector {
         _cc.CamSetting("Character");
     }
 
-    public void DoAction(CharacterStatus.Action action)
+    public void DoAction(IActionSelector.Action action)
     {
 
         switch (action) {
-            case CharacterStatus.Action.Attack:
+            case IActionSelector.Action.Attack:
                 new BasicAttack(_cc, _cc.GetPoint());
                 _cc.UsePoint(_cc.GetPoint());
                 return;
-            case CharacterStatus.Action.Move:
+            case IActionSelector.Action.Move:
                 DoMove();
                 return;
-            case CharacterStatus.Action.Dice:
+            case IActionSelector.Action.Dice:
                 _cc.SetPoint(4);
                 return;
             default:
@@ -73,35 +74,35 @@ public class BasicEnemyActionSelector : IActionSelector {
 
     void DoMove() {
 
-        HexCoordinate? pos = GetPlayerInRange(Mathf.Max(3, _cc.GetPoint() / 2));
+        HexCoordinate? pos = GetEnemyInRange(_cc.HexPos, Mathf.Max(3, _cc.GetPoint() / 2));
 
         if (pos == null)
         {
-            _cc.ActionEnd();
+            _cc.ActionEnd(0);
             return;
         }
 
         IPathGroup movementRange = HexGrid.Instance.GetPathGroupTo(_cc.HexPos, pos.Value, _cc.GetPoint() + 2);
 
         IList<HexCoordinate> pathHex = movementRange.GetPathTo(pos.Value);
-        IList<Vector3> path = pathHex.Select(pos => HexGrid.Instance.GetTileAt(pos).transform.position).ToList();
+        IList<Vector3> path = pathHex.Select(pos => HexGrid.Instance.GetMapUnitAt(pos).transform.position).ToList();
 
         path.RemoveAt(path.Count - 1);
         _cc.Move(new Queue<Vector3>(path));
 
     }
 
-    private HexCoordinate? GetPlayerInRange(int range)
+    private HexCoordinate? GetEnemyInRange(HexCoordinate pos, int range)
     {
 
-        foreach (HexCoordinate pos in HexGrid.Instance.GetNeighboursFor( _cc.HexPos, range))
+        foreach (HexCoordinate p in HexGrid.Instance.GetNeighboursFor(pos, range))
         {
-            GameObject entity = HexGrid.Instance.GetTileAt(pos).Entity;
+            ICharacterController entity = HexGrid.Instance.GetMapUnitAt(p).CC;
 
-            if (entity != null && entity.CompareTag("Player"))
-            {
-                return pos;
-            }
+            if (entity == null) continue;
+            if (entity.TeamIdx == _cc.TeamIdx) continue;
+
+            return p;
         }
 
         return null;

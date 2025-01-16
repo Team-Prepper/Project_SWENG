@@ -301,7 +301,7 @@ Transform:
   m_GameObject: {fileID: 1101063257065619253}
   serializedVersion: 2
   m_LocalRotation: {x: 0.5, y: -0.5, z: -0.5, w: 0.5}
-  m_LocalPosition: {x: -5.522026e-34, y: 0.009641191, z: 0.00065985596}
+  m_LocalPosition: {x: -5.522026e-34, y: 0.6, z: 0.00065985596}
   m_LocalScale: {x: 60, y: 60, z: 60}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -573,13 +573,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _healthUI: {fileID: 6344804691434824250}
+  _nameCode: 
   _anim: {fileID: 6553928170046245639}
   _hp:
     _curValue: 50
     _maxValue: 50
     _minValue: 0
   _level: 1
-  _exp: 0
   _def: 0
   _attackPower: 10
 --- !u!1 &2574853504587313132
@@ -2286,7 +2286,7 @@ PrefabInstance:
     - target: {fileID: 404512375063164342, guid: 6b35e559e2048424d8b237e3718e2058,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.3
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 404512375063164342, guid: 6b35e559e2048424d8b237e3718e2058,
         type: 3}

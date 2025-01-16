@@ -38,4 +38,6 @@ public interface INetwork {
 
     public void LeaveRoom();
 
+    public void GameMasterSet();
+
 }

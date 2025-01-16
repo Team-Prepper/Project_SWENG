@@ -11,7 +11,7 @@ public class LocalCharacterController : MonoBehaviour, ICharacterController {
 
     [SerializeField] int _dicePoint = 0;
 
-    CharacterStatus _status;
+    public CharacterStatus Status { get; private set; }
     CharacterMove _moveComp;
     CharacterAttack _attackComp;
 
@@ -41,49 +41,55 @@ public class LocalCharacterController : MonoBehaviour, ICharacterController {
     // Start is called before the first frame update
     public void Initial(string characterName, int teamIdx, bool camSync)
     {
+        Debug.Log(characterName);
+
         GameObject go = AssetOpener.ImportGameObject(string.Format("Prefab/Characters/{0}", characterName));
 
         go.transform.SetParent(transform);
         go.transform.localPosition = Vector3.zero;
 
-        _status = go.GetComponent<CharacterStatus>();
+        Status = go.GetComponent<CharacterStatus>();
         _moveComp = go.GetComponent<CharacterMove>();
         _attackComp = go.GetComponent<CharacterAttack>();
-        
+
         if (_moveComp == null)
             _moveComp = gameObject.AddComponent<CharacterMove>();
         if (_attackComp == null)
             _attackComp = gameObject.AddComponent<CharacterAttack>();
 
-        _status.SetCC(this);
+        Status.SetCC(this);
         _moveComp.SetCC(this);
         _attackComp.SetCC(this);
 
-        HexGrid.Instance.GetTileAt(transform.position).Entity = gameObject;
 
         TeamIdx = teamIdx;
         GameManager.Instance.GameMaster.AddTeamMember(this, teamIdx);
+
+        MapUnit mapUnit = HexGrid.Instance.GetMapUnitAt(transform.position);
+
+        mapUnit.SetEntity(gameObject);
+        mapUnit.SetCC(this);
     }
 
     public void CamSetting(string key) {
-        CameraManager.Instance.ConverTo(transform, key);
+        CameraManager.Instance.CameraSetting(transform, key);
     }
 
     public void PlayAnim(string triggerType, string triggerValue) {
-        _status.PlayAnim(triggerType, triggerValue);
+        Status.PlayAnim(triggerType, triggerValue);
     }
 
     public void TakeDamage(int amount)
     {
-        _status.TakeDamage(amount);
+        Status.TakeDamage(amount);
 
-        if (_status.IsAlive)
+        if (Status.IsAlive)
         {
             PlayAnim("SetTrigger", "Hit");
             return;
         }
 
-        HexGrid.Instance.GetTileAt(gameObject.transform.position).Entity = null;
+        HexGrid.Instance.GetMapUnitAt(gameObject.transform.position).SetEntity(null);
 
         PlayAnim("SetTrigger", "Die");
         _actionSelector.Die();
@@ -103,15 +109,20 @@ public class LocalCharacterController : MonoBehaviour, ICharacterController {
         _actionSelector.SetCharacterController(this);
     }
 
-    public void ActionEnd()
+    public void ActionEnd(float time = 0) {
+        Invoke(nameof(_ActionEnd), time);
+    }
+
+    public void _ActionEnd()
     {
         if (_actionSelector == null) {
             return;
         }
 
-        List<CharacterStatus.Action> list = new List<CharacterStatus.Action>();
+        List<IActionSelector.Action> list = new List<IActionSelector.Action>();
 
-        if (_rollDice == false) list.Add(CharacterStatus.Action.Dice);
+        if (_rollDice == false) list.Add(IActionSelector.Action.Dice);
+        if (GetPoint() > 0) list.Add(IActionSelector.Action.Interaction);
 
         _moveComp.TryAddAction(list);
         _attackComp.TryAddAction(list);
@@ -125,13 +136,22 @@ public class LocalCharacterController : MonoBehaviour, ICharacterController {
 
     public void MoveTo(HexCoordinate before, HexCoordinate after)
     {
-        HexGrid.Instance.GetTileAt(before).Entity = null;
-        HexGrid.Instance.GetTileAt(after).Entity = gameObject;
-        HexGrid.Instance.GetTileAt(after).CloudActiveFalse();
+        HexGrid.Instance.GetMapUnitAt(before).SetEntity(null);
+        HexGrid.Instance.GetMapUnitAt(after).SetEntity(gameObject);
+        HexGrid.Instance.GetMapUnitAt(after).SetCC(this);
     }
 
     public void Move(Queue<Vector3> path)
     {
         _moveComp.Move(path);
+    }
+
+    public void EquipItem(string data) { 
+        
+    }
+
+    public void Interaction(HexCoordinate targetPos)
+    {
+        HexGrid.Instance.GetMapUnitAt(targetPos).Interaction(this);
     }
 }

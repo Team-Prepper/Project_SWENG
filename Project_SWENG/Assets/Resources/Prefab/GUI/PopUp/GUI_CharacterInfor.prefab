@@ -98,9 +98,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   priority: 0
   _name: {fileID: 842579120998017735}
-  _lv: {fileID: 0}
-  _hp: {fileID: 0}
-  _attackValue: {fileID: 0}
+  _lv: {fileID: 7910292838040804631}
+  _hp: {fileID: 6086916067215890245}
+  _attackValue: {fileID: 1845600397760725065}
 --- !u!1 &2453696335656870705
 GameObject:
   m_ObjectHideFlags: 0
@@ -113,7 +113,7 @@ GameObject:
   - component: {fileID: 7644954804273429370}
   - component: {fileID: 7910292838040804631}
   m_Layer: 5
-  m_Name: tmp_Level
+  m_Name: txt_Level
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -168,11 +168,11 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 7caf6488107e0594fb52394d655a392b, type: 3}
-    m_FontSize: 48
+    m_FontSize: 64
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 4
-    m_MaxSize: 48
+    m_MaxSize: 64
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
@@ -192,7 +192,7 @@ GameObject:
   - component: {fileID: 3867408669527604979}
   - component: {fileID: 5883923107028649285}
   m_Layer: 5
-  m_Name: hp
+  m_Name: txt_label_hp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -247,11 +247,11 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 7caf6488107e0594fb52394d655a392b, type: 3}
-    m_FontSize: 48
+    m_FontSize: 64
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 3
-    m_MaxSize: 48
+    m_MaxSize: 64
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
@@ -294,9 +294,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -50}
-  m_SizeDelta: {x: 450, y: 60}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -30}
+  m_SizeDelta: {x: 450, y: 100}
+  m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &4132702135408895103
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -327,11 +327,11 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 7caf6488107e0594fb52394d655a392b, type: 3}
-    m_FontSize: 48
+    m_FontSize: 90
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 4
-    m_MaxSize: 48
+    m_MaxSize: 90
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
@@ -376,7 +376,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -20}
+  m_AnchoredPosition: {x: 0, y: -50}
   m_SizeDelta: {x: 1000, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7886470299982356019
@@ -501,7 +501,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -100}
+  m_AnchoredPosition: {x: 0, y: -150}
   m_SizeDelta: {x: 900, y: 10}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8622418493893092177
@@ -554,7 +554,7 @@ GameObject:
   - component: {fileID: 8361175436127388353}
   - component: {fileID: 4391531170659991277}
   m_Layer: 5
-  m_Name: attackValue
+  m_Name: txt_label_attackValue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -609,11 +609,11 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 7caf6488107e0594fb52394d655a392b, type: 3}
-    m_FontSize: 48
+    m_FontSize: 64
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 3
-    m_MaxSize: 48
+    m_MaxSize: 64
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
@@ -783,7 +783,7 @@ GameObject:
   - component: {fileID: 7094997799536744363}
   - component: {fileID: 6086916067215890245}
   m_Layer: 5
-  m_Name: tmp_HP
+  m_Name: txt_HP
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -838,11 +838,11 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 7caf6488107e0594fb52394d655a392b, type: 3}
-    m_FontSize: 48
+    m_FontSize: 64
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 4
-    m_MaxSize: 48
+    m_MaxSize: 64
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
@@ -887,11 +887,11 @@ RectTransform:
   - {fileID: 694157642243795428}
   m_Father: {fileID: 2090756444657496406}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -300}
-  m_SizeDelta: {x: 1000, y: 400}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: 0, y: 250}
+  m_SizeDelta: {x: 1000, y: 500}
+  m_Pivot: {x: 0.5, y: 0}
 --- !u!222 &4026217890104618531
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -942,7 +942,7 @@ GameObject:
   - component: {fileID: 6066016370851501925}
   - component: {fileID: 1845600397760725065}
   m_Layer: 5
-  m_Name: tmp_AttackValue
+  m_Name: txt_AttackValue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -997,11 +997,11 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 7caf6488107e0594fb52394d655a392b, type: 3}
-    m_FontSize: 48
+    m_FontSize: 64
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 4
-    m_MaxSize: 48
+    m_MaxSize: 64
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
@@ -1021,7 +1021,7 @@ GameObject:
   - component: {fileID: 1668814013575040983}
   - component: {fileID: 2667321607984205665}
   m_Layer: 5
-  m_Name: level
+  m_Name: txt_label_level
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1076,11 +1076,11 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 7caf6488107e0594fb52394d655a392b, type: 3}
-    m_FontSize: 48
+    m_FontSize: 64
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 3
-    m_MaxSize: 48
+    m_MaxSize: 64
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1

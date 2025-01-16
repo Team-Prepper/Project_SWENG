@@ -3,13 +3,10 @@ using UnityEngine;
 
 public class PhotonGameMaster : MonoBehaviourPun, IGameMaster {
 
+    public IGameMaster.Phase _gamePhase;
+
     Team[] _teams;
     int _turn;
-
-    [SerializeField] private PlayerSpawner _playerSpawner;
-    [SerializeField] private EnemySpawner _enemySpawner;
-
-    public IGameMaster.Phase gamePhase;
 
     public GameObject InstantiateCharacter(Vector3 position, Quaternion rotation)
     {
@@ -24,24 +21,24 @@ public class PhotonGameMaster : MonoBehaviourPun, IGameMaster {
         return null;
     }
 
-    private void Start()
+    public void StartGame()
     {
-        GameManager.Instance.SetGameMaster(this);
+        GameObject spawner = GameObject.FindWithTag("Spawner");
 
         if (PhotonNetwork.IsMasterClient)
         {
             _teams = new Team[2];
             _teams[0] = new Team();
             _teams[1] = new Team();
-            _enemySpawner.SpawnEnemy();
+            spawner.GetComponent<EnemySpawner>().SpawnEnemy();
         }
 
-        _playerSpawner.SpawnPlayer(
+        spawner.GetComponent<PlayerSpawner>().SpawnPlayer(
             GameManager.Instance.Network.PlayerId);
         
         if (PhotonNetwork.IsMasterClient)
         {
-            gamePhase = IGameMaster.Phase.Play;
+            _gamePhase = IGameMaster.Phase.Play;
             _teams[0].StartTurn();
         }
     }
@@ -70,7 +67,7 @@ public class PhotonGameMaster : MonoBehaviourPun, IGameMaster {
 
     public void GameEnd(bool victory)
     {
-        gamePhase = IGameMaster.Phase.End;
+        _gamePhase = IGameMaster.Phase.End;
     }
 
 }

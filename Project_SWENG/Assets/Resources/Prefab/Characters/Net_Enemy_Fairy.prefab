@@ -714,7 +714,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2027284434984980127
 Transform:
   m_ObjectHideFlags: 0
@@ -767,13 +767,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _healthUI: {fileID: 4615092111065079343}
+  _nameCode: 
   _anim: {fileID: 2249882306818113445}
   _hp:
     _curValue: 50
     _maxValue: 50
     _minValue: 0
   _level: 1
-  _exp: 0
   _def: 0
   _attackPower: 10
 --- !u!1 &2050031097269433564
@@ -3103,7 +3103,7 @@ PrefabInstance:
     - target: {fileID: 404512375063164342, guid: 6b35e559e2048424d8b237e3718e2058,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.011
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 404512375063164342, guid: 6b35e559e2048424d8b237e3718e2058,
         type: 3}

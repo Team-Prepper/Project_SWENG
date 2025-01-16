@@ -169,4 +169,9 @@ public class PhotonNet : MonoBehaviourPunCallbacks, INetwork {
         Room.PlayerExit(new RoomMember(otherPlayer.NickName));
     }
 
+    public void GameMasterSet() {
+
+        GameManager.Instance.SetGameMaster<PhotonGameMaster>();
+    }
+
 }

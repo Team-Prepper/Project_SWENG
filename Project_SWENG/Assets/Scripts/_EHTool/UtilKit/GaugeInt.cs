@@ -77,5 +77,10 @@ namespace EHTool.UtilKit {
         {
             return (_curValue - _minValue) * 1f / (_maxValue - _minValue);
         }
+
+        public override string ToString()
+        {
+            return string.Format("{0} / {1}", _curValue, _maxValue);
+        }
     }
 }

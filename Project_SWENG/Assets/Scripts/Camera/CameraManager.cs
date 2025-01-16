@@ -9,7 +9,6 @@ public class CameraManager : MonoSingleton<CameraManager>
 
     [SerializeField] private Transform _target;
 
-    public bool IsPlayerMove { get; set; }
     public bool IsWide { get; private set; }
 
     public void SetCamTarget(Transform target)
@@ -99,7 +98,7 @@ public class CameraManager : MonoSingleton<CameraManager>
         }
     }
 
-    public void ConverTo(Transform target, string key)
+    public void CameraSetting(Transform target, string key)
     {
         SetCamTarget(target);
 

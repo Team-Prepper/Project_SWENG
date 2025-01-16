@@ -10,12 +10,13 @@ public class GUI_PlayerActionSelect : GUICustomFullScreen, IActionSelector {
     [SerializeField] private GUI_PlayerHealth _playerHealth;
     [SerializeField] private Text _dicePoint;
 
-    [SerializeField] RectTransform panelBtnTr;
+    [SerializeField] RectTransform _panelBtnTr;
     [SerializeField] float _openTime;
 
-    [SerializeField] Button btnAttack;
-    [SerializeField] Button btnMove;
-    [SerializeField] Button btnDice;
+    [SerializeField] private Button _btnInteraction;
+    [SerializeField] private Button _btnAttack;
+    [SerializeField] private Button _btnMove;
+    [SerializeField] private Button _btnDice;
 
     public Button _turnEndButton;
 
@@ -24,6 +25,7 @@ public class GUI_PlayerActionSelect : GUICustomFullScreen, IActionSelector {
     public void SetPlayer(GameObject target)
     {
         CameraManager.Instance.SetCamTarget(target.transform);
+
         target.GetComponentInChildren<CharacterStatus>()?.SetHealthUI(_playerHealth);
 
     }
@@ -34,14 +36,15 @@ public class GUI_PlayerActionSelect : GUICustomFullScreen, IActionSelector {
 
     }
 
-    public void Ready(IList<CharacterStatus.Action> actionList)
+    public void Ready(IList<IActionSelector.Action> actionList)
     {
         gameObject.SetActive(true);
         _cc.CamSetting("Character");
 
-        btnDice.interactable = actionList.Contains(CharacterStatus.Action.Dice);
-        btnAttack.interactable = actionList.Contains(CharacterStatus.Action.Attack);
-        btnMove.interactable = actionList.Contains(CharacterStatus.Action.Move);
+        _btnInteraction.interactable = actionList.Contains(IActionSelector.Action.Interaction);
+        _btnDice.interactable = actionList.Contains(IActionSelector.Action.Dice);
+        _btnAttack.interactable = actionList.Contains(IActionSelector.Action.Attack);
+        _btnMove.interactable = actionList.Contains(IActionSelector.Action.Move);
 
         StartCoroutine(_PanelOpen());
     }
@@ -52,9 +55,9 @@ public class GUI_PlayerActionSelect : GUICustomFullScreen, IActionSelector {
 
     private IEnumerator _PanelOpen() {
 
-        panelBtnTr.localScale = Vector2.zero;
-        panelBtnTr.eulerAngles = Vector3.forward * 90f;
-        panelBtnTr.gameObject.SetActive(true);
+        _panelBtnTr.localScale = Vector2.zero;
+        _panelBtnTr.eulerAngles = Vector3.forward * 90f;
+        _panelBtnTr.gameObject.SetActive(true);
 
         float spendTime = 0;
 
@@ -62,11 +65,11 @@ public class GUI_PlayerActionSelect : GUICustomFullScreen, IActionSelector {
         {
             yield return null;
             spendTime += Time.deltaTime;
-            panelBtnTr.localScale = Vector2.Lerp(Vector2.zero, Vector2.one, spendTime / _openTime);
-            panelBtnTr.eulerAngles = Vector3.Lerp(Vector3.forward * 90f, Vector3.zero, spendTime / _openTime);
+            _panelBtnTr.localScale = Vector2.Lerp(Vector2.zero, Vector2.one, spendTime / _openTime);
+            _panelBtnTr.eulerAngles = Vector3.Lerp(Vector3.forward * 90f, Vector3.zero, spendTime / _openTime);
         }
 
-        panelBtnTr.localScale = Vector2.one;
+        _panelBtnTr.localScale = Vector2.one;
 
     }
 
@@ -88,6 +91,13 @@ public class GUI_PlayerActionSelect : GUICustomFullScreen, IActionSelector {
         _AfterAction();
     }
 
+    public void OpenInteraction()
+    {
+        UIManager.Instance.OpenGUI<GUIInteraction>("Interaction").Set(_cc);
+        _AfterAction();
+
+    }
+
     public void TurnEndButton()
     {
         if (_nowPopUp != null) return;
@@ -97,7 +107,7 @@ public class GUI_PlayerActionSelect : GUICustomFullScreen, IActionSelector {
 
     void _AfterAction() {
 
-        panelBtnTr.gameObject.SetActive(false);
+        _panelBtnTr.gameObject.SetActive(false);
     }
 
     protected override void Update()

@@ -3,13 +3,10 @@ using EHTool;
 
 public class LocalGameMaster : MonoBehaviour, IGameMaster {
 
-    Team[] _teams;
+    public IGameMaster.Phase _gamePhase;
+
     [SerializeField] int _turn;
-
-    [SerializeField] private PlayerSpawner _playerSpawner;
-    [SerializeField] private EnemySpawner _enemySpawner;
-
-    public IGameMaster.Phase gamePhase;
+    Team[] _teams;
 
     public GameObject InstantiateCharacter(Vector3 position, Quaternion rotation) {
         GameObject retval = AssetOpener.ImportGameObject("LocalCC");
@@ -25,18 +22,22 @@ public class LocalGameMaster : MonoBehaviour, IGameMaster {
         return null;
     }
 
-    private void Start()
+    public void StartGame()
     {
-        GameManager.Instance.SetGameMaster(this);
+
         _teams = new Team[2];
         _teams[0] = new Team();
         _teams[1] = new Team();
 
-        _playerSpawner.SpawnPlayer(0);
-        _enemySpawner.SpawnEnemy();
+        GameObject spawner = GameObject.FindWithTag("Spawner");
 
-        gamePhase = IGameMaster.Phase.Play;
+        spawner.GetComponent<EnemySpawner>().SpawnEnemy();
+        spawner.GetComponent<PlayerSpawner>().SpawnPlayer(
+            GameManager.Instance.Network.PlayerId);
+
+        _gamePhase = IGameMaster.Phase.Play;
         _teams[0].StartTurn();
+
     }
 
     public void AddTeamMember(ICharacterController c, int teamIdx)
@@ -62,10 +63,6 @@ public class LocalGameMaster : MonoBehaviour, IGameMaster {
 
     }
 
-    private void Update()
-    {
-    }
-
     void changeDayNight()
     {
         return;
@@ -84,7 +81,7 @@ public class LocalGameMaster : MonoBehaviour, IGameMaster {
 
     public void GameEnd(bool victory)
     {
-        gamePhase = IGameMaster.Phase.End;
+        _gamePhase = IGameMaster.Phase.End;
     }
 
 }

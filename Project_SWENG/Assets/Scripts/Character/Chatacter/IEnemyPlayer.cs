@@ -5,16 +5,16 @@ using UnityEngine;
 public interface IEnemyPlayer {
     public void AddSelector(BasicEnemyActionSelector selector);
     public void RemoveSelector(BasicEnemyActionSelector selector);
-    public void ActionAdd(BasicEnemyActionSelector selector, IList<CharacterStatus.Action> actions);
+    public void ActionAdd(BasicEnemyActionSelector selector, IList<IActionSelector.Action> actions);
 }
 
 public class EnemyPlayer : MonoBehaviour, IEnemyPlayer {
 
-    IDictionary<BasicEnemyActionSelector, IList<CharacterStatus.Action>> _data;
+    IDictionary<BasicEnemyActionSelector, IList<IActionSelector.Action>> _data;
     BasicEnemyActionSelector _nowSelector;
 
     public EnemyPlayer() {
-        _data = new Dictionary<BasicEnemyActionSelector, IList<CharacterStatus.Action>>();
+        _data = new Dictionary<BasicEnemyActionSelector, IList<IActionSelector.Action>>();
     }
 
     public void AddSelector(BasicEnemyActionSelector selector) {
@@ -27,7 +27,7 @@ public class EnemyPlayer : MonoBehaviour, IEnemyPlayer {
 
     }
 
-    public void ActionAdd(BasicEnemyActionSelector selector, IList<CharacterStatus.Action> actions) {
+    public void ActionAdd(BasicEnemyActionSelector selector, IList<IActionSelector.Action> actions) {
 
         _data[selector] = actions;
 
@@ -41,10 +41,10 @@ public class EnemyPlayer : MonoBehaviour, IEnemyPlayer {
 
     void _ActionSelect() {
 
-        if (!_data.TryGetValue(_nowSelector, out IList<CharacterStatus.Action> actions)) return;
+        if (!_data.TryGetValue(_nowSelector, out IList<IActionSelector.Action> actions)) return;
 
         while (actions == null || actions.Count == 0) {
-            _nowSelector.DoAction(CharacterStatus.Action.TurnEnd);
+            _nowSelector.DoAction(IActionSelector.Action.TurnEnd);
 
             _data[_nowSelector] = null;
             _nowSelector = _SelectNewSelector();
@@ -60,17 +60,17 @@ public class EnemyPlayer : MonoBehaviour, IEnemyPlayer {
 
         StartCoroutine(_ActionSelect3(() => {
 
-            if (actions.Contains(CharacterStatus.Action.Attack))
+            if (actions.Contains(IActionSelector.Action.Attack))
             {
-                _nowSelector.DoAction(CharacterStatus.Action.Attack);
+                _nowSelector.DoAction(IActionSelector.Action.Attack);
             }
-            else if (actions.Contains(CharacterStatus.Action.Move))
+            else if (actions.Contains(IActionSelector.Action.Move))
             {
-                _nowSelector.DoAction(CharacterStatus.Action.Move);
+                _nowSelector.DoAction(IActionSelector.Action.Move);
             }
             else
             {
-                _nowSelector.DoAction(CharacterStatus.Action.Dice);
+                _nowSelector.DoAction(IActionSelector.Action.Dice);
             }
 
             if (_nowSelector != null && _data.ContainsKey(_nowSelector))
@@ -88,7 +88,7 @@ public class EnemyPlayer : MonoBehaviour, IEnemyPlayer {
 
     BasicEnemyActionSelector _SelectNewSelector()
     {
-        foreach (KeyValuePair<BasicEnemyActionSelector, IList<CharacterStatus.Action>> item in _data)
+        foreach (KeyValuePair<BasicEnemyActionSelector, IList<IActionSelector.Action>> item in _data)
         {
             if (item.Value == null) continue;
             return item.Key;

@@ -45,7 +45,7 @@ public class BasicTargetingAttack : IAttack {
     {
         foreach (HexCoordinate hexPos in attackPos)
         {
-            MapUnit targetHex = HexGrid.Instance.GetTileAt(hexPos);
+            MapUnit targetHex = HexGrid.Instance.GetMapUnitAt(hexPos);
             if (targetHex.Entity == null || !targetHex.Entity.TryGetComponent(out IDamagable target)) continue;
 
             target.TakeDamage(_value * _usingPoint);
@@ -53,12 +53,12 @@ public class BasicTargetingAttack : IAttack {
         }
 
         if (attackPos.Count > 0)
-            _cc.transform.LookAt(attackPos.ElementAt(0).ConvertToVector3());
+            _cc.transform.LookAt(attackPos.ElementAt(0).ConvertToVector3() + _cc.transform.position.y * Vector3.up);
 
         _cc.UsePoint(_usingPoint);
         _cc.CamSetting("Battle");
         _cc.PlayAnim("SetTrigger", "Attack");
-        _cc.ActionEnd();
+        _cc.ActionEnd(2f);
 
     }
 }
@@ -79,22 +79,26 @@ public class BasicAttack : IAttack {
 
     public void Attack(IList<HexCoordinate> attackPos)
     {
+        HexCoordinate? attackedCoord = null;
+
         foreach (HexCoordinate hexPos in attackPos)
         {
-            MapUnit targetHex = HexGrid.Instance.GetTileAt(hexPos);
+            MapUnit targetHex = HexGrid.Instance.GetMapUnitAt(hexPos);
             if (targetHex.Entity == null || !targetHex.Entity.TryGetComponent(out IDamagable target)) continue;
+
+            if (attackedCoord == null) attackedCoord = hexPos;
 
             target.TakeDamage(_value);
 
         }
 
-        if (attackPos.Count > 0)
-            _cc.transform.LookAt(attackPos.ElementAt(0).ConvertToVector3());
+        if (attackedCoord != null)
+            _cc.transform.LookAt(attackedCoord.Value.ConvertToVector3() + _cc.transform.position.y * Vector3.up);
 
         _cc.UsePoint(_value);
         _cc.CamSetting("Wide");
         _cc.PlayAnim("SetTrigger", "Attack");
-        _cc.ActionEnd();
+        _cc.ActionEnd(2f);
     }
 
 }

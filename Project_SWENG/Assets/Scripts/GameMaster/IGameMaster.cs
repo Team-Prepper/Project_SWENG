@@ -69,5 +69,5 @@ public interface IGameMaster
     public void TurnEnd(ICharacterController c);
 
     public void GameEnd(bool victory);
-
+    void StartGame();
 }

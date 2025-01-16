@@ -1,16 +1,13 @@
 using UnityEngine;
 using EHTool.UtilKit;
-using System.Collections.Generic;
 
 public class CharacterStatus : MonoBehaviour, ICharacterComponent {
-    public enum Action {
-        Dice, Move, Attack, TurnEnd
-    }
 
     protected ICharacterController _cc;
 
     [SerializeField] private IHealthUI _healthUI;
-    [SerializeField] Animator _anim;
+    [SerializeField] private string _nameCode;
+    [SerializeField] private Animator _anim;
 
     [SerializeField] private GaugeInt _hp;
     [SerializeField] private int _level = 1;
@@ -47,6 +44,11 @@ public class CharacterStatus : MonoBehaviour, ICharacterComponent {
 
     public void SetHealthUI(IHealthUI ui)
     {
+        if (_healthUI != null)
+        {
+            Destroy(_healthUI);
+        }
+
         _healthUI = ui;
         _healthUI.UpdateGUI(_hp);
     }
@@ -94,7 +96,7 @@ public class CharacterStatus : MonoBehaviour, ICharacterComponent {
 
     public virtual string GetName()
     {
-        return string.Empty;
+        return _nameCode;
     }
 
 }

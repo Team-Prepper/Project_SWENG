@@ -3,60 +3,56 @@ using UnityEngine;
 
 public class GUI_AttackSelect : GUICustomFullScreen, IAttackTargetSelector {
 
-    [SerializeField] private Transform _markerParent;
-    [SerializeField] private Transform[] _attackMarkers;
+    [SerializeField] private Sprite _markerSprite;
+    [SerializeField] private Vector3 _markerLocalScale;
+    [SerializeField] private Vector3 _markerEulerAngle;
 
     [SerializeField] private GameObject btnAttack;
     [SerializeField] private GameObject btnSkill;
 
-    private IList<HexCoordinate> _attackRange;
-    private int _useMarkCount;
+    private ISet<HexCoordinate> _attackRange;
 
     MapUnit _attackTarget;
+
     IAttack _targetAttack;
     ICharacterController _cc;
-
 
     public void Set(IAttack attack, ICharacterController cc)
     {
         _targetAttack = attack;
         _cc = cc;
 
-        _markerParent.localScale = Vector3.one / GameObject.Find("Canvas").GetComponent<RectTransform>().localScale.y;
-        _attackRange = new List<HexCoordinate>();
+        _attackRange = new HashSet<HexCoordinate>(6);
 
         _attackTarget = null;
 
         foreach (var neighbour in HexGrid.Instance.GetNeighboursFor(cc.HexPos))
         {
-            MapUnit atkHex = HexGrid.Instance.GetTileAt(neighbour);
+            MapUnit atkHex = HexGrid.Instance.GetMapUnitAt(neighbour);
 
-            if (!(atkHex.tileType == TileDataScript.TileType.normal || atkHex.tileType == TileDataScript.TileType.dungon)) continue;
+            if (!(atkHex.tileType == TileDataScript.TileType.normal ||
+                atkHex.tileType == TileDataScript.TileType.dungon)) continue;
 
             _attackRange.Add(neighbour);
-            _SetMarker(atkHex.transform.position);
+            _SetMarker(atkHex.HexCoords);
         }
 
-        CameraManager.Instance.ConverTo(_cc.transform, "Wide");
+        CameraManager.Instance.CameraSetting(_cc.transform, "Wide");
     }
 
-    private void _SetMarker(Vector3 pos)
+    private void _SetMarker(HexCoordinate pos)
     {
-        if (_useMarkCount >= _attackMarkers.Length) return;
-
-        _attackMarkers[_useMarkCount].gameObject.SetActive(true);
-        _attackMarkers[_useMarkCount++].position = pos;
+        HexGrid.Instance.GetMapUnitAt(pos).
+            SetSprite(_markerSprite, _markerLocalScale, _markerEulerAngle, true);
 
     }
 
     private void _ResetMarker()
     {
-        for (int i = 0; i < _useMarkCount; i++)
-        {
-            _attackMarkers[i].gameObject.SetActive(false);
+        foreach(HexCoordinate coord in _attackRange) {
+            HexGrid.Instance.GetMapUnitAt(coord).
+                SetSprite(_markerSprite, _markerLocalScale, _markerEulerAngle, false);
         }
-
-        _useMarkCount = 0;
 
     }
 
@@ -72,24 +68,25 @@ public class GUI_AttackSelect : GUICustomFullScreen, IAttackTargetSelector {
     public override void HexSelect(HexCoordinate selectGridPos)
     {
 
-        if (_attackTarget && _attackTarget == HexGrid.Instance.GetTileAt(selectGridPos))
+        if (_attackTarget && _attackTarget == HexGrid.Instance.GetMapUnitAt(selectGridPos))
         {
             DoAttack();
+            return;
         }
 
         _ResetMarker();
 
         if (_attackRange.Contains(selectGridPos))
         {
-            _attackTarget = HexGrid.Instance.GetTileAt(selectGridPos);
-            _SetMarker(_attackTarget.transform.position);
+            _attackTarget = HexGrid.Instance.GetMapUnitAt(selectGridPos);
+            _SetMarker(selectGridPos);
 
             return;
 
         }
 
         if (_attackTarget == null) {
-            _cc.ActionEnd();
+            _cc.ActionEnd(0);
             Close();
             return;
         }
@@ -98,7 +95,13 @@ public class GUI_AttackSelect : GUICustomFullScreen, IAttackTargetSelector {
 
         foreach (HexCoordinate pos in _attackRange)
         {
-            _SetMarker(pos.ConvertToVector3());
+            _SetMarker(pos);
         }
+    }
+
+    public override void Close()
+    {
+        base.Close();
+        _ResetMarker();
     }
 }

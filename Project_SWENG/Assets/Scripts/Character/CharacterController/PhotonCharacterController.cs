@@ -6,6 +6,7 @@ using EHTool;
 public class PhotonCharacterController : MonoBehaviourPun, ICharacterController {
 
     public int TeamIdx { get; private set; }
+
     public HexCoordinate HexPos => HexCoordinate.ConvertFromVector3(transform.position);
 
     [SerializeField] PhotonView _view;
@@ -14,7 +15,7 @@ public class PhotonCharacterController : MonoBehaviourPun, ICharacterController 
 
     [SerializeField] protected int _dicePoint;
 
-    CharacterStatus _status;
+    public CharacterStatus Status { get; private set; }
     CharacterMove _moveComp;
     CharacterAttack _attackComp;
 
@@ -56,7 +57,7 @@ public class PhotonCharacterController : MonoBehaviourPun, ICharacterController 
         go.transform.SetParent(transform);
         go.transform.localPosition = Vector3.zero;
 
-        _status = go.GetComponent<CharacterStatus>();
+        Status = go.GetComponent<CharacterStatus>();
         _moveComp = go.GetComponent<CharacterMove>();
         _attackComp = go.GetComponent<CharacterAttack>();
 
@@ -65,11 +66,12 @@ public class PhotonCharacterController : MonoBehaviourPun, ICharacterController 
         if (_attackComp == null)
             _attackComp = gameObject.AddComponent<CharacterAttack>();
 
-        _status.SetCC(this);
+        Status.SetCC(this);
         _moveComp.SetCC(this);
         _attackComp.SetCC(this);
 
-        HexGrid.Instance.GetTileAt(transform.position).Entity = gameObject;
+        HexGrid.Instance.GetMapUnitAt(transform.position).SetEntity(gameObject);
+        HexGrid.Instance.GetMapUnitAt(transform.position).SetCC(this);
 
         TeamIdx = teamIdx;
 
@@ -87,7 +89,7 @@ public class PhotonCharacterController : MonoBehaviourPun, ICharacterController 
     {
         if (!_camSync)
         {
-            CameraManager.Instance.ConverTo(transform, key);
+            CameraManager.Instance.CameraSetting(transform, key);
             return;
         }
 
@@ -98,7 +100,7 @@ public class PhotonCharacterController : MonoBehaviourPun, ICharacterController 
     [PunRPC]
     private void _CamSetting(string key)
     {
-        CameraManager.Instance.ConverTo(transform, key);
+        CameraManager.Instance.CameraSetting(transform, key);
 
     }
 
@@ -110,7 +112,7 @@ public class PhotonCharacterController : MonoBehaviourPun, ICharacterController 
     [PunRPC]
     public void _PlayAnim(string triggerType, string triggerValue)
     {
-        _status.PlayAnim(triggerType, triggerValue);
+        Status.PlayAnim(triggerType, triggerValue);
 
     }
 
@@ -123,15 +125,15 @@ public class PhotonCharacterController : MonoBehaviourPun, ICharacterController 
     [PunRPC]
     private void _TakeDamage(int amount)
     {
-        _status.TakeDamage(amount);
+        Status.TakeDamage(amount);
 
-        if (_status.IsAlive)
+        if (Status.IsAlive)
         {
             _PlayAnim("SetTrigger", "Hit");
             return;
         }
 
-        HexGrid.Instance.GetTileAt(gameObject.transform.position).Entity = null;
+        HexGrid.Instance.GetMapUnitAt(gameObject.transform.position).SetEntity(null);
 
         if (!PhotonNetwork.IsMasterClient) return;
 
@@ -164,17 +166,21 @@ public class PhotonCharacterController : MonoBehaviourPun, ICharacterController 
         _actionSelector.SetCharacterController(this);
     }
 
-
-    public void ActionEnd()
+    public void ActionEnd(float time = 0)
+    {
+        Invoke(nameof(_ActionEnd), time);
+    }
+    public void _ActionEnd()
     {
         if (_actionSelector == null)
         {
             return;
         }
 
-        List<CharacterStatus.Action> list = new List<CharacterStatus.Action>();
+        List<IActionSelector.Action> list = new List<IActionSelector.Action>();
 
-        if (_rollDice == false) list.Add(CharacterStatus.Action.Dice);
+        if (_rollDice == false) list.Add(IActionSelector.Action.Dice);
+        if (GetPoint() > 0) list.Add(IActionSelector.Action.Interaction);
 
         _moveComp.TryAddAction(list);
         _attackComp.TryAddAction(list);
@@ -204,9 +210,9 @@ public class PhotonCharacterController : MonoBehaviourPun, ICharacterController 
         HexCoordinate before = new HexCoordinate(beforeX, beforeZ);
         HexCoordinate after = new HexCoordinate(afterX, afterZ);
 
-        HexGrid.Instance.GetTileAt(before).Entity = null;
-        HexGrid.Instance.GetTileAt(after).Entity = gameObject;
-        HexGrid.Instance.GetTileAt(after).CloudActiveFalse();
+        HexGrid.Instance.GetMapUnitAt(before).SetEntity(null);
+        HexGrid.Instance.GetMapUnitAt(after).SetEntity(gameObject);
+        HexGrid.Instance.GetMapUnitAt(after).SetCC(this);
     }
 
     public void Move(Queue<Vector3> path)
@@ -214,4 +220,13 @@ public class PhotonCharacterController : MonoBehaviourPun, ICharacterController 
         _moveComp.Move(path);
     }
 
+    public void Interaction(HexCoordinate targetPos)
+    {
+        HexGrid.Instance.GetMapUnitAt(targetPos).Interaction(this);
+    }
+
+    public void EquipItem(string data)
+    {
+        
+    }
 }
