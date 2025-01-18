@@ -3,6 +3,8 @@ using EHTool;
 
 public class LocalGameMaster : MonoBehaviour, IGameMaster {
 
+    public GameSetting Setting { get; set; }
+
     public IGameMaster.Phase _gamePhase;
 
     [SerializeField] int _turn;
@@ -24,6 +26,8 @@ public class LocalGameMaster : MonoBehaviour, IGameMaster {
 
     public void StartGame()
     {
+        if (Setting == null)
+            Setting = new GameSetting();
 
         _teams = new Team[2];
         _teams[0] = new Team();

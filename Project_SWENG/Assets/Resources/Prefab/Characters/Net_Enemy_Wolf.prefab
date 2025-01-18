@@ -1724,13 +1724,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _healthUI: {fileID: 3115641768505865467}
+  _nameCode: 
   _anim: {fileID: 5678338637888236992}
   _hp:
     _curValue: 50
     _maxValue: 50
     _minValue: 0
   _level: 1
-  _exp: 0
   _def: 0
   _attackPower: 10
 --- !u!1 &8738368616489938081
@@ -1877,7 +1877,7 @@ PrefabInstance:
     - target: {fileID: 404512375063164342, guid: 6b35e559e2048424d8b237e3718e2058,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.3
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 404512375063164342, guid: 6b35e559e2048424d8b237e3718e2058,
         type: 3}

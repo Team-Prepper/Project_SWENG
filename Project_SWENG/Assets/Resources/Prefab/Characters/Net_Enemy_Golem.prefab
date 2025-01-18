@@ -33,7 +33,7 @@ Transform:
   m_Children:
   - {fileID: 8432855557427477933}
   - {fileID: 390036242975108555}
-  - {fileID: 4703678394567235207}
+  - {fileID: 7967377128491036362}
   - {fileID: 8406150569651913556}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -71,13 +71,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _healthUI: {fileID: 7830197174678121668}
+  _nameCode: 
   _anim: {fileID: 8739516103693960357}
   _hp:
     _curValue: 50
     _maxValue: 50
     _minValue: 0
   _level: 1
-  _exp: 0
   _def: 0
   _attackPower: 10
 --- !u!1 &143273982570609827
@@ -557,6 +557,38 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8722070522581492911}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1314494338913872394
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7967377128491036362}
+  m_Layer: 0
+  m_Name: bojung
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7967377128491036362
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1314494338913872394}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0, y: 0, z: 0}
+  m_LocalScale: {x: 70, y: 70, z: 70}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 4703678394567235207}
+  m_Father: {fileID: 7303537555415803648}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1383710709599704175
 GameObject:
@@ -2581,15 +2613,15 @@ Transform:
   m_GameObject: {fileID: 7981755596071956966}
   serializedVersion: 2
   m_LocalRotation: {x: 0.5, y: -0.5, z: -0.5, w: 0.5}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
-  m_LocalScale: {x: 70, y: 70, z: 70}
+  m_LocalPosition: {x: 0, y: 0.014285715, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4228238159087257433}
   - {fileID: 2947590367040711325}
   - {fileID: 2041356782812533341}
   - {fileID: 900446514005138975}
-  m_Father: {fileID: 7303537555415803648}
+  m_Father: {fileID: 7967377128491036362}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8136300133980497361
 GameObject:
@@ -3243,7 +3275,7 @@ PrefabInstance:
     - target: {fileID: 404512375063164342, guid: 6b35e559e2048424d8b237e3718e2058,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.3
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 404512375063164342, guid: 6b35e559e2048424d8b237e3718e2058,
         type: 3}

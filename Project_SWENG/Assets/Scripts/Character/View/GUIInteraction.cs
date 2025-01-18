@@ -50,7 +50,6 @@ public class GUIInteraction : GUICustomFullScreen {
     public void DoInteraction()
     {
         _cc.Interaction(_interactionTarget.HexCoords);
-        _cc.UsePoint(1);
 
         Close();
 

@@ -6,37 +6,13 @@ public class LocalCharacterController : MonoBehaviour, ICharacterController {
 
     public int TeamIdx { get; private set; }
 
+    public HexCoordinate HexPos =>
+        HexCoordinate.ConvertFromVector3(transform.position);
+
+    public Character Character { get; private set; }
+    public bool RollDice { get; set; }
+
     IActionSelector _actionSelector;
-    public HexCoordinate HexPos => HexCoordinate.ConvertFromVector3(transform.position);
-
-    [SerializeField] int _dicePoint = 0;
-
-    public CharacterStatus Status { get; private set; }
-    CharacterMove _moveComp;
-    CharacterAttack _attackComp;
-
-    [SerializeField] bool _rollDice = false;
-
-    public void UsePoint(int usingAmount)
-    {
-        if (_dicePoint < usingAmount)
-        {
-            return;
-        }
-        _dicePoint -= usingAmount;
-    }
-
-    public int GetPoint()
-    {
-        return _dicePoint;
-    }
-
-    public virtual void SetPoint(int setValue)
-    {
-        _dicePoint = setValue;
-        _rollDice = true;
-        ActionEnd();
-    }
 
     // Start is called before the first frame update
     public void Initial(string characterName, int teamIdx, bool camSync)
@@ -48,19 +24,12 @@ public class LocalCharacterController : MonoBehaviour, ICharacterController {
         go.transform.SetParent(transform);
         go.transform.localPosition = Vector3.zero;
 
-        Status = go.GetComponent<CharacterStatus>();
-        _moveComp = go.GetComponent<CharacterMove>();
-        _attackComp = go.GetComponent<CharacterAttack>();
+        Character = go.GetComponent<Character>();
 
-        if (_moveComp == null)
-            _moveComp = gameObject.AddComponent<CharacterMove>();
-        if (_attackComp == null)
-            _attackComp = gameObject.AddComponent<CharacterAttack>();
+        if (Character == null)
+            Character = go.AddComponent<Character>();
 
-        Status.SetCC(this);
-        _moveComp.SetCC(this);
-        _attackComp.SetCC(this);
-
+        Character.Initial(this);
 
         TeamIdx = teamIdx;
         GameManager.Instance.GameMaster.AddTeamMember(this, teamIdx);
@@ -76,14 +45,14 @@ public class LocalCharacterController : MonoBehaviour, ICharacterController {
     }
 
     public void PlayAnim(string triggerType, string triggerValue) {
-        Status.PlayAnim(triggerType, triggerValue);
+        Character.PlayAnim(triggerType, triggerValue);
     }
 
     public void TakeDamage(int amount)
     {
-        Status.TakeDamage(amount);
+        Character.Status.TakeDamage(amount);
 
-        if (Status.IsAlive)
+        if (Character.Status.IsAlive)
         {
             PlayAnim("SetTrigger", "Hit");
             return;
@@ -94,13 +63,12 @@ public class LocalCharacterController : MonoBehaviour, ICharacterController {
         PlayAnim("SetTrigger", "Die");
         _actionSelector.Die();
 
-        // 죽었을 때 GameMaster에서 처리할 것
         GameManager.Instance.GameMaster.RemoveTeamMember(this, TeamIdx);
 
     }
 
     public void SetPlay() {
-        _rollDice = false;
+        RollDice = false;
         ActionEnd();
     }
 
@@ -119,15 +87,7 @@ public class LocalCharacterController : MonoBehaviour, ICharacterController {
             return;
         }
 
-        List<IActionSelector.Action> list = new List<IActionSelector.Action>();
-
-        if (_rollDice == false) list.Add(IActionSelector.Action.Dice);
-        if (GetPoint() > 0) list.Add(IActionSelector.Action.Interaction);
-
-        _moveComp.TryAddAction(list);
-        _attackComp.TryAddAction(list);
-
-        _actionSelector.Ready(list);
+        _actionSelector.Ready(Character.GetActionList());
     }
 
     public void TurnEnd() {
@@ -143,15 +103,17 @@ public class LocalCharacterController : MonoBehaviour, ICharacterController {
 
     public void Move(Queue<Vector3> path)
     {
-        _moveComp.Move(path);
-    }
-
-    public void EquipItem(string data) { 
-        
+        Character.Move(path);
     }
 
     public void Interaction(HexCoordinate targetPos)
     {
-        HexGrid.Instance.GetMapUnitAt(targetPos).Interaction(this);
+        Character.Interaction(targetPos);
+    }
+
+    public void EquipItem(string data)
+    {
+        Character.EquipItem(data);
+
     }
 }

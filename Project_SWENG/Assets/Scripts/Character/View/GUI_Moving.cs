@@ -85,7 +85,7 @@ public class GUI_Moving : GUICustomFullScreen {
 
     private void _CalcualteRange()
     {
-        movementRange = HexGrid.Instance.GetPathGroup(_cc.HexPos, _cc.GetPoint());
+        movementRange = HexGrid.Instance.GetPathGroup(_cc.HexPos, _cc.Character.GetPoint());
     }
 
     private void _MoveUnit()

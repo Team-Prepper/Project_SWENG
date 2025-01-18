@@ -14,7 +14,7 @@ public class CharacterMove : MonoBehaviour, ICharacterComponent {
     }
 
     public void TryAddAction(IList<IActionSelector.Action> target) {
-        if (_cc.GetPoint() < 2) return;
+        if (_cc.Character.GetPoint() < 2) return;
 
         target.Add(IActionSelector.Action.Move);
     }
@@ -33,7 +33,7 @@ public class CharacterMove : MonoBehaviour, ICharacterComponent {
         {
             if (HexGrid.Instance.GetMapUnitAt(targetPos).Entity != null) break;
 
-            _cc.UsePoint(2);
+            _cc.Character.UsePoint(2);
 
             Vector3 startPosition = _cc.transform.position;
             Vector3 direction = targetPos - startPosition;

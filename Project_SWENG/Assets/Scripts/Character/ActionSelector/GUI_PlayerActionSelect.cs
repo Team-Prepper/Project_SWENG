@@ -75,7 +75,7 @@ public class GUI_PlayerActionSelect : GUICustomFullScreen, IActionSelector {
 
     public void OpenAttack()
     {
-        new BasicTargetingAttack(_cc,  5, _cc.GetPoint());
+        new BasicTargetingAttack(_cc,  5, _cc.Character.GetPoint());
         _AfterAction();
     }
 
@@ -87,7 +87,7 @@ public class GUI_PlayerActionSelect : GUICustomFullScreen, IActionSelector {
 
     public void OpenDice()
     {
-        UIManager.Instance.OpenGUI<GUI_Dice>("Dice").SetPlayer(_cc);
+        UIManager.Instance.OpenGUI<GUI_Dice>("Dice").SetPlayer(_cc.Character);
         _AfterAction();
     }
 
@@ -113,7 +113,7 @@ public class GUI_PlayerActionSelect : GUICustomFullScreen, IActionSelector {
     protected override void Update()
     {
         base.Update();
-        _dicePoint.text = _cc.GetPoint().ToString();
+        _dicePoint.text = _cc.Character.GetPoint().ToString();
         _turnEndGlowLight.SetActive(_turnEndButton.interactable);
     }
 

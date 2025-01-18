@@ -194,6 +194,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   _nickNameInput: {fileID: 0}
+  _localScene: Local
 --- !u!1 &1127709830696919213
 GameObject:
   m_ObjectHideFlags: 0
@@ -316,9 +317,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1127709830150573849}
-        m_TargetAssemblyTypeName: GUI_Title, Assembly-CSharp
-        m_MethodName: OpenScene
-        m_Mode: 5
+        m_TargetAssemblyTypeName: GUITitle, Assembly-CSharp
+        m_MethodName: StartLocalPlay
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -405,7 +406,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Local Play
+  m_Text: "\uB85C\uCEEC \uD50C\uB808\uC774"
   _key: btn_LocalPlay
 --- !u!1 &1877636169072418602
 GameObject:
@@ -942,7 +943,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: MultiPlay
+  m_Text: "\uBA40\uD2F0 \uD50C\uB808\uC774"
   _key: btn_MultiPlay
 --- !u!1 &8425641314229782157
 GameObject:
@@ -1022,7 +1023,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Setting
+  m_Text: "\uC124\uC815"
   _key: btn_Setting
 --- !u!1 &8425641314419835048
 GameObject:

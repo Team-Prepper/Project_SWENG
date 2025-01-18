@@ -20,7 +20,7 @@ public class BasicEnemyActionSelector : IActionSelector {
     public void Ready(IList<IActionSelector.Action> actionList)
     {
         if (actionList.Contains(IActionSelector.Action.Dice)) {
-            _cc.SetPoint(4);
+            _cc.Character.SetPoint(4);
             return;
         }
 
@@ -31,7 +31,7 @@ public class BasicEnemyActionSelector : IActionSelector {
             if (a == IActionSelector.Action.Interaction) continue;
             if (a == IActionSelector.Action.Attack && null == GetEnemyInRange(_cc.HexPos, 1)) continue;
             if (a == IActionSelector.Action.Move) {
-                if (null == GetEnemyInRange(_cc.HexPos, Mathf.Max(_cc.GetPoint() / 2, 3))) continue;
+                if (null == GetEnemyInRange(_cc.HexPos, Mathf.Max(_cc.Character.GetPoint() / 2, 3))) continue;
                 if (null != GetEnemyInRange(_cc.HexPos, 1)) continue;
             }
             list.Add(a);
@@ -55,14 +55,14 @@ public class BasicEnemyActionSelector : IActionSelector {
 
         switch (action) {
             case IActionSelector.Action.Attack:
-                new BasicAttack(_cc, _cc.GetPoint());
-                _cc.UsePoint(_cc.GetPoint());
+                new BasicAttack(_cc, _cc.Character.GetPoint());
+                _cc.Character.UsePoint(_cc.Character.GetPoint());
                 return;
             case IActionSelector.Action.Move:
                 DoMove();
                 return;
             case IActionSelector.Action.Dice:
-                _cc.SetPoint(4);
+                _cc.Character.SetPoint(4);
                 return;
             default:
                 _cc.TurnEnd();
@@ -74,7 +74,8 @@ public class BasicEnemyActionSelector : IActionSelector {
 
     void DoMove() {
 
-        HexCoordinate? pos = GetEnemyInRange(_cc.HexPos, Mathf.Max(3, _cc.GetPoint() / 2));
+        HexCoordinate? pos = GetEnemyInRange(
+            _cc.HexPos, Mathf.Max(3, _cc.Character.GetPoint() / 2));
 
         if (pos == null)
         {
@@ -82,10 +83,12 @@ public class BasicEnemyActionSelector : IActionSelector {
             return;
         }
 
-        IPathGroup movementRange = HexGrid.Instance.GetPathGroupTo(_cc.HexPos, pos.Value, _cc.GetPoint() + 2);
+        IPathGroup movementRange = HexGrid.Instance.GetPathGroupTo(
+            _cc.HexPos, pos.Value, _cc.Character.GetPoint() + 2);
 
         IList<HexCoordinate> pathHex = movementRange.GetPathTo(pos.Value);
-        IList<Vector3> path = pathHex.Select(pos => HexGrid.Instance.GetMapUnitAt(pos).transform.position).ToList();
+        IList<Vector3> path = pathHex.Select(
+            pos => HexGrid.Instance.GetMapUnitAt(pos).transform.position).ToList();
 
         path.RemoveAt(path.Count - 1);
         _cc.Move(new Queue<Vector3>(path));

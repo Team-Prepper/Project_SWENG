@@ -15,7 +15,7 @@ public class GUI_ShowCharacterInfor : GUIPopUp
 
     public void SetInfor(ICharacterController target, ICharacterController client)
     {
-        CharacterStatus character = target.Status;
+        CharacterStatus character = target.Character.Status;
         CameraManager.Instance.CameraSetting(target.transform, "Character");
         _client = client;
 

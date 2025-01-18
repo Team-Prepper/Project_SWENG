@@ -43,6 +43,15 @@ public class GUINetworkRoom : GUICustomFullScreen, RoomObserver {
         Renewal();
     }
 
+    public void GameSetting() {
+        if (GameManager.Instance.Network.IsMaster)
+        {
+            UIManager.Instance.OpenGUI<GUIGameSetting>("GameSetting");
+            return;
+        }
+        UIManager.Instance.OpenGUI<GUIPlayerSetting>("PlayerSetting");
+    }
+
     public void Renewal()
     {
         

@@ -13,7 +13,7 @@ public class CharacterAttack : MonoBehaviour, ICharacterComponent {
 
     public void TryAddAction(IList<IActionSelector.Action> target)
     {
-        if (_cc.GetPoint() < _usePointAtAttack) return;
+        if (_cc.Character.GetPoint() < _usePointAtAttack) return;
 
         target.Add(IActionSelector.Action.Attack);
     }

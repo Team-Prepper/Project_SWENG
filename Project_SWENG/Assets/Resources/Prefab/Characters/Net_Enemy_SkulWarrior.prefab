@@ -1569,6 +1569,38 @@ Transform:
   - {fileID: 8854048059871439978}
   m_Father: {fileID: 442850367449424426}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &6872331908253187555
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5259181966746215506}
+  m_Layer: 0
+  m_Name: Bojung
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5259181966746215506
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6872331908253187555}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 80, y: 80, z: 80}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 6659990870008590850}
+  m_Father: {fileID: 3105029065577227296}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6969724607247942799
 GameObject:
   m_ObjectHideFlags: 0
@@ -1817,14 +1849,14 @@ Transform:
   m_GameObject: {fileID: 8172979405168467806}
   serializedVersion: 2
   m_LocalRotation: {x: 0.5, y: -0.5, z: -0.5, w: 0.5}
-  m_LocalPosition: {x: 0, y: 0.77, z: 0}
-  m_LocalScale: {x: 80, y: 80, z: 80}
+  m_LocalPosition: {x: 0, y: 0.009625, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5265819850124943554}
   - {fileID: 3474875138876018127}
   - {fileID: 8040913738742639245}
-  m_Father: {fileID: 3105029065577227296}
+  m_Father: {fileID: 5259181966746215506}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8401371496320941921
 GameObject:
@@ -2048,7 +2080,7 @@ Transform:
   m_Children:
   - {fileID: 5606966890355936349}
   - {fileID: 5206582939571773048}
-  - {fileID: 6659990870008590850}
+  - {fileID: 5259181966746215506}
   - {fileID: 249575677181438604}
   - {fileID: 7673048379560992786}
   m_Father: {fileID: 0}
@@ -2358,7 +2390,7 @@ PrefabInstance:
     - target: {fileID: 404512375063164342, guid: 6b35e559e2048424d8b237e3718e2058,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 404512375063164342, guid: 6b35e559e2048424d8b237e3718e2058,
         type: 3}

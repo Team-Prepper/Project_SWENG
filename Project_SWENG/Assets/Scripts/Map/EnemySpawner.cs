@@ -1,11 +1,9 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    [SerializeField] string _path = "EnemyData";
-    [SerializeField] string _enemyPrefabKey = "Enemy";
-    [SerializeField] string _bossEnemyPrefabKey = "BossEnemy";
-
     public GameObject _stageBossEnemyPrefab;
 
     public GameObject bossCam;
@@ -19,28 +17,24 @@ public class EnemySpawner : MonoBehaviour
     {
         _enemyPlayer = gameObject.AddComponent<EnemyPlayer>();
 
-        JsonDataConnector<string, string[]> connector = new JsonDataConnector<string, string[]>();
-
-        connector.Connect(_path);
-
         for (int i = 0; i < bossEnemyCnt; i++)
         {
-            SpawnEnemy(GetRandHex(), connector.Get(_bossEnemyPrefabKey));
+            SpawnEnemy(GetRandHex(), GameManager.Instance.GameMaster.Setting.BossEnemy);
         }
         for (int i = 0; i < enemyCnt; i++)
         {
-            SpawnEnemy(GetRandHex(), connector.Get(_enemyPrefabKey));
+            SpawnEnemy(GetRandHex(), GameManager.Instance.GameMaster.Setting.Enemy);
         }
     }
 
-    private void SpawnEnemy(MapUnit spawnHex, string[] spawnEnemyList)
+    private void SpawnEnemy(MapUnit spawnHex, IList<string> spawnEnemyList)
     {
         Transform spawnPos = spawnHex.transform;
         GameObject enemy = GameManager.Instance.GameMaster.InstantiateCharacter(spawnPos.position, spawnPos.rotation);
 
         ICharacterController cc = enemy.GetComponent<ICharacterController>();
         
-        cc.Initial(spawnEnemyList[Random.Range(0, spawnEnemyList.Length)], 1, true);
+        cc.Initial(spawnEnemyList[Random.Range(0, spawnEnemyList.Count)], 1, true);
         cc.SetActionSelector(new BasicEnemyActionSelector(_enemyPlayer));
         
     }

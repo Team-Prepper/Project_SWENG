@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class PhotonGameMaster : MonoBehaviourPun, IGameMaster {
 
+    public GameSetting Setting { get; set; }
     public IGameMaster.Phase _gamePhase;
 
     Team[] _teams;
@@ -23,6 +24,9 @@ public class PhotonGameMaster : MonoBehaviourPun, IGameMaster {
 
     public void StartGame()
     {
+        if (Setting == null)
+            Setting = new GameSetting();
+
         GameObject spawner = GameObject.FindWithTag("Spawner");
 
         if (PhotonNetwork.IsMasterClient)

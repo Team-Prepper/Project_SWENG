@@ -21,9 +21,9 @@ public class GUIShop : GUIPopUp
     {
         ItemData targetItem = ItemManager.Instance.GetItemData(targetItemCode);
 
-        if (_cc.GetPoint() >= targetItem.cost)
+        if (_cc.Character.GetPoint() >= targetItem.cost)
         {
-            _cc.UsePoint(targetItem.cost);
+            _cc.Character.UsePoint(targetItem.cost);
             _cc.EquipItem(targetItemCode);
             showComment("Thank you for your purchase");
             return true;

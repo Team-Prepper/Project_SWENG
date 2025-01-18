@@ -7,6 +7,14 @@ using EHTool.UIKit;
 public class GUITitle : GUICustomFullScreen
 {
     [SerializeField] private InputField _nickNameInput;
+    [SerializeField] private string _localScene = "Local";
+
+    public void StartLocalPlay() {
+        GameManager.Instance.SetGameMaster<LocalGameMaster>();
+        UIManager.Instance.OpenGUI<GUIGameSetting>("GameSetting").SetCloseCallback(() => {
+            OpenScene(_localScene);
+        });
+    }
 
     public void OpenScene(string sceneName) {
         UIManager.Instance.OpenGUI<GUI_Loading>("Loading");

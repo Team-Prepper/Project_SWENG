@@ -61,6 +61,8 @@ public interface IGameMaster
         End
     }
 
+    public GameSetting Setting { get; set; }
+
     public GameObject InstantiateCharacter(Vector3 position, Quaternion rotation);
     public GameObject InstantiateItem(Vector3 position);
 

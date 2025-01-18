@@ -55,7 +55,7 @@ public class BasicTargetingAttack : IAttack {
         if (attackPos.Count > 0)
             _cc.transform.LookAt(attackPos.ElementAt(0).ConvertToVector3() + _cc.transform.position.y * Vector3.up);
 
-        _cc.UsePoint(_usingPoint);
+        _cc.Character.UsePoint(_usingPoint);
         _cc.CamSetting("Battle");
         _cc.PlayAnim("SetTrigger", "Attack");
         _cc.ActionEnd(2f);
@@ -95,7 +95,7 @@ public class BasicAttack : IAttack {
         if (attackedCoord != null)
             _cc.transform.LookAt(attackedCoord.Value.ConvertToVector3() + _cc.transform.position.y * Vector3.up);
 
-        _cc.UsePoint(_value);
+        _cc.Character.UsePoint(_value);
         _cc.CamSetting("Wide");
         _cc.PlayAnim("SetTrigger", "Attack");
         _cc.ActionEnd(2f);
