@@ -22,8 +22,8 @@ public struct BFSPathGroup : IPathGroup
         if (!_visitedNodesDict.ContainsKey(destination))
             return new List<HexCoordinate>();
 
-        List<HexCoordinate> path = new List<HexCoordinate>();
-        path.Add(destination);
+        List<HexCoordinate> path = new List<HexCoordinate>
+        { destination };
 
         while (_visitedNodesDict[destination] != null)
         {

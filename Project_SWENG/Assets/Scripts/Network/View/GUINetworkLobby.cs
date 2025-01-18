@@ -1,8 +1,9 @@
+using EHTool.UIKit;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GUINetworkLobby : GUICustomFullScreen
+public class GUINetworkLobby : GUIFullScreen
 {
 
     [SerializeField] private Text _lobbyInfor;        // TMP_Text->Text

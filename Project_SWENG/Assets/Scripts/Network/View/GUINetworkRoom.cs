@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using EHTool.UIKit;
 using System;
 
-public class GUINetworkRoom : GUICustomFullScreen, RoomObserver {
+public class GUINetworkRoom : GUIFullScreen, RoomObserver {
 
     [SerializeField] GUINetworkRoomPlayerState[] _playerStates;
 

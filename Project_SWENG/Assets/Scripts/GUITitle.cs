@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using EHTool.UIKit;
 
-public class GUITitle : GUICustomFullScreen
+public class GUITitle : GUIFullScreen
 {
     [SerializeField] private InputField _nickNameInput;
     [SerializeField] private string _localScene = "Local";

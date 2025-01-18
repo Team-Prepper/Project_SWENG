@@ -10,6 +10,10 @@ public class GUICustomFullScreen : GUIWindow, IGUIFullScreen {
     private IList<IGUIPopUp> _popupUI;
     protected IGUIPopUp _nowPopUp;
 
+    MapUnit _mapUnit;
+
+    bool _inputStartFromThis = false;
+
     public void AddPopUp(IGUIPopUp popUp)
     {
         if (_nowPopUp != null)
@@ -58,7 +62,13 @@ public class GUICustomFullScreen : GUIWindow, IGUIFullScreen {
 
     public override void Close()
     {
+
         UIManager.Instance.CloseFullScreen(this);
+
+        if (_mapUnit != null)
+        {
+            _mapUnit.OnMouseToggle(false);
+        }
 
         while (_popupUI.Count > 0)
         {
@@ -72,11 +82,34 @@ public class GUICustomFullScreen : GUIWindow, IGUIFullScreen {
     {
         if (_nowPopUp != null) return;
 
+        HexCoordinate coord = MousePointHex();
+
+        if (_mapUnit != null)
+        {
+            _mapUnit.OnMouseToggle(false);
+        }
+
+        if (CameraManager.Instance.IsWide)
+        {
+            _mapUnit = HexGrid.Instance.GetMapUnitAt(coord);
+
+            if (_mapUnit != null)
+            {
+                _mapUnit.OnMouseToggle(true);
+            }
+
+        }
+
         if (Input.GetMouseButtonUp(0))
         {
-            HexCoordinate coord = MousePointHex();
+            if (_inputStartFromThis)
+                HexSelect(coord);
+            return;
+        }
 
-            HexSelect(coord);
+        if (Input.GetMouseButtonDown(0))
+        {
+            _inputStartFromThis = true;
         }
     }
 
@@ -87,9 +120,8 @@ public class GUICustomFullScreen : GUIWindow, IGUIFullScreen {
 
     public HexCoordinate MousePointHex()
     {
-        Vector3 touchPos = PlayerInputManager.Instance.mousePos;
         RaycastHit hit;
-        Ray ray = Camera.main.ScreenPointToRay(touchPos);
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
         if (!Physics.Raycast(ray, out hit, 100, selectionMask)) return new HexCoordinate(0, 0);
 

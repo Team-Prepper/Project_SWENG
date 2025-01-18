@@ -39,40 +39,40 @@ public class PlayerInputManager : MonoSingleton<PlayerInputManager>
 
     private void OnEnable()
     {
-        if (playerControls == null)
+        if (playerControls != null)
         {
-            playerControls = new PlayerInputSystem();
-
-            playerControls.MouseInput.MouseLClick.performed += InputMouseLClick;
-            playerControls.BaseInput.Select.performed += HandleUnitSelect;
-
-            playerControls.BaseInput.Movement.performed += i => movementInput = i.ReadValue<Vector2>();
-
-            playerControls.MouseInput.MouseDelta.performed += i => cameraInput = i.ReadValue<Vector2>();
-            playerControls.MouseInput.PointerPosition.performed += i => mousePos = i.ReadValue<Vector2>();
-            playerControls.MouseInput.MouseScroll.performed += i => scrollValue = i.ReadValue<float>();
-
-
-            playerControls.KeyInput.ActionQ.performed += i => inputQ = true;
-            playerControls.KeyInput.ActionQ.canceled += i => inputQ = false;
-            playerControls.KeyInput.ActionE.performed += i => inputE = true;
-            playerControls.KeyInput.ActionE.canceled += i => inputE = false;
-            playerControls.KeyInput.ActionC.performed += i => inputC = true;
-            playerControls.KeyInput.ActionC.canceled += i => inputC = false;
-            playerControls.KeyInput.ActionV.performed += i => inputV = true;
-            playerControls.KeyInput.ActionV.canceled += i => inputV = false;
-
-            playerControls.KeyInput.Action1.performed += i => input1 = true;
-            playerControls.KeyInput.Action1.canceled += i => input1 = false;
-            playerControls.KeyInput.Action2.performed += i => input2 = true;
-            playerControls.KeyInput.Action2.canceled += i => input2 = false;
-            playerControls.KeyInput.Action3.performed += i => input3 = true;
-            playerControls.KeyInput.Action3.canceled += i => input3 = false;
-            playerControls.KeyInput.Action4.performed += i => input4 = true;
-            playerControls.KeyInput.Action4.canceled += i => input4 = false;
+            playerControls.Enable();
         }
 
-        playerControls.Enable();
+        playerControls = new PlayerInputSystem();
+
+        playerControls.MouseInput.MouseLClick.performed += InputMouseLClick;
+        playerControls.BaseInput.Select.performed += HandleUnitSelect;
+
+        playerControls.BaseInput.Movement.performed += i => movementInput = i.ReadValue<Vector2>();
+
+        playerControls.MouseInput.MouseDelta.performed += i => cameraInput = i.ReadValue<Vector2>();
+        playerControls.MouseInput.PointerPosition.performed += i => mousePos = i.ReadValue<Vector2>();
+        playerControls.MouseInput.MouseScroll.performed += i => scrollValue = i.ReadValue<float>();
+
+
+        playerControls.KeyInput.ActionQ.performed += i => inputQ = true;
+        playerControls.KeyInput.ActionQ.canceled += i => inputQ = false;
+        playerControls.KeyInput.ActionE.performed += i => inputE = true;
+        playerControls.KeyInput.ActionE.canceled += i => inputE = false;
+        playerControls.KeyInput.ActionC.performed += i => inputC = true;
+        playerControls.KeyInput.ActionC.canceled += i => inputC = false;
+        playerControls.KeyInput.ActionV.performed += i => inputV = true;
+        playerControls.KeyInput.ActionV.canceled += i => inputV = false;
+
+        playerControls.KeyInput.Action1.performed += i => input1 = true;
+        playerControls.KeyInput.Action1.canceled += i => input1 = false;
+        playerControls.KeyInput.Action2.performed += i => input2 = true;
+        playerControls.KeyInput.Action2.canceled += i => input2 = false;
+        playerControls.KeyInput.Action3.performed += i => input3 = true;
+        playerControls.KeyInput.Action3.canceled += i => input3 = false;
+        playerControls.KeyInput.Action4.performed += i => input4 = true;
+        playerControls.KeyInput.Action4.canceled += i => input4 = false;
     }
 
     private void Update()
@@ -137,6 +137,8 @@ public class PlayerInputManager : MonoSingleton<PlayerInputManager>
         if (!Physics.Raycast(ray, out RaycastHit hit, 100, selectionMask)) return;
 
         GameObject selectedObject = hit.collider.gameObject;
+
+        return;
 
         if (originObj == selectedObject) return;
 
