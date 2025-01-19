@@ -68,7 +68,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 7caf6488107e0594fb52394d655a392b, type: 3}
-    m_FontSize: 227
+    m_FontSize: 215
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 1
@@ -190,9 +190,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   priority: 0
-  selectionMask:
-    serializedVersion: 2
-    m_Bits: 0
   _nickNameInput: {fileID: 0}
   _localScene: Local
 --- !u!1 &1127709830696919213
@@ -533,8 +530,8 @@ RectTransform:
   m_Children:
   - {fileID: 2345069840279057759}
   - {fileID: 29689834338807753}
-  - {fileID: 6305229434168924250}
   - {fileID: 1923185843112467271}
+  - {fileID: 6305229434168924250}
   m_Father: {fileID: 1127709830150573852}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -621,7 +618,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: "\xA9 2024 Team Prepper"
+  m_Text: "\xA9 2025 Team Prepper"
 --- !u!114 &6124882694787045839
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1193,7 +1190,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3614867858226288811
 CanvasRenderer:

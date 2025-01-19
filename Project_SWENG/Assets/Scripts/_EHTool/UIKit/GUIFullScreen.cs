@@ -34,6 +34,7 @@ namespace EHTool.UIKit {
             _nowPopUp?.SetOn();
             _nowPanel?.SetOn();
         }
+
         public override void SetOff()
         {
             base.SetOff();

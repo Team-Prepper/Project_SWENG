@@ -42,6 +42,7 @@ public class PhotonNet : MonoBehaviourPunCallbacks, INetwork {
         _room = gameObject.AddComponent<PhotonRoom>();
 
     }
+
     public void Connect(string nickName, CallbackMethod connectCallback) {
         PhotonNetwork.ConnectUsingSettings();
         PhotonNetwork.LocalPlayer.NickName = nickName;

@@ -209,9 +209,9 @@ GameObject:
   - component: {fileID: 1577702175795552083}
   - component: {fileID: 8654295211644263890}
   - component: {fileID: 4813713368361336000}
-  - component: {fileID: 4780356637836815773}
+  - component: {fileID: 7189644861116037503}
   m_Layer: 5
-  m_Name: GUI_Dice
+  m_Name: box_Container
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -269,7 +269,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: 21300000, guid: 81ed2512d4e68c74098a3bb639d03209, type: 3}
-  m_Type: 0
+  m_Type: 2
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -278,7 +278,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &4780356637836815773
+--- !u!114 &7189644861116037503
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -287,11 +287,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 5162636683544338234}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1c4e3e656b8dc5b4fa62f066f8008ebc, type: 3}
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  priority: 0
-  _dice: {fileID: 0}
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
+  m_EffectDistance: {x: 5, y: 5}
+  m_UseGraphicAlpha: 1
 --- !u!1 &5770284138321879887
 GameObject:
   m_ObjectHideFlags: 0

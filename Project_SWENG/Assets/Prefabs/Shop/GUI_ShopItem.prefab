@@ -62,7 +62,7 @@ MonoBehaviour:
   skillIcon: {fileID: 3743302295636499914}
   itemInfo: {fileID: 6896949774308708690}
   itemCost: {fileID: 5420357474769212645}
-  thisItem: {fileID: 0}
+  _itemCode: 
 --- !u!222 &3701385832855497525
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -406,8 +406,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -147.5, y: 37.500004}
-  m_SizeDelta: {x: 205, y: 75}
+  m_AnchoredPosition: {x: -147.5, y: 0}
+  m_SizeDelta: {x: 205, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3743302295776629518
 CanvasRenderer:

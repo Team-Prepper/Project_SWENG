@@ -13,12 +13,12 @@ public class GUIGameSetting : GUIPlayerSetting
 
         base.Display();
 
-        _Display(_enemyData, _gameSetting.Enemy);
-        _Display(_bossEnemyData, _gameSetting.BossEnemy);
+        _Display(_enemyData, _gameSetting.Enemy, EnemyCharacterRemove);
+        _Display(_bossEnemyData, _gameSetting.BossEnemy, BossEnemyCharacterRemove);
 
     }
 
-    void _Display(GUIGameSettingUnit[] guiUnits, IList<string> value)
+    void _Display(GUIGameSettingUnit[] guiUnits, IList<string> value, CallbackMethod<string> deleteAction)
     {
         int i = 0;
 
@@ -26,7 +26,7 @@ public class GUIGameSetting : GUIPlayerSetting
         {
             if (i < value.Count)
             {
-                guiUnit.SetData(this, value[i++]);
+                guiUnit.SetData(this, value[i++], deleteAction);
                 continue;
             }
 
@@ -40,7 +40,7 @@ public class GUIGameSetting : GUIPlayerSetting
         UIManager.Instance.OpenGUI<GUICharacterSelect>("CharacterSelect").Set(_gameSetting.Enemy, (value) =>
         {
             _gameSetting.Enemy.Add(value);
-            _Display(_enemyData, _gameSetting.Enemy);
+            _Display(_enemyData, _gameSetting.Enemy, EnemyCharacterRemove);
         });
     }
 
@@ -51,8 +51,17 @@ public class GUIGameSetting : GUIPlayerSetting
             return;
         }
         _gameSetting.Enemy.Remove(characterCode);
-        _Display(_enemyData, _gameSetting.Enemy);
+        _Display(_enemyData, _gameSetting.Enemy, EnemyCharacterRemove);
 
+    }
+    public void AddBossEnemy()
+    {
+
+        UIManager.Instance.OpenGUI<GUICharacterSelect>("CharacterSelect").Set(_gameSetting.BossEnemy, (value) =>
+        {
+            _gameSetting.BossEnemy.Add(value);
+            _Display(_bossEnemyData, _gameSetting.BossEnemy, BossEnemyCharacterRemove);
+        });
     }
 
     public void BossEnemyCharacterRemove(string characterCode)
@@ -62,7 +71,7 @@ public class GUIGameSetting : GUIPlayerSetting
             return;
         }
         _gameSetting.BossEnemy.Remove(characterCode);
-        _Display(_bossEnemyData, _gameSetting.BossEnemy);
+        _Display(_bossEnemyData, _gameSetting.BossEnemy, BossEnemyCharacterRemove);
 
     }
 

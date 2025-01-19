@@ -9,17 +9,21 @@ public class GUIGameSettingUnit : MonoBehaviour
     GUIGameSetting _target;
     string _characterCode;
 
-    internal void SetData(GUIGameSetting target, string characterCode)
+    CallbackMethod<string> _deleteAction;
+
+    internal void SetData(GUIGameSetting target, string characterCode, CallbackMethod<string> deleteAction)
     {
         gameObject.SetActive(true);
 
         _target = target;
         _characterCode = characterCode;
         _name.SetText(characterCode);
+
+        _deleteAction = deleteAction;
     }
 
     public void Delete() {
-        _target.EnemyCharacterRemove(_characterCode);
+        _deleteAction?.Invoke(_characterCode);
     }
 
 }
