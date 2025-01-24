@@ -39,8 +39,7 @@ public class PhotonCharacterController : MonoBehaviourPun, ICharacterController 
 
         Character.Initial(this);
 
-        HexGrid.Instance.GetMapUnitAt(transform.position).SetEntity(gameObject);
-        HexGrid.Instance.GetMapUnitAt(transform.position).SetCC(this);
+        HexGrid.Instance.GetMapUnitAt(transform.position).SetCC(gameObject, this);
 
         TeamIdx = teamIdx;
         _camSync = camSync;
@@ -102,12 +101,13 @@ public class PhotonCharacterController : MonoBehaviourPun, ICharacterController 
             return;
         }
 
-        HexGrid.Instance.GetMapUnitAt(gameObject.transform.position).SetEntity(null);
+        HexGrid.Instance.GetMapUnitAt(HexPos).ResetEntityState();
 
         if (!PhotonNetwork.IsMasterClient) return;
 
         PlayAnim("SetTrigger", "Die");
         _actionSelector.Die();
+        Character.Die();
 
         GameManager.Instance.GameMaster.RemoveTeamMember(this, TeamIdx);
 
@@ -172,9 +172,8 @@ public class PhotonCharacterController : MonoBehaviourPun, ICharacterController 
         HexCoordinate before = new HexCoordinate(beforeX, beforeZ);
         HexCoordinate after = new HexCoordinate(afterX, afterZ);
 
-        HexGrid.Instance.GetMapUnitAt(before).SetEntity(null);
-        HexGrid.Instance.GetMapUnitAt(after).SetEntity(gameObject);
-        HexGrid.Instance.GetMapUnitAt(after).SetCC(this);
+        HexGrid.Instance.GetMapUnitAt(before).ResetEntityState();
+        HexGrid.Instance.GetMapUnitAt(after).SetCC(gameObject, this);
 
     }
 

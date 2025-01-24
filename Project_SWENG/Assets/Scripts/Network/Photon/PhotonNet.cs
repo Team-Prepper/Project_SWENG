@@ -3,6 +3,7 @@ using ExitGames.Client.Photon;
 using Photon.Pun;
 using Photon.Realtime;
 using System.Collections.Generic;
+using System;
 
 public class PhotonNet : MonoBehaviourPunCallbacks, INetwork {
 
@@ -28,7 +29,7 @@ public class PhotonNet : MonoBehaviourPunCallbacks, INetwork {
 
     public int PlayerId { get; private set; }
 
-    CallbackMethod _connectCallback;
+    Action _connectCallback;
 
     void Awake()
     {
@@ -43,7 +44,7 @@ public class PhotonNet : MonoBehaviourPunCallbacks, INetwork {
 
     }
 
-    public void Connect(string nickName, CallbackMethod connectCallback) {
+    public void Connect(string nickName, Action connectCallback) {
         PhotonNetwork.ConnectUsingSettings();
         PhotonNetwork.LocalPlayer.NickName = nickName;
         _connectCallback = connectCallback;

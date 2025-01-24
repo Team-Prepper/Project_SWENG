@@ -19,7 +19,10 @@ public class PhotonGameMaster : MonoBehaviourPun, IGameMaster {
 
     public GameObject InstantiateItem(Vector3 position)
     {
-        return null;
+        GameObject retval = PhotonNetwork.Instantiate("PhotonItem", position, Quaternion.identity);
+
+        return retval;
+
     }
 
     public void StartGame()

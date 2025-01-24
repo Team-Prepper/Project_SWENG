@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using EHTool.UIKit;
+using static UnityEngine.EventSystems.EventTrigger;
 
 [SelectionBase]
 public class MapUnit : MonoBehaviour {
@@ -16,22 +17,27 @@ public class MapUnit : MonoBehaviour {
     public HexCoordinate HexCoords => HexCoordinate.ConvertFromVector3(transform.position);
 
     [SerializeField] private GameObject _entity;
+
     private ICharacterController _cc;
+    private IItemController _ic;
 
     public GameObject Entity => _entity;
     public ICharacterController CC => _cc;
     public bool IsCloud { get; private set; } = true;
 
-    public void SetEntity(GameObject entity) {
+    public void ResetEntityState()
+    {
+        _entity = null;
+        _cc = null;
+        _ic = null;
+    }
+
+    public void SetCC(GameObject entity, ICharacterController cc = null) {
 
         if (_entity == entity) return;
         _entity = entity;
 
         if (entity == null) _cc = null;
-
-    }
-
-    public void SetCC(ICharacterController cc) {
 
         _cc = cc;
 
@@ -39,6 +45,12 @@ public class MapUnit : MonoBehaviour {
         {
             CloudActiveFalse();
         }
+
+    }
+
+    public void SetItem(GameObject entity, IItemController ic) {
+        _entity = entity;
+        _ic = ic;
     }
 
     public bool IsObstacle {
@@ -46,28 +58,12 @@ public class MapUnit : MonoBehaviour {
             if (Entity != null) return true;
             if (tileType == TileDataScript.TileType.obstacle) return true;
             if (tileType == TileDataScript.TileType.village) return true;
-            if (Item != null) return true;
             return false;
         }
     }
 
     [SerializeField] private GameObject _itemZone; //parent
     private GameObject itemMesh;
-
-    public ItemData Item { get; private set; }
-
-    public void SetItem(ItemData item) {
-        Item = item;
-
-        if (item != null)
-        {
-            itemMesh = Instantiate(item.itemObject, _itemZone.transform);
-        }
-        else
-        {
-            Destroy(itemMesh);
-        }
-    }
 
     private void Start()
     {
@@ -125,8 +121,11 @@ public class MapUnit : MonoBehaviour {
             UIManager.Instance.OpenGUI<GUI_ShowCharacterInfor>("CharacterInfor").SetInfor(_cc, actor);
             return;
         }
+        if (_ic != null) {
+            _ic.Interaction(actor);
+        }
 
-        _cc.ActionEnd(0);
+        actor.ActionEnd(0);
 
     }
 }

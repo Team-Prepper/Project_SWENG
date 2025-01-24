@@ -12,7 +12,7 @@ public interface ICharacterController : IDamagable, IEntity {
     public void SetActionSelector(IActionSelector actionSelector);
 
     public void SetPlay();
-    public void ActionEnd(float time);
+    public void ActionEnd(float time = 0);
     public void TurnEnd();
     public void CamSetting(string key);
 

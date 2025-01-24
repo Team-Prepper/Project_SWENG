@@ -118,45 +118,12 @@ public class PlayerInputManager : MonoSingleton<PlayerInputManager>
 
     public void HandleUnitSelect(InputAction.CallbackContext context)
     {
-        
         Debug.Log("SpaceBar");
-        //Debug.Log(PhotonNetwork.NetworkClientState);
-        /*
-        if (!GameManager.IsNull())
-        {
-            OnUnitSelected?.Invoke(GameManager.Instance.player);
-        }*/
-        
     }
 
 
     private void MouseMove()
     {
-        Ray ray = Camera.main.ScreenPointToRay(mousePos);
-
-        if (!Physics.Raycast(ray, out RaycastHit hit, 100, selectionMask)) return;
-
-        GameObject selectedObject = hit.collider.gameObject;
-
-        return;
-
-        if (originObj == selectedObject) return;
-
-        if (hex != null)
-        {
-            // origin off
-            hex.OnMouseToggle(false);
-        }
-
-        if (!CameraManager.Instance.IsWide) return;
-
-        hex = selectedObject.GetComponent<MapUnit>();
-
-        if (hex != null)
-        {
-            // New Obj on
-            hex.OnMouseToggle(true);
-        }
 
     }
 }

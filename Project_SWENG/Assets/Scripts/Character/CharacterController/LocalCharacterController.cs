@@ -36,8 +36,7 @@ public class LocalCharacterController : MonoBehaviour, ICharacterController {
 
         MapUnit mapUnit = HexGrid.Instance.GetMapUnitAt(transform.position);
 
-        mapUnit.SetEntity(gameObject);
-        mapUnit.SetCC(this);
+        mapUnit.SetCC(gameObject, this);
     }
 
     public void CamSetting(string key) {
@@ -58,10 +57,11 @@ public class LocalCharacterController : MonoBehaviour, ICharacterController {
             return;
         }
 
-        HexGrid.Instance.GetMapUnitAt(gameObject.transform.position).SetEntity(null);
+        HexGrid.Instance.GetMapUnitAt(gameObject.transform.position).ResetEntityState();
 
         PlayAnim("SetTrigger", "Die");
         _actionSelector.Die();
+        Character.Die();
 
         GameManager.Instance.GameMaster.RemoveTeamMember(this, TeamIdx);
 
@@ -96,9 +96,8 @@ public class LocalCharacterController : MonoBehaviour, ICharacterController {
 
     public void MoveTo(HexCoordinate before, HexCoordinate after)
     {
-        HexGrid.Instance.GetMapUnitAt(before).SetEntity(null);
-        HexGrid.Instance.GetMapUnitAt(after).SetEntity(gameObject);
-        HexGrid.Instance.GetMapUnitAt(after).SetCC(this);
+        HexGrid.Instance.GetMapUnitAt(before).ResetEntityState();
+        HexGrid.Instance.GetMapUnitAt(after).SetCC(gameObject, this);
     }
 
     public void Move(Queue<Vector3> path)

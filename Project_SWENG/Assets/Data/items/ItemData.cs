@@ -45,8 +45,5 @@ public class ItemData : ScriptableObject
     public ItemTier tier;
 
     public ItemType type;
-    
-    public void Pick() {
-        UIManager.Instance.OpenGUI<GUI_ItemInterAction>("ItemInterAction").SetItem(this);    
-    }
+
 }

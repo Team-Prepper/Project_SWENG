@@ -3,52 +3,75 @@ using UnityEngine.UI;
 using TMPro;
 using EHTool.LangKit;
 using EHTool.UIKit;
+using System;
 
 public class GUI_ItemInterAction : GUIPopUp
 {
-    private ItemData _targetItem;
-
     [SerializeField] private Image _itemIcon;
     [SerializeField] private Image _itemSkillIcon;
     [SerializeField] private Text _itemNameLabel;
     [SerializeField] private Text _itemInforLabel;
     [SerializeField] private Text _itemValueLabel;
-    [SerializeField] private TextMeshProUGUI _itemSkillInfoLabel;
+    [SerializeField] private Text _itemSkillInfoLabel;
 
-    public void SetItem(ItemData item) {
+    Action _interactionEvent;
+    Action _closeEvent;
 
-        _targetItem = item;
-        _itemIcon.sprite = item.icon;
-        _itemSkillIcon.sprite = item.skillIcon;
+    public void SetItem(string item) {
 
-        _itemNameLabel.text = LangManager.Instance.GetStringByKey(item.itemName);
+        ItemData itemData = ItemManager.Instance.GetItemData(item);
 
+        _itemIcon.sprite = itemData.icon;
+        _itemSkillIcon.sprite = itemData.skillIcon;
+
+        _itemNameLabel.text = LangManager.Instance.GetStringByKey(itemData.itemName);
+        _itemInforLabel.text = GetInforLabel(itemData);
+
+        switch (itemData.type)
+        {
+            case ItemData.ItemType.Weapon:
+                _itemSkillInfoLabel.text = "Cost : " + itemData.skillCost + "\n";
+                _itemSkillInfoLabel.text += "Dmg : " + itemData.skillDmg;
+                break;
+        }
+
+        _itemValueLabel.text = itemData.value.ToString();
+    }
+
+    public void InteractionEventSet(Action action) {
+        _interactionEvent += action;
+    }
+
+    public void CloseEvent(Action action) {
+        _closeEvent = action;
+    }
+
+    string GetInforLabel(ItemData item)
+    {
         switch (item.type)
         {
             case ItemData.ItemType.Helmet:
-                _itemInforLabel.text = LangManager.Instance.GetStringByKey("itemInterAction_All");
-                break;
+                return LangManager.Instance.GetStringByKey("itemInterAction_All");
             case ItemData.ItemType.Armor:
-                _itemInforLabel.text = LangManager.Instance.GetStringByKey("itemInterAction_HP"); ;
-                break;
+                return LangManager.Instance.GetStringByKey("itemInterAction_HP"); ;
             case ItemData.ItemType.Weapon:
-                _itemInforLabel.text = LangManager.Instance.GetStringByKey("itemInterAction_Attack"); ;
-                _itemSkillInfoLabel.text = "Cost : " + item.skillCost + "\n";
-                _itemSkillInfoLabel.text += "Dmg : " + item.skillDmg;
-                break;
+                return LangManager.Instance.GetStringByKey("itemInterAction_Attack"); ;
             case ItemData.ItemType.Shield:
-                _itemInforLabel.text = LangManager.Instance.GetStringByKey("itemInterAction_Defense"); ;
-                break;
+                return LangManager.Instance.GetStringByKey("itemInterAction_Defense");
             default:
-                _itemInforLabel.text = "";
-                break;
+                return "";
         }
-        _itemValueLabel.text = item.value.ToString();
 
     }
 
     public void InterAction() {
-        InventoryManager.Instance.GetItem(_targetItem);
+        _interactionEvent?.Invoke();
+    }
+
+    public override void Close()
+    {
+        _closeEvent?.Invoke();
+        base.Close();
     }
 
 }

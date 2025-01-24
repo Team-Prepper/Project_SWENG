@@ -1,7 +1,5 @@
-using Photon.Realtime;
-using System.Collections;
+using System;
 using System.Collections.Generic;
-using UnityEngine;
 
 public struct NetworkRoom {
     public string Name;
@@ -28,7 +26,7 @@ public interface INetwork {
 
     public int PlayerId { get; }
 
-    public void Connect(string nickName, CallbackMethod connectCallback = null);
+    public void Connect(string nickName, Action connectCallback = null);
     public void Disconnect();
 
     public IList<NetworkRoom> GetRoomInfor();

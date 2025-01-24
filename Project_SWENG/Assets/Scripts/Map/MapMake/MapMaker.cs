@@ -15,7 +15,7 @@ public class MapMaker : MonoBehaviour
     [SerializeField] TileDataScript _tileVillage;
     [SerializeField] TileDataScript _tileOcean;
 
-    List<HexTileSetter> _tileSetters;
+    List<MapUnitSetter> _tileSetters;
 
     [Space(10)]
     public GameObject hexGround;
@@ -58,7 +58,7 @@ public class MapMaker : MonoBehaviour
 
     public void CreateHexGrid()
     {
-        _tileSetters = new List<HexTileSetter>();
+        _tileSetters = new List<MapUnitSetter>();
         if (_nowWorking) DestroyImmediate(_nowWorking);
 
         _nowWorking = new GameObject("Map");
@@ -89,10 +89,10 @@ public class MapMaker : MonoBehaviour
     public void EndEdit()
     {
         _nowWorking.transform.eulerAngles = new Vector3(0, 0, 0);
-        foreach (HexTileSetter setter in _tileSetters) {
+        foreach (MapUnitSetter setter in _tileSetters) {
             DestroyImmediate(setter);
         }
-        _tileSetters = new List<HexTileSetter>();
+        _tileSetters = new List<MapUnitSetter>();
         _nowWorking = null;
     }
 
@@ -100,13 +100,13 @@ public class MapMaker : MonoBehaviour
     {
         if (_nowWorking == null) return;
         DestroyImmediate(_nowWorking);
-        _tileSetters = new List<HexTileSetter>();
+        _tileSetters = new List<MapUnitSetter>();
     }
 
     private MapUnit _SpawnHexTile(Vector3 spawnPos)
     {
         MapUnit hex = Instantiate(_hexPrefab, spawnPos, Quaternion.identity);
-        HexTileSetter tileSetter = hex.gameObject.AddComponent<HexTileSetter>();
+        MapUnitSetter tileSetter = hex.gameObject.AddComponent<MapUnitSetter>();
         tileSetter.SetInfor(this);
         _tileSetters.Add(tileSetter);
         hex.transform.SetParent(_nowWorking.transform);
@@ -136,7 +136,7 @@ public class MapMaker : MonoBehaviour
         else
             tile.transform.SetParent(hex.transform);
 
-        tile.AddComponent<HexTileSetter>();
+        tile.AddComponent<MapUnitSetter>();
         HexGrid.Instance.AddTile(hex);
 
         return hex;

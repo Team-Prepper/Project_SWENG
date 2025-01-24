@@ -4,7 +4,7 @@ using UnityEditor;
 using UnityEngine;
 
 [CanEditMultipleObjects]
-[CustomEditor(typeof(HexTileSetter))]
+[CustomEditor(typeof(MapUnitSetter))]
 public class TileSetterEditor : Editor {
     public override void OnInspectorGUI()
     {
@@ -14,7 +14,7 @@ public class TileSetterEditor : Editor {
         {
             foreach (Object targetObject in targets)
             {
-                HexTileSetter generator = (HexTileSetter)targetObject;
+                MapUnitSetter generator = (MapUnitSetter)targetObject;
                 generator.SetTile();
             }
         }
@@ -23,7 +23,7 @@ public class TileSetterEditor : Editor {
         {
             foreach (Object targetObject in targets)
             {
-                HexTileSetter generator = (HexTileSetter)targetObject;
+                MapUnitSetter generator = (MapUnitSetter)targetObject;
                 generator.SetEntity();
             }
         }

@@ -20,8 +20,13 @@ public class LocalGameMaster : MonoBehaviour, IGameMaster {
 
     }
 
-    public GameObject InstantiateItem(Vector3 position) {
-        return null;
+    public GameObject InstantiateItem(Vector3 position)
+    {
+        GameObject retval = AssetOpener.ImportGameObject("LocalItem");
+
+        retval.transform.position = position;
+
+        return retval;
     }
 
     public void StartGame()
