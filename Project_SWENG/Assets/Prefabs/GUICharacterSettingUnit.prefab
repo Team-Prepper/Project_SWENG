@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8361377856156587617}
   - component: {fileID: 7450613933086550211}
-  - component: {fileID: 5088723612316231403}
   - component: {fileID: 1655285671222134029}
   - component: {fileID: 2652722058402583114}
   - component: {fileID: 1817726073419563736}
@@ -50,19 +49,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4961862944402403144}
   m_CullTransparentMesh: 1
---- !u!114 &5088723612316231403
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4961862944402403144}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ce08f408048a17643998d56e7484a6ce, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _name: {fileID: 4337964677665706479}
 --- !u!114 &1655285671222134029
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -231,7 +217,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5544968519806852462}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3fe9d1ef168bba84895b8a57fb1fb8a3, type: 3}
+  m_Script: {fileID: 11500000, guid: 12570bef5492f6f4fba58d2c05099188, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -247,13 +233,13 @@ MonoBehaviour:
     m_FontSize: 64
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 0
-    m_MaxSize: 96
+    m_MinSize: 4
+    m_MaxSize: 64
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Net_Enemy_Dragon
-  _key: Net_Enemy_Dragon
+  m_Text: "\uBC15\uC950"
+  _key: Net_Enemy_Bat

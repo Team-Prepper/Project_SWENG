@@ -6,6 +6,7 @@ public class GameManager : MonoSingleton<GameManager> {
 
     public INetwork Network { get; private set; }
     public IGameMaster GameMaster { get; private set; }
+    public IGameSetting GameSetting { get; internal set; }
 
     GameObject _gameMasterObject;
 

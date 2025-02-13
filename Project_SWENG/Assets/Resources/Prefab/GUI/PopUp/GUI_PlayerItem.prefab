@@ -61,7 +61,7 @@ MonoBehaviour:
   skillIcon: {fileID: 3743302295636499914}
   itemInfo: {fileID: 6896949774308708690}
   itemCost: {fileID: 0}
-  thisItem: {fileID: 0}
+  _itemCode: 
 --- !u!222 &3701385832855497525
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -382,9 +382,9 @@ GameObject:
   m_Component:
   - component: {fileID: 3743302295776629516}
   - component: {fileID: 3743302295776629518}
-  - component: {fileID: 5928003519470778319}
+  - component: {fileID: 1099741584438388277}
   m_Layer: 5
-  m_Name: xtxt_ItemName
+  m_Name: etxt_ItemName
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -417,7 +417,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3743302295776629515}
   m_CullTransparentMesh: 1
---- !u!114 &5928003519470778319
+--- !u!114 &1099741584438388277
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -426,7 +426,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3743302295776629515}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3fe9d1ef168bba84895b8a57fb1fb8a3, type: 3}
+  m_Script: {fileID: 11500000, guid: 12570bef5492f6f4fba58d2c05099188, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -439,19 +439,19 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 7caf6488107e0594fb52394d655a392b, type: 3}
-    m_FontSize: 48
+    m_FontSize: 64
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 4
-    m_MaxSize: 48
+    m_MinSize: 6
+    m_MaxSize: 64
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Tmp
-  _key: Tmp
+  m_Text: TMP
+  _key: TMP
 --- !u!1 &5785946216680830873
 GameObject:
   m_ObjectHideFlags: 0
