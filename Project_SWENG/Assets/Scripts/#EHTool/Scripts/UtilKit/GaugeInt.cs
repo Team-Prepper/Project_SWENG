@@ -7,17 +7,9 @@ namespace EHTool.UtilKit {
         [SerializeField] private int _maxValue;
         [SerializeField] private int _minValue;
 
-        public int Value {
-            get {
-                return _curValue;
-            }
-        }
+        public int Value => _curValue;
 
-        public int MaxValue {
-            get {
-                return _maxValue;
-            }
-        }
+        public int MaxValue => _maxValue;
 
         public GaugeInt()
         {
@@ -46,7 +38,7 @@ namespace EHTool.UtilKit {
 
         public void AddValue(int addAmout)
         {
-            _curValue = _curValue + addAmout;
+            _curValue += addAmout;
 
             if (_curValue.CompareTo(_maxValue) > 0)
                 _curValue = _maxValue;
@@ -54,7 +46,7 @@ namespace EHTool.UtilKit {
 
         public void SubValue(int subAmout)
         {
-            _curValue = _curValue - subAmout;
+            _curValue -= subAmout;
 
             if (_curValue.CompareTo(_minValue) < 0)
                 _curValue = _minValue;
@@ -73,7 +65,14 @@ namespace EHTool.UtilKit {
 
         public float ConvertToRate()
         {
-            return (_curValue - _minValue) / (_maxValue - _minValue);
+            return (Value * 1f - _minValue) / (MaxValue - _minValue);
         }
+
+        public override string ToString() {
+            return string.Format("{0} / {1}", Value, MaxValue);
+
+        }
+
     }
+
 }

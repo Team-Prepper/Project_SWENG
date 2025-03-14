@@ -1,0 +1,60 @@
+﻿using EHTool.LangKit;
+using EHTool.UIKit;
+using System;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class GUICharacterSelect : GUIPopUp {
+
+    private Action<string> _callback;
+
+    [SerializeField] private GUICharacterSelectUnit[] _characters;
+    [SerializeField] private GameObject _listView;
+    [SerializeField] private EHText _message;
+
+    public void Set(IList<string> except, Action<string> callback)
+    {
+
+        _callback = callback;
+
+        IList<string> characterList = CharacterManager.Instance.AllCharacters;
+
+        foreach (string str in except)
+        {
+            if (characterList.Contains(str))
+                characterList.Remove(str);
+        }
+
+        if (characterList.Count == 0)
+        {
+            _message.gameObject.SetActive(true);
+            _message.SetText("label_NoMoreCharacter");
+            _listView.SetActive(false);
+            return;
+        }
+
+        _message.gameObject.SetActive(false);
+        _listView.SetActive(true);
+
+        int i = 0;
+        
+        foreach (GUICharacterSelectUnit guiUnit in _characters)
+        {
+            if (i >= characterList.Count)
+            {
+                guiUnit.gameObject.SetActive(false);
+                continue;
+            }
+
+            guiUnit.Set(characterList[i++], ChangeTo);
+
+        }
+    }
+
+    public void ChangeTo(string value)
+    {
+        _callback?.Invoke(value);
+        Close();
+    }
+
+}

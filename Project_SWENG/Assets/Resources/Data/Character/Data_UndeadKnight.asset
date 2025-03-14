@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84eb774793ec04f4b93001a6fbf059c4, type: 3}
+  m_Name: Data_UndeadKnight
+  m_EditorClassIdentifier: 
+  CharacterName: Label_Character_UndeadKnight
+  DefaultSkill: BatAttack
+  Image: {fileID: 21300000, guid: d405b747e01422f4d889df82fa76c162, type: 3}
+  CharacterPrefab: {fileID: 1827309546896009461, guid: 29fd93db55fbfc24db397fd814ddc363,
+    type: 3}
+  StatusElements:
+  - HP: 100
+    Atk: 20
+    Dfs: 20
+  - HP: 150
+    Atk: 30
+    Dfs: 30
+  - HP: 180
+    Atk: 35
+    Dfs: 35

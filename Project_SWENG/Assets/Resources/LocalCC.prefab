@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8796925696645273430}
   - component: {fileID: 8796925696645273431}
+  - component: {fileID: 8985681165379597367}
   m_Layer: 0
   m_Name: LocalCC
   m_TagString: Untagged
@@ -44,5 +45,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccf58871ad46f1941bae5550e14ca548, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _dicePoint: 10
-  _rollDice: 0
+  _status: {fileID: 8985681165379597367}
+--- !u!114 &8985681165379597367
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8799764154775130914}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f644fb781f4e8a14fa4db6d83db3cb51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

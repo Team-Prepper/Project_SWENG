@@ -8,7 +8,7 @@ public class GameManager : MonoSingleton<GameManager> {
     public IGameMaster GameMaster { get; private set; }
     public IGameSetting GameSetting { get; internal set; }
 
-    GameObject _gameMasterObject;
+    private GameObject _gameMasterObject;
 
     public void SetGameMaster<T>() where T : Component, IGameMaster
     {
@@ -28,6 +28,7 @@ public class GameManager : MonoSingleton<GameManager> {
 
         SetGameMaster<LocalGameMaster>();
 
+        GameSetting = new LocalGameSetting();
         Network = gameObject.AddComponent<PhotonNet>();
     }
 
