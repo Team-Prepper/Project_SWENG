@@ -1,3 +1,5 @@
+#nullable disable
+
 using UnityEngine;
 using UnityEngine.Events;
 using EHTool.UIKit;
@@ -23,8 +25,7 @@ public class PlayerSpawner : MonoBehaviour
         cc.SetActionSelector(playerActionSelector);
         
         cc.Initial(GameManager.Instance.GameSetting.Players[posIdx].PlayerCharacter, 0, false);
-
-        playerActionSelector.SetPlayer(player);
+        
         callback?.Invoke();
 
         EventPlayerSpawn?.Invoke(player);

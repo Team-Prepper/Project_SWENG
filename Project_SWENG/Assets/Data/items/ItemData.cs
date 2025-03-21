@@ -1,3 +1,5 @@
+#nullable disable
+
 using UnityEngine;
 using EHTool.UIKit;
 

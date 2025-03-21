@@ -13,12 +13,17 @@ public class CameraManager : MonoSingleton<CameraManager>
 
     public void SetCamTarget(Transform target)
     {
+        if (target == _target) return;
+        _target = target;
+
         int nextGroupIdx = (1 + _nowGroupIdx) % _groups.Length;
         _groups[nextGroupIdx].SetCamTarget(target);
         _groups[_nowGroupIdx].OffTheGroup();
+
         _nowGroupIdx = nextGroupIdx;
         ConvertToCharacterCam();
         StartCoroutine(ResetMode());
+        
     }
 
     IEnumerator ResetMode()
@@ -81,7 +86,7 @@ public class CameraManager : MonoSingleton<CameraManager>
     {
         if (_target == null) return;
 
-        // Player´Â ½Ì±ÛÅæÀÌ±â¿¡ Àü¿ªÀûÀ¸·Î Á¢±ÙÇÒ ¼ö ÀÖ½À´Ï´Ù.
+        // Playerï¿½ï¿½ ï¿½Ì±ï¿½ï¿½ï¿½ï¿½Ì±â¿¡ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö½ï¿½ï¿½Ï´ï¿½.
         Vector3 direction = (_target.position - transform.position).normalized;
 
         RaycastHit[] hits = Physics.RaycastAll(transform.position, direction, Mathf.Infinity,

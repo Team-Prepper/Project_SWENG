@@ -126,7 +126,6 @@ public class PhotonCharacterController : MonoBehaviourPun, ICharacterController 
     public void SetActionSelector(IActionSelector actionSelector)
     {
         _actionSelector = actionSelector;
-        _actionSelector.SetCharacterController(this);
     }
 
     public void ActionEnd(float time = 0)
@@ -145,7 +144,7 @@ public class PhotonCharacterController : MonoBehaviourPun, ICharacterController 
 
         if (_dicePoint.IsRollDice == false)
             list.Add(IActionSelector.Action.Dice);
-        _actionSelector.Ready(list);
+        _actionSelector.Ready(this, list);
         
     }
 

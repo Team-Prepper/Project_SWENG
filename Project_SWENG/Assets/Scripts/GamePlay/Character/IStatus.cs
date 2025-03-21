@@ -11,7 +11,7 @@ public interface IStatus : IObservable<IStatus> {
 
     public int Atk { get; }
     public int Dfs { get; }
-    public string Attack { get; }
+    public SkillData Skill { get; }
     public bool IsAlive { get; }
 
     public void SetCC(ICharacterController cc);

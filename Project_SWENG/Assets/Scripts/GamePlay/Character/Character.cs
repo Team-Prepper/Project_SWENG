@@ -59,6 +59,17 @@ public class Character : MonoBehaviour {
         Debug.LogFormat("Equip: {0}", targetItem);
     }
 
+    public void ChangeAnimClip(string key, AnimationClip clip) {
+        
+        AnimatorOverrideController overrideController =
+            new AnimatorOverrideController(_anim.runtimeAnimatorController);
+        
+        Debug.Log(key);
+        overrideController[key] = clip; // 기존 Idle 애니메이션을 다른 클립으로 변경
+        _anim.runtimeAnimatorController = overrideController;
+
+    }
+
     public void PlayAnim(string triggerType, string triggerValue) {
         switch (triggerType)
         {

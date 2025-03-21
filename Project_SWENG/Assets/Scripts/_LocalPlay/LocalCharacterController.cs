@@ -73,7 +73,6 @@ public class LocalCharacterController : MonoBehaviour, ICharacterController {
 
     public void SetActionSelector(IActionSelector actionSelector) {
         _actionSelector = actionSelector;
-        _actionSelector.SetCharacterController(this);
     }
 
     public void ActionEnd(float time = 0) {
@@ -91,7 +90,7 @@ public class LocalCharacterController : MonoBehaviour, ICharacterController {
         if (_dicePoint.IsRollDice == false)
             list.Add(IActionSelector.Action.Dice);
 
-        _actionSelector.Ready(list);
+        _actionSelector.Ready(this, list);
     }
 
     public void TurnEnd() {

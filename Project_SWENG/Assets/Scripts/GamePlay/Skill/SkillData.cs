@@ -1,12 +1,14 @@
+#nullable disable
+
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Skill", menuName = "Custom/SkillData", order = 2)]
 public class SkillData : ScriptableObject {
 
     public string SkillName;
-    public string AnimName;
+    public AnimationClip AnimClip;
 
-    public string SkillValue = "BasicSkill/5";
+    public string SkillValue = "RangeSkill/5";
 
     public ISkill GetSkill() {
         string[] parsed = SkillValue.Split("/");

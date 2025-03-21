@@ -13,12 +13,14 @@ public class CharacterData : ScriptableObject {
 
     public string CharacterName;
 
-    public string DefaultSkill;
+    public SkillData DefaultSkill;
 
     public Sprite Image;
 
     public Character CharacterPrefab;
 
     public StatusElement[] StatusElements;
+
+    public bool IsHumanType = true;
 
 }

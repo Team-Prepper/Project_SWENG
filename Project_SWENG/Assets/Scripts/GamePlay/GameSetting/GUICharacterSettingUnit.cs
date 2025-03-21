@@ -19,7 +19,8 @@ public class GUICharacterSettingUnit : MonoBehaviour {
 
         _characterChangeMethod = characterChangeMethod;
         
-        _name.SetText(characterCode);
+        _name.SetText(CharacterManager.Instance.
+            GetCharacterData(characterCode).CharacterName);
     }
 
     public void CharacterChange() {

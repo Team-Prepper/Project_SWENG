@@ -12,13 +12,10 @@ public class BasicEnemyActionSelector : IActionSelector {
         _player.AddSelector(this);
     }
 
-    public void SetCharacterController(ICharacterController cc)
+    public void Ready(ICharacterController cc, IList<IActionSelector.Action> actionList)
     {
         _cc = cc;
-    }
 
-    public void Ready(IList<IActionSelector.Action> actionList)
-    {
         if (actionList.Contains(IActionSelector.Action.Dice)) {
             _cc.DicePoint.SetPoint(4);
             return;
@@ -59,7 +56,7 @@ public class BasicEnemyActionSelector : IActionSelector {
 
         switch (action) {
             case IActionSelector.Action.Attack:
-                SkillManager.Instance.GetSkillData(_cc.Status.Attack).GetSkill().Set(this, _cc);
+                _cc.Status.Skill.GetSkill().Set(this, _cc);
                 return;
             case IActionSelector.Action.Move:
                 DoMove();

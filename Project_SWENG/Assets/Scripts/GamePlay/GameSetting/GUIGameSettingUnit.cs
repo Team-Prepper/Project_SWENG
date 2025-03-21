@@ -21,8 +21,10 @@ public class GUIGameSettingUnit : MonoBehaviour
         _target = target;
         _characterCode = characterCode;
         
-        _img.sprite = CharacterManager.Instance.GetCharacterData(characterCode).Image;
-        _name.SetText(characterCode);
+        CharacterData data = CharacterManager.Instance.GetCharacterData(characterCode);
+
+        _img.sprite = data.Image;
+        _name.SetText(data.CharacterName);
 
         _deleteAction = deleteAction;
     }

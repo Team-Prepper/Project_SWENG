@@ -11,19 +11,20 @@ public class GUICharacterSelectUnit : MonoBehaviour {
     private string _value;
     private Action<string> _selectedMethod;
 
-    public void Set(string value, Action<string> selectedMethod) {
-        _value = value;
+    public void Set(string characterCode, Action<string> selectedMethod) {
+        _value = characterCode;
         _selectedMethod = selectedMethod;
 
-        _img.sprite = CharacterManager.Instance.GetCharacterData(value).Image;
-        _name.SetText(value);
+        CharacterData data = CharacterManager.Instance.GetCharacterData(characterCode);
+
+        _img.sprite = data.Image;
+        _name.SetText(data.CharacterName);
 
         gameObject.SetActive(true);
     }
 
     public void Select()
     {
-        Debug.Log(_value);
         _selectedMethod?.Invoke(_value);
     }
 

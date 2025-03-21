@@ -7,8 +7,7 @@ public interface IActionSelector
         Interaction
     }
 
-    public void SetCharacterController(ICharacterController cc);
-    public void Ready(IList<Action> actionList);
+    public void Ready(ICharacterController cc, IList<Action> actionList);
     public void SelectTarget(ISkill attack);
 
     public void Die();

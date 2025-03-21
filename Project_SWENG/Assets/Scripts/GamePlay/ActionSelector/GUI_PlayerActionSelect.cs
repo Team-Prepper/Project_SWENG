@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using EHTool.UIKit;
+using System;
+using System.Linq;
 
 public class GUI_PlayerActionSelect : GUICustomFullScreen, IActionSelector {
 
@@ -17,24 +19,39 @@ public class GUI_PlayerActionSelect : GUICustomFullScreen, IActionSelector {
     [SerializeField] private Button _btnMove;
     [SerializeField] private Button _btnDice;
 
+    private IDictionary<ICharacterController, IList<IActionSelector.Action>> _todoList
+        = new Dictionary<ICharacterController, IList<IActionSelector.Action>>();
     private ICharacterController _cc;
 
-    public void SetPlayer(GameObject target)
-    {
-        CameraManager.Instance.SetCamTarget(target.transform);
-
-    }
+#nullable enable
+    private IDisposable? _disposable;
 
     public void SetCharacterController(ICharacterController cc)
     {
         _cc = cc;
-        _cc.Status.Subscribe(_playerHealth);
+        _disposable?.Dispose();
+        _disposable = _cc.Status.Subscribe(_playerHealth);
         
     }
 
-    public void Ready(IList<IActionSelector.Action> actionList)
+    public void Ready(ICharacterController cc, IList<IActionSelector.Action> actionList)
     {
         gameObject.SetActive(true);
+
+        if (_cc == null) {
+            SetCharacterController(cc);
+        }
+        if (_cc == cc) {
+            Func(actionList);
+            return;
+        }
+
+        _todoList.Add(cc, actionList);
+
+    }
+
+    private void Func(IList<IActionSelector.Action> actionList) {
+
         _cc.CamSetting("Character");
 
         _btnInteraction.interactable = actionList.Contains(IActionSelector.Action.Interaction);
@@ -43,6 +60,7 @@ public class GUI_PlayerActionSelect : GUICustomFullScreen, IActionSelector {
         _btnMove.interactable = actionList.Contains(IActionSelector.Action.Move);
 
         StartCoroutine(_PanelOpen());
+
     }
 
     public void Die() { 
@@ -78,8 +96,7 @@ public class GUI_PlayerActionSelect : GUICustomFullScreen, IActionSelector {
 
     public void OpenAttack()
     {
-        SkillManager.Instance.GetSkillData(_cc.Status.Attack).
-            GetSkill().Set(this, _cc);
+        _cc.Status.Skill.GetSkill().Set(this, _cc);
         _AfterAction();
     }
 
@@ -107,6 +124,13 @@ public class GUI_PlayerActionSelect : GUICustomFullScreen, IActionSelector {
         if (_nowPopUp != null) return;
         _AfterAction();
         _cc.TurnEnd();
+        _cc = null;
+
+        if (_todoList.Count < 1) return;
+
+        SetCharacterController(_todoList.ToList()[0].Key);
+        Func(_todoList[_cc]);
+        _todoList.Remove(_cc);
     }
 
     void _AfterAction() {
@@ -117,6 +141,7 @@ public class GUI_PlayerActionSelect : GUICustomFullScreen, IActionSelector {
     protected override void Update()
     {
         base.Update();
+        if (_cc == null) return;
         _dicePoint.text = _cc.DicePoint.GetPoint().ToString();
     }
 

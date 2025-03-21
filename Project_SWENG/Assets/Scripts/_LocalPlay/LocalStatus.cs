@@ -7,6 +7,9 @@ using System.Collections.Generic;
 public class LocalStatus : MonoBehaviour, IStatus {
 
     public string Name { get; }
+
+    bool _isHuman = false;
+
     private string _characterCode;
     public string CharacterCode {
         get {
@@ -16,7 +19,8 @@ public class LocalStatus : MonoBehaviour, IStatus {
             _characterCode = value;
             CharacterData data = CharacterManager.Instance.GetCharacterData(_characterCode);
             _statusElement = data.StatusElements;
-            Attack = data.DefaultSkill;
+            Skill = data.DefaultSkill;
+            _isHuman = data.IsHumanType;
         } 
     }
 
@@ -32,7 +36,18 @@ public class LocalStatus : MonoBehaviour, IStatus {
     public int Atk => _statusElement[Level].Atk + _addedAtk;
     public int Dfs => _statusElement[Level].Dfs + _addedDfs;
 
-    public string Attack { get; private set; } = "BasicTargetingSkill";
+    private SkillData _skill;
+    public SkillData Skill { 
+        get {
+            return _skill;
+        }
+        private set {
+            if (!_isHuman) return;
+            _skill = value;
+            _cc.Character.ChangeAnimClip("Attack", _skill.AnimClip);
+        }
+    }
+
     public bool IsAlive => HP.Value > 0;
 
     private ICharacterController _cc;

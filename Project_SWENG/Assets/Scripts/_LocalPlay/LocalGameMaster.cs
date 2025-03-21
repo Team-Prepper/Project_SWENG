@@ -1,14 +1,13 @@
+#nullable disable
+
 using UnityEngine;
 using EHTool;
+using EHTool.UIKit;
 
 public class LocalGameMaster : MonoBehaviour, IGameMaster {
 
-    public LocalGameSetting Setting { get; set; }
-
-    public IGameMaster.Phase _gamePhase;
-
-    [SerializeField] int _turn;
-    Team[] _teams;
+    [SerializeField] private int _turn;
+    private Team[] _teams;
 
     public GameObject InstantiateCharacter(Vector3 position, Quaternion rotation) {
         GameObject retval = AssetOpener.ImportGameObject("LocalCC");
@@ -31,8 +30,6 @@ public class LocalGameMaster : MonoBehaviour, IGameMaster {
 
     public void StartGame()
     {
-        if (Setting == null)
-            Setting = new LocalGameSetting();
 
         _teams = new Team[2];
         _teams[0] = new Team();
@@ -41,10 +38,10 @@ public class LocalGameMaster : MonoBehaviour, IGameMaster {
         GameObject spawner = GameObject.FindWithTag("Spawner");
 
         spawner.GetComponent<EnemySpawner>().SpawnEnemy();
-        spawner.GetComponent<PlayerSpawner>().SpawnPlayer(0, null);
 
-        _gamePhase = IGameMaster.Phase.Play;
-        _teams[0].StartTurn();
+        for (int i = 0; i < GameManager.Instance.GameSetting.Players.Count; i++) {
+            spawner.GetComponent<PlayerSpawner>().SpawnPlayer(i, null);
+        }
 
     }
 
@@ -52,11 +49,19 @@ public class LocalGameMaster : MonoBehaviour, IGameMaster {
     {
         _teams[teamIdx].AddMember(c);
 
+        if (_teams[0].GetLeftMemberCount() <
+            GameManager.Instance.GameSetting.Players.Count) return;
+
+        _teams[0].StartTurn();
+
     }
 
     public void RemoveTeamMember(ICharacterController c, int teamIdx)
     {
         _teams[teamIdx].RemoveMember(c);
+
+        if (_teams[teamIdx].GetLeftMemberCount() > 0) return;
+        GameEnd(teamIdx == 0);
 
     }
 
@@ -71,25 +76,13 @@ public class LocalGameMaster : MonoBehaviour, IGameMaster {
 
     }
 
-    void changeDayNight()
-    {
-        return;
-        /*
-        if (gamePhase != IGameMaster.Phase.EnemyPhase)
-        {
-            day.SetActive(true);
-            night.SetActive(false);
-        }
-        else
-        {
-            day.SetActive(false);
-            night.SetActive(true);
-        }*/
-    }
-
     public void GameEnd(bool victory)
     {
-        _gamePhase = IGameMaster.Phase.End;
+        if (victory) {
+            UIManager.Instance.OpenGUI<GUIFullScreen>("");
+            return;
+        }
+        UIManager.Instance.OpenGUI<GUIFullScreen>("GameOver");
     }
 
 }

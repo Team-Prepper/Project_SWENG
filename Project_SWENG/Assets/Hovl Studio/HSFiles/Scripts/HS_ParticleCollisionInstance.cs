@@ -1,4 +1,6 @@
 /*This script created by using docs.unity3d.com/ScriptReference/MonoBehaviour.OnParticleCollision.html*/
+#nullable disable
+
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;

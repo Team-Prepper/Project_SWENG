@@ -1,4 +1,6 @@
-﻿using TMPro;
+﻿#nullable disable
+
+using TMPro;
 using UnityEngine;
 
 public class DropdownSample: MonoBehaviour

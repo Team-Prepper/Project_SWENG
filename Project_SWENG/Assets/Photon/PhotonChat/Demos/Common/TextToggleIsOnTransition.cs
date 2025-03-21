@@ -7,6 +7,8 @@
 // <author>developer@exitgames.com</author>
 // --------------------------------------------------------------------------------------------------------------------
 
+#nullable disable
+
 using UnityEngine;  
 using UnityEngine.EventSystems;
 using UnityEngine.UI;

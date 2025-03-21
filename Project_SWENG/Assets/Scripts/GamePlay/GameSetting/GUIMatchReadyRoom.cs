@@ -10,6 +10,7 @@ public class GUIMatchReadyRoom : GUIFullScreen, MatchObserver {
 
     [SerializeField] private Text _listText;
     [SerializeField] private Text _roomInforText;
+
     [SerializeField] private GameObject _startBtn;
     [SerializeField] private GameObject _readyBtn;
     [SerializeField] private GameObject _readyCancleBtn;
@@ -76,10 +77,16 @@ public class GUIMatchReadyRoom : GUIFullScreen, MatchObserver {
 
         _roomInforText.text = string.Format("{0} / {1} / {2}Max", setting.Name, setting.Players.Count, setting.MaxPlayerCnt);
 
-        _startBtn.SetActive(GameManager.Instance.GameSetting.IsMaster);
-        _dicePointSetter.SetActive(GameManager.Instance.GameSetting.IsMaster);
-
-        _readyBtn.SetActive(!GameManager.Instance.GameSetting.IsMaster);
+        if (GameManager.Instance.GameSetting.IsMaster) {
+            _startBtn.SetActive(GameManager.Instance.GameSetting.IsMaster);
+            _dicePointSetter.SetActive(GameManager.Instance.GameSetting.IsMaster);
+            _readyBtn.SetActive(false);
+            _readyCancleBtn.SetActive(false);
+            return;
+        }
+        
+        _readyBtn.SetActive(!_isReady);
+        _readyCancleBtn.SetActive(_isReady);
     }
 
     public void StartGame()
@@ -92,6 +99,7 @@ public class GUIMatchReadyRoom : GUIFullScreen, MatchObserver {
 
     public void ReadyBtn()
     {
+        if (GameManager.Instance.GameSetting.IsMaster) return;
         _isReady = !_isReady;
         GameManager.Instance.GameSetting.SetPlayerReady(_isReady);
         _readyBtn.SetActive(!_isReady);

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Data_Fairy
   m_EditorClassIdentifier: 
   CharacterName: Label_Character_Fairy
-  DefaultSkill: BatAttack
+  DefaultSkill: {fileID: 11400000, guid: 3560eadda04381443811270730d24a78, type: 2}
   Image: {fileID: 21300000, guid: ccf4aef76a681ca4eba2dfc0ebce9a1d, type: 3}
   CharacterPrefab: {fileID: -1954575111953744579, guid: 5bc11aa07681a5a4c98d5dc3f1fba222,
     type: 3}
@@ -27,3 +27,4 @@ MonoBehaviour:
   - HP: 180
     Atk: 35
     Dfs: 35
+  IsHumanType: 0

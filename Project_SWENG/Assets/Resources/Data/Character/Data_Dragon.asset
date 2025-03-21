@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Data_Dragon
   m_EditorClassIdentifier: 
   CharacterName: Label_Character_Dragon
-  DefaultSkill: Dragon's Breath
+  DefaultSkill: {fileID: 11400000, guid: 3a326c1ce5429ba4dac5769a9806e645, type: 2}
   Image: {fileID: 21300000, guid: 64c30d3d56bd04d49941b111d62777fa, type: 3}
   CharacterPrefab: {fileID: 3608303845406338741, guid: 7868deb2317c64942a7d85aa6cf60c6e,
     type: 3}
@@ -27,3 +27,4 @@ MonoBehaviour:
   - HP: 180
     Atk: 35
     Dfs: 35
+  IsHumanType: 0

@@ -4,6 +4,8 @@
 // <author>developer@exitgames.com</author>
 // --------------------------------------------------------------------------------------------------------------------
 
+#nullable disable
+
 using System.Collections.Generic;
 using ExitGames.Client.Photon;
 using UnityEngine;

@@ -17,15 +17,15 @@ public class GUIUnitRoomPlayerState : MonoBehaviour
 
     private int _idx;
 
-    public void SetInfor(string name, int idx, string characterName, bool isReady) {
-        _name.text = name;
+    public void SetInfor(string name, int idx, string characterCode, bool isReady) {
         _idx = idx;
         
         _characterSetting.SetData(new List<string>() { GameManager.Instance.GameSetting.Players[_idx].PlayerCharacter },
             GameManager.Instance.GameSetting.Players[_idx].PlayerCharacter, PlayerCharacterChange);
 
-        _characterIcon.sprite =
-            CharacterManager.Instance.GetCharacterData(characterName).Image;
+        CharacterData data = CharacterManager.Instance.GetCharacterData(characterCode);
+        _characterIcon.sprite = data.Image;
+        _name.text = LangManager.Instance.GetStringByKey(data.CharacterName);
 
         _readyIcon.SetActive(isReady);
         _emoji.gameObject.SetActive(false);

@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 
@@ -46,8 +45,8 @@ public class TransparentObject : MonoBehaviour {
     }
 
 
-    #region #Run-time 중에 RenderingMode 바꾸는 메소드들
-    /// Runtime 중에 RenderingMode를 바꾸는 방법을 찾아보니, 다음과 같은 코드를 사용한다고 함. <summary>
+    #region #Run-time ??? RenderingMode ???? ?????
+    /// Runtime ??? RenderingMode?? ???? ????? ??????, ?????? ???? ??? ??????? ??. <summary>
     // 0 = Opaque, 1 = Cutout, 2 = Fade, 3 = Transparent
     private void SetMaterialRenderingMode(Material material, float mode, int renderQueue)
     {
