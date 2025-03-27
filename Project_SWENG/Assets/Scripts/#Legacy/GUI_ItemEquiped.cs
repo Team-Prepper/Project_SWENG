@@ -1,3 +1,4 @@
+/*
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -45,35 +46,35 @@ public class GUI_ItemEquiped : MonoBehaviour, IObserver<InventoryManager>
         
         switch (item.type)
         {
-            case ItemData.ItemType.Helmet:
+            case IItem.ItemType.Helmet:
                 slotHelmet.color = tierColor;
-                if(item.icon != null)
-                    iconHelmet.sprite = item.icon;
+                if(item.Icon != null)
+                    iconHelmet.sprite = item.Icon;
                 if (helmetValue != null)
                     helmetValue.text = string.Format(LangManager.Instance.GetStringByKey("shopItem_All"), item.value);
                 
                     
                 break;
-            case ItemData.ItemType.Armor:
+            case IItem.ItemType.Armor:
                 slotArmor.color = tierColor;
-                if (item.icon != null)
-                    iconArmor.sprite = item.icon;
+                if (item.Icon != null)
+                    iconArmor.sprite = item.Icon;
                 if (armorValue != null)
                     armorValue.text = string.Format(LangManager.Instance.GetStringByKey("shopItem_HP"), item.value);
                 break;
-            case ItemData.ItemType.Weapon:
+            case IItem.ItemType.Weapon:
                 slotHandL.color = tierColor;
-                if (item.icon != null)
-                    iconHandL.sprite = item.icon;
+                if (item.Icon != null)
+                    iconHandL.sprite = item.Icon;
                 if (weaponValue != null)
                     weaponValue.text = string.Format(LangManager.Instance.GetStringByKey("shopItem_Attack"), item.value);
                 if(weaponSkillValue != null && item.hasSkill)
                     weaponSkillValue.text = "Cost : " + item.skillCost.ToString() + "\nDMG : " + item.skillDmg.ToString();
                 break;
-            case ItemData.ItemType.Shield:
+            case IItem.ItemType.Shield:
                 slotHandR.color = tierColor;
-                if (item.icon != null)
-                    iconHandR.sprite = item.icon;
+                if (item.Icon != null)
+                    iconHandR.sprite = item.Icon;
                 if (shieldValue != null)
                     shieldValue.text = string.Format(LangManager.Instance.GetStringByKey("shopItem_Defense"), item.value);
                 break;
@@ -91,16 +92,17 @@ public class GUI_ItemEquiped : MonoBehaviour, IObserver<InventoryManager>
 
     public void OnCompleted()
     {
-        throw new NotImplementedException();
+
     }
 
     public void OnError(Exception error)
     {
-        throw new NotImplementedException();
+
     }
 
     public void OnNext(InventoryManager value)
     {
-        throw new NotImplementedException();
+
     }
 }
+*/

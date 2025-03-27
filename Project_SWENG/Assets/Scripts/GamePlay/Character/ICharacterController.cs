@@ -7,6 +7,7 @@ public interface ICharacterController : IDamagable, IEntity {
     public Character Character { get; }
     public IDicePoint DicePoint { get; }
     public IStatus Status { get; }
+    public Inventory Inventory { get; }
 
     public void Initial(string characterName, int teamIdx, bool camSync);
     public void SetActionSelector(IActionSelector actionSelector);

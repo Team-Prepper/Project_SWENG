@@ -6,6 +6,7 @@ public class MapMaker : MonoBehaviour
     GameObject _nowWorking;
     [Header("Ref")]
     [SerializeField] private MapUnit _hexPrefab;
+    [SerializeField] private Vector2Int _pointMove;
 
     [SerializeField] TileDataScript _tileNormal;
     [SerializeField] TileDataScript _tileRock;
@@ -23,9 +24,6 @@ public class MapMaker : MonoBehaviour
     [Space(20)]
     public int gridSizeN = 7; // ?????? ???? N
     public int oceanSizeN = 5;
-
-    private readonly float hexWidth = 4.325f; // horizontal
-    private readonly float hexHeight = 5.0f;  // vertical
 
     public TileDataScript GetTileData(TileDataScript.TileType type) {
         TileDataScript tileType = null;
@@ -68,22 +66,14 @@ public class MapMaker : MonoBehaviour
 
         _nowWorking.transform.SetParent(transform);
 
-        for (int q = -gridSizeN; q <= gridSizeN; q++)
-        {
-            int r1 = Mathf.Max(-gridSizeN, -q - gridSizeN);
-            int r2 = Mathf.Min(gridSizeN, -q + gridSizeN);
-
-            for (int r = r1; r <= r2; r++)
-            {
-                float xPos = hexWidth * (q);
-                float zPos = hexHeight * (r + q * 0.5f);
-
-                _SpawnHexTile(new Vector3(xPos, 0, zPos));
-
-            }
+        foreach(HexCoordinate hex in
+            HexCoordinate.GetNeighboursFor(
+                new HexCoordinate(_pointMove.x,_pointMove.y), gridSizeN)) {
+            _SpawnHexTile(hex.ConvertToVector3());
         }
 
         _nowWorking.transform.eulerAngles = new Vector3(-90, 0, 0);
+
     }
 
     public void EndEdit()

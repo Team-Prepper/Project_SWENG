@@ -1,30 +1,21 @@
-using EHTool.LangKit;
 using System;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class GUIGameSettingUnit : MonoBehaviour
 {
 
-    [SerializeField] private Image _img;
-    [SerializeField] EHText _name;
+    [SerializeField] private GUIUnitCharacterInfor _characterInfor;
 
-    GUIGameSetting _target;
-    string _characterCode;
+    private string _characterCode;
 
-    Action<string> _deleteAction;
+    private Action<string> _deleteAction;
 
-    public void SetData(GUIGameSetting target, string characterCode, Action<string> deleteAction)
+    public void SetData(string characterCode, Action<string> deleteAction)
     {
         gameObject.SetActive(true);
 
-        _target = target;
         _characterCode = characterCode;
-        
-        CharacterData data = CharacterManager.Instance.GetCharacterData(characterCode);
-
-        _img.sprite = data.Image;
-        _name.SetText(data.CharacterName);
+        _characterInfor.Set(characterCode);
 
         _deleteAction = deleteAction;
     }

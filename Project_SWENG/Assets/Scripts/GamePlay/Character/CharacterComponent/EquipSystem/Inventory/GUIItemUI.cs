@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,16 +10,6 @@ public class GUIItemUI : MonoBehaviour
     public Transform itemPickupUITransform;
     public GameObject itemPickupUI;
     public Sprite[] itemTierBackground;
-
-    public static readonly IList<Color> colors = new List<Color>
-        {
-            new Color(0.7169812f, 0.5083325f, 0.01690993f, 1f), // common
-            new Color(0.2722067f, 0.5849056f, 0.13519505f, 1f), // uncommom
-            new Color(0.1541919f, 0.3933419f, 0.71223475f, 1f), // rare
-            new Color(0.4543215f, 0.2126654f, 0.99174132f, 1f), // epic
-            new Color(0.8971235f, 0.8946123f, 0.21643756f, 1f), // legendary
-            new Color(0.9912354f, 0.3451256f, 0.61234353f, 1f) // mythic
-        };
 
     private void Awake()
     {
@@ -38,11 +26,10 @@ public class GUIItemUI : MonoBehaviour
         var itemInfo = obj.transform.Find("ItemInfo").GetComponent<TextMeshProUGUI>();
         var itemPickupBtn = obj.transform.Find("Pickup").GetComponent<Button>();
     
-        itemMain.color = colors[(int) itemPickup.item.tier];
-        itemIcon.sprite = itemPickup.item.icon;
+        itemMain.color = ItemManager.Instance.GetTierColor(itemPickup.item.tier);
+        itemIcon.sprite = itemPickup.item.Icon;
         itemBack.sprite = itemTierBackground[(int)itemPickup.item.tier];
-        itemName.text = itemPickup.item.itemName;
-        itemInfo.text = itemPickup.item.value.ToString();
+        itemName.text = itemPickup.item.ItemName;
         
         itemPickupBtn.onClick.AddListener(() => OnClickEvent(itemPickup));
         
@@ -51,6 +38,6 @@ public class GUIItemUI : MonoBehaviour
 
     private void OnClickEvent(ItemPickup itemPickup)
     {
-        itemPickup.PickupHandler();
+        itemPickup.PickupHandler(null);
     }
 }

@@ -9,7 +9,7 @@ public class GUIShop : GUIPopUp
     [SerializeField] GUIShopUnit[] _itemInfo;
     [SerializeField] TextMeshProUGUI _shopComment;
 
-    ICharacterController _cc;
+    private ICharacterController _cc;
 
     public override void Open()
     {
@@ -21,10 +21,10 @@ public class GUIShop : GUIPopUp
     {
         ItemData targetItem = ItemManager.Instance.GetItemData(targetItemCode);
 
-        if (_cc.DicePoint.GetPoint() >= targetItem.cost)
+        if (_cc.DicePoint.GetPoint() >= targetItem.Cost)
         {
-            _cc.DicePoint.UsePoint(targetItem.cost);
-            _cc.EquipItem(targetItemCode);
+            _cc.DicePoint.UsePoint(targetItem.Cost);
+            _cc.Inventory.AddItem(targetItemCode);
             showComment("Thank you for your purchase");
             return true;
         }

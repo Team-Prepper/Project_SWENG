@@ -1,5 +1,4 @@
 using EHTool;
-using System;
 using UnityEngine;
 
 public class GameManager : MonoSingleton<GameManager> {
@@ -32,8 +31,4 @@ public class GameManager : MonoSingleton<GameManager> {
         Network = gameObject.AddComponent<PhotonNet>();
     }
 
-    internal string[] GetEnemyList(string bossEnemyPrefabKey)
-    {
-        throw new NotImplementedException();
-    }
 }

@@ -1,16 +1,14 @@
 using System.Collections.Generic;
 using EHTool;
-using JetBrains.Annotations;
 using UnityEngine;
 
 public class HexGrid : Singleton<HexGrid> {
-    //public Dictionary<Vector3Int, bool> hexTileDict = new Dictionary<Vector3Int, bool>();
 
-    public float XOffset { get; private set; } = 5f;
+    public float XOffset { get; private set; } = 4.325f;
     public float ZOffset { get; private set; } = 5f;
 
-    IDictionary<HexCoordinate, MapUnit> _mapUnitDict = new Dictionary<HexCoordinate, MapUnit>();
-    IDictionary<HexCoordinate, ISet<HexCoordinate>> _mapUnitNeighboursDict = new Dictionary<HexCoordinate, ISet<HexCoordinate>>();
+    IDictionary<HexCoordinate, MapUnit> _mapUnitDict =
+        new Dictionary<HexCoordinate, MapUnit>();
 
     private IList<MapUnit> _emptyHexTiles = new List<MapUnit>();
 
@@ -18,8 +16,10 @@ public class HexGrid : Singleton<HexGrid> {
 
     public IPathGroup GetPathGroup(HexCoordinate startPos, int point)
     {
-        IDictionary<HexCoordinate, HexCoordinate?> visitedNodes = new Dictionary<HexCoordinate, HexCoordinate?>();
-        IDictionary<HexCoordinate, int> costSoFar = new Dictionary<HexCoordinate, int>();
+        IDictionary<HexCoordinate, HexCoordinate?> visitedNodes =
+            new Dictionary<HexCoordinate, HexCoordinate?>();
+        IDictionary<HexCoordinate, int> costSoFar =
+            new Dictionary<HexCoordinate, int>();
 
         Queue<HexCoordinate> nodesToVisitQueue = new Queue<HexCoordinate>();
 
@@ -112,7 +112,6 @@ public class HexGrid : Singleton<HexGrid> {
         if (hex.tileType == TileDataScript.TileType.normal) _emptyHexTiles.Add(hex);
     }
 
-
     public MapUnit GetMapUnitAt(Vector3 hexCoordinates)
     {
         return GetMapUnitAt(HexCoordinate.ConvertFromVector3(hexCoordinates));
@@ -125,37 +124,20 @@ public class HexGrid : Singleton<HexGrid> {
 
     }
 
-    public ISet<HexCoordinate> GetNeighboursFor(HexCoordinate hexCoordinates, int len) {
-        if (len < 1) return new HashSet<HexCoordinate>();
-        if (len == 1) return GetNeighboursFor(hexCoordinates);
+    public ISet<HexCoordinate> GetNeighboursFor(HexCoordinate hexCoordinates, int len = 1) {
+
+        ISet<HexCoordinate> neighbours =
+            HexCoordinate.GetNeighboursFor(hexCoordinates, len);
 
         ISet<HexCoordinate> retval = new HashSet<HexCoordinate>();
 
-        foreach (HexCoordinate coord in HexCoordinate.GetDirectionList(hexCoordinates))
+        foreach (HexCoordinate coord in neighbours)
         {
-            retval.UnionWith(GetNeighboursFor(coord, len - 1));
+            if (!_mapUnitDict.ContainsKey(coord)) continue;
+            retval.Add(coord);
         }
 
         return retval;
-    }
-
-    public ISet<HexCoordinate> GetNeighboursFor(HexCoordinate hexCoordinates)
-    {
-        if (_mapUnitDict.ContainsKey(hexCoordinates) == false)
-            return new HashSet<HexCoordinate>();
-
-        if (!_mapUnitNeighboursDict.ContainsKey(hexCoordinates))
-        {
-            _mapUnitNeighboursDict.Add(hexCoordinates, new HashSet<HexCoordinate>());
-
-            foreach (HexCoordinate pos in HexCoordinate.GetDirectionList(hexCoordinates))
-            {
-                if (!_mapUnitDict.ContainsKey(pos)) continue;
-                _mapUnitNeighboursDict[hexCoordinates].Add(pos);
-
-            }
-        }
-        return _mapUnitNeighboursDict[hexCoordinates];
     }
 
     public MapUnit GetRandHexAtEmpty()

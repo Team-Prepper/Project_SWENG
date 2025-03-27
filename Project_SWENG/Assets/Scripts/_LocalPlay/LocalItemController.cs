@@ -16,7 +16,7 @@ public class LocalItemController : MonoBehaviour, IItemController
 
         ItemData data = ItemManager.Instance.GetItemData(itemCode);
 
-        Instantiate(data.itemObject, _itemParentTr);
+        Instantiate(data.Prefab, _itemParentTr);
 
     }
 

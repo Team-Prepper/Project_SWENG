@@ -17,6 +17,11 @@ public class PhotonCharacterController : MonoBehaviourPun, ICharacterController 
     [SerializeField] private PhotonStatus _status;
     public IStatus Status => _status;
 
+    [SerializeField] private Inventory _inventory;
+    public Inventory Inventory => _inventory;
+
+    private bool _inventoryOpened;
+
     [SerializeField] private PhotonView _view;
 
     private IActionSelector _actionSelector;
@@ -38,6 +43,8 @@ public class PhotonCharacterController : MonoBehaviourPun, ICharacterController 
 
         Status.SetCC(this);
         Status.CharacterCode = characterName;
+
+        Inventory.SetCC(this);
         
         _dicePoint.SetCC(this);
 
@@ -95,7 +102,6 @@ public class PhotonCharacterController : MonoBehaviourPun, ICharacterController 
         
         HexGrid.Instance.GetMapUnitAt(HexPos).ResetEntityState();
 
-        _actionSelector.Die();
         Character.Die();
 
         GameManager.Instance.GameMaster.RemoveTeamMember(this, TeamIdx);
@@ -119,7 +125,10 @@ public class PhotonCharacterController : MonoBehaviourPun, ICharacterController 
         {
             return;
         }
+        
+        _inventoryOpened = false;
         _dicePoint.Reset();
+        
         ActionEnd();
     }
 
@@ -142,8 +151,11 @@ public class PhotonCharacterController : MonoBehaviourPun, ICharacterController 
 
         IList<IActionSelector.Action> list = Character.GetActionList();
 
+        if (!_inventoryOpened)
+            list.Add(IActionSelector.Action.Inventory);
         if (_dicePoint.IsRollDice == false)
             list.Add(IActionSelector.Action.Dice);
+
         _actionSelector.Ready(this, list);
         
     }

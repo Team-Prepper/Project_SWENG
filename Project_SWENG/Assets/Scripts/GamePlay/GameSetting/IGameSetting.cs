@@ -24,7 +24,7 @@ public class MatchUnsubscriber : IDisposable {
 
 public interface IGameSetting
 {
-    [System.Serializable]
+    [Serializable]
     public class PlayerSetting {
         public string Name;
         public string PlayerCharacter;
@@ -41,12 +41,17 @@ public interface IGameSetting
 
     public string Name { get; }
     public int MaxPlayerCnt { get; }
+    public int EnemyCnt { get; set; }
+    public int PhaseCnt { get; set; }
+
+    public string MapName { get; set; }
     
     public IDisposable Subscribe(MatchObserver observer);
 
     public IList<PlayerSetting> Players { get; }
-    public IList<string> Enemy { get; }
-    public IList<string> BossEnemy { get; }
+    public IList<string> Enemy { get; set; }
+    public IList<string> BossEnemy { get; set; }
+
 
     public bool StartGame();
     public void DisposeGame();
@@ -56,8 +61,4 @@ public interface IGameSetting
     public void AddPlayer(string name, string characterCode);
     public void RemovePlayer(int idx);
 
-    public void AddEnemy(string characterCode);
-    public void RemoveEnemy(string characterCode);
-    public void AddBossEnemy(string characterCode);
-    public void RemoveBossEnemy(string characterCode);
 }

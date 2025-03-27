@@ -17,6 +17,11 @@ public class LocalCharacterController : MonoBehaviour, ICharacterController {
     
     private DicePoint _dicePoint = new DicePoint();
     public IDicePoint DicePoint => _dicePoint;
+    
+    [SerializeField] private Inventory _inventory;
+    public Inventory Inventory => _inventory;
+
+    private bool _inventoryOpened;
 
     // Start is called before the first frame update
     public void Initial(string characterName, int teamIdx, bool camSync)
@@ -30,6 +35,8 @@ public class LocalCharacterController : MonoBehaviour, ICharacterController {
 
         Status.SetCC(this);
         Status.CharacterCode = characterName;
+        
+        Inventory.SetCC(this);
         
         _dicePoint.SetCC(this);
 
@@ -46,7 +53,6 @@ public class LocalCharacterController : MonoBehaviour, ICharacterController {
         HexGrid.Instance.GetMapUnitAt(gameObject.transform.position).ResetEntityState();
 
         Character.Die();
-        _actionSelector.Die();
 
         GameManager.Instance.GameMaster.RemoveTeamMember(this, TeamIdx);
 
@@ -68,6 +74,7 @@ public class LocalCharacterController : MonoBehaviour, ICharacterController {
 
     public void SetPlay() {
         _dicePoint.Reset();
+        _inventoryOpened = false;
         ActionEnd();
     }
 
@@ -87,6 +94,8 @@ public class LocalCharacterController : MonoBehaviour, ICharacterController {
 
         IList<IActionSelector.Action> list = Character.GetActionList();
 
+        if (!_inventoryOpened)
+            list.Add(IActionSelector.Action.Inventory);
         if (_dicePoint.IsRollDice == false)
             list.Add(IActionSelector.Action.Dice);
 

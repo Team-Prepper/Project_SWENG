@@ -8,16 +8,16 @@ public class GUIUnitRoomPlayerState : MonoBehaviour
 {
 
     [SerializeField] private Text _name;
-    [SerializeField] private GUICharacterSettingUnit _characterSetting;
+    [SerializeField] private GUIUnitCharacterSetting _characterSetting;
     [SerializeField] private Image _characterIcon;
     [SerializeField] private GameObject _readyIcon;
     [SerializeField] private Image _emoji;
 
-    readonly float _waitingTime = 2f;
+    private readonly float _waitingTime = 2f;
 
     private int _idx;
 
-    public void SetInfor(string name, int idx, string characterCode, bool isReady) {
+    public void SetInfor(int idx, string name, string characterCode, bool isReady) {
         _idx = idx;
         
         _characterSetting.SetData(new List<string>() { GameManager.Instance.GameSetting.Players[_idx].PlayerCharacter },
@@ -25,7 +25,7 @@ public class GUIUnitRoomPlayerState : MonoBehaviour
 
         CharacterData data = CharacterManager.Instance.GetCharacterData(characterCode);
         _characterIcon.sprite = data.Image;
-        _name.text = LangManager.Instance.GetStringByKey(data.CharacterName);
+        _name.text = name;
 
         _readyIcon.SetActive(isReady);
         _emoji.gameObject.SetActive(false);

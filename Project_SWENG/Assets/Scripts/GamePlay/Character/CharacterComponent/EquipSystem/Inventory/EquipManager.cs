@@ -168,9 +168,10 @@ public class EquipManager : MonoBehaviour
 
     public ItemData GetEquipWeaponHasSkill()
     {
+        /*
         if (curEquipWeapon != null && curEquipWeapon.hasSkill)
             return curEquipWeapon;
-        
+        */
         return null;
     }
 
@@ -308,7 +309,7 @@ public class EquipManager : MonoBehaviour
         if (curEquipWeapon != newWeapon)
             UnequipWeapon();
 
-        weaponModel = Instantiate(newWeapon.itemObject, weaponSlot);
+        weaponModel = Instantiate(newWeapon.Prefab, weaponSlot);
         curEquipWeapon = newWeapon;
     }
 
@@ -327,7 +328,7 @@ public class EquipManager : MonoBehaviour
         }
             
         
-        shieldModel = Instantiate(newShield.itemObject, shieldSlot);
+        shieldModel = Instantiate(newShield.Prefab, shieldSlot);
         curEquipShield = newShield;
         //_playerController.EquipItemHandler(newShield);
     }

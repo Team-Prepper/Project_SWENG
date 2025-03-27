@@ -1,13 +1,9 @@
-﻿using EHTool.LangKit;
-using System;
+﻿using System;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class GUICharacterSelectUnit : MonoBehaviour {
+public class GUIUnitCharacterSelect : MonoBehaviour {
 
-    [SerializeField] private Image _img;
-    [SerializeField] private EHText _name;
-
+    [SerializeField] private GUIUnitCharacterInfor _characterInfor;
     private string _value;
     private Action<string> _selectedMethod;
 
@@ -15,10 +11,7 @@ public class GUICharacterSelectUnit : MonoBehaviour {
         _value = characterCode;
         _selectedMethod = selectedMethod;
 
-        CharacterData data = CharacterManager.Instance.GetCharacterData(characterCode);
-
-        _img.sprite = data.Image;
-        _name.SetText(data.CharacterName);
+        _characterInfor.Set(characterCode);
 
         gameObject.SetActive(true);
     }

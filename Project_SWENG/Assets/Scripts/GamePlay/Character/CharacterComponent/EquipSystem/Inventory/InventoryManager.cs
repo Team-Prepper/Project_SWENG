@@ -45,24 +45,22 @@ public class InventoryManager : MonoSingleton<InventoryManager>, IObservable<Inv
 
     public void GetItem(ItemData item)
     {
-        if (item.itemHex != null)
-            //item.itemHex.SetItem(null);
 
         switch (item.type)
         {
-            case ItemData.ItemType.Helmet:
+            case Item.ItemType.Helmet:
                 _helmet = item;
                 _equipManager.EquipHelmet(item);
                 break;
-            case ItemData.ItemType.Armor:
+            case Item.ItemType.Armor:
                 _armor = item;
                 _equipManager.EquipArmor(item);
                 break;
-            case ItemData.ItemType.Weapon:
+            case Item.ItemType.Weapon:
                 Weapon = item;
                 _equipManager.EquipWeapon(item);
                 break;
-            case ItemData.ItemType.Shield:
+            case Item.ItemType.Shield:
                 _shield = item;
                 _equipManager.EquipShield(item);
                 break;

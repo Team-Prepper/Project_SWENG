@@ -94,4 +94,29 @@ public struct HexCoordinate : IEquatable<HexCoordinate> {
         return !c1.Equals(c2);
     }
 
+    public static ISet<HexCoordinate> GetNeighboursFor(HexCoordinate hexCoordinates, int len) {
+        
+        ISet<HexCoordinate> retval = new HashSet<HexCoordinate>();
+
+        Vector3 origin = hexCoordinates.ConvertToVector3();
+
+        for (int q = -len; q <= len; q++)
+        {
+            int r1 = Mathf.Max(-len, -q - len);
+            int r2 = Mathf.Min(len, -q + len);
+
+            for (int r = r1; r <= r2; r++)
+            {
+                float xPos = HexGrid.Instance.XOffset * q + origin.x;
+                float zPos = HexGrid.Instance.ZOffset * (r + q * 0.5f) + origin.z;
+                
+                retval.Add(ConvertFromVector3(new Vector3(xPos, 0, zPos)));
+
+            }
+        }
+
+        return retval;
+    }
+
+
 }

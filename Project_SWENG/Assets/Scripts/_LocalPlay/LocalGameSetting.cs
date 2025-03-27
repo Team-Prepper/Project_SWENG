@@ -7,12 +7,16 @@ using System;
 public class LocalGameSetting : IGameSetting {
 
     public IList<IGameSetting.PlayerSetting> Players { get; set; }
-    public IList<string> Enemy { get; private set; }
-    public IList<string> BossEnemy { get; private set; }
+    public IList<string> Enemy { get; set; }
+    public IList<string> BossEnemy { get; set; }
 
     public string Name => "TMP";
 
     public int MaxPlayerCnt => 3;
+    public int EnemyCnt { get; set; } = 3;
+    public int PhaseCnt { get; set; } = 1;
+
+    public string MapName { get; set; } = "Local";
 
     public bool IsMaster => true;
     private ISet<MatchObserver> _observers;
@@ -42,7 +46,7 @@ public class LocalGameSetting : IGameSetting {
 
     public bool StartGame()
     {
-        SceneManager.LoadSceneAsync("Local");
+        SceneManager.LoadSceneAsync(MapName);
         UIManager.Instance.OpenGUI<GUI_Loading>("Loading");
 
         return true;
@@ -68,28 +72,6 @@ public class LocalGameSetting : IGameSetting {
     {
         Notify();
 
-    }
-
-    public void AddEnemy(string characterCode) { 
-        Enemy.Add(characterCode);
-        Notify();
-    }
-
-    public void RemoveEnemy(string characterCode) {
-        Enemy.Remove(characterCode);
-        Notify();
-    }
-
-    public void AddBossEnemy(string characterCode)
-    {
-        BossEnemy.Add(characterCode);
-        Notify();
-    }
-
-    public void RemoveBossEnemy(string characterCode)
-    {
-        BossEnemy.Remove(characterCode);
-        Notify();
     }
 
     public void SetPlayerReady(bool v)

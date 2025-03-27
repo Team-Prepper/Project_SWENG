@@ -11,6 +11,8 @@ public class RangeTargetSelector : ISkillTargetSelector {
     {
         List<IDamagable> targets = new List<IDamagable>();
         ISet<HexCoordinate> neighbours = HexGrid.Instance.GetNeighboursFor(cc.HexPos);
+        
+        neighbours.Remove(cc.HexPos);
 
         foreach (var pos in neighbours) {
             ICharacterController targetCC = HexGrid.Instance.GetMapUnitAt(pos).CC;

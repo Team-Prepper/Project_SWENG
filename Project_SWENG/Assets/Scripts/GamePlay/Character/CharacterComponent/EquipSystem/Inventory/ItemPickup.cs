@@ -19,12 +19,12 @@ public class ItemPickup : MonoBehaviour
         showUI.SetActive(false); 
     }
     
-    public void PickupHandler()
+    public void PickupHandler(ICharacterController cc)
     {
-        Pickup();
+        Pickup(cc);
     }
 
-    public void Pickup()
+    public void Pickup(ICharacterController cc)
     {
         HideItem();
         InventoryManager.Instance.GetItem(item);

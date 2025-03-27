@@ -17,6 +17,7 @@ public class GUI_PlayerActionSelect : GUICustomFullScreen, IActionSelector {
     [SerializeField] private Button _btnInteraction;
     [SerializeField] private Button _btnAttack;
     [SerializeField] private Button _btnMove;
+    [SerializeField] private Button _btnInventory;
     [SerializeField] private Button _btnDice;
 
     private IDictionary<ICharacterController, IList<IActionSelector.Action>> _todoList
@@ -26,7 +27,7 @@ public class GUI_PlayerActionSelect : GUICustomFullScreen, IActionSelector {
 #nullable enable
     private IDisposable? _disposable;
 
-    public void SetCharacterController(ICharacterController cc)
+    private void SetCharacterController(ICharacterController cc)
     {
         _cc = cc;
         _disposable?.Dispose();
@@ -42,7 +43,7 @@ public class GUI_PlayerActionSelect : GUICustomFullScreen, IActionSelector {
             SetCharacterController(cc);
         }
         if (_cc == cc) {
-            Func(actionList);
+            ViewSet(actionList);
             return;
         }
 
@@ -50,7 +51,7 @@ public class GUI_PlayerActionSelect : GUICustomFullScreen, IActionSelector {
 
     }
 
-    private void Func(IList<IActionSelector.Action> actionList) {
+    private void ViewSet(IList<IActionSelector.Action> actionList) {
 
         _cc.CamSetting("Character");
 
@@ -58,15 +59,11 @@ public class GUI_PlayerActionSelect : GUICustomFullScreen, IActionSelector {
         _btnDice.interactable = actionList.Contains(IActionSelector.Action.Dice);
         _btnAttack.interactable = actionList.Contains(IActionSelector.Action.Attack);
         _btnMove.interactable = actionList.Contains(IActionSelector.Action.Move);
+        _btnInventory.interactable = actionList.Contains(IActionSelector.Action.Inventory);
 
         StartCoroutine(_PanelOpen());
 
     }
-
-    public void Die() { 
-        
-    }
-
     private IEnumerator _PanelOpen() {
 
         _panelBtnTr.localScale = Vector2.zero;
@@ -119,6 +116,11 @@ public class GUI_PlayerActionSelect : GUICustomFullScreen, IActionSelector {
 
     }
 
+    public void OpenInventory() {
+        UIManager.Instance.OpenGUI<GUIInventory>("Inventory").Set(_cc);
+        _AfterAction();
+    }
+
     public void TurnEndButton()
     {
         if (_nowPopUp != null) return;
@@ -129,12 +131,11 @@ public class GUI_PlayerActionSelect : GUICustomFullScreen, IActionSelector {
         if (_todoList.Count < 1) return;
 
         SetCharacterController(_todoList.ToList()[0].Key);
-        Func(_todoList[_cc]);
+        ViewSet(_todoList[_cc]);
         _todoList.Remove(_cc);
     }
 
     void _AfterAction() {
-
         _panelBtnTr.gameObject.SetActive(false);
     }
 

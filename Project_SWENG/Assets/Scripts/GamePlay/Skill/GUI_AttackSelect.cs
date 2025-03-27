@@ -28,6 +28,7 @@ public class GUI_AttackSelect : GUICustomFullScreen, ISkillTargetSelector {
 
         foreach (var neighbour in HexGrid.Instance.GetNeighboursFor(cc.HexPos))
         {
+            if (neighbour.Equals(cc.HexPos)) continue;
             MapUnit atkHex = HexGrid.Instance.GetMapUnitAt(neighbour);
 
             if (!(atkHex.tileType == TileDataScript.TileType.normal ||

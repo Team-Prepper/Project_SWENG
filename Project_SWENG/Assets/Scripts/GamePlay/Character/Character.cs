@@ -21,8 +21,10 @@ public class Character : MonoBehaviour {
 
     private void DieEvent() {
         Destroy(gameObject);
+
         GameObject item = GameManager.Instance.GameMaster.InstantiateItem(transform.position);
-        item.GetComponent<IItemController>().SetInitial("item_armor_000");
+        item.GetComponent<IItemController>().SetInitial("Item_Heal");
+
     }
 
     public void SetCC(ICharacterController cc)

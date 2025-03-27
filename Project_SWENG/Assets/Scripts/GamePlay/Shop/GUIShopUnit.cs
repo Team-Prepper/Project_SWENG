@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using EHTool.LangKit;
@@ -6,13 +5,13 @@ using TMPro;
 
 public class GUIShopUnit : MonoBehaviour
 {
-    [SerializeField] Image itemIcon;
-    [SerializeField] Image itemIconBackground;
-    [SerializeField] Text itemName;                 // TextMeshProUGUI -> Text
-    [SerializeField] Image skillIcon;
+    [SerializeField] private Image itemIcon;
+    [SerializeField] private Image itemIconBackground;
+    [SerializeField] private Text itemName;                 // TextMeshProUGUI -> Text
+    [SerializeField] private Image skillIcon;
     
-    [SerializeField] Text itemInfo;                 // TextMeshProUGUI -> Text
-    [SerializeField] TextMeshProUGUI itemCost;
+    [SerializeField] private Text itemInfo;                 // TextMeshProUGUI -> Text
+    [SerializeField] private TextMeshProUGUI itemCost;
 
     [SerializeField] private string _itemCode;
     private GUIShop _shop;
@@ -24,26 +23,25 @@ public class GUIShopUnit : MonoBehaviour
 
         ItemData item = ItemManager.Instance.GetItemData(itemCode);
 
-        itemIcon.sprite = item.icon;
+        itemIcon.sprite = item.Icon;
         itemIconBackground.color = ItemManager.Instance.GetTierColor(item.tier);
-        skillIcon.sprite = item.skillIcon;
-        itemName.text = LangManager.Instance.GetStringByKey(item.itemName);
-        itemCost.text = item.cost.ToString();
-
-        itemInfo.text = string.Format(GetString(item.type), item.value);
+        //skillIcon.sprite = item.skillIcon;
+        itemName.text = LangManager.Instance.GetStringByKey(item.ItemName);
+        itemCost.text = item.Cost.ToString();
+        
     }
 
-    private string GetString(ItemData.ItemType itemType) {
+    private string GetString(Item.ItemType itemType) {
 
         switch (itemType)
         {
-            case ItemData.ItemType.Helmet:
+            case Item.ItemType.Helmet:
                 return LangManager.Instance.GetStringByKey("shopItem_All");
-            case ItemData.ItemType.Armor:
+            case Item.ItemType.Armor:
                 return LangManager.Instance.GetStringByKey("shopItem_HP");
-            case ItemData.ItemType.Weapon:
+            case Item.ItemType.Weapon:
                 return LangManager.Instance.GetStringByKey("shopItem_Attack");
-            case ItemData.ItemType.Shield:
+            case Item.ItemType.Shield:
                 return LangManager.Instance.GetStringByKey("shopItem_Defense");
             default:
                 return "{0}";

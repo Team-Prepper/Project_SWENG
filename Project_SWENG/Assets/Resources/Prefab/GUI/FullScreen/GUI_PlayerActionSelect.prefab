@@ -822,7 +822,6 @@ GameObject:
   - component: {fileID: 6350373845087555479}
   - component: {fileID: 2278800742885352392}
   - component: {fileID: 7572882215870131779}
-  - component: {fileID: 4817014714178625388}
   m_Layer: 5
   m_Name: box_Equipment
   m_TagString: Untagged
@@ -915,31 +914,6 @@ MonoBehaviour:
   m_Spacing: {x: 0, y: 6}
   m_Constraint: 0
   m_ConstraintCount: 2
---- !u!114 &4817014714178625388
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1502669134903538055}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b0c86fa06ef804bfa8e0cef7c2e2ac23, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  slotHelmet: {fileID: 7339796222291916057}
-  iconHelmet: {fileID: 2597095983318839221}
-  slotArmor: {fileID: 1199948853193813878}
-  iconArmor: {fileID: 3727805614476196657}
-  slotHandL: {fileID: 2283983711432585580}
-  iconHandL: {fileID: 7567719513970036576}
-  slotHandR: {fileID: 8829652233156957151}
-  iconHandR: {fileID: 5841135043313661737}
-  helmetValue: {fileID: 0}
-  armorValue: {fileID: 0}
-  weaponValue: {fileID: 0}
-  weaponSkillValue: {fileID: 0}
-  shieldValue: {fileID: 0}
 --- !u!1 &1507098452141084043
 GameObject:
   m_ObjectHideFlags: 0
@@ -3264,7 +3238,6 @@ MonoBehaviour:
   selectionMask:
     serializedVersion: 2
     m_Bits: 64
-  _turnEndGlowLight: {fileID: 0}
   _playerHealth: {fileID: 892208365351574064}
   _dicePoint: {fileID: 1186807182274807844}
   _panelBtnTr: {fileID: 6020636037528751936}
@@ -3272,8 +3245,8 @@ MonoBehaviour:
   _btnInteraction: {fileID: 8159746410811295155}
   _btnAttack: {fileID: 886428298082995691}
   _btnMove: {fileID: 848884712041846766}
+  _btnInventory: {fileID: 8575076279352160513}
   _btnDice: {fileID: 622361474486686849}
-  _turnEndButton: {fileID: 0}
 --- !u!1 &7793673614277232305
 GameObject:
   m_ObjectHideFlags: 0
@@ -3784,7 +3757,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7041752733694834711}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 7650594730702384326}
+        m_TargetAssemblyTypeName: GUI_PlayerActionSelect, Assembly-CSharp
+        m_MethodName: OpenInventory
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &3106853608814576401
 MonoBehaviour:
   m_ObjectHideFlags: 0

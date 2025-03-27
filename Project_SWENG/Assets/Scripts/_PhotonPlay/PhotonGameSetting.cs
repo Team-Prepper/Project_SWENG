@@ -9,15 +9,19 @@ public class PhotonGameSetting : MonoBehaviourPun, IPunObservable, IGameSetting 
     public string Name => PhotonNetwork.CurrentRoom.Name;
     public int MaxPlayerCnt => PhotonNetwork.CurrentRoom.MaxPlayers;
 
+    public int EnemyCnt { get; set; } = 1;
+    public int PhaseCnt { get; set; } = 1;
+
+    public string MapName { get; set; } = "Local";
+
     public IList<IGameSetting.PlayerSetting> Players { get; set; }
-    public IList<string> Enemy { get; private set; }
-    public IList<string> BossEnemy { get; private set; }
+    public IList<string> Enemy { get; set; }
+    public IList<string> BossEnemy { get; set; }
 
     public bool IsMaster => PhotonNetwork.IsMasterClient;
 
     private PhotonView _view;
     private ISet<MatchObserver> _observers;
-    private string _defaultCharacter;
 
     public IDisposable Subscribe(MatchObserver o)
     {
@@ -35,7 +39,14 @@ public class PhotonGameSetting : MonoBehaviourPun, IPunObservable, IGameSetting 
 
     public void SetPlayer(int idx, string CharacterCode)
     {
+        if (!PhotonNetwork.LocalPlayer.NickName.Equals(Players[idx].Name)) return;
+        _view.RPC("PunServerSetPlayer", RpcTarget.MasterClient, idx, CharacterCode);
+    }
+
+    [PunRPC]
+    void PunServerSetPlayer(int idx, string CharacterCode) {
         Players[idx].PlayerCharacter = CharacterCode;
+        Notify();
     }
     
     void Notify()
@@ -56,27 +67,6 @@ public class PhotonGameSetting : MonoBehaviourPun, IPunObservable, IGameSetting 
         Players.RemoveAt(idx);
     }
 
-    public void AddEnemy(string characterCode)
-    {
-        Enemy.Add(characterCode);
-    }
-
-    public void RemoveEnemy(string characterCode)
-    {
-        Enemy.Remove(characterCode);
-    }
-
-    public void AddBossEnemy(string characterCode)
-    {
-        BossEnemy.Add(characterCode);
-
-    }
-
-    public void RemoveBossEnemy(string characterCode)
-    {
-        BossEnemy.Remove(characterCode);
-    }
-
     public void Awake()
     {
         _view = GetComponent<PhotonView>();
@@ -90,13 +80,10 @@ public class PhotonGameSetting : MonoBehaviourPun, IPunObservable, IGameSetting 
 
         Players = new List<IGameSetting.PlayerSetting>();
 
-        _defaultCharacter = gameDataDict["Player"][0];
-
         Enemy = gameDataDict["Enemy"];
         BossEnemy = gameDataDict["BossEnemy"];
 
         _view.FindObservables(true);
-        
 
     }
 
@@ -130,7 +117,7 @@ public class PhotonGameSetting : MonoBehaviourPun, IPunObservable, IGameSetting 
             if (!Players[i].IsReady && !Players[i].Name.Equals(PhotonNetwork.LocalPlayer.NickName)) return false;
         }
 
-        PhotonNetwork.LoadLevel(1);
+        PhotonNetwork.LoadLevel(MapName);
 
         return true;
     }

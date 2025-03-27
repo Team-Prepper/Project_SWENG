@@ -1,15 +1,42 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using EHTool.LangKit;
 using EHTool.UIKit;
 
 public class GUI_Setting : GUIPopUp
 {
+    [System.Serializable]
+    public class LangOption {
+        public string key;
+        public string value;
+    }
 
-    public void SetLanguage(string lang)
+    [SerializeField] private EHDropdown _langDropdown;
+    [SerializeField] private LangOption[] _langOptions;
+
+    public override void Open()
     {
-        LangManager.Instance.ChangeLang(lang);
+        int idx = 0;
+
+        string[] options = new string[_langOptions.Length];
+
+        for (int i = 0; i < _langOptions.Length; i++) {
+            if (LangManager.Instance.NowLang.Equals(_langOptions[i].value)) {
+                idx = i;
+            }
+            options[i] = _langOptions[i].key;
+        }
+
+        _langDropdown.SetDropdownOption(options);
+        _langDropdown.value = idx;
+
+        _langDropdown.onValueChanged.AddListener(SetLanguage);
+        
+        base.Open();
+    }
+
+    public void SetLanguage(int idx)
+    {
+        LangManager.Instance.ChangeLang(_langOptions[idx].value);
 
     }
 

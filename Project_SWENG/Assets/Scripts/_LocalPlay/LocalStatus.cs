@@ -8,7 +8,7 @@ public class LocalStatus : MonoBehaviour, IStatus {
 
     public string Name { get; }
 
-    bool _isHuman = false;
+    bool _isHuman = true;
 
     private string _characterCode;
     public string CharacterCode {
@@ -19,7 +19,7 @@ public class LocalStatus : MonoBehaviour, IStatus {
             _characterCode = value;
             CharacterData data = CharacterManager.Instance.GetCharacterData(_characterCode);
             _statusElement = data.StatusElements;
-            Skill = data.DefaultSkill;
+            _skill = data.DefaultSkill;
             _isHuman = data.IsHumanType;
         } 
     }

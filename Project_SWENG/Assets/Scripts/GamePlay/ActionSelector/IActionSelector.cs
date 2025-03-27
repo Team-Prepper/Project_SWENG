@@ -4,12 +4,10 @@ public interface IActionSelector
 {
     public enum Action {
         Dice, Move, Attack, TurnEnd,
-        Interaction
+        Interaction, Inventory
     }
 
     public void Ready(ICharacterController cc, IList<Action> actionList);
     public void SelectTarget(ISkill attack);
-
-    public void Die();
 
 }

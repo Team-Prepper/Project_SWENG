@@ -46,12 +46,11 @@ public class GUIMatchReadyRoom : GUIFullScreen, MatchObserver {
 
     public void GameSetting()
     {
-        if (GameManager.Instance.GameSetting.IsMaster)
+        if (!GameManager.Instance.GameSetting.IsMaster)
         {
-            UIManager.Instance.OpenGUI<GUIGameSetting>("GameSetting");
             return;
         }
-        UIManager.Instance.OpenGUI<GUIPlayerSetting>("PlayerSetting");
+        UIManager.Instance.OpenGUI<GUIGameSetting>("GameSetting");
     }
 
     public void Renewal()
@@ -72,7 +71,7 @@ public class GUIMatchReadyRoom : GUIFullScreen, MatchObserver {
                 continue;
             }
             _playerStates[i].gameObject.SetActive(true);
-            _playerStates[i].SetInfor(players[i].Name, i, players[i].PlayerCharacter, players[i].IsReady);
+            _playerStates[i].SetInfor(i, players[i].Name, players[i].PlayerCharacter, players[i].IsReady);
         }
 
         _roomInforText.text = string.Format("{0} / {1} / {2}Max", setting.Name, setting.Players.Count, setting.MaxPlayerCnt);

@@ -4,14 +4,14 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GUICharacterSettingUnit : MonoBehaviour {
+public class GUIUnitCharacterSetting : MonoBehaviour {
 
     [SerializeField] private EHText _name;
 
     private Action<string> _characterChangeMethod;
     private IList<string> _except;
 
-    internal void SetData(IList<string> except, string characterCode, Action<string> characterChangeMethod)
+    public void SetData(IList<string> except, string characterCode, Action<string> characterChangeMethod)
     {
         _except = except;
 

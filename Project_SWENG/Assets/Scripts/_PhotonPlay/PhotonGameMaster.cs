@@ -5,8 +5,12 @@ using EHTool.UIKit;
 public class PhotonGameMaster : MonoBehaviourPun, IGameMaster
 {
     private PhotonView _view;
-    private Team[] _teams;
+
     private int _turn;
+    private Team[] _teams;
+
+    private EnemySpawner _enemySpawner;
+    private int _phase;
 
     public GameObject InstantiateCharacter(Vector3 position, Quaternion rotation)
     {
@@ -26,6 +30,8 @@ public class PhotonGameMaster : MonoBehaviourPun, IGameMaster
 
     public void StartGame()
     {
+        _phase = 0;
+
         _view = GetComponent<PhotonView>();
 
         GameObject spawner = GameObject.FindWithTag("Spawner");
@@ -35,7 +41,8 @@ public class PhotonGameMaster : MonoBehaviourPun, IGameMaster
             _teams = new Team[2];
             _teams[0] = new Team();
             _teams[1] = new Team();
-            spawner.GetComponent<EnemySpawner>().SpawnEnemy();
+            _enemySpawner = spawner.GetComponent<EnemySpawner>();
+            _enemySpawner.SpawnEnemy();
         }
 
         spawner.GetComponent<PlayerSpawner>().SpawnPlayer(
@@ -50,15 +57,30 @@ public class PhotonGameMaster : MonoBehaviourPun, IGameMaster
         if (!PhotonNetwork.IsMasterClient) return;
         if (_teams[0].GetLeftMemberCount() <
             GameManager.Instance.GameSetting.Players.Count) return;
+        if (_phase > 0) return;
 
-        _teams[0].StartTurn();
+        GameStart();
         
+    }
+
+    public void GameStart() {
+        _phase = 1;
+        _teams[0].StartTurn();
+
     }
 
     public void RemoveTeamMember(ICharacterController c, int teamIdx)
     {
         _teams[teamIdx].RemoveMember(c);
+
         if (_teams[teamIdx].GetLeftMemberCount() > 0) return;
+
+        if (teamIdx != 0 && _phase == 1) {
+            _phase++;
+            _enemySpawner.SpawnBoss();
+            return;
+        }
+
         _view.RPC("PunAllGameEnd", RpcTarget.All, teamIdx == 0);
     }
 
@@ -70,10 +92,10 @@ public class PhotonGameMaster : MonoBehaviourPun, IGameMaster
     public void GameEnd(bool victory)
     {
         if (victory) {
-            UIManager.Instance.OpenGUI<GUIFullScreen>("");
+            UIManager.Instance.OpenGUI<GUIFullScreen>("GameWin");
             return;
         }
-        UIManager.Instance.OpenGUI<GUIFullScreen>("");
+        UIManager.Instance.OpenGUI<GUIFullScreen>("GameOver");
 
     }
 

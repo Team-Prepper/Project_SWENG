@@ -18,6 +18,8 @@ public class GUIInteraction : GUICustomFullScreen {
         _cc = cc;
 
         _interactionRange = HexGrid.Instance.GetNeighboursFor(cc.HexPos);
+        _interactionRange.Remove(cc.HexPos);
+        
         _interactionTarget = null;
 
         foreach (HexCoordinate neighbour in _interactionRange)

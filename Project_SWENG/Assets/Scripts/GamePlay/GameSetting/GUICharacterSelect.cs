@@ -8,7 +8,7 @@ public class GUICharacterSelect : GUIPopUp {
 
     private Action<string> _callback;
 
-    [SerializeField] private GUICharacterSelectUnit[] _characters;
+    [SerializeField] private GUIUnitCharacterSelect[] _characters;
     [SerializeField] private GameObject _listView;
     [SerializeField] private EHText _message;
 
@@ -38,7 +38,7 @@ public class GUICharacterSelect : GUIPopUp {
 
         int i = 0;
         
-        foreach (GUICharacterSelectUnit guiUnit in _characters)
+        foreach (GUIUnitCharacterSelect guiUnit in _characters)
         {
             if (i >= characterList.Count)
             {

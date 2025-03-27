@@ -902,88 +902,6 @@ MonoBehaviour:
   battleCamLeft: {fileID: 915502488}
   battleCamRight: {fileID: 338535868}
   wideCam: {fileID: 645526015}
---- !u!1 &442932694
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 442932695}
-  - component: {fileID: 442932696}
-  m_Layer: 0
-  m_Name: ItemManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &442932695
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 442932694}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 4211884697469968129}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &442932696
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 442932694}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f9460c081551b5b4f8ac8bff7165ed64, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _items:
-  - {fileID: 11400000, guid: 3a6fa9d111d4aef4fbee8ddceee5671b, type: 2}
-  - {fileID: 11400000, guid: d6fc7ee31e7ee594fa6490b7deacf1dd, type: 2}
-  - {fileID: 11400000, guid: 8fb525483fd02164d805ffd0b8a50c6e, type: 2}
-  - {fileID: 11400000, guid: a504f23aace7a494e9d26bbb4f95c74c, type: 2}
-  - {fileID: 11400000, guid: bcc9e3255ab90cc42976d4bd8f0ce7f0, type: 2}
-  - {fileID: 11400000, guid: 6448da35b94e92246bab4e87d2ccc6c9, type: 2}
-  - {fileID: 11400000, guid: 0b1baf7e6ba2e8f4e8593368ff42feef, type: 2}
-  - {fileID: 11400000, guid: b82af8ca217398341a24a1b061ccc88e, type: 2}
-  - {fileID: 11400000, guid: a96d3843a1e599f4b870aa6f92bc8bfd, type: 2}
-  - {fileID: 11400000, guid: 3f8b7093acc1d9140a2ff426172307b2, type: 2}
-  - {fileID: 11400000, guid: 2142a540f6b94c849b66fa09de21ff81, type: 2}
-  - {fileID: 11400000, guid: ac9c1c6c29d41c04c90651e38cf8766b, type: 2}
-  - {fileID: 11400000, guid: 8d8e7bcc46b261e41bd4ffa476e55f5f, type: 2}
-  - {fileID: 11400000, guid: 4739ca86cb37c6a45ac63d60cef811a7, type: 2}
-  - {fileID: 11400000, guid: b1cf639e3d53ced45953a23fc464b914, type: 2}
-  - {fileID: 11400000, guid: 57d970922a13d514c90020b7ecc9d0da, type: 2}
-  - {fileID: 11400000, guid: 286830b61235ce6419f3fe03888ccd5a, type: 2}
-  - {fileID: 11400000, guid: 117063f7acf771740ad8e9c31f803c0e, type: 2}
-  - {fileID: 11400000, guid: 9636de2e904f7564681812a144c2c5e5, type: 2}
-  - {fileID: 11400000, guid: 7d8ff834795e3e1488071b4064657218, type: 2}
-  - {fileID: 11400000, guid: d9537cdb3155bc046af6f6086b8ad97c, type: 2}
-  - {fileID: 11400000, guid: 8e6b57ef71b661c44b9901a0c57f3202, type: 2}
-  - {fileID: 11400000, guid: f57d3edef36d2944ca89337b2d04ee4a, type: 2}
-  - {fileID: 11400000, guid: 9a74602a142484248bb7fb4df4b3a38e, type: 2}
-  - {fileID: 11400000, guid: 8afa063f7f023ba4eab7e87e35210050, type: 2}
-  - {fileID: 11400000, guid: ebd563efe16f41a4b83829acc4ef1d7d, type: 2}
-  - {fileID: 11400000, guid: 0409fa5f5395b5f4bab4d5a395500d58, type: 2}
-  - {fileID: 11400000, guid: 5c8848576f5769841bd85a7a2422edca, type: 2}
-  - {fileID: 11400000, guid: 5c7396a74da1d7f4aa72cf31c743ee17, type: 2}
-  - {fileID: 11400000, guid: 15a3f5a4153706241ac7ca0746394762, type: 2}
-  - {fileID: 11400000, guid: e3f56c28e60d62b4caebe617b906bc9e, type: 2}
-  - {fileID: 11400000, guid: cc7cc37b5684fbf4a8735d758a2ce9a4, type: 2}
-  - {fileID: 11400000, guid: ea19b87df2cf1864a9e41bc39f6c18e5, type: 2}
-  - {fileID: 11400000, guid: 192ce8f07c792fd4faabc8b86179e3e3, type: 2}
-  - {fileID: 11400000, guid: 817021e579794c24aba78d3f36db6dbe, type: 2}
-  - {fileID: 11400000, guid: 64d48332e07d9c44bb0d1eff641cd775, type: 2}
-  - {fileID: 11400000, guid: fef7e4baad3b5ce48ae85e730a557365, type: 2}
 --- !u!1 &514775838
 GameObject:
   m_ObjectHideFlags: 3
@@ -2182,7 +2100,6 @@ MonoBehaviour:
     type: 3}
   bossCam: {fileID: 0}
   enemyCnt: 1
-  bossEnemyCnt: 0
 --- !u!114 &1011261882
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4229,7 +4146,6 @@ Transform:
   - {fileID: 1011261879}
   - {fileID: 118877247}
   - {fileID: 223876909}
-  - {fileID: 442932695}
   - {fileID: 2002983554}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

@@ -9,6 +9,10 @@ public class LocalGameMaster : MonoBehaviour, IGameMaster {
     [SerializeField] private int _turn;
     private Team[] _teams;
 
+    private EnemySpawner _enemySpawner;
+
+    private int _phase;
+
     public GameObject InstantiateCharacter(Vector3 position, Quaternion rotation) {
         GameObject retval = AssetOpener.ImportGameObject("LocalCC");
 
@@ -30,6 +34,7 @@ public class LocalGameMaster : MonoBehaviour, IGameMaster {
 
     public void StartGame()
     {
+        _phase = 0;
 
         _teams = new Team[2];
         _teams[0] = new Team();
@@ -37,7 +42,8 @@ public class LocalGameMaster : MonoBehaviour, IGameMaster {
 
         GameObject spawner = GameObject.FindWithTag("Spawner");
 
-        spawner.GetComponent<EnemySpawner>().SpawnEnemy();
+        _enemySpawner = spawner.GetComponent<EnemySpawner>();
+        _enemySpawner.SpawnEnemy();
 
         for (int i = 0; i < GameManager.Instance.GameSetting.Players.Count; i++) {
             spawner.GetComponent<PlayerSpawner>().SpawnPlayer(i, null);
@@ -51,16 +57,31 @@ public class LocalGameMaster : MonoBehaviour, IGameMaster {
 
         if (_teams[0].GetLeftMemberCount() <
             GameManager.Instance.GameSetting.Players.Count) return;
+        if (_phase > 0) return;
 
+        GameStart();
+
+    }
+
+    public void GameStart() {
+        _phase = 1;
         _teams[0].StartTurn();
 
     }
+
 
     public void RemoveTeamMember(ICharacterController c, int teamIdx)
     {
         _teams[teamIdx].RemoveMember(c);
 
         if (_teams[teamIdx].GetLeftMemberCount() > 0) return;
+        
+        if (teamIdx != 0 && _phase == 1) {
+            _phase++;
+            _enemySpawner.SpawnBoss();
+            return;
+        }
+
         GameEnd(teamIdx == 0);
 
     }
@@ -73,13 +94,13 @@ public class LocalGameMaster : MonoBehaviour, IGameMaster {
 
         _turn = (_turn + 1) % _teams.Length;
         _teams[_turn].StartTurn();
-
+        
     }
 
     public void GameEnd(bool victory)
     {
         if (victory) {
-            UIManager.Instance.OpenGUI<GUIFullScreen>("");
+            UIManager.Instance.OpenGUI<GUIFullScreen>("GameWin");
             return;
         }
         UIManager.Instance.OpenGUI<GUIFullScreen>("GameOver");
