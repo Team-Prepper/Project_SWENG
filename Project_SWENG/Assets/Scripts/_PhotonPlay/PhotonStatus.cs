@@ -22,6 +22,8 @@ public class PhotonStatus : MonoBehaviourPun, IStatus, IPunObservable
             _statusElement = data.StatusElements;
             _skill = data.DefaultSkill;
             _isHuman = data.IsHumanType;
+            
+            HP = new GaugeInt(_statusElement[0].HP);
         } 
     }
 

@@ -81,7 +81,7 @@ public class PhotonGameMaster : MonoBehaviourPun, IGameMaster
             return;
         }
 
-        _view.RPC("PunAllGameEnd", RpcTarget.All, teamIdx == 0);
+        _view.RPC("PunAllGameEnd", RpcTarget.All, teamIdx != 0);
     }
 
     [PunRPC]

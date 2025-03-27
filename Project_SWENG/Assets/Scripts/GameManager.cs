@@ -1,5 +1,8 @@
 using EHTool;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using System;
+using System.Collections;
 
 public class GameManager : MonoSingleton<GameManager> {
 
@@ -7,18 +10,43 @@ public class GameManager : MonoSingleton<GameManager> {
     public IGameMaster GameMaster { get; private set; }
     public IGameSetting GameSetting { get; internal set; }
 
-    private GameObject _gameMasterObject;
+    private Component _gameMasterComponent;
+
+    private bool _actionRegistered = false;
+    private Action _actions;
 
     public void SetGameMaster<T>() where T : Component, IGameMaster
     {
-        if (_gameMasterObject != null) {
-            Destroy(_gameMasterObject);
+        if (_gameMasterComponent != null) {
+            Destroy(_gameMasterComponent);
         }
 
-        _gameMasterObject = new GameObject("GameMaster");
-        _gameMasterObject.transform.SetParent(transform);
+        T temp = gameObject.AddComponent<T>();
+        
+        _gameMasterComponent = temp;
+        GameMaster = temp;
 
-        GameMaster = _gameMasterObject.AddComponent<T>();
+    }
+
+    public void AddSceneLoadEvent(Action action) {
+        
+        if (!_actionRegistered) {
+            _actionRegistered = true;
+            SceneManager.sceneLoaded += (t, v) => {
+                StartCoroutine(WaitAFrame());
+            };
+
+        }
+        _actions += action;
+    }
+
+    IEnumerator WaitAFrame() {
+        yield return null;
+        _actions?.Invoke();
+    }
+
+    public void RemoveSceneLoadEvent(Action action) {
+        _actions -= action;
     }
 
     protected override void OnCreate()
@@ -29,6 +57,7 @@ public class GameManager : MonoSingleton<GameManager> {
 
         GameSetting = new LocalGameSetting();
         Network = gameObject.AddComponent<PhotonNet>();
+
     }
 
 }

@@ -19,6 +19,7 @@ public interface INetwork {
     public INetworkRoom Room { get; }
 
     public bool IsMaster { get; }
+    public bool IsConnect { get; }
 
     public string NickName { get; }
     public int CountOfPlayers { get; }

@@ -82,7 +82,7 @@ public class LocalGameMaster : MonoBehaviour, IGameMaster {
             return;
         }
 
-        GameEnd(teamIdx == 0);
+        GameEnd(teamIdx != 0);
 
     }
 

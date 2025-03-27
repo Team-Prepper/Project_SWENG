@@ -13,6 +13,11 @@ public class BasicEnemyActionSelector : MonoBehaviour, IActionSelector
         = new Dictionary<ICharacterController, IList<IActionSelector.Action>>();
 
     private int _continuousCnt;
+    private int _dicePoint = 4;
+
+    public void SetDicePoint(int amount) {
+        _dicePoint = amount;
+    }
 
     private void SetCharacterController(ICharacterController cc)
     {
@@ -29,7 +34,7 @@ public class BasicEnemyActionSelector : MonoBehaviour, IActionSelector
     public void Ready(ICharacterController cc, IList<IActionSelector.Action> actionList)
     {
         if (actionList.Contains(IActionSelector.Action.Dice)) {
-            cc.DicePoint.SetPoint(4);
+            cc.DicePoint.SetPoint(_dicePoint);
             return;
         }
 

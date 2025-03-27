@@ -4,11 +4,19 @@ using UnityEngine;
 public class EnemySpawner : MonoBehaviour
 {
 
-    private IActionSelector _acitonSelector;
+    private IActionSelector _enemyAcitonSelector;
+    private BasicEnemyActionSelector _bossActionSelector;
     private IList<MapUnit> _spawnableMapUnit;
 
     private void Awake() {
-        _acitonSelector = gameObject.AddComponent<BasicEnemyActionSelector>();
+        
+        _enemyAcitonSelector =
+            gameObject.AddComponent<BasicEnemyActionSelector>();
+        _bossActionSelector =
+            gameObject.AddComponent<BasicEnemyActionSelector>();
+
+        _bossActionSelector.SetDicePoint(10);
+
     }
 
     public void SpawnEnemy()
@@ -22,7 +30,7 @@ public class EnemySpawner : MonoBehaviour
 
         for (int i = 0; i < GameManager.Instance.GameSetting.EnemyCnt; i++)
         {
-            SpawnEnemy(GetRandHex(), GameManager.Instance.GameSetting.Enemy);
+            SpawnEnemy(GetRandHex(), GameManager.Instance.GameSetting.Enemy, _enemyAcitonSelector);
         }
     }
 
@@ -35,10 +43,10 @@ public class EnemySpawner : MonoBehaviour
             _spawnableMapUnit.Add(mu);
         }
 
-        SpawnEnemy(GetBossPos(), GameManager.Instance.GameSetting.BossEnemy);
+        SpawnEnemy(GetBossPos(), GameManager.Instance.GameSetting.BossEnemy, _bossActionSelector);
     }
 
-    private void SpawnEnemy(MapUnit spawnHex, IList<string> spawnEnemyList)
+    private void SpawnEnemy(MapUnit spawnHex, IList<string> spawnEnemyList, IActionSelector actionSelector)
     {
         if (spawnHex == null) return;
         
@@ -49,7 +57,7 @@ public class EnemySpawner : MonoBehaviour
         ICharacterController cc = enemy.GetComponent<ICharacterController>();
         
         cc.Initial(spawnEnemyList[Random.Range(0, spawnEnemyList.Count)], 1, true);
-        cc.SetActionSelector(_acitonSelector);
+        cc.SetActionSelector(actionSelector);
         
     }
 

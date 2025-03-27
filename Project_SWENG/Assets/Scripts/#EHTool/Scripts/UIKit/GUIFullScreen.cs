@@ -8,17 +8,16 @@ namespace EHTool.UIKit {
         protected IGUIPopUp _nowPopUp;
         protected IGUIPanel _nowPanel;
 
-        bool _isSetting = false;
+        private bool _isSetting = false;
 
         virtual protected void Start()
         {
-            if (_isSetting) return;
-
             Open();
         }
 
         public override void Open()
         {
+            if (_isSetting) return;
 
             _isSetting = true;
 

@@ -78,8 +78,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\uB2EB\uAE30"
-  _key: btn_Close
+  m_Text: btn_Room
+  _key: btn_Room
 --- !u!1 &2611614488499082108
 GameObject:
   m_ObjectHideFlags: 0
@@ -90,7 +90,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4152720664421707796}
   - component: {fileID: 2780056760251977757}
-  - component: {fileID: 5925597839457238681}
+  - component: {fileID: 6631100713146548622}
   m_Layer: 5
   m_Name: GUI_GameWin
   m_TagString: Untagged
@@ -126,7 +126,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2611614488499082108}
   m_CullTransparentMesh: 1
---- !u!114 &5925597839457238681
+--- !u!114 &6631100713146548622
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -135,10 +135,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 2611614488499082108}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2e21effbf1f0ae34db7ff20c1807230a, type: 3}
+  m_Script: {fileID: 11500000, guid: 92ac76641b1512f499643aafc5b23b5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   priority: 0
+  _titleSceneIdx: 0
 --- !u!1 &3890349670903480305
 GameObject:
   m_ObjectHideFlags: 0
@@ -342,9 +343,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: GUIWindow, Assembly-CSharp
-        m_MethodName: Close
+      - m_Target: {fileID: 6631100713146548622}
+        m_TargetAssemblyTypeName: GUIGameResult, Assembly-CSharp
+        m_MethodName: GotoLobby
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -491,9 +492,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: GUIWindow, Assembly-CSharp
-        m_MethodName: Close
+      - m_Target: {fileID: 6631100713146548622}
+        m_TargetAssemblyTypeName: GUIGameResult, Assembly-CSharp
+        m_MethodName: GotoRoom
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -672,8 +673,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\uB2EB\uAE30"
-  _key: btn_Close
+  m_Text: btn_Lobby
+  _key: btn_Lobby
 --- !u!1 &7613078903911972353
 GameObject:
   m_ObjectHideFlags: 0

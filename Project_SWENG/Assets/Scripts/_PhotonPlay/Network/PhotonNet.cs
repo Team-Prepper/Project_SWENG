@@ -24,6 +24,7 @@ public class PhotonNet : MonoBehaviourPunCallbacks, INetwork {
     private List<RoomInfo> _roomList = new List<RoomInfo>();
 
     public bool IsMaster => PhotonNetwork.IsMasterClient;
+    public bool IsConnect => PhotonNetwork.IsConnected;
 
     public string NickName => PhotonNetwork.NickName;
     public int CountOfPlayers => PhotonNetwork.CountOfPlayers;

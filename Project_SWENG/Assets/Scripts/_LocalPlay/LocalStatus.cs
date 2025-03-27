@@ -18,9 +18,12 @@ public class LocalStatus : MonoBehaviour, IStatus {
         set {
             _characterCode = value;
             CharacterData data = CharacterManager.Instance.GetCharacterData(_characterCode);
+            
             _statusElement = data.StatusElements;
             _skill = data.DefaultSkill;
             _isHuman = data.IsHumanType;
+
+            _hp = new GaugeInt(data.StatusElements[0].HP);
         } 
     }
 
