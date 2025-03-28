@@ -1,17 +1,17 @@
 using UnityEngine;
-using UnityEngine.UI;
 using EHTool.LangKit;
 
-public class GUIUnitCharacterInfor : MonoBehaviour {
-
-    [SerializeField] private Image _img;
+public class GUIUnitCharacterInfor : GUIUnitCharacterInforIcon {
+    
     [SerializeField] private EHText _name;
+    [SerializeField] private EHText _desc;
 
-    public void Set(string characterCode) {
+    public override void Set(string characterCode) {
+
+        base.Set(characterCode);
 
         CharacterData data = CharacterManager.Instance.GetCharacterData(characterCode);
 
-        _img.sprite = data.Image;
         _name.SetText(data.CharacterName);
 
     }

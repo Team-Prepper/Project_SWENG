@@ -24,9 +24,11 @@ public class LocalItemController : MonoBehaviour, IItemController
     {
         GUI_ItemInterAction ui = UIManager.Instance.OpenGUI<GUI_ItemInterAction>("ItemInterAction");
 
+        CameraManager.Instance.CameraSetting(transform, "Character");
+        
         ui.SetItem(_itemCode);
         ui.InteractionEventSet(() => {
-            cc.EquipItem(_itemCode);
+            cc.Inventory.AddItem(_itemCode);
             Equip();
         });
 

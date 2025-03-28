@@ -10,7 +10,7 @@ public class GUI_Setting : GUIPopUp
         public string value;
     }
 
-    [SerializeField] private EHDropdown _langDropdown;
+    [SerializeField] private EHDropdownWrapper _langDropdown;
     [SerializeField] private LangOption[] _langOptions;
 
     public override void Open()

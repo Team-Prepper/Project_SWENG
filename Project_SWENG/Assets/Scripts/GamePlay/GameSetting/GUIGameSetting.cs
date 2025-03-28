@@ -8,7 +8,7 @@ public class GUIGameSetting : GUIPopUp
 {
 
     [SerializeField] private GameSettingData[] _presets;
-    [SerializeField] private EHDropdown _presetDropdown;
+    [SerializeField] private EHDropdownWrapper _presetDropdown;
     [SerializeField] private Text _enemyCntText;
     [SerializeField] private Text _phaseCntText;
 

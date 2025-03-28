@@ -4,7 +4,7 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 using System;
 
-public class EHDropdown : MonoBehaviour, IObserver<IEHLangManager> {
+public class EHDropdownWrapper : MonoBehaviour, IObserver<IEHLangManager> {
 
     [SerializeField] private string[] _options;
     [SerializeField] private Dropdown _dropdown;

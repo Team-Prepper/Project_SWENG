@@ -121,8 +121,19 @@ public class MapUnit : MonoBehaviour {
             UIManager.Instance.OpenGUI<GUI_ShowCharacterInfor>("CharacterInfor").SetInfor(_cc, actor);
             return;
         }
+
         if (_ic != null) {
             _ic.Interaction(actor);
+            return;
+        }
+
+        if (Random.Range(0, 1f) < 0.2f) {
+            GameObject item = GameManager.Instance.GameMaster.InstantiateItem(transform.position);
+            item.GetComponent<IItemController>().SetInitial("Item_Heal");
+
+            CameraManager.Instance.CameraSetting(item.transform, "Character");
+            actor.ActionEnd(2f);
+            return;
         }
 
         actor.ActionEnd(0);

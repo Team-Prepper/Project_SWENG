@@ -1,24 +1,39 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class GUIUnitCharacterSelect : MonoBehaviour {
 
-    [SerializeField] private GUIUnitCharacterInfor _characterInfor;
-    private string _value;
-    private Action<string> _selectedMethod;
+    [SerializeField] private IGUIUnitCharacterInfor _characterInfor;
+    [SerializeField] private GameObject _light;
 
-    public void Set(string characterCode, Action<string> selectedMethod) {
-        _value = characterCode;
+    private int _idx;
+    private Action<int> _selectedMethod;
+
+    public void Set(IList<string> characterList, int idx, Action<int> selectedMethod) {
+        if (idx >= characterList.Count) {
+            gameObject.SetActive(false);
+            return;
+        }
+        _idx = idx;
         _selectedMethod = selectedMethod;
 
-        _characterInfor.Set(characterCode);
+        _characterInfor.Set(characterList[idx]);
 
         gameObject.SetActive(true);
+        DisSelect();
     }
 
     public void Select()
     {
-        _selectedMethod?.Invoke(_value);
+        _selectedMethod?.Invoke(_idx);
+        _light.SetActive(true);
+    }
+
+    public void DisSelect()
+    {
+        _light.SetActive(false);
+        
     }
 
 }
