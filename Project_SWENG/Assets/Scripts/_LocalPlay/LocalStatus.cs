@@ -91,6 +91,13 @@ public class LocalStatus : MonoBehaviour, IStatus {
         _addedDfs += amount;
         Notify();
     }
+    
+    public void Heal(int amount) {
+
+        HP.AddValue(amount);
+        Notify();
+
+    }
 
     public void TakeDamage(int amount) {
 

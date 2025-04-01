@@ -1,5 +1,3 @@
-#nullable disable
-
 using UnityEngine;
 using EHTool;
 using EHTool.UIKit;
@@ -11,7 +9,8 @@ public class LocalGameMaster : MonoBehaviour, IGameMaster {
 
     private EnemySpawner _enemySpawner;
 
-    private int _phase;
+    private IGameMaster.Phase _phase;
+    private int _phaseCnt;
 
     public GameObject InstantiateCharacter(Vector3 position, Quaternion rotation) {
         GameObject retval = AssetOpener.ImportGameObject("LocalCC");
@@ -64,7 +63,7 @@ public class LocalGameMaster : MonoBehaviour, IGameMaster {
     }
 
     public void GameStart() {
-        _phase = 1;
+        _phase = IGameMaster.Phase.Play;
         _teams[0].StartTurn();
 
     }
@@ -76,13 +75,31 @@ public class LocalGameMaster : MonoBehaviour, IGameMaster {
 
         if (_teams[teamIdx].GetLeftMemberCount() > 0) return;
         
-        if (teamIdx != 0 && _phase == 1) {
-            _phase++;
-            _enemySpawner.SpawnBoss();
+        if (teamIdx == 0 ) {
+            GameEnd(teamIdx != 0);
             return;
         }
 
-        GameEnd(teamIdx != 0);
+        if (_phase == IGameMaster.Phase.Play)
+        {
+
+            _phase = IGameMaster.Phase.Boss;
+            _enemySpawner.SpawnBoss();
+
+            return;
+
+        }
+
+        _phaseCnt++;
+
+        if (_phaseCnt >= GameManager.Instance.GameSetting.PhaseCnt)
+        {
+            GameEnd(teamIdx != 0);
+            return;
+        }
+
+        _phase = IGameMaster.Phase.Play;
+        _enemySpawner.SpawnEnemy();
 
     }
 

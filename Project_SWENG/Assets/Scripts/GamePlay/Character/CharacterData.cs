@@ -12,6 +12,7 @@ public class CharacterData : ScriptableObject {
     }
 
     public string CharacterName;
+    public string CharacterDesc;
 
     public SkillData DefaultSkill;
 

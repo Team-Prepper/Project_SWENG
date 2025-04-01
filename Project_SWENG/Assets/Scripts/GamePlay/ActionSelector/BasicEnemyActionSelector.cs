@@ -13,10 +13,12 @@ public class BasicEnemyActionSelector : MonoBehaviour, IActionSelector
         = new Dictionary<ICharacterController, IList<IActionSelector.Action>>();
 
     private int _continuousCnt;
-    private int _dicePoint = 4;
+    private int _dicePointMin = 4;
+    private int _dicePointMax = 5;
 
-    public void SetDicePoint(int amount) {
-        _dicePoint = amount;
+    public void SetDicePointRange(int min, int max) {
+        _dicePointMin = min;
+        _dicePointMax = max;
     }
 
     private void SetCharacterController(ICharacterController cc)
@@ -34,7 +36,9 @@ public class BasicEnemyActionSelector : MonoBehaviour, IActionSelector
     public void Ready(ICharacterController cc, IList<IActionSelector.Action> actionList)
     {
         if (actionList.Contains(IActionSelector.Action.Dice)) {
-            cc.DicePoint.SetPoint(_dicePoint);
+            cc.DicePoint.SetPoint(UnityEngine.Random.Range(_dicePointMin, _dicePointMax));
+            cc.IsRollDice = true;
+            cc.ActionEnd(0);
             return;
         }
 
@@ -67,8 +71,8 @@ public class BasicEnemyActionSelector : MonoBehaviour, IActionSelector
         foreach (IActionSelector.Action a in actionList)
         {
             if (a == IActionSelector.Action.Interaction) continue;
-            if (a == IActionSelector.Action.Inventory) continue;
-            if (a == IActionSelector.Action.Attack && null == GetEnemyInRange(_cc.HexPos, 1)) continue;
+            if (a == IActionSelector.Action.Attack &&
+                null == GetEnemyInRange(_cc.HexPos, 1)) continue;
             if (a == IActionSelector.Action.Move)
             {
                 if (null == GetEnemyInRange(_cc.HexPos, Mathf.Max(_cc.DicePoint.GetPoint() / 2, 3))) continue;
@@ -76,7 +80,7 @@ public class BasicEnemyActionSelector : MonoBehaviour, IActionSelector
             }
             list.Add(a);
         }
-
+        
         if (list.Count == 0 && _continuousCnt == 0)
         {
             TurnEnd();

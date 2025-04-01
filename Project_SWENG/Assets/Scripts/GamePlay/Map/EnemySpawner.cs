@@ -15,7 +15,7 @@ public class EnemySpawner : MonoBehaviour
         _bossActionSelector =
             gameObject.AddComponent<BasicEnemyActionSelector>();
 
-        _bossActionSelector.SetDicePoint(10);
+        _bossActionSelector.SetDicePointRange(6, 7);
 
     }
 

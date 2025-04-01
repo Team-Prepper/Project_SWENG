@@ -23,6 +23,8 @@ public class GUIGameSetting : GUIPopUp
     {
         base.Open();
 
+        _enemyCnt = GameManager.Instance.GameSetting.EnemyCnt;
+        _phaseCnt = GameManager.Instance.GameSetting.PhaseCnt;
         _enemyList = new List<string>(GameManager.Instance.GameSetting.Enemy);
         _bossEnemyList = new List<string>(GameManager.Instance.GameSetting.BossEnemy);
 

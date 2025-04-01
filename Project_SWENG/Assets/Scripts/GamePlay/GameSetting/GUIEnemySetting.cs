@@ -5,43 +5,38 @@ using System;
 
 public class GUIEnemySetting : GUIPopUp
 {
-    [SerializeField] private List<GUIGameSettingUnit> _enemyData;
-    [SerializeField] private List<GUIGameSettingUnit> _bossEnemyData;
-    
+    [SerializeField] private List<GUIUnitCharacterSelect> _enemySelectUI;
+    [SerializeField] private List<GUIUnitCharacterSelect> _bossSelectUI;
 
+    private List<int> _enemyRemoveList;
+    private List<int> _bossRemoveList;
+    
     private IList<string> _enemyList;
-    private IList<string> _bossEnemyList;
+    private IList<string> _bossList;
 
     public void SetList(IList<string> enemyList, IList<string> bossEnemyList) {
+
         _enemyList = enemyList;
-        _bossEnemyList = bossEnemyList;
+        _bossList = bossEnemyList;
 
-        Display();
-    }
+        _enemyRemoveList = new List<int>();
+        _bossRemoveList = new List<int>();
 
-    private void Display() {
-
-        _Display(_enemyData, _enemyList, EnemyCharacterRemove);
-        _Display(_bossEnemyData, _bossEnemyList, BossEnemyCharacterRemove);
+        _Display(_enemySelectUI, _enemyList, AddEnemyRemoveList);
+        _Display(_bossSelectUI, _bossList, AddBossRemoveList);
 
     }
 
-    void _Display(List<GUIGameSettingUnit> guiUnits, IList<string> value, Action<string> deleteAction)
+    void _Display(List<GUIUnitCharacterSelect> guiUnits, IList<string> value, Action<int> deleteAction)
     {
+
         while (guiUnits.Count < value.Count) {
             Instantiate(guiUnits[0], guiUnits[0].transform.parent);
         } 
 
-        int i = 0;
-        foreach (GUIGameSettingUnit guiUnit in guiUnits)
+        for (int i = 0; i < guiUnits.Count; i++)
         {
-            if (i < value.Count)
-            {
-                guiUnit.SetData(value[i++], deleteAction);
-                continue;
-            }
-
-            guiUnit.gameObject.SetActive(false);
+            guiUnits[i].Set(value, i, deleteAction);
         }
 
     }
@@ -52,19 +47,39 @@ public class GUIEnemySetting : GUIPopUp
             Set(_enemyList, (value) =>
                 {
                     _enemyList.Add(value);
-                    _Display(_enemyData, _enemyList, EnemyCharacterRemove);
+                    _Display(_enemySelectUI, _enemyList, AddEnemyRemoveList);
                 }
             );
     }
 
-    public void EnemyCharacterRemove(string characterCode)
+    public void RemoveEnemy() {
+
+        _enemyRemoveList.Sort((a, b) => { return b.CompareTo(a); });
+
+        for (int i = 0; i < _enemyRemoveList.Count; i++) {
+            _enemyList.RemoveAt(_enemyRemoveList[i]);
+        }
+
+        _enemyRemoveList = new List<int>();
+        _Display(_enemySelectUI, _enemyList, AddEnemyRemoveList);
+
+    }
+
+    public void AddEnemyRemoveList(int idx)
     {
-        if (_enemyList.Count < 2)
+        if (_enemyRemoveList.Contains(idx)) {
+            _enemyRemoveList.Remove(idx);
+            _enemySelectUI[idx].SetLightActive(false);
+            return;
+        }
+
+        if (_enemyList.Count - _enemyRemoveList.Count  < 2)
         {
             return;
         }
-        _enemyList.Remove(characterCode);
-        _Display(_enemyData, _enemyList, EnemyCharacterRemove);
+
+        _enemyRemoveList.Add(idx);
+        _enemySelectUI[idx].SetLightActive(true);
 
     }
 
@@ -72,22 +87,40 @@ public class GUIEnemySetting : GUIPopUp
     {
 
         UIManager.Instance.OpenGUI<GUICharacterSelect>("CharacterSelect").
-            Set(_bossEnemyList, (value) =>
+            Set(_bossList, (value) =>
                 {
-                    _bossEnemyList.Add(value);
-                    _Display(_bossEnemyData, _bossEnemyList, BossEnemyCharacterRemove);
+                    _bossList.Add(value);
+                    _Display(_bossSelectUI, _bossList, AddBossRemoveList);
                 }
             );
+
+    }
+    public void RemoveBossEnemy() {
+        _bossRemoveList.Sort((a, b) => { return b.CompareTo(a); });
+
+        for (int i = 0; i < _bossRemoveList.Count; i++) {
+            _bossList.RemoveAt(_bossRemoveList[i]);
+        }
+
+        _bossRemoveList = new List<int>();
+        _Display(_bossSelectUI, _bossList, AddBossRemoveList);
     }
 
-    public void BossEnemyCharacterRemove(string characterCode)
+    public void AddBossRemoveList(int idx)
     {
-        if (_bossEnemyList.Count < 2)
+        if (_bossRemoveList.Contains(idx)) {
+            _bossRemoveList.Remove(idx);
+            _bossSelectUI[idx].SetLightActive(false);
+            return;
+        }
+
+        if (_bossList.Count - _bossRemoveList.Count < 2)
         {
             return;
         }
-        _bossEnemyList.Remove(characterCode);
-        _Display(_bossEnemyData, _bossEnemyList, BossEnemyCharacterRemove);
+
+        _bossRemoveList.Add(idx);
+        _bossSelectUI[idx].SetLightActive(true);
 
     }
 

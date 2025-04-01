@@ -31,8 +31,10 @@ public class Team {
     public void StartTurn()
     {
 
-        IDictionary<ICharacterController, bool> members = new Dictionary<ICharacterController, bool>();
-        IList<ICharacterController> list = new List<ICharacterController>();
+        IDictionary<ICharacterController, bool> members
+            = new Dictionary<ICharacterController, bool>();
+        IList<ICharacterController> list
+            = new List<ICharacterController>();
 
         foreach (ICharacterController m in _members.Keys)
         {

@@ -21,18 +21,17 @@ public class GUIUnitCharacterSelect : MonoBehaviour {
         _characterInfor.Set(characterList[idx]);
 
         gameObject.SetActive(true);
-        DisSelect();
+        SetLightActive(false);
     }
 
     public void Select()
     {
         _selectedMethod?.Invoke(_idx);
-        _light.SetActive(true);
     }
 
-    public void DisSelect()
+    public void SetLightActive(bool isActive)
     {
-        _light.SetActive(false);
+        _light.SetActive(isActive);
         
     }
 

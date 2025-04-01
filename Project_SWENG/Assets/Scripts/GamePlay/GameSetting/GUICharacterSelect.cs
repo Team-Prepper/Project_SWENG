@@ -54,10 +54,13 @@ public class GUICharacterSelect : GUIPopUp
     public void ChangeTo(int value)
     {
         if (_idx >= 0) {
-            _characters[_idx].DisSelect();
+            _characters[_idx].SetLightActive(false);
         }
+        
         _idx = value;
+        _characters[_idx].SetLightActive(true);
         _selectedCharacterInfor.Set(_characterList[_idx]);
+
     }
 
     public void Select() {

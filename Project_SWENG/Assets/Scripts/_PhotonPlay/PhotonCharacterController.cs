@@ -2,7 +2,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 
-public class PhotonCharacterController : MonoBehaviourPun, ICharacterController {
+public class PhotonCharacterController :
+    MonoBehaviourPun, ICharacterController
+{
+
+    [SerializeField] private PhotonStatus _status;
+    [SerializeField] private Inventory _inventory;
+    [SerializeField] private PhotonView _view;
 
     public int TeamIdx { get; private set; }
 
@@ -10,56 +16,68 @@ public class PhotonCharacterController : MonoBehaviourPun, ICharacterController 
         HexCoordinate.ConvertFromVector3(transform.position);
 
     public Character Character { get; private set; }
-
-    private DicePoint _dicePoint = new DicePoint();
-    public IDicePoint DicePoint => _dicePoint;
-
-    [SerializeField] private PhotonStatus _status;
     public IStatus Status => _status;
-
-    [SerializeField] private Inventory _inventory;
     public Inventory Inventory => _inventory;
-
-    private bool _inventoryOpened;
-
-    [SerializeField] private PhotonView _view;
+    public IDicePoint DicePoint { get; private set; }
+    public bool IsRollDice { get; set; }
 
     private IActionSelector _actionSelector;
     private bool _camSync;
 
     public void Initial(string characterName, int teamIdx, bool camSync)
     {
-        _view.RPC("PunAllInitial", RpcTarget.All, characterName, teamIdx, camSync);
-        _view.RPC("PunMasterAddMember", RpcTarget.MasterClient, teamIdx);
+        _view.RPC(nameof(PunAllInitial), RpcTarget.All,
+            characterName, teamIdx, camSync);
     }
 
     [PunRPC]
     private void PunAllInitial(string characterName, int teamIdx, bool camSync)
     {
-        Character = Instantiate(CharacterManager.Instance.GetCharacterData(characterName).CharacterPrefab);
+        HexGrid.Instance.GetMapUnitAt(transform.position).
+            SetCC(gameObject, this);
+
+        Character = Instantiate(CharacterManager.Instance.
+            GetCharacterData(characterName).CharacterPrefab);
+
         Character.SetCC(this);
-        Character.transform.SetParent(transform);
-        Character.transform.localPosition = Vector3.zero;
 
         Status.SetCC(this);
         Status.CharacterCode = characterName;
 
         Inventory.SetCC(this);
-        
-        _dicePoint.SetCC(this);
 
-        HexGrid.Instance.GetMapUnitAt(transform.position).SetCC(gameObject, this);
+        DicePoint = new DicePoint();
 
         TeamIdx = teamIdx;
         _camSync = camSync;
+
+        if (!PhotonNetwork.IsMasterClient) return;
+
+        GameManager.Instance.GameMaster.
+            AddTeamMember(this, TeamIdx);
+
+        Character.AddRemoveAction(() =>
+        {
+            GameManager.Instance.GameMaster.
+                RemoveTeamMember(this, TeamIdx);
+
+            PhotonNetwork.Destroy(gameObject);
+
+        });
+
+    }
+
+    public void Remove()
+    {
+        _view.RPC(nameof(PunMasterRemove), RpcTarget.MasterClient);
     }
 
     [PunRPC]
-    private void PunMasterAddMember(int teamIdx)
+    public void PunMasterRemove()
     {
-        TeamIdx = teamIdx;
-        GameManager.Instance.GameMaster.AddTeamMember(this, TeamIdx);
+        HexGrid.Instance.GetMapUnitAt(HexPos).ResetEntityState();
 
+        Character.Die();
     }
 
     public void CamSetting(string key)
@@ -70,8 +88,7 @@ public class PhotonCharacterController : MonoBehaviourPun, ICharacterController 
             return;
         }
 
-        _view.RPC("PunAllCamSetting", RpcTarget.All, key);
-
+        _view.RPC(nameof(PunAllCamSetting), RpcTarget.All, key);
     }
 
     [PunRPC]
@@ -82,30 +99,14 @@ public class PhotonCharacterController : MonoBehaviourPun, ICharacterController 
 
     public void PlayAnim(string triggerType, string triggerValue)
     {
-        _view.RPC("PunAllPlayAnim", RpcTarget.All, triggerType, triggerValue);
+        _view.RPC(nameof(PunAllPlayAnim), RpcTarget.All,
+            triggerType, triggerValue);
     }
 
     [PunRPC]
-    public void PunAllPlayAnim(string triggerType, string triggerValue)
+    public void PunAllPlayAnim(string type, string value)
     {
-        Character.PlayAnim(triggerType, triggerValue);
-
-    }
-
-    public void Remove() {
-        _view.RPC("PunMasterRemove", RpcTarget.MasterClient);
-        
-    }
-
-    [PunRPC]
-    public void PunMasterRemove() {
-        
-        HexGrid.Instance.GetMapUnitAt(HexPos).ResetEntityState();
-
-        Character.Die();
-
-        GameManager.Instance.GameMaster.RemoveTeamMember(this, TeamIdx);
-
+        Character.PlayAnim(type, value);
     }
 
     public void TakeDamage(int amount)
@@ -115,20 +116,16 @@ public class PhotonCharacterController : MonoBehaviourPun, ICharacterController 
 
     public void SetPlay()
     {
-        _view.RPC("PunAllSetPlay", RpcTarget.All);
+        _view.RPC(nameof(PunAllSetPlay), RpcTarget.All);
     }
 
     [PunRPC]
-    private void PunAllSetPlay() {
+    private void PunAllSetPlay()
+    {
+        if (_actionSelector == null) return;
 
-        if (_actionSelector == null)
-        {
-            return;
-        }
-        
-        _inventoryOpened = false;
-        _dicePoint.Reset();
-        
+        IsRollDice = false;
+
         ActionEnd();
     }
 
@@ -139,30 +136,25 @@ public class PhotonCharacterController : MonoBehaviourPun, ICharacterController 
 
     public void ActionEnd(float time = 0)
     {
+        if (_actionSelector == null) return;
+
         Invoke(nameof(_ActionEnd), time);
     }
 
     public void _ActionEnd()
     {
-        if (_actionSelector == null)
-        {
-            return;
-        }
+        IList<IActionSelector.Action> list
+            = Character.GetActionList();
 
-        IList<IActionSelector.Action> list = Character.GetActionList();
-
-        if (!_inventoryOpened)
-            list.Add(IActionSelector.Action.Inventory);
-        if (_dicePoint.IsRollDice == false)
+        if (IsRollDice == false)
             list.Add(IActionSelector.Action.Dice);
 
         _actionSelector.Ready(this, list);
-        
     }
 
     public void TurnEnd()
     {
-        _view.RPC("PunMasterTurnEnd", RpcTarget.MasterClient);
+        _view.RPC(nameof(PunMasterTurnEnd), RpcTarget.MasterClient);
     }
 
     [PunRPC]
@@ -173,18 +165,17 @@ public class PhotonCharacterController : MonoBehaviourPun, ICharacterController 
 
     public void MoveTo(HexCoordinate before, HexCoordinate after)
     {
-        _view.RPC("PunAllMoveTo", RpcTarget.All, before.x, before.z, after.x, after.z);
+        _view.RPC(nameof(PunAllMoveTo), RpcTarget.All,
+            before.x, before.z, after.x, after.z);
     }
 
     [PunRPC]
-    private void PunAllMoveTo(int beforeX, int beforeZ, int afterX, int afterZ) {
-
-        HexCoordinate before = new HexCoordinate(beforeX, beforeZ);
-        HexCoordinate after = new HexCoordinate(afterX, afterZ);
-
-        HexGrid.Instance.GetMapUnitAt(before).ResetEntityState();
-        HexGrid.Instance.GetMapUnitAt(after).SetCC(gameObject, this);
-
+    private void PunAllMoveTo(int bX, int bZ, int aX, int aZ)
+    {
+        HexGrid.Instance.GetMapUnitAt
+            (new HexCoordinate(bX, bZ)).ResetEntityState();
+        HexGrid.Instance.GetMapUnitAt
+            (new HexCoordinate(aX, aZ)).SetCC(gameObject, this);
     }
 
     public void Move(Queue<Vector3> path)
@@ -195,11 +186,6 @@ public class PhotonCharacterController : MonoBehaviourPun, ICharacterController 
     public void Interaction(HexCoordinate targetPos)
     {
         Character.Interaction(targetPos);
-    }
-
-    public void EquipItem(string data)
-    {
-        Character.EquipItem(data);
     }
 
 }

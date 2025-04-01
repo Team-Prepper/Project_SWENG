@@ -24,12 +24,17 @@ public class GUI_PlayerActionSelect : GUICustomFullScreen, IActionSelector {
         = new Dictionary<ICharacterController, IList<IActionSelector.Action>>();
     private ICharacterController _cc;
 
+    private GUI_Dice _dicePopUp;
+
 #nullable enable
     private IDisposable? _disposable;
 
     private void SetCharacterController(ICharacterController cc)
     {
+        _cc?.Character.SetHPViewActive(true);
+
         _cc = cc;
+        _cc.Character.SetHPViewActive(false);
         _disposable?.Dispose();
         _disposable = _cc.Status.Subscribe(_playerHealth);
         
@@ -55,15 +60,20 @@ public class GUI_PlayerActionSelect : GUICustomFullScreen, IActionSelector {
 
         _cc.CamSetting("Character");
 
-        _btnInteraction.interactable = actionList.Contains(IActionSelector.Action.Interaction);
-        _btnDice.interactable = actionList.Contains(IActionSelector.Action.Dice);
-        _btnAttack.interactable = actionList.Contains(IActionSelector.Action.Attack);
-        _btnMove.interactable = actionList.Contains(IActionSelector.Action.Move);
-        _btnInventory.interactable = actionList.Contains(IActionSelector.Action.Inventory);
+        _btnInteraction.interactable = actionList.Contains
+            (IActionSelector.Action.Interaction);
+        _btnDice.interactable = actionList.Contains
+            (IActionSelector.Action.Dice);
+        _btnAttack.interactable = actionList.Contains
+            (IActionSelector.Action.Attack);
+        _btnMove.interactable = actionList.Contains
+            (IActionSelector.Action.Move);
+        _btnInventory.interactable = true;
 
         StartCoroutine(_PanelOpen());
 
     }
+
     private IEnumerator _PanelOpen() {
 
         _panelBtnTr.localScale = Vector2.zero;
@@ -105,19 +115,34 @@ public class GUI_PlayerActionSelect : GUICustomFullScreen, IActionSelector {
 
     public void OpenDice()
     {
-        UIManager.Instance.OpenGUI<GUI_Dice>("Dice").SetPlayer(_cc.DicePoint);
+        if(_dicePopUp == null) {
+            _dicePopUp =
+                UIManager.Instance.OpenGUI<GUI_Dice>("Dice");
+        }
+        else {
+            _dicePopUp.ReOpen();
+        }
+
+        _dicePopUp.SetPlayer(_cc.DicePoint);
+        _dicePopUp.AddCloseMethod(() => {
+            _cc.ActionEnd(0);
+            _cc.IsRollDice = true;
+        });
+
         _AfterAction();
     }
 
     public void OpenInteraction()
     {
-        UIManager.Instance.OpenGUI<GUIInteraction>("Interaction").Set(_cc);
+        UIManager.Instance.OpenGUI<GUIInteraction>
+            ("Interaction").Set(_cc);
         _AfterAction();
 
     }
 
     public void OpenInventory() {
-        UIManager.Instance.OpenGUI<GUIInventory>("Inventory").Set(_cc);
+        UIManager.Instance.OpenGUI<GUIInventory>
+            ("Inventory").Set(_cc);
         _AfterAction();
     }
 
@@ -128,7 +153,10 @@ public class GUI_PlayerActionSelect : GUICustomFullScreen, IActionSelector {
         _cc.TurnEnd();
         _cc = null;
 
-        if (_todoList.Count < 1) return;
+        if (_todoList.Count < 1) {
+            ItemManager.Instance.ShopItemInitial(5);
+            return;
+        }
 
         SetCharacterController(_todoList.ToList()[0].Key);
         ViewSet(_todoList[_cc]);

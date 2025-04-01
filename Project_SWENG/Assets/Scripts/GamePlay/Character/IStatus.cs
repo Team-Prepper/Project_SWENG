@@ -19,6 +19,7 @@ public interface IStatus : IObservable<IStatus> {
     public void AddAtk(int amount);
     public void AddDfs(int amount);
 
+    public void Heal(int amount);
     public void TakeDamage(int amount);
 
 }

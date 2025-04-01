@@ -7,6 +7,8 @@ public class ItemManager : Singleton<ItemManager>
     private IDictionary<string, ItemData> _dict;
     private IDictionary<Item.ItemTier, Color> _tierColorDict;
 
+    public IList<string> ShopItems { get; private set; }
+
     protected override void OnCreate()
     {
         base.OnCreate();
@@ -28,6 +30,12 @@ public class ItemManager : Singleton<ItemManager>
             {  Item.ItemTier.Legendary, new Color(0.8971235f, 0.8946123f, 0.21643756f, 1f) },
             {  Item.ItemTier.Mythic,    new Color(0.9912354f, 0.3451256f, 0.61234353f, 1f) }
         };
+        
+        ShopItemInitial(5);
+    }
+
+    public void ShopItemInitial(int cnt) {
+        ShopItems = GetRandomItemList(cnt);
     }
 
     public Color GetTierColor(Item.ItemTier tier) {
@@ -38,9 +46,16 @@ public class ItemManager : Singleton<ItemManager>
         return _dict[itemCode];
     }
 
-    public IList<string> GetRandomItemList(int itemCounts)
+    public IList<string> GetRandomItemList(int count)
     {
-        return GetRandomSelection(_dict.Keys, itemCounts);
+        List<string> retval = new List<string>();
+
+        int itemCount = _dict.Keys.Count;
+        for (int i = 0; i * itemCount < count - itemCount; i++) {
+            retval.AddRange(GetRandomSelection(_dict.Keys, itemCount));
+        }
+        retval.AddRange(GetRandomSelection(_dict.Keys, count - retval.Count));
+        return retval;
     }
 
     private IList<T> GetRandomSelection<T>(ICollection<T> originalList, int count)

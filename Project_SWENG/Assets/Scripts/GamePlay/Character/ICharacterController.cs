@@ -6,6 +6,7 @@ public interface ICharacterController : IDamagable, IEntity {
     public int TeamIdx { get; }
     public Character Character { get; }
     public IDicePoint DicePoint { get; }
+    public bool IsRollDice { get; set; }
     public IStatus Status { get; }
     public Inventory Inventory { get; }
 
@@ -23,5 +24,4 @@ public interface ICharacterController : IDamagable, IEntity {
     public void Move(Queue<Vector3> path);
     public void Interaction(HexCoordinate targetPos);
 
-    public void EquipItem(string targetItem);
 }

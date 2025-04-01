@@ -6,12 +6,12 @@ public class GUIUnitItemInfor : GUIUnitItemInforIcon
     [SerializeField] private EHText _itemName;
     [SerializeField] private EHText _itemDesc;
     
-    public override void SetItemInfor(string itemCode) {
+    protected override void Set(ItemData data) {
 
-        base.SetItemInfor(itemCode);
+        base.Set(data);
 
-        ItemData data = ItemManager.Instance.GetItemData(itemCode);
-        _itemName.text = data.ItemName;
-        _itemDesc.text = data.ItemDesc;
+        _itemName.SetText(data.ItemName);
+        _itemDesc.SetText(data.ItemDesc);
+
     }
 }

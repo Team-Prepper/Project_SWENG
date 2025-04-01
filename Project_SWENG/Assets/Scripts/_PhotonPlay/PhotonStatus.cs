@@ -91,6 +91,13 @@ public class PhotonStatus : MonoBehaviourPun, IStatus, IPunObservable
     {
         _addedDfs += amount;
     }
+    
+    public void Heal(int amount) {
+
+        HP.AddValue(amount);
+        _view.RPC("SetHP", RpcTarget.All, HP.Value, HP.MaxValue);
+
+    }
 
     public void TakeDamage(int amount)
     {

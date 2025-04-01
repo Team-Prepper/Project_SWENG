@@ -26,7 +26,7 @@ public class GUIInventory : GUIPopUp, IObserver<Inventory> {
 
     public void OnNext(Inventory value)
     {
-        _idx = Mathf.Min(_idx, _cc.Inventory.ItemList.Count);
+        _idx = Mathf.Min(_idx, _cc.Inventory.ItemList.Count - 1);
 
         for (int i = 0; i < _units.Length; i++) {
             _units[i].SetItemInfor(_cc.Inventory.ItemList, i, Select);
@@ -58,14 +58,16 @@ public class GUIInventory : GUIPopUp, IObserver<Inventory> {
 
     public void Use() {
         if (_idx < 0) return;
-        _cc.Inventory.UseItem(_idx);
+        int idx = _idx;
         _idx = -1;
+        _cc.Inventory.UseItem(idx);
     }
 
     public void Discard() {
         if (_idx < 0) return;
-        _cc.Inventory.RemoveItem(_idx);
+        int idx = _idx;
         _idx = -1;
+        _cc.Inventory.RemoveItem(idx);
 
     }
 

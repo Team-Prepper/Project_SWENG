@@ -1,7 +1,6 @@
 using UnityEngine;
 using System.Collections;
 using EHTool.UIKit;
-using static UnityEngine.EventSystems.EventTrigger;
 
 [SelectionBase]
 public class MapUnit : MonoBehaviour {

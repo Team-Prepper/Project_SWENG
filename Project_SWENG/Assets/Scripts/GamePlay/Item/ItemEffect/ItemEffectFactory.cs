@@ -4,7 +4,9 @@ public class ItemEffectFactory {
         
         switch(split[0]) {
             case "Heal":
-                return new HealEffect(split[1]);
+                return new HealItemEffect(split[1]);
+            case "Dice":
+                return new DiceItemEffect(split[1]);
         }
         return null;
     }

@@ -13,23 +13,32 @@ public class Character : MonoBehaviour {
     private CharacterMove _moveComp;
     private CharacterAttack _attackComp;
 
+    private Action _removeAction;
 
     public void Die()
     {
         Invoke(nameof(DieEvent), _dieTime);
     }
 
+    public void AddRemoveAction(Action action) {
+        _removeAction += action;
+    }
+
     private void DieEvent() {
-        Destroy(gameObject);
 
         GameObject item = GameManager.Instance.GameMaster.InstantiateItem(transform.position);
         item.GetComponent<IItemController>().SetInitial("Item_Heal");
+        
+        _removeAction?.Invoke();
 
     }
 
     public void SetCC(ICharacterController cc)
     {
         _cc = cc;
+
+        transform.SetParent(_cc.transform);
+        transform.localPosition = Vector3.zero;
 
         _moveComp = gameObject.GetComponent<CharacterMove>();
         _attackComp = gameObject.GetComponent<CharacterAttack>();
@@ -43,6 +52,10 @@ public class Character : MonoBehaviour {
         _attackComp.SetCC(_cc);
 
         _cc.Status.Subscribe(_hpUI);
+    }
+
+    public void SetHPViewActive(bool visible) {
+        _hpUI.gameObject.SetActive(visible);
     }
 
     public void Move(Queue<Vector3> path,

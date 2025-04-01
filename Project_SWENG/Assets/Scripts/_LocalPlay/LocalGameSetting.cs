@@ -13,7 +13,7 @@ public class LocalGameSetting : IGameSetting {
     public string Name => "TMP";
 
     public int MaxPlayerCnt => 3;
-    public int EnemyCnt { get; set; } = 3;
+    public int EnemyCnt { get; set; } = 1;
     public int PhaseCnt { get; set; } = 1;
 
     public string MapName { get; set; } = "Local";

@@ -1,18 +1,49 @@
 using UnityEngine;
+using UnityEngine.UI;
 using EHTool.LangKit;
 
-public class GUIUnitCharacterInfor : GUIUnitCharacterInforIcon {
+public class GUIUnitCharacterInfor : GUIUnitCharacterInforName {
     
-    [SerializeField] private EHText _name;
     [SerializeField] private EHText _desc;
 
-    public override void Set(string characterCode) {
+    [SerializeField] private Text _hp;
+    [SerializeField] private Text _atk;
+    [SerializeField] private Text _dfs;
+    [SerializeField] private Text _levelTxt;
 
-        base.Set(characterCode);
+    private CharacterData _target;
+    private int _level;
 
-        CharacterData data = CharacterManager.Instance.GetCharacterData(characterCode);
+    protected override void Set(CharacterData data) {
 
-        _name.SetText(data.CharacterName);
+        base.Set(data);
+
+        _target = data;
+
+        _desc.SetText(data.CharacterDesc);
+
+        _level = 0;
+        StatusShow(_level);
+
+    }
+
+    public void LevelChanged(int amount) {
+
+        _level = Mathf.Clamp(_level + amount, 0,
+            _target.StatusElements.Length - 1);
+
+        StatusShow(_level);
+    }
+
+    private void StatusShow(int level) {
+
+        CharacterData.StatusElement element =
+            _target.StatusElements[level];
+
+        _levelTxt.text = (level + 1).ToString();
+        _hp.text = element.HP.ToString();
+        _atk.text = element.Atk.ToString();
+        _dfs.text = element.Dfs.ToString();
 
     }
 

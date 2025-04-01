@@ -4,7 +4,7 @@ using UnityEngine;
 public class GUIGameSettingUnit : MonoBehaviour
 {
 
-    [SerializeField] private GUIUnitCharacterInfor _characterInfor;
+    [SerializeField] private GUIUnitCharacterInforIcon _characterInfor;
 
     private string _characterCode;
 

@@ -10,7 +10,9 @@ public class PhotonGameMaster : MonoBehaviourPun, IGameMaster
     private Team[] _teams;
 
     private EnemySpawner _enemySpawner;
-    private int _phase;
+
+    private IGameMaster.Phase _phase;
+    private int _phaseCnt;
 
     public GameObject InstantiateCharacter(Vector3 position, Quaternion rotation)
     {
@@ -60,11 +62,12 @@ public class PhotonGameMaster : MonoBehaviourPun, IGameMaster
         if (_phase > 0) return;
 
         GameStart();
-        
+
     }
 
-    public void GameStart() {
-        _phase = 1;
+    public void GameStart()
+    {
+        _phase = IGameMaster.Phase.Play;
         _teams[0].StartTurn();
 
     }
@@ -75,23 +78,45 @@ public class PhotonGameMaster : MonoBehaviourPun, IGameMaster
 
         if (_teams[teamIdx].GetLeftMemberCount() > 0) return;
 
-        if (teamIdx != 0 && _phase == 1) {
-            _phase++;
+        if (teamIdx == 0)
+        {
+            _view.RPC("PunAllGameEnd", RpcTarget.All, false);
+            return;
+        }
+        if (_phase == IGameMaster.Phase.Play)
+        {
+            _phase = IGameMaster.Phase.Boss;
             _enemySpawner.SpawnBoss();
+
+            return;
+
+        }
+
+        _phaseCnt++;
+
+        Debug.LogFormat("{0}, {1}", _phaseCnt, GameManager.Instance.GameSetting.PhaseCnt);
+
+        if (_phaseCnt >= GameManager.Instance.GameSetting.PhaseCnt)
+        {
+            _view.RPC("PunAllGameEnd", RpcTarget.All, true);
             return;
         }
 
-        _view.RPC("PunAllGameEnd", RpcTarget.All, teamIdx != 0);
+        _phase = IGameMaster.Phase.Play;
+        _enemySpawner.SpawnEnemy();
+
     }
 
     [PunRPC]
-    private void PunAllGameEnd(bool victory) {
+    private void PunAllGameEnd(bool victory)
+    {
         GameEnd(victory);
     }
 
     public void GameEnd(bool victory)
     {
-        if (victory) {
+        if (victory)
+        {
             UIManager.Instance.OpenGUI<GUIFullScreen>("GameWin");
             return;
         }

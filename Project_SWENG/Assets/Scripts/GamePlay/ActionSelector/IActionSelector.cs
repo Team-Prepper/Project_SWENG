@@ -4,7 +4,7 @@ public interface IActionSelector
 {
     public enum Action {
         Dice, Move, Attack, TurnEnd,
-        Interaction, Inventory
+        Interaction
     }
 
     public void Ready(ICharacterController cc, IList<Action> actionList);

@@ -5,6 +5,7 @@ public interface IGameMaster
     public enum Phase {
         Ready,
         Play,
+        Boss,
         End
     }
 

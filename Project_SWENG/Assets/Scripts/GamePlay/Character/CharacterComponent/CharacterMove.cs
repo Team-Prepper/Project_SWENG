@@ -5,7 +5,7 @@ using System;
 
 public class CharacterMove : MonoBehaviour, ICharacterComponent {
 
-    ICharacterController _cc;
+    private ICharacterController _cc;
 
     [SerializeField] private float _movementDuration = 0.5f;
     [SerializeField] private float _moveRotationDuration = 0.4f;

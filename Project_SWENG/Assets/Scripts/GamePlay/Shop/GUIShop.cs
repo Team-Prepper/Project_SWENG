@@ -1,13 +1,12 @@
-using TMPro;
 using UnityEngine;
 using EHTool.UIKit;
 using System.Collections.Generic;
 using UnityEngine.UI;
 
 public class GUIShop : GUIPopUp
-{
-    [SerializeField] int _itemCounts;
-    [SerializeField] Text _price;
+{   
+    [SerializeField] private string _errorCode = "돈이 부족합니다.";
+    [SerializeField] private Text _price;
     [SerializeField] private GUIUnitInventoryUnit[] _units;
     [SerializeField] private IGUIUnitItemInfor _selectedItemInfor;
 
@@ -19,12 +18,16 @@ public class GUIShop : GUIPopUp
     public override void Open()
     {
         base.Open();
+
+        _itemList = ItemManager.Instance.ShopItems;
+
         DisplayItem();
     }
 
     public bool BuyItemToShop(string targetItemCode)
     {
-        ItemData targetItem = ItemManager.Instance.GetItemData(targetItemCode);
+        ItemData targetItem =
+            ItemManager.Instance.GetItemData(targetItemCode);
 
         if (_cc.DicePoint.GetPoint() >= targetItem.Cost)
         {
@@ -32,8 +35,11 @@ public class GUIShop : GUIPopUp
             _cc.Inventory.AddItem(targetItemCode);
 
             _itemList.Remove(targetItemCode);
+            DisplayItem();
             return true;
         }
+
+        UIManager.Instance.DisplayMessage(_errorCode);
 
         return false;
     }
@@ -45,8 +51,6 @@ public class GUIShop : GUIPopUp
 
     private void DisplayItem()
     {
-        _itemList = ItemManager.Instance.GetRandomItemList(_itemCounts);
-
         for (int i = 0; i < _units.Length; i++) {
             _units[i].SetItemInfor(_itemList, i, Select);
         }

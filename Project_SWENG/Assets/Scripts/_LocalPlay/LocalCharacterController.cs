@@ -1,7 +1,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LocalCharacterController : MonoBehaviour, ICharacterController {
+public class LocalCharacterController :
+    MonoBehaviour, ICharacterController
+{
+
+    [SerializeField] private LocalStatus _status;
+    [SerializeField] private Inventory _inventory;
 
     public int TeamIdx { get; private set; }
 
@@ -9,100 +14,97 @@ public class LocalCharacterController : MonoBehaviour, ICharacterController {
         HexCoordinate.ConvertFromVector3(transform.position);
 
     public Character Character { get; private set; }
-
-    [SerializeField] private LocalStatus _status;
     public IStatus Status => _status;
+    public Inventory Inventory => _inventory;
+    public IDicePoint DicePoint { get; private set; }
+    public bool IsRollDice { get; set; }
 
     private IActionSelector _actionSelector;
-    
-    private DicePoint _dicePoint = new DicePoint();
-    public IDicePoint DicePoint => _dicePoint;
-    
-    [SerializeField] private Inventory _inventory;
-    public Inventory Inventory => _inventory;
 
-    private bool _inventoryOpened;
-
-    // Start is called before the first frame update
     public void Initial(string characterName, int teamIdx, bool camSync)
     {
+        HexGrid.Instance.GetMapUnitAt(transform.position)
+            .SetCC(gameObject, this);
 
         Character = Instantiate(CharacterManager.Instance.
             GetCharacterData(characterName).CharacterPrefab);
+
         Character.SetCC(this);
-        Character.transform.SetParent(transform);
-        Character.transform.localPosition = Vector3.zero;
+        Character.AddRemoveAction(() =>
+        {
+            GameManager.Instance.GameMaster.
+                RemoveTeamMember(this, TeamIdx);
+
+            Destroy(gameObject);
+        });
 
         Status.SetCC(this);
         Status.CharacterCode = characterName;
-        
+
         Inventory.SetCC(this);
-        
-        _dicePoint.SetCC(this);
+
+        DicePoint = new DicePoint();
 
         TeamIdx = teamIdx;
+
         GameManager.Instance.GameMaster.AddTeamMember(this, teamIdx);
 
-        MapUnit mapUnit = HexGrid.Instance.GetMapUnitAt(transform.position);
-
-        mapUnit.SetCC(gameObject, this);
     }
 
-    public void Remove() {
-
-        HexGrid.Instance.GetMapUnitAt(gameObject.transform.position).ResetEntityState();
+    public void Remove()
+    {
+        HexGrid.Instance.GetMapUnitAt(HexPos).ResetEntityState();
 
         Character.Die();
-
-        GameManager.Instance.GameMaster.RemoveTeamMember(this, TeamIdx);
-
     }
 
-    public void CamSetting(string key) {
+    public void CamSetting(string key)
+    {
         CameraManager.Instance.CameraSetting(transform, key);
     }
 
-    public void PlayAnim(string triggerType, string triggerValue) {
-        Character.PlayAnim(triggerType, triggerValue);
-    }
+    public void PlayAnim(string triggerType, string triggerValue)
+    { Character.PlayAnim(triggerType, triggerValue); }
 
     public void TakeDamage(int amount)
+    { Status.TakeDamage(amount); }
+
+    public void SetPlay()
     {
-        Status.TakeDamage(amount);
+        if (_actionSelector == null) return;
 
-    }
-
-    public void SetPlay() {
-        _dicePoint.Reset();
-        _inventoryOpened = false;
+        IsRollDice = false;
         ActionEnd();
     }
 
-    public void SetActionSelector(IActionSelector actionSelector) {
+    public void SetActionSelector(IActionSelector actionSelector)
+    {
         _actionSelector = actionSelector;
     }
 
-    public void ActionEnd(float time = 0) {
+    public void ActionEnd(float time = 0)
+    {
+        if (_actionSelector == null)
+        {
+            return;
+        }
+
         Invoke(nameof(_ActionEnd), time);
     }
 
     public void _ActionEnd()
     {
-        if (_actionSelector == null) {
-            return;
-        }
+        IList<IActionSelector.Action> list
+            = Character.GetActionList();
 
-        IList<IActionSelector.Action> list = Character.GetActionList();
-
-        if (!_inventoryOpened)
-            list.Add(IActionSelector.Action.Inventory);
-        if (_dicePoint.IsRollDice == false)
+        if (IsRollDice == false)
             list.Add(IActionSelector.Action.Dice);
 
         _actionSelector.Ready(this, list);
     }
 
-    public void TurnEnd() {
+    public void TurnEnd()
+    {
         GameManager.Instance.GameMaster.TurnEnd(this);
     }
 
@@ -113,19 +115,9 @@ public class LocalCharacterController : MonoBehaviour, ICharacterController {
     }
 
     public void Move(Queue<Vector3> path)
-    {
-        Character.Move(path, MoveTo);
-    }
+    { Character.Move(path, MoveTo); }
 
     public void Interaction(HexCoordinate targetPos)
-    {
-        Character.Interaction(targetPos);
-    }
-
-    public void EquipItem(string data)
-    {
-        Character.EquipItem(data);
-
-    }
+    { Character.Interaction(targetPos); }
 
 }
