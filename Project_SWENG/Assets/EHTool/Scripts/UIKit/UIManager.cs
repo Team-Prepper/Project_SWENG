@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Xml;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -62,6 +63,7 @@ namespace EHTool.UIKit {
             ///new XMLDictionaryReader<string, string>();
 
             _dic = connector.ReadData("GUIInfor");
+
             SceneManager.sceneLoaded += OnSceneLoaded;
         }
 

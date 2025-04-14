@@ -14,7 +14,7 @@ namespace EHTool.UIKit {
 
         public override void Close()
         {
-            
+
         }
 
         public void CloseMessageBox()
