@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿#nullable disable
+
+using UnityEngine;
 
 
 namespace TMPro.Examples

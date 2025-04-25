@@ -1,3 +1,5 @@
+#nullable disable
+
 #if UNITY_WEBGL || WEBSOCKET || WEBSOCKET_PROXYCONFIG
 
 // --------------------------------------------------------------------------------------------------------------------
@@ -168,7 +170,7 @@ namespace ExitGames.Client.Photon
         {
             proxyUrl = null;
 
-            #if !WEBSOCKET_PROXYCONFIG
+#if !WEBSOCKET_PROXYCONFIG
 
             if (!string.IsNullOrEmpty(proxyAddress))
             {
@@ -182,7 +184,7 @@ namespace ExitGames.Client.Photon
 
             return true;
 
-            #else
+#else
 
             if (!string.IsNullOrEmpty(proxyAddress))
             {
@@ -251,7 +253,7 @@ namespace ExitGames.Client.Photon
             }
 
             return true;
-            #endif
+#endif
         }
 
 

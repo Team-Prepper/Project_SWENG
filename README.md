@@ -1,3 +1,22 @@
-# Project_SWENG
+# The Sixth Legend(Project_SWENG)
 
-PlayLink : https://sodaxi.itch.io/tile-adventure
+## 개요
+육각 필드 위에서 진행되는 턴제 TRPG 게임입니다.
+
+[🎮 itch-io에서 플레이](https://sodaxi.itch.io/tile-adventure)
+
+## 계획
+- [ ] 기본 플레이 구현
+    - [ ] 적, 플레이어 공통 기능 구현
+        - [x] 턴 종료
+        - [ ] 타일 위에서의 이동
+    - [ ] 플레이어 행동
+        - [ ] 공격 버튼을 눌러 주변을 공격
+            - [ ] 특정 범위를 공격
+            - [ ] 특정 위치를 공격
+        - [ ] Bag 버튼을 눌러 아이템 확인 및 사용
+        - [ ] Find 버튼을 눌러 해당 위치에서 수색
+            - [ ] 해당 위치에 아이템이 있을 경우 아이템 획득
+            - [ ] 아무것도 없는 위치의 경우 일정 확률로 아이템 확득
+    - [ ] 적 기능 구현
+- [ ] 멀티 플레이 구현

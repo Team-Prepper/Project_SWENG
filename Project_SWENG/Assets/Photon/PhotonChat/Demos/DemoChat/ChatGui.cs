@@ -4,6 +4,8 @@
 // <author>developer@exitgames.com</author>
 // --------------------------------------------------------------------------------------------------------------------
 
+#nullable disable
+
 using System;
 using System.Collections.Generic;
 

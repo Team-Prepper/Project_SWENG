@@ -16,5 +16,5 @@ public class EnemyStatus : ScriptableObject
 
     public bool isBoss = false;
     public Sprite UIImage; 
-    public List<Item> dropItem;
+    public List<ItemData> dropItem;
 }

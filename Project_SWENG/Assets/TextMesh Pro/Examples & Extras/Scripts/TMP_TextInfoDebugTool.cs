@@ -1,4 +1,6 @@
-﻿using System;
+﻿#nullable disable
+
+using System;
 using UnityEngine;
 using System.Collections;
 using UnityEditor;

@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿#nullable disable
+
+using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 using TMPro;

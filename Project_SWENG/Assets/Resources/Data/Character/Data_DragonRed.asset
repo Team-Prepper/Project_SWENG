@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84eb774793ec04f4b93001a6fbf059c4, type: 3}
+  m_Name: Data_DragonRed
+  m_EditorClassIdentifier: 
+  CharacterName: Label_Character_DragonRed
+  CharacterDesc: Label_Character_DragonRed_Desc
+  DefaultSkill: {fileID: 11400000, guid: 3a326c1ce5429ba4dac5769a9806e645, type: 2}
+  Image: {fileID: 21300000, guid: a9d88692366bdae4ca6a2224f85843b3, type: 3}
+  CharacterPrefab: {fileID: 636017249493980821, guid: 3154814d0fc7f0249a41fcf05c1bcb54,
+    type: 3}
+  StatusElements:
+  - HP: 30
+    Atk: 10
+    Dfs: 5
+  - HP: 50
+    Atk: 16
+    Dfs: 8
+  - HP: 60
+    Atk: 20
+    Dfs: 10
+  IsHumanType: 0
