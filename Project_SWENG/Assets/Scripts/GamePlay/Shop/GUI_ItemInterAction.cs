@@ -6,21 +6,14 @@ using System;
 
 public class GUI_ItemInterAction : GUIPopUp
 {
-    [SerializeField] private Image _itemIcon;
-    [SerializeField] private Text _itemNameLabel;
-    [SerializeField] private Text _itemInforLabel;
+    [SerializeField] private GUIUnitItemInforIcon _infor;
 
     private Action _interactionEvent;
     private Action _closeEvent;
 
     public void SetItem(string item) {
-
-        ItemData itemData = ItemManager.Instance.GetItemData(item);
-
-        _itemIcon.sprite = itemData.Icon;
-
-        _itemNameLabel.text = LangManager.Instance.GetStringByKey(itemData.ItemName);
-        _itemInforLabel.text = LangManager.Instance.GetStringByKey(itemData.ItemDesc);
+        
+        _infor.SetItemInfor(item);
 
     }
 
