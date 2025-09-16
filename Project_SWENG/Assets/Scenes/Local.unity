@@ -2061,6 +2061,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1011261879}
   - component: {fileID: 1011261882}
+  - component: {fileID: 1011261883}
   - component: {fileID: 1011261881}
   m_Layer: 0
   m_Name: Spawner
@@ -2096,10 +2097,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d920894e11d03584799fb379b4d774f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _stageBossEnemyPrefab: {fileID: 4183390767300949228, guid: e9e354758dd1673429bd477eaf46b7e4,
-    type: 3}
-  bossCam: {fileID: 0}
-  enemyCnt: 1
 --- !u!114 &1011261882
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2112,10 +2109,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3df40055bfdd5b4a88bce66c69a20bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerActionSelectUIKey: PlayerActionSelect
+  _asSpawner: {fileID: 1011261883}
   EventPlayerSpawn:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1011261883
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1011261878}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43d506ff81c5f7146b30cf2a0e542429, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playerActionSelectUIKey: PlayerActionSelect
 --- !u!1 &1058636719
 GameObject:
   m_ObjectHideFlags: 0
@@ -2407,7 +2417,7 @@ PrefabInstance:
     - target: {fileID: 3820841313985493197, guid: 8b2f81f6f33d95649ab14a617ff3949b,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3820841313985493197, guid: 8b2f81f6f33d95649ab14a617ff3949b,
         type: 3}

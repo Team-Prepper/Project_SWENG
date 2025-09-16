@@ -1,145 +1,149 @@
 using System.Collections;
 using UnityEngine;
-using EHTool;
+using EasyH;
 
-public class CameraManager : MonoSingleton<CameraManager>
+namespace CameraSystem
 {
-    [SerializeField] private CameraGroup[] _groups;
-    int _nowGroupIdx;
-
-    [SerializeField] private Transform _target;
-
-    public bool IsWide { get; private set; }
-
-    public void SetCamTarget(Transform target)
+    public class CameraManager : MonoSingleton<CameraManager>
     {
-        if (target == _target) return;
-        _target = target;
+        [SerializeField] private CameraGroup[] _groups;
+        int _nowGroupIdx;
 
-        int nextGroupIdx = (1 + _nowGroupIdx) % _groups.Length;
-        _groups[nextGroupIdx].SetCamTarget(target);
-        _groups[_nowGroupIdx].OffTheGroup();
+        [SerializeField] private Transform _target;
 
-        _nowGroupIdx = nextGroupIdx;
-        ConvertToCharacterCam();
-        StartCoroutine(ResetMode());
-        
-    }
+        public bool IsWide { get; private set; }
 
-    IEnumerator ResetMode()
-    {
-        yield return new WaitForSeconds(1f);
-    }
-
-    private Vector3 MoveCamWithMouse()
-    {
-        Vector3 mouseCamMove = new Vector3();
-        Vector3 worldPos = Camera.main.ScreenToViewportPoint(PlayerInputManager.Instance.mousePos);
-        if (worldPos.x < 0.01f)
+        public void SetCamTarget(Transform target)
         {
-            if(PlayerOutOfRange() % 2 != 0)
-                mouseCamMove.x = -1;
+            if (target == _target) return;
+            _target = target;
+
+            int nextGroupIdx = (1 + _nowGroupIdx) % _groups.Length;
+            _groups[nextGroupIdx].SetCamTarget(target);
+            _groups[_nowGroupIdx].OffTheGroup();
+
+            _nowGroupIdx = nextGroupIdx;
+            ConvertToCharacterCam();
+            StartCoroutine(ResetMode());
+
         }
-        if (worldPos.x > 0.99f)
+
+        IEnumerator ResetMode()
         {
-            if (PlayerOutOfRange() % 3 != 0)
-                mouseCamMove.x = 1; 
+            yield return new WaitForSeconds(1f);
         }
-        if (worldPos.y < 0.01f)
+
+        private Vector3 MoveCamWithMouse()
         {
-            if (PlayerOutOfRange() % 7 != 0)
-                mouseCamMove.z = -1;
-        }
-        if (worldPos.y > 0.99f)
-        {
-            if (PlayerOutOfRange() % 5 != 0)
-                mouseCamMove.z = 1;
-        }
-        return mouseCamMove;
-    }
-
-    private int PlayerOutOfRange()
-    {
-        int outValue = 1;
-        float px = _target.transform.position.x;
-        float pz = _target.transform.position.z;
-        //float tx = characterCam.gameObject.transform.position.x;
-        //float tz = characterCam.gameObject.transform.position.z;
-
-        float xOffset = px;
-        float zOffset = pz;
-
-        if (xOffset > 12)
-            outValue *= 2;
-        if (xOffset < -12)
-            outValue *= 3;
-
-        if (zOffset > 17)
-            outValue *= 7;
-        if (zOffset < -1)
-            outValue *= 5;
-
-        return outValue;
-    }// Camera script
-
-    void LateUpdate()
-    {
-        if (_target == null) return;
-
-        // Player�� �̱����̱⿡ ���������� ������ �� �ֽ��ϴ�.
-        Vector3 direction = (_target.position - transform.position).normalized;
-
-        RaycastHit[] hits = Physics.RaycastAll(transform.position, direction, Mathf.Infinity,
-                            1 << LayerMask.NameToLayer("EnvironmentObject"));
-
-        for (int i = 0; i < hits.Length; i++)
-        {
-            TransparentObject[] obj = hits[i].transform.GetComponentsInChildren<TransparentObject>();
-
-            for (int j = 0; j < obj.Length; j++)
+            Vector3 mouseCamMove = new Vector3();
+            Vector3 worldPos = Camera.main.ScreenToViewportPoint(PlayerInputManager.Instance.mousePos);
+            if (worldPos.x < 0.01f)
             {
-                obj[j]?.BecomeTransparent();
+                if (PlayerOutOfRange() % 2 != 0)
+                    mouseCamMove.x = -1;
+            }
+            if (worldPos.x > 0.99f)
+            {
+                if (PlayerOutOfRange() % 3 != 0)
+                    mouseCamMove.x = 1;
+            }
+            if (worldPos.y < 0.01f)
+            {
+                if (PlayerOutOfRange() % 7 != 0)
+                    mouseCamMove.z = -1;
+            }
+            if (worldPos.y > 0.99f)
+            {
+                if (PlayerOutOfRange() % 5 != 0)
+                    mouseCamMove.z = 1;
+            }
+            return mouseCamMove;
+        }
+
+        private int PlayerOutOfRange()
+        {
+            int outValue = 1;
+            float px = _target.transform.position.x;
+            float pz = _target.transform.position.z;
+            //float tx = characterCam.gameObject.transform.position.x;
+            //float tz = characterCam.gameObject.transform.position.z;
+
+            float xOffset = px;
+            float zOffset = pz;
+
+            if (xOffset > 12)
+                outValue *= 2;
+            if (xOffset < -12)
+                outValue *= 3;
+
+            if (zOffset > 17)
+                outValue *= 7;
+            if (zOffset < -1)
+                outValue *= 5;
+
+            return outValue;
+        }// Camera script
+
+        void LateUpdate()
+        {
+            if (_target == null) return;
+            
+            Vector3 direction = (_target.position - transform.position).normalized;
+
+            RaycastHit[] hits = Physics.RaycastAll(transform.position, direction, Mathf.Infinity,
+                                1 << LayerMask.NameToLayer("EnvironmentObject"));
+
+            for (int i = 0; i < hits.Length; i++)
+            {
+                TransparentObject[] obj = hits[i].transform.GetComponentsInChildren<TransparentObject>();
+
+                for (int j = 0; j < obj.Length; j++)
+                {
+                    obj[j]?.BecomeTransparent();
+                }
             }
         }
-    }
 
-    public void CameraSetting(Transform target, string key)
-    {
-        SetCamTarget(target);
-
-        switch (key)
+        public void CameraSetting(Transform target, string key)
         {
-            case "Character":
-                ConvertToCharacterCam();
-                break;
-            case "Battle":
-                ConvertToBattleCam();
-                break;
-            case "Wide":
-                ConvertToWideCam();
-                break;
-            default:
-                ConvertToCharacterCam();
-                break;
+            SetCamTarget(target);
+
+            switch (key)
+            {
+                case "Character":
+                    ConvertToCharacterCam();
+                    break;
+                case "Battle":
+                    ConvertToBattleCam();
+                    break;
+                case "Wide":
+                    ConvertToWideCam();
+                    break;
+                default:
+                    ConvertToCharacterCam();
+                    break;
+            }
+
+        }
+
+        public void ConvertToCharacterCam()
+        {
+            IsWide = false;
+            _groups[_nowGroupIdx].ConvertToCharacterCam();
+        }
+
+        public void ConvertToBattleCam()
+        {
+            IsWide = false;
+            _groups[_nowGroupIdx].ConvertToBattleCam();
+        }
+
+        public void ConvertToWideCam()
+        {
+            IsWide = true;
+            _groups[_nowGroupIdx].ConvertToWideCam();
         }
 
     }
 
-    public void ConvertToCharacterCam()
-    {
-        IsWide = false;
-        _groups[_nowGroupIdx].ConvertToCharacterCam();
-    }
-
-    public void ConvertToBattleCam()
-    {
-        IsWide = false;
-        _groups[_nowGroupIdx].ConvertToBattleCam();
-    }
-
-    public void ConvertToWideCam()
-    {
-        IsWide = true;
-        _groups[_nowGroupIdx].ConvertToWideCam();
-    }
 }
