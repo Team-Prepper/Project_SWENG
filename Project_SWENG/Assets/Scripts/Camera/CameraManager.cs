@@ -1,6 +1,6 @@
 using System.Collections;
 using UnityEngine;
-using EasyH;
+using EasyH.Unity;
 
 namespace CameraSystem
 {

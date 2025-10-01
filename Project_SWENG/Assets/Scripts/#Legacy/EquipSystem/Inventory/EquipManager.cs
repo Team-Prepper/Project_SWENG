@@ -1,7 +1,7 @@
 using Photon.Pun;
 using System.Collections.Generic;
 using UnityEngine;
-using SWEng.Data;
+using SWEng;
 
 public class EquipManager : MonoBehaviour
 {

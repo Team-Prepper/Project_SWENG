@@ -1,12 +1,16 @@
 using UnityEngine;
 
-namespace EasyH {
+namespace EasyH
+{
 
     [ExecuteInEditMode]
-    public class Singleton<T> where T : Singleton<T>, new() {
+    public class Singleton<T> where T : Singleton<T>, new()
+    {
         static T _instance;
-        public static T Instance {
-            get {
+        public static T Instance
+        {
+            get
+            {
                 if (_instance == null)
                 {
                     _instance = new T();
@@ -16,9 +20,11 @@ namespace EasyH {
                 return _instance;
             }
         }
+
         protected virtual void OnCreate()
         {
 
         }
+
     }
 }

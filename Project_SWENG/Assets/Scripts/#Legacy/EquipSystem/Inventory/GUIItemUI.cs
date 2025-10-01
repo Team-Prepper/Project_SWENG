@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using SWEng.Data;
+using SWEng;
 
 public class GUIItemUI : MonoBehaviour
 {

@@ -175,7 +175,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4955868814101785369}
   - component: {fileID: 2882325845685972859}
-  - component: {fileID: 3707150461990273204}
+  - component: {fileID: 2196212055050349779}
   m_Layer: 5
   m_Name: etxt_Placeholder
   m_TagString: Untagged
@@ -210,7 +210,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1381572228958960445}
   m_CullTransparentMesh: 1
---- !u!114 &3707150461990273204
+--- !u!114 &2196212055050349779
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -219,7 +219,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1381572228958960445}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 12570bef5492f6f4fba58d2c05099188, type: 3}
+  m_Script: {fileID: 11500000, guid: 58cc8152140ff5f4c9e403aed8633941, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -232,19 +232,19 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 7caf6488107e0594fb52394d655a392b, type: 3}
-    m_FontSize: 64
+    m_FontSize: 72
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 6
-    m_MaxSize: 64
+    m_MinSize: 7
+    m_MaxSize: 72
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Enter Your Name
-  _key: Enter Your Name
+  m_Text: Name
+  _key: Name
 --- !u!1 &1532434515530336566
 GameObject:
   m_ObjectHideFlags: 0
@@ -394,7 +394,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8656299293565121034}
   - component: {fileID: 219833325322577567}
-  - component: {fileID: 2166236204115849724}
+  - component: {fileID: 4956997086648811740}
   m_Layer: 5
   m_Name: etxt_Button_Name
   m_TagString: Untagged
@@ -429,7 +429,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3545334864765339117}
   m_CullTransparentMesh: 1
---- !u!114 &2166236204115849724
+--- !u!114 &4956997086648811740
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -438,7 +438,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3545334864765339117}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 12570bef5492f6f4fba58d2c05099188, type: 3}
+  m_Script: {fileID: 11500000, guid: 58cc8152140ff5f4c9e403aed8633941, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -451,11 +451,11 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 7caf6488107e0594fb52394d655a392b, type: 3}
-    m_FontSize: 48
+    m_FontSize: 72
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 4
-    m_MaxSize: 64
+    m_MinSize: 7
+    m_MaxSize: 72
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
@@ -629,7 +629,7 @@ MonoBehaviour:
   m_Interactable: 1
   m_TargetGraphic: {fileID: 0}
   m_TextComponent: {fileID: 7330901396426844418}
-  m_Placeholder: {fileID: 3707150461990273204}
+  m_Placeholder: {fileID: 0}
   m_ContentType: 0
   m_InputType: 0
   m_AsteriskChar: 42
@@ -777,6 +777,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: box_PopUp_Container
+      objectReference: {fileID: 0}
+    - target: {fileID: 3682634721225672161, guid: f7a1dad4be2f3a3449b2922bc54f3e87,
+        type: 3}
+      propertyPath: _key
+      value: label_Connect
+      objectReference: {fileID: 0}
+    - target: {fileID: 3682634721225672161, guid: f7a1dad4be2f3a3449b2922bc54f3e87,
+        type: 3}
+      propertyPath: m_Text
+      value: "\uC5F0\uACB0"
       objectReference: {fileID: 0}
     - target: {fileID: 3823196290107933499, guid: f7a1dad4be2f3a3449b2922bc54f3e87,
         type: 3}

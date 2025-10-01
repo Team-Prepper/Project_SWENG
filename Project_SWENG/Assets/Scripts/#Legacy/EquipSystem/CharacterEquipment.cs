@@ -1,4 +1,4 @@
-using SWEng.GamePlay;
+using SWEng;
 
 public class CharacterEquipment
 {

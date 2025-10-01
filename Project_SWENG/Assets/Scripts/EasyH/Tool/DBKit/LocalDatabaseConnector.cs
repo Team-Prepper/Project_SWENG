@@ -2,86 +2,131 @@ using System.Collections.Generic;
 using System;
 using System.IO;
 using UnityEngine;
+using Newtonsoft.Json;
 
 namespace EasyH.Tool.DBKit {
-    // �׽�Ʈ �� Firestore�� �������� �ʾ��� �� ���Ǵ� DB ������
-    // Firestore�� �����ϴ��� ĳ�� DB�� ����� �� ������
-    public class LocalDatabaseConnector<T> : IDatabaseConnector<T> where T : IDictionaryable<T> {
+    
+    public class LocalDatabaseConnector<K, T> : IDatabaseConnector<K, T> where T : IDictionaryable<T>
+    {
 
-        DataTable _data;
+        private Dictionary<K, T> _data;
         private string _path;
 
-        ISet<Action<IList<T>>> _allCallback;
-        IDictionary<Action<T>, ISet<int>> _recordCallback;
+        private ISet<Action<IDictionary<K, T>>> _allCallback;
+        private IDictionary<Action<T>, ISet<K>> _recordCallback;
 
-        IDictionary<Action<T>, Action<string>> _recordFallback;
-
-        class DataTable {
-            public List<T> value;
-        }
+        private IDictionary<Action<T>, Action<string>> _recordFallback;
 
         public bool IsDatabaseExist()
         {
             return File.Exists(_path);
         }
 
-        private DataTable _GetDataTable()
+        private Dictionary<K, T> _GetDataTable()
         {
 
             if (_data == null)
             {
+                _data = new Dictionary<K, T>();
+
                 string json;
 
                 if (IsDatabaseExist())
                     json = File.ReadAllText(_path);
                 else
                 {
-                    json = "{\"value\":[]}";
+                    json = "{ }";
                 }
-                _data = JsonUtility.FromJson<DataTable>(json);
+
+                IDictionary<K, object> snapshot =
+                    JsonConvert.DeserializeObject<Dictionary<K, object>>(json);
+                    
+                foreach (var childSnapshot in snapshot)
+                {
+
+                    K key = (K)Convert.ChangeType(childSnapshot.Key, typeof(K));
+                    T value = Activator.CreateInstance<T>();
+
+                    if (childSnapshot.Value is IDictionary<string, object> childDataDictionary)
+                    {
+                        value.SetValueFromDictionary(childDataDictionary);
+                    }
+
+                    _data.Add(key, value);
+                }
             }
 
             return _data;
         }
 
-        public void Connect(string authName, string databaseName)
-        {
+        public void Connect(string[] args)
+        { 
+            
 #if UNITY_EDITOR
-            _path = string.Format("{0}/{1}/{2}.json", Application.dataPath, "/Resources", databaseName);
+            _path = string.Format("{0}/{1}/{2}.json", Application.dataPath, "/Resources", string.Join("/", args));
 #else
-            _path = string.Format("{0}/{1}.json", Application.persistentDataPath, databaseName);
+            _path = string.Format("{0}/{1}.json", Application.persistentDataPath, string.Join("/", args));
 #endif
             _data = null;
 
-            _allCallback = new HashSet<Action<IList<T>>>();
-            _recordCallback = new Dictionary<Action<T>, ISet<int>>();
+            _allCallback = new HashSet<Action<IDictionary<K, T>>>();
+            _recordCallback = new Dictionary<Action<T>, ISet<K>>();
             _recordFallback = new Dictionary<Action<T>, Action<string>>();
+        }
+
+        public void Connect(string authName, string databaseName)
+        {
+            Connect(new string[2] { databaseName, authName });
         }
 
         public void AddRecord(T record)
         {
-            DataTable table = _GetDataTable();
-            table.value.Add(record);
+            Dictionary<K, T> table = _GetDataTable();
+            table.Add(default, record);
 
-            string json = JsonUtility.ToJson(table, true);
+            string json = JsonConvert.SerializeObject(table);
 
             File.WriteAllText(_path, json);
         }
 
-        public void UpdateRecordAt(T record, int idx)
+        public void UpdateRecordAt(K idx, T record)
         {
-            DataTable table = _GetDataTable();
-            int removeStartIdx = Mathf.Min(table.value.Count, idx);
+            UpdateRecord(new IDatabaseConnector<K, T>.UpdateLog[1] { new(idx, record)});
+        }
+        
+        public void UpdateRecord(IDatabaseConnector<K, T>.UpdateLog[] updates)
+        {
+            Dictionary<K, T> table = _GetDataTable();
 
-            table.value.RemoveRange(removeStartIdx, table.value.Count - removeStartIdx);
-            table.value.Add(record);
+            foreach (var r in updates)
+            { 
+                
+                if (table.ContainsKey(r.Idx))
+                {
+                    table[r.Idx] = r.Record;
+                }
+                else
+                {
+                    table.Add(r.Idx, r.Record);
+                }
+            }
 
-            string json = JsonUtility.ToJson(table, true);
+            string json = JsonConvert.SerializeObject(table);
 
+            // Get the directory path from the full file path
+            string directoryPath = Path.GetDirectoryName(_path);
+
+            // Check if the directory exists and create it if it doesn't
+            if (!Directory.Exists(directoryPath))
+            {
+                Directory.CreateDirectory(directoryPath);
+            }
+            
             File.WriteAllText(_path, json);
+
         }
 
-        public void GetAllRecord(Action<IList<T>> callback, Action<string> fallback)
+        public void GetAllRecord(Action<IDictionary<K, T>> callback, Action<string> fallback)
         {
 
             if (_allCallback.Count > 0)
@@ -92,21 +137,21 @@ namespace EasyH.Tool.DBKit {
 
             _allCallback.Add(callback);
 
-            IList<T> data = _GetDataTable().value;
+            IDictionary<K, T> data = _GetDataTable();
 
-            foreach (Action<IList<T>> cb in _allCallback)
+            foreach (Action<IDictionary<K, T>> cb in _allCallback)
             {
                 cb(data);
             }
 
-            _allCallback = new HashSet<Action<IList<T>>>();
+            _allCallback = new HashSet<Action<IDictionary<K, T>>>();
         }
 
-        public void GetRecordAt(Action<T> callback, Action<string> fallback, int idx)
+        public void GetRecordAt(K idx, Action<T> callback, Action<string> fallback)
         {
             if (!_recordCallback.ContainsKey(callback))
             {
-                _recordCallback.Add(callback, new HashSet<int>());
+                _recordCallback.Add(callback, new HashSet<K>());
                 _recordFallback.Add(callback, fallback);
             }
 
@@ -116,13 +161,13 @@ namespace EasyH.Tool.DBKit {
             GetAllRecord(Callback, Fallback);
         }
 
-        public void Callback(IList<T> data)
+        public void Callback(IDictionary<K, T> data)
         {
-            foreach (KeyValuePair<Action<T>, ISet<int>> callback in _recordCallback)
+            foreach (KeyValuePair<Action<T>, ISet<K>> callback in _recordCallback)
             {
-                foreach (int idx in callback.Value)
+                foreach (K idx in callback.Value)
                 {
-                    if (data.Count > idx)
+                    if (data.ContainsKey(idx))
                         callback.Key(data[idx]);
                     else
                         _recordFallback[callback.Key]("No Idx");
@@ -130,23 +175,29 @@ namespace EasyH.Tool.DBKit {
                 }
             }
 
-            _recordCallback = new Dictionary<Action<T>, ISet<int>>();
+            _recordCallback = new Dictionary<Action<T>, ISet<K>>();
             _recordFallback = new Dictionary<Action<T>, Action<string>>();
         }
 
-        public void Fallback(string msg) {
+        public void Fallback(string msg)
+        {
 
-            foreach (KeyValuePair<Action<T>, ISet<int>> callback in _recordCallback)
+            foreach (KeyValuePair<Action<T>, ISet<K>> callback in _recordCallback)
             {
-                foreach (int idx in callback.Value)
+                foreach (K idx in callback.Value)
                 {
                     _recordFallback[callback.Key]?.Invoke(msg);
 
                 }
             }
 
-            _recordCallback = new Dictionary<Action<T>, ISet<int>>();
+            _recordCallback = new Dictionary<Action<T>, ISet<K>>();
             _recordFallback = new Dictionary<Action<T>, Action<string>>();
+        }
+        
+        public void DeleteRecordAt(K idx)
+        {
+            
         }
     }
 }

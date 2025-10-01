@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using SWEng.Data;
+using SWEng;
 
 [CreateAssetMenu(fileName = "EnemyStatus", menuName = "EnemyStatus/EnemyBaseStatsData", order = 2)]
 

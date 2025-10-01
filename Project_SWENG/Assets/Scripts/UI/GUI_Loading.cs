@@ -1,8 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using EasyH.UI;
 using UnityEngine.UI;
+using EasyH.Unity.UI;
 
 public class GUI_Loading : GUIWindow
 {

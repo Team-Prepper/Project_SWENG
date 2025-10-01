@@ -248,7 +248,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6744831080307749686}
   - component: {fileID: 2444225872450767367}
-  - component: {fileID: 281649100417629471}
+  - component: {fileID: 8456682769882692380}
   m_Layer: 5
   m_Name: etxt_btnName
   m_TagString: Untagged
@@ -283,7 +283,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 606599461233746140}
   m_CullTransparentMesh: 1
---- !u!114 &281649100417629471
+--- !u!114 &8456682769882692380
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -292,7 +292,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 606599461233746140}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 12570bef5492f6f4fba58d2c05099188, type: 3}
+  m_Script: {fileID: 11500000, guid: 58cc8152140ff5f4c9e403aed8633941, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -305,11 +305,11 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 7caf6488107e0594fb52394d655a392b, type: 3}
-    m_FontSize: 48
+    m_FontSize: 72
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 4
-    m_MaxSize: 48
+    m_MinSize: 7
+    m_MaxSize: 72
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
@@ -1349,7 +1349,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1419437174620221133}
   - component: {fileID: 8844016766302573783}
-  - component: {fileID: 4789131462491256522}
+  - component: {fileID: 3854086285633232165}
   m_Layer: 5
   m_Name: etxt_Placeholder
   m_TagString: Untagged
@@ -1384,7 +1384,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3850692682681620382}
   m_CullTransparentMesh: 1
---- !u!114 &4789131462491256522
+--- !u!114 &3854086285633232165
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1393,7 +1393,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3850692682681620382}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 12570bef5492f6f4fba58d2c05099188, type: 3}
+  m_Script: {fileID: 11500000, guid: 58cc8152140ff5f4c9e403aed8633941, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -1405,13 +1405,13 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 14
+    m_Font: {fileID: 12800000, guid: 7caf6488107e0594fb52394d655a392b, type: 3}
+    m_FontSize: 72
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 10
-    m_MaxSize: 40
-    m_Alignment: 0
+    m_MinSize: 7
+    m_MaxSize: 72
+    m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
@@ -2294,7 +2294,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7789412258077484694}
   m_HandleRect: {fileID: 562984882470696706}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:

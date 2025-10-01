@@ -1,7 +1,6 @@
-using EasyH.UI;
-using SWEng.GamePlay;
-using SWEng.MultiPlay.Photon;
-using Photon.Pun;
+using EasyH.Unity.UI;
+using MultiPlay.Photon.Network;
+using SWEng;
 
 public class GUITitle : GUIFullScreen
 {

@@ -172,7 +172,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2688187400530577519}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 12570bef5492f6f4fba58d2c05099188, type: 3}
+  m_Script: {fileID: 11500000, guid: 58cc8152140ff5f4c9e403aed8633941, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -195,7 +195,7 @@ MonoBehaviour:
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
-    m_LineSpacing: 1.2
+    m_LineSpacing: 1
   m_Text: "\uC8FC\uC0AC\uC704\uB97C \uB204\uB974\uC138\uC694"
   _key: label_PressTheDice
 --- !u!1 &5162636683544338234
@@ -823,9 +823,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 6689326524714760359}
-        m_TargetAssemblyTypeName: Dice, Assembly-CSharp
-        m_MethodName: Rolling
+      - m_Target: {fileID: 6335449902841641541}
+        m_TargetAssemblyTypeName: GUIDice, Assembly-CSharp
+        m_MethodName: Roll
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1041,6 +1041,7 @@ GameObject:
   - component: {fileID: 6689326524714760361}
   - component: {fileID: 6689326524714760359}
   - component: {fileID: 6689326524714760360}
+  - component: {fileID: 5411165650742664300}
   m_Layer: 12
   m_Name: D20
   m_TagString: Untagged
@@ -1076,6 +1077,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87bf4fac6647a7e4982ba05ed663af9a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _diceValue: {fileID: 5411165650742664300}
   torqueMin: 100
   torqueMax: 200
   throwStrength: 10
@@ -1083,34 +1085,10 @@ MonoBehaviour:
   _waitTime: 0.5
   _diceSet:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 6689326524714760359}
-        m_TargetAssemblyTypeName: Dice, Assembly-CSharp
-        m_MethodName: SetDicD20
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   _diceStopEvent:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 6335449902841641541}
-        m_TargetAssemblyTypeName: GUI_Dice, Assembly-CSharp
-        m_MethodName: SetDiceValue
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!54 &6689326524714760360
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1138,6 +1116,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &5411165650742664300
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6689326524714760362}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28ccd8e9f6ba8aa48a7da4cc32f05c50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6689326525004190331
 GameObject:
   m_ObjectHideFlags: 0

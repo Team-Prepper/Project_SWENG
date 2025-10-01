@@ -1,6 +1,5 @@
 using UnityEngine;
-using SWEng.Data;
-using SWEng.GamePlay;
+using SWEng;
 
 public class ItemPickup : MonoBehaviour
 {

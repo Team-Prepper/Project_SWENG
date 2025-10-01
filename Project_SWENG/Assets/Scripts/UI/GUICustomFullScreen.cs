@@ -1,8 +1,9 @@
 using System.Collections.Generic;
 using UnityEngine;
-using EasyH.UI;
-using SWEng.Data;
+using SWEng;
 using CameraSystem;
+using EasyH.Unity.UI;
+using BKTools.Gaming.GridMap2D;
 
 public class GUICustomFullScreen : GUIWindow, IGUIFullScreen {
 
@@ -11,7 +12,7 @@ public class GUICustomFullScreen : GUIWindow, IGUIFullScreen {
     private IList<IGUIPopUp> _popupUI;
     protected IGUIPopUp _nowPopUp;
 
-    MapUnit _mapUnit;
+    private MapUnit _mapUnit;
 
     bool _inputStartFromThis = false;
 

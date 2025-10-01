@@ -1,9 +1,9 @@
-using EasyH;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using SWEng.GamePlay.Item;
-using SWEng.Data;
+using SWEng;
+using EasyH;
+using EasyH.Unity;
 
 public class InventoryManager : MonoSingleton<InventoryManager>, IObservable<InventoryManager>
 {

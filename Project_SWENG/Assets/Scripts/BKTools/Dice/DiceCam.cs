@@ -2,16 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace BKTools.Gaming.Dice
+public class DiceCam : MonoBehaviour
 {
-    public class DiceCam : MonoBehaviour
+    [SerializeField] private GameObject dice;
+    private void Update()
     {
-        [SerializeField] private GameObject dice;
-        private void Update()
-        {
-            Vector3 dicePos = new Vector3(dice.transform.localPosition.x, 15, dice.transform.localPosition.z);
-
-            this.transform.localPosition = dicePos;
-        }
+        Vector3 dicePos = new Vector3(dice.transform.localPosition.x,15, dice.transform.localPosition.z);
+        
+        transform.localPosition = dicePos;
     }
 }
