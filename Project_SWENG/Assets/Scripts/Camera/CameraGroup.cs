@@ -1,4 +1,4 @@
-using Cinemachine;
+using Unity.Cinemachine;
 using UnityEngine;
 
 namespace CameraSystem
@@ -11,7 +11,7 @@ namespace CameraSystem
         [SerializeField] private CinemachineVirtualCameraBase battleCamRight;
         [SerializeField] private CinemachineVirtualCameraBase wideCam;
 
-        Transform _target;
+        private Transform _target;
 
         public void SetCamTarget(Transform target)
         {
