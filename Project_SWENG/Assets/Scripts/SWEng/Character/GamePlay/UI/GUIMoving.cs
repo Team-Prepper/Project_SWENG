@@ -31,7 +31,7 @@ public class GUIMoving : GUICustomFullScreen {
         _ShowRange();
         _moveNumParent.localScale = Vector3.one / GameObject.Find("Canvas").GetComponent<RectTransform>().localScale.y;
 
-        _cc.CameraController.CamSetting("Wide");
+        _cc.CamController.CamSetting("Wide");
     }
     private void _HideRange()
     {

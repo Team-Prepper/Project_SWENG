@@ -19,7 +19,7 @@ namespace SWEng
         public IDicePoint DicePoint { get; }
         public IMemberState TurnMemberState { get; }
         public Inventory Inventory { get; }
-        public ICameraController CameraController { get; }
+        public ICameraController CamController { get; }
 
         public void Initial(string characterName);
 

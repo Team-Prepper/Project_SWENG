@@ -99,7 +99,10 @@ namespace MultiPlay.Photon.SWEng
             CharacterData data = CharacterDataManager.Instance.
                 GetCharacterData(_characterCode);
 
-            _targetCharacter.Actor = Instantiate(data.Actor, _targetCharacter.transform);
+            _targetCharacter.Actor = Instantiate(
+                data.Actor, _targetCharacter.transform);
+            _targetCharacter.Status.Subscribe(
+                _targetCharacter.Actor.GetHPBar());
 
             _statusElement = data.StatusElements;
             _isHuman = data.IsHumanType;

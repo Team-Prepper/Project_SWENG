@@ -93,7 +93,7 @@ public class BasicEnemyCharacterController : MonoBehaviour, ICharacterController
 
         _continuousCnt++;
 
-        _cc.CameraController.CamSetting("Character");
+        _cc.CamController.CamSetting("Character");
 
         StartCoroutine(WaitSeconds(1f, ActionSelect(list)));
 
@@ -146,7 +146,7 @@ public class BasicEnemyCharacterController : MonoBehaviour, ICharacterController
             return;
         }
 
-        _cc.CameraController.CamSetting("Wide");
+        _cc.CamController.CamSetting("Wide");
 
         IList<GridCoord2D> path
             = EntityManager.Instance.GetPathGroupTo(

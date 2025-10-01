@@ -30,11 +30,11 @@ namespace SWEng
         public IDicePoint DicePoint { get; private set; }
         public IMemberState TurnMemberState { get; set; }
 
-        public ICameraController CameraController { get; private set; }
+        public ICameraController CamController { get; private set; }
 
         public bool IsRollDice { get; set; }
 
-        private ICharacterController _actionSelector;
+        private ICharacterController _cc;
 
         private CharacterMoveBase _moveComp;
         private CharacterAttack _attackComp;
@@ -67,7 +67,7 @@ namespace SWEng
 
             TurnMemberState = GetComponent<IMemberState>();
             EntityTransform = GetComponent<EntityTransform>();
-            CameraController = GetComponent<ICameraController>();
+            CamController = GetComponent<ICameraController>();
 
             _moveComp = GetComponent<CharacterMoveBase>();
             _attackComp = GetComponent<CharacterAttack>();
@@ -109,38 +109,26 @@ namespace SWEng
 
         public void Remove()
         {
-            Actor.Die();
-        }
-
-        public void CamSetting(string key)
-        {
-            CameraManager.Instance.CameraSetting(transform, key);
-        }
-
-        public void PlayAnim(string triggerType,
-            string triggerValue)
-        {
-            Actor.PlayAnim(triggerType, triggerValue);
+            Destroy(gameObject);
         }
 
         public void SetPlay(bool turnEnd)
         {
             if (turnEnd) return;
-            if (_actionSelector == null) return;
+            if (_cc == null) return;
 
             IsRollDice = false;
             ActionEnd();
         }
 
-        public void SetCC(
-            ICharacterController actionSelector)
+        public void SetCC(ICharacterController actionSelector)
         {
-            _actionSelector = actionSelector;
+            _cc = actionSelector;
         }
 
         public void ActionEnd(float time = 0)
         {
-            if (_actionSelector == null)
+            if (_cc == null)
             {
                 return;
             }
@@ -162,7 +150,7 @@ namespace SWEng
             if (IsRollDice == false)
                 list.Add(ICharacterController.Action.Dice);
 
-            _actionSelector.Ready(this, list);
+            _cc.Ready(this, list);
         }
 
         public void MoveTo(GridCoord2D before, GridCoord2D after)

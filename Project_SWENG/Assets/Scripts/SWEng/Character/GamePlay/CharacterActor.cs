@@ -5,8 +5,6 @@ namespace SWEng {
 
     public class CharacterActor : MonoBehaviour
     {
-
-        [SerializeField] private float _dieTime = 2f;
         [SerializeField] private Animator _anim;
         [SerializeField] private HPBarBase _hpUI;
 
@@ -14,6 +12,8 @@ namespace SWEng {
         {
 
         }
+
+        public HPBarBase GetHPBar() => _hpUI;
 
         public void SetHPViewActive(bool visible)
         {

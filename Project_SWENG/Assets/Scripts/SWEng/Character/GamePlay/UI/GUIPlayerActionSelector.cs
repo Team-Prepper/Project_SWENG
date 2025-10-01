@@ -59,7 +59,7 @@ public class GUIPlayerActionSelect : GUICustomFullScreen, ICharacterController {
 
     private void ViewSet(IList<ICharacterController.Action> actionList) {
 
-        _cc.CameraController.CamSetting("Character");
+        _cc.CamController.CamSetting("Character");
 
         _btnInteraction.interactable = actionList.Contains
             (ICharacterController.Action.Interaction);

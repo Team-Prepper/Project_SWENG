@@ -36,7 +36,7 @@ namespace SWEng
             _cc.transform.LookAt(look + _cc.transform.position.y * Vector3.up);
 
             _cc.DicePoint.UsePoint(_usingPoint);
-            _cc.CameraController.CamSetting("Battle");
+            _cc.CamController.CamSetting("Battle");
             _cc.Animation.PlayAnim("SetTrigger", "Attack");
             _cc.ActionEnd(2f);
 

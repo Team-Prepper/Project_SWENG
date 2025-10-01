@@ -84,7 +84,10 @@ namespace SWEng
 
             _targetCharacter.Status.SetHP(_statusElement[0].HP,
                 _statusElement[0].HP);
-            _targetCharacter.Actor = Instantiate(data.Actor, _targetCharacter.transform);
+            _targetCharacter.Actor = Instantiate(
+                data.Actor, _targetCharacter.transform);
+            _targetCharacter.Status.Subscribe(
+                _targetCharacter.Actor.GetHPBar());
             _targetCharacter.Actor.transform.localPosition = Vector3.zero;
 
         }
