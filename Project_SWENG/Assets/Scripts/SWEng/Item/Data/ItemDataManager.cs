@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using EasyH;
-using System;
+using EasyH.Unity;
 
 
 namespace SWEng
@@ -24,7 +24,8 @@ namespace SWEng
             foreach (var data in
                 _itemDataDict.ReadData("ItemInfor"))
             {
-                _dict.Add(data.Key, AssetOpener.Import<ItemData>(data.Value));
+                _dict.Add(data.Key, 
+                    ResourceManager.Instance.ResourceConnector.Import<ItemData>(data.Value));
             }
 
             _tierColorDict = new Dictionary<ItemData.ItemTier, Color>() {

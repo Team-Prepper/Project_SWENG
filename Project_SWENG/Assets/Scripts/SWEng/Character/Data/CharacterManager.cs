@@ -1,6 +1,7 @@
-using EasyH;
 using System.Collections.Generic;
 using System.Linq;
+using EasyH;
+using EasyH.Unity;
 
 namespace SWEng
 {
@@ -20,7 +21,9 @@ namespace SWEng
 
             foreach (var data in rawData)
             {
-                _characterDataDict.Add(data.Key, AssetOpener.Import<CharacterData>(data.Value));
+                _characterDataDict.Add(data.Key,
+                    ResourceManager.Instance.ResourceConnector.
+                        Import<CharacterData>(data.Value));
             }
 
         }

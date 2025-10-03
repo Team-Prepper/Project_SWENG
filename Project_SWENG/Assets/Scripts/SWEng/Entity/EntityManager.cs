@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using CameraSystem;
 using BKTools.Gaming.GridMap2D;
 using EasyH;
+using EasyH.Unity;
 
 namespace SWEng
 {
@@ -21,8 +22,9 @@ namespace SWEng
             if (map.tileType == TileDataScript.TileType.village)
             {
                 ShopInteractionBase interaction =
-                    AssetOpener.Import<ShopInteractionBase>(
-                        "Event/Event_OpenShop");
+                    ResourceManager.Instance.ResourceConnector.
+                        Import<ShopInteractionBase>(
+                            "Event/Event_OpenShop");
 
                 interaction.SetData(map);
                 interaction.Interaction(actor);

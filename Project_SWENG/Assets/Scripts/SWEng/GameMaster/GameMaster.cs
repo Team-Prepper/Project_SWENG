@@ -1,5 +1,6 @@
 using UnityEngine;
 using EasyH;
+using EasyH.Unity;
 using EasyH.Unity.UI;
 using EasyH.Gaming.TurnBased;
 using UnityEngine.SceneManagement;
@@ -18,8 +19,8 @@ namespace SWEng
 
         public ICharacter InstantiateCharacter(Vector3 position, Quaternion rotation)
         {
-            ICharacter retval = AssetOpener.
-                ImportComponent<Character>("LocalCC");
+            ICharacter retval = ResourceManager.Instance.
+                ResourceConnector.ImportComponent<Character>("LocalCC");
 
             retval.transform.
                 SetPositionAndRotation(position, rotation);
@@ -30,7 +31,8 @@ namespace SWEng
 
         public GameObject InstantiateItem(Vector3 position)
         {
-            GameObject retval = AssetOpener.ImportGameObject("LocalItem");
+            GameObject retval = ResourceManager.Instance.
+                ResourceConnector.ImportGameObject("LocalItem");
 
             retval.transform.position = position;
 

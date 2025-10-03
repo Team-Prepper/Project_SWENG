@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using EasyH;
+using EasyH.Unity;
 
 namespace SWEng
 {
@@ -15,14 +16,16 @@ namespace SWEng
             IDictionaryConnector<string, string> connector
                 = new JsonDictionaryConnector<string, string>();
 
-            IDictionary<string, string> rawData = connector.ReadData("SkillInfor");
+            IDictionary<string, string> rawData
+                = connector.ReadData("SkillInfor");
 
             _skillDataDict = new Dictionary<string, SkillData>();
 
             foreach (var data in rawData)
             {
                 SkillData skillData =
-                    AssetOpener.Import<SkillData>(data.Value);
+                    ResourceManager.Instance.ResourceConnector.
+                        Import<SkillData>(data.Value);
 
                 _skillDataDict.Add(data.Key, skillData);
             }
