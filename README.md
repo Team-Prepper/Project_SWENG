@@ -6,7 +6,7 @@
 - [🎮 itch-io에서 플레이](https://sodaxi.itch.io/tile-adventure)
 
 ## 개발환경
-- 게임 엔진: Unity 6000.0.58f2
+- 게임 엔진: Unity 6000.0.60f1
 - IDE: Visual Studio Code
 - 멀티 플레이: Photon
 

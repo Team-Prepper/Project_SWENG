@@ -1,5 +1,5 @@
 using UnityEngine;
-using EasyH.Tool.LangKit;
+using EasyH.Unity.LangKit;
 using SWEng;
 
 public class GUIUnitCharacterDataName : GUIUnitCharacterDataIcon

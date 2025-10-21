@@ -6,7 +6,10 @@ using EasyH;
 
 namespace EasyH.Unity.UI
 {
-
+    [CreateAssetMenu(fileName = "GUIInfor", menuName = "Scriptable Object/GUIWindowDictionary")]
+    public class GUIWindowDictionaryData :
+        GroupDictionaryDataBase<string, GUIWindow> { }
+    
     public class UIManager : Singleton<UIManager>
     {
         public IGUIFullScreen NowDisplay { get; private set; }
@@ -60,7 +63,7 @@ namespace EasyH.Unity.UI
             NowDisplay = null;
             uiStack = new StablePriorityQueue<IGUIFullScreen>(
                 (a, b) =>
-                { 
+                {
                     return a.Priority.CompareTo(b.Priority);
                 }
             );
@@ -87,7 +90,7 @@ namespace EasyH.Unity.UI
 
             GameObject retGO = ResourceManager.Instance.
                 ResourceConnector.ImportGameObject(path);
-                
+
             retGO.GetComponent<IGUI>().Open(callback);
 
             return retGO.GetComponent<T>();

@@ -1,9 +1,9 @@
 using UnityEngine;
-using EasyH.Tool.LangKit;
 using UnityEngine.UI;
 using CameraSystem;
 using SWEng;
 using EasyH.Unity.UI;
+using EasyH.Unity.LangKit;
 
 public class GUI_ShowCharacterInfor : GUIPopUp
 {

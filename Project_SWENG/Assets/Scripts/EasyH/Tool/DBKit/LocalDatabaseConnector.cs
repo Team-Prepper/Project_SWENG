@@ -47,10 +47,12 @@ namespace EasyH.Tool.DBKit {
                     K key = (K)Convert.ChangeType(childSnapshot.Key, typeof(K));
                     T value = Activator.CreateInstance<T>();
 
-                    if (childSnapshot.Value is IDictionary<string, object> childDataDictionary)
-                    {
-                        value.SetValueFromDictionary(childDataDictionary);
-                    }
+                    if (!(childSnapshot.Value is
+                        IDictionary<string, object>
+                            childDataDictionary)) continue;
+
+                    if (!value.SetValueFromDictionary(
+                        childDataDictionary)) continue;
 
                     _data.Add(key, value);
                 }

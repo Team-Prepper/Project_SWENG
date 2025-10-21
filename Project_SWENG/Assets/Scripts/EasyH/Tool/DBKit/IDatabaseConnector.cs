@@ -6,7 +6,8 @@ namespace EasyH.Tool.DBKit {
     public interface IDictionaryable<T> {
 
         public IDictionary<string, object> ToDictionary();
-        public void SetValueFromDictionary(IDictionary<string, object> value);
+        public bool SetValueFromDictionary(
+            IDictionary<string, object> value);
 
     }
 

@@ -1,9 +1,9 @@
 using System;
 using TMPro;
 using UnityEngine;
+using EasyH.LangKit;
 
-
-namespace EasyH.Tool.LangKit {
+namespace EasyH.Unity.LangKit {
 
     [RequireComponent(typeof(CanvasRenderer))]
     [AddComponentMenu("UI/EHTMP", 100)]
@@ -12,8 +12,7 @@ namespace EasyH.Tool.LangKit {
 
         [SerializeField] private string _key = string.Empty;
 
-#nullable enable
-        private IDisposable? _cancellation;
+        private IDisposable _cancellation;
 
         public void OnCompleted()
         {

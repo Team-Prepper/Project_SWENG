@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
-using EasyH.Tool.LangKit;
+using EasyH.Unity.LangKit;
 using SWEng;
 
 public class GUIUnitCharacterData : GUIUnitCharacterDataName {

@@ -1,5 +1,5 @@
 using UnityEngine;
-using EasyH.Tool.LangKit;
+using EasyH.LangKit;
 using EasyH.Unity.UI;
 
 public class GUI_Setting : GUIPopUp

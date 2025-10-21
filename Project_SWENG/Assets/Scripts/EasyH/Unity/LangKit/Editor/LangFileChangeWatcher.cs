@@ -1,5 +1,6 @@
 using UnityEditor;
 using UnityEngine;
+using EasyH.LangKit;
 
 #if UNITY_EDITOR
 namespace EasyH.Tool.LangKit {

@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 
-namespace EasyH.Tool.LangKit {
+namespace EasyH.LangKit {
 
     public interface IEHText : IObserver<IEHLangManager> {
         public void SetText(string key);

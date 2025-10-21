@@ -2,7 +2,7 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace EasyH.Tool.LangKit {
+namespace EasyH.Unity.LangKit {
 
 
     [CustomEditor(typeof(EHTmp))]

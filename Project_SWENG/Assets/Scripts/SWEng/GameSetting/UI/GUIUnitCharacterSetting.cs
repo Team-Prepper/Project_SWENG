@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using SWEng;
-using EasyH.Tool.LangKit;
+using EasyH.Unity.LangKit;
 using EasyH.Unity.UI;
 
 public class GUIUnitCharacterSetting : MonoBehaviour {

@@ -1,9 +1,10 @@
-using EasyH.Tool.LangKit;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using System;
+using EasyH.LangKit;
 
+[RequireComponent(typeof(Dropdown))]
 public class EHDropdownWrapper : MonoBehaviour, IObserver<IEHLangManager> {
 
     [SerializeField] private string[] _options;
@@ -12,17 +13,24 @@ public class EHDropdownWrapper : MonoBehaviour, IObserver<IEHLangManager> {
     public Dropdown.DropdownEvent onValueChanged 
         => _dropdown.onValueChanged;
 
-    public int value {
-        get {
+    public int value
+    {
+        get
+        {
             return _dropdown.value;
         }
-        set {
+        set
+        {
             _dropdown.value = value;
         }
     }
 
-#nullable enable
-    IDisposable? _disposable;
+    private void Start()
+    {
+        _dropdown = GetComponent<Dropdown>();
+    }
+    
+    private IDisposable _disposable;
 
     private void OnEnable() {
         _disposable = LangManager.Instance.Subscribe(this);

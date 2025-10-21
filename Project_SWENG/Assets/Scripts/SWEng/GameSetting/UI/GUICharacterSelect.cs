@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using SWEng;
 using EasyH.Unity.UI;
-using EasyH.Tool.LangKit;
+using EasyH.Unity.LangKit;
 
 public class GUICharacterSelect : GUIPopUp
 {

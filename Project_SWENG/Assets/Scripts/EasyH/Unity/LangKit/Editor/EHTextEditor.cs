@@ -1,7 +1,7 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace EasyH.Tool.LangKit {
+namespace EasyH.Unity.LangKit {
 
     [CanEditMultipleObjects]
     [CustomEditor(typeof(EHText))]
