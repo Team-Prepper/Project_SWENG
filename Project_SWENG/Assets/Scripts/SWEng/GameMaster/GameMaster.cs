@@ -66,8 +66,6 @@ namespace SWEng
 
             sys.SetStartCondition(() =>
             {
-                Debug.Log("Check");
-                Debug.Log(sys.GetTeamMemberCnt(0));
                 if (sys.GetTeamMemberCnt(0)
                     >= setting.Players.Count)
                 {

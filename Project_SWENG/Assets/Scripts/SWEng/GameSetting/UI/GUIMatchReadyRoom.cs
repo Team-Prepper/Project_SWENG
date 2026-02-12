@@ -108,7 +108,6 @@ public class GUIMatchReadyRoom : GUIFullScreen, MatchObserver {
 
     public void LeaveRoom()
     {
-        Debug.Log("LeaveRoom");
         GameManager.Instance.Master.DisposeGame();
         Close();
     }

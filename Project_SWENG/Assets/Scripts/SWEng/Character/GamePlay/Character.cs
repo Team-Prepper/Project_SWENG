@@ -114,7 +114,6 @@ namespace SWEng
 
         public void SetPlay(bool turnEnd)
         {
-            Debug.Log(turnEnd);
             if (turnEnd) return;
             if (_cc == null) return;
 

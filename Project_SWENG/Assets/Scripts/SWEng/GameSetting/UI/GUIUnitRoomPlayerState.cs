@@ -1,4 +1,3 @@
-using EasyH.Tool.LangKit;
 using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
