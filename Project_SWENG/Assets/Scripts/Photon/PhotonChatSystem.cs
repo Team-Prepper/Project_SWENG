@@ -63,5 +63,11 @@ namespace MultiPlay.Photon.Chat
         {
             _blockUser.Add(name);
         }
+
+        public void Clear()
+        {
+            OnReceiveChat = null;
+            OnReceiveEmoji = null;
+        }
     }
 }

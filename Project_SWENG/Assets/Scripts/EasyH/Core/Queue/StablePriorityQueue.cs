@@ -15,6 +15,10 @@ namespace EasyH
         public StablePriorityQueue()
         {
             _list = new List<T>();
+            SetComparator((a, b) =>
+            {
+                return 1;
+            });
         }
 
         public StablePriorityQueue(Func<T, T, int> comparator)

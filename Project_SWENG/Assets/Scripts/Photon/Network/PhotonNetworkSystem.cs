@@ -105,8 +105,9 @@ namespace MultiPlay.Photon.Network
 
         public void LeaveRoom()
         {
-            _room.LeaveRoom();
             PhotonNetwork.LeaveRoom();
+            UnityEngine.Debug.Log("LeaveRoom");
+            _room.LeaveRoom();
         }
 
         public override void OnConnectedToMaster()
@@ -134,7 +135,7 @@ namespace MultiPlay.Photon.Network
 
         public override void OnDisconnected(DisconnectCause cause)
         {
-            PhotonNetwork.ConnectUsingSettings();
+            //PhotonNetwork.ConnectUsingSettings();
         }
 
         public override void OnJoinedRoom()
@@ -145,11 +146,13 @@ namespace MultiPlay.Photon.Network
             {
                 if (value.Equals(true))
                 {
+                    LeaveRoom();
                     return;
                 }
             }
 
             base.OnJoinedRoom();
+            _room.EnterRoom();
 
             Player[] sortedPlayers = PhotonNetwork.PlayerList;
             int actorNumber = PhotonNetwork.LocalPlayer.ActorNumber;

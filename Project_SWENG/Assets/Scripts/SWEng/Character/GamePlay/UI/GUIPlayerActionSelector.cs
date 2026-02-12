@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using EasyH.Unity.UI;
 using SWEng;
+using System.Runtime.CompilerServices;
 
 public class GUIPlayerActionSelect : GUICustomFullScreen, ICharacterController {
 

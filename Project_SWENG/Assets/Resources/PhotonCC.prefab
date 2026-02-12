@@ -15,13 +15,13 @@ GameObject:
   - component: {fileID: 6175015453305900188}
   - component: {fileID: 1719676013190498885}
   - component: {fileID: 8944771808441625110}
-  - component: {fileID: 3463376528790405414}
   - component: {fileID: 3929093214693240705}
   - component: {fileID: 5358647178874522741}
   - component: {fileID: -2912982592693740639}
   - component: {fileID: 8632687399734740219}
   - component: {fileID: 6974021429140489198}
   - component: {fileID: 8266675935376592933}
+  - component: {fileID: 2354700401365309164}
   m_Layer: 0
   m_Name: PhotonCC
   m_TagString: Untagged
@@ -119,20 +119,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _usePointAtAttack: 3
---- !u!114 &3463376528790405414
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8799764154775130914}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 19ef985d6f36247429e52d4095d5edae, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _movementDuration: 0.5
-  _moveRotationDuration: 0.4
 --- !u!114 &3929093214693240705
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -225,3 +211,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _pv: {fileID: 0}
+--- !u!114 &2354700401365309164
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8799764154775130914}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31449cb7244f26d45916a91a7b84a428, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _movementDuration: 1
+  _acceleration: 1

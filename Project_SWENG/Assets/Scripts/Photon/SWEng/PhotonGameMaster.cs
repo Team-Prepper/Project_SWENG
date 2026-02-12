@@ -11,12 +11,9 @@ namespace MultiPlay.Photon.SWEng
     {
         private PhotonView _view;
 
-        private int _turn;
-
         private EnemySpawner _enemySpawner;
 
         private IGameMaster.Phase _phase;
-        private int _phaseCnt;
 
         public ICharacter InstantiateCharacter(Vector3 position, Quaternion rotation)
         {
@@ -61,6 +58,22 @@ namespace MultiPlay.Photon.SWEng
             _phase = 0;
 
             _view = GetComponent<PhotonView>();
+            
+            ITurnSystem sys = new TurnSystem();
+            TurnManager.Instance.System = sys;
+
+            sys.SetStartCondition(() =>
+            {
+                if (!PhotonNetwork.IsMasterClient)
+                    return false;
+
+                if (sys.GetTeamMemberCnt(0)
+                    >= GameManager.Instance.Setting.Players.Count)
+                {
+                    return true;
+                }
+                return false; 
+            });
 
             GameObject spawner = GameObject.FindWithTag("Spawner");
 
@@ -74,14 +87,6 @@ namespace MultiPlay.Photon.SWEng
                 SpawnPlayer(NetworkManager.Instance.System.PlayerId);
 
         }
-
-        public void GameStart()
-        {
-            _phase = IGameMaster.Phase.Play;
-            TurnManager.Instance.System.StartGame();
-
-        }
-
         [PunRPC]
         private void PunAllGameEnd(bool victory)
         {

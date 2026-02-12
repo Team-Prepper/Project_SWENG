@@ -93,7 +93,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
-  m_EffectDistance: {x: 3, y: 3}
+  m_EffectDistance: {x: 0, y: 5}
   m_UseGraphicAlpha: 1
 --- !u!1 &1127709830150573853
 GameObject:
@@ -332,6 +332,7 @@ GameObject:
   - component: {fileID: 1127709830890466086}
   - component: {fileID: 1127709830890466080}
   - component: {fileID: 4394447884084646673}
+  - component: {fileID: 6869939122493931779}
   m_Layer: 5
   m_Name: etxt_btn_Name
   m_TagString: Untagged
@@ -401,6 +402,21 @@ MonoBehaviour:
     m_LineSpacing: 1
   m_Text: "\uB85C\uCEEC \uD50C\uB808\uC774"
   _key: btn_LocalPlay
+--- !u!114 &6869939122493931779
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1127709830890466087}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
+  m_EffectDistance: {x: 0, y: 5}
+  m_UseGraphicAlpha: 1
 --- !u!1 &1877636169072418602
 GameObject:
   m_ObjectHideFlags: 0
@@ -494,7 +510,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
-  m_EffectDistance: {x: 3, y: 3}
+  m_EffectDistance: {x: 0, y: 5}
   m_UseGraphicAlpha: 1
 --- !u!1 &2851136108987589851
 GameObject:
@@ -594,7 +610,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.8117647, g: 0.70980394, b: 0.23137255, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -614,7 +630,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: "\xA9 2025 Team Prepper"
+  m_Text: "\xA9 2026 Team Prepper"
 --- !u!114 &6124882694787045839
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -627,8 +643,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
-  m_EffectDistance: {x: 2, y: 2}
+  m_EffectColor: {r: 0.8117647, g: 0.70980394, b: 0.23137255, a: 1}
+  m_EffectDistance: {x: 0, y: 5}
   m_UseGraphicAlpha: 1
 --- !u!1 &6234135081899566255
 GameObject:
@@ -786,7 +802,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
-  m_EffectDistance: {x: 3, y: 3}
+  m_EffectDistance: {x: 0, y: 5}
   m_UseGraphicAlpha: 1
 --- !u!1 &8425641312736131313
 GameObject:
@@ -932,6 +948,7 @@ GameObject:
   - component: {fileID: 8425641313507337586}
   - component: {fileID: 8425641313507337596}
   - component: {fileID: 8154429915094122869}
+  - component: {fileID: 5849644092460739565}
   m_Layer: 5
   m_Name: etxt_btn_Name
   m_TagString: Untagged
@@ -1001,6 +1018,21 @@ MonoBehaviour:
     m_LineSpacing: 1
   m_Text: "\uBA40\uD2F0 \uD50C\uB808\uC774"
   _key: btn_MultiPlay
+--- !u!114 &5849644092460739565
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8425641313507337585}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
+  m_EffectDistance: {x: 0, y: 5}
+  m_UseGraphicAlpha: 1
 --- !u!1 &8425641314229782157
 GameObject:
   m_ObjectHideFlags: 0
@@ -1012,6 +1044,7 @@ GameObject:
   - component: {fileID: 8425641314229782158}
   - component: {fileID: 8425641314229782152}
   - component: {fileID: 2168732515188549618}
+  - component: {fileID: 6431887735593575075}
   m_Layer: 5
   m_Name: etxt_btn_Name
   m_TagString: Untagged
@@ -1081,6 +1114,21 @@ MonoBehaviour:
     m_LineSpacing: 1
   m_Text: "\uC124\uC815"
   _key: btn_Setting
+--- !u!114 &6431887735593575075
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8425641314229782157}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
+  m_EffectDistance: {x: 0, y: 5}
+  m_UseGraphicAlpha: 1
 --- !u!1 &8425641314419835048
 GameObject:
   m_ObjectHideFlags: 0
@@ -1231,7 +1279,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &5344555791261790979
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1272,7 +1320,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.5019608}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

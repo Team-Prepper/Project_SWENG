@@ -10,14 +10,14 @@ namespace MultiPlay.Photon.TurnBased
     {
         public bool TurnEnd { get; private set; }
 
-        public int TeamIdx { get; private set; }
+        public int TeamIdx { get; private set; } = -1;
 
         public Action<bool> OnTurnEndStateChanged { get; set; }
         public Action OnTeamIdxChanged { get; set; }
 
         [SerializeField] private PhotonView _pv;
 
-        private void Start()
+        private void Awake()
         { 
             _pv = _pv != null ? _pv : GetComponent<PhotonView>();
         }
@@ -26,7 +26,8 @@ namespace MultiPlay.Photon.TurnBased
         {
             _pv.RPC(nameof(PunSetTeamIdx), RpcTarget.All, idx);
         }
-
+        
+        [PunRPC]
         public void PunSetTeamIdx(int idx)
         {
             if (idx == TeamIdx) return;
@@ -74,6 +75,7 @@ namespace MultiPlay.Photon.TurnBased
         public void PunEndTurn()
         {
             TurnEnd = true;
+            Debug.Log(TurnEnd);
             TurnManager.Instance.System.TurnEnd();
         }
     }

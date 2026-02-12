@@ -36,8 +36,8 @@ public class GUINetworkConnect : GUIPopUp
     {
         NetworkManager.Instance.System.OnConnectEvent -= OnConnect;
         _loadingUI.Close();
-        UIManager.Instance.OpenGUI<GUINetworkLobby>("Network_Lobby");
         Close();
+        UIManager.Instance.OpenGUI<GUINetworkLobby>("Network_Lobby");
     }
 
 }

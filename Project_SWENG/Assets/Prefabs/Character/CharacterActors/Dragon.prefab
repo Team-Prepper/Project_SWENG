@@ -560,6 +560,9 @@ SkinnedMeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 3
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1449,7 +1452,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &6202825420256002057
 Animator:
-  serializedVersion: 5
+  serializedVersion: 7
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -1463,6 +1466,7 @@ Animator:
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
@@ -1480,7 +1484,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 063474f3e8d96e449985a3add2393ff0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _dieTime: 2
   _anim: {fileID: 6202825420256002057}
   _hpUI: {fileID: 527216363961204277}
 --- !u!1 &4433330515617724619
@@ -7437,6 +7440,9 @@ ParticleSystemRenderer:
   m_ReflectionProbeUsage: 0
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -8268,6 +8274,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Canvas_enHealth
+      objectReference: {fileID: 0}
+    - target: {fileID: 833343554697698998, guid: 6b35e559e2048424d8b237e3718e2058,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 833343554697698998, guid: 6b35e559e2048424d8b237e3718e2058,
         type: 3}

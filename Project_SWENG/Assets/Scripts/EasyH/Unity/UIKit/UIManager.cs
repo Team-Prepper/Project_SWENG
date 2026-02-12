@@ -80,7 +80,11 @@ namespace EasyH.Unity.UI
         void OnSceneLoaded(Scene scene, LoadSceneMode mode)
         {
             NowDisplay = null;
-            uiStack = new StablePriorityQueue<IGUIFullScreen>();
+            uiStack = new StablePriorityQueue<IGUIFullScreen>(
+                (a, b) =>
+                {
+                    return a.Priority.CompareTo(b.Priority);
+                });
 
         }
 

@@ -58,21 +58,35 @@ namespace SWEng
         {
             _phase = 0;
 
-            TurnManager.Instance.System = new TurnSystem();
+            IGameSetting setting =
+                GameManager.Instance.Setting;
+
+            ITurnSystem sys = new TurnSystem();
+            TurnManager.Instance.System = sys;
+
+            sys.SetStartCondition(() =>
+            {
+                Debug.Log("Check");
+                Debug.Log(sys.GetTeamMemberCnt(0));
+                if (sys.GetTeamMemberCnt(0)
+                    >= setting.Players.Count)
+                {
+                    return true;
+                }
+                return false; 
+            });
 
             GameObject spawner = GameObject.FindWithTag("Spawner");
 
             _enemySpawner = spawner.GetComponent<EnemySpawner>();
             _enemySpawner.SpawnEnemy();
 
-            for (int i = 0; i < GameManager.Instance.Setting.Players.Count; i++)
+            for (int i = 0; i < setting.Players.Count; i++)
             {
                 spawner.GetComponent<PlayerSpawner>().SpawnPlayer(i, null);
             }
 
             _phase = IGameMaster.Phase.Play;
-
-            TurnManager.Instance.System.StartGame();
             //TurnManager.Instance.System.Subscribe();
 
         }

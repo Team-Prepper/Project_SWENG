@@ -4,6 +4,7 @@ using SWEng.Network;
 using SWEng;
 using MultiPlay.Photon.Chat;
 using MultiPlay.Photon.SWEng;
+using Unity.VisualScripting;
 
 namespace MultiPlay.Photon.Network
 {
@@ -27,6 +28,7 @@ namespace MultiPlay.Photon.Network
         { 
             _gameSettingView = gameObject.
                 AddComponent<PhotonGameSetting>();
+            _chat.Clear();
 
             GameManager.Instance.SetGameMaster<PhotonGameMaster>();
             GameManager.Instance.Setting = _gameSettingView;

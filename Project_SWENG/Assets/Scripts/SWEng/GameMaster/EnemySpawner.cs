@@ -63,12 +63,11 @@ namespace SWEng
 
             ICharacter cc = GameManager.Instance.Master.
                 InstantiateCharacter(spawnPos.position, spawnPos.rotation);
-
+            
+            cc.SetCC(characterController);
             cc.TurnMemberState.SetTeamIdx(1);
             cc.Initial(spawnEnemyList[
                 Random.Range(0, spawnEnemyList.Count)]);
-            
-            cc.SetCC(characterController);
 
         }
 
