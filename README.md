@@ -3,7 +3,9 @@
 ## 개요
 육각 필드 위에서 진행되는 턴제 TRPG 게임입니다.
 
-[🎮 itch-io에서 플레이](https://sodaxi.itch.io/tile-adventure)
+~~[🎮 itch-io에서 플레이](https://sodaxi.itch.io/tile-adventure)~~ (현재 사용 불가 : photon network 만료)
+
+
 
 ## 계획
 - [ ] 기본 플레이 구현
